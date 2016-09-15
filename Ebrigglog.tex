@@ -1,0 +1,73 @@
+Ce problème porte sur des calculs numériques en base 2. On se limite ici à certains nombres binaires  de $[0,2[$ représentés par des listes.\newline
+Soit $A=(a_0,a_1,\cdots,a_l)$ une liste de $0$ et de $1$ (sa longueur est $l+1$), le nombre binaire qu'elle représente est
+\begin{displaymath}
+  a = a_0 + \frac{a_1}{2}+ \frac{a_2}{2^2}+\cdots + \frac{a_l}{2^{l}}
+\end{displaymath}
+On dira ici qu'il s'agit d'un nombre binaire de longueur $l$, on utilisera librement que tout nombre binaire de longueur $l$ est dans l'intervalle $[0,2[$.
+\subsection{Opérations}
+\begin{enumerate}
+  \item Citer les principales propriétés de l'opérateur \texttt{//} en Python.
+  \item Addition.\newline
+  Soient $A$ et $B$ des listes (de même longueur $l+1$) de $0$ et de $1$. Soient $a$ et $b$ les nombres binaires qu'elles représentent respectivement. On considère la fonction \texttt{add}.
+\lstinputlisting[firstline=16, lastline=26]{Cbrigglog.py}
+Montrer que $a$ et $b$ sont dans $[0,2[$. Justifier que les propriétés:
+\begin{itemize}
+  \item \og \texttt{ret} désigne $0$ ou $1$\fg 
+  \item \og \texttt{S} est une liste de $0$ et de $1$\fg
+\end{itemize}
+sont des invariants pour la boucle \texttt{while} de ce code. Soit $s$ le nombre binaire représenté par la liste \texttt{S} à la fin de l'exécution. Dans quel cas a-t-on $s = a+b$? Sinon, quelle relation a-t-on?
+
+\item Décalage. 
+\begin{enumerate}
+  \item Coder en Python une fonction \texttt{shift} qui prend deux paramètres \texttt{A} et \texttt{k} où \texttt{A} désigne une liste de $0$ et de $1$ et \texttt{k} désigne un entier naturel. Cette fonction ne devra rien afficher ni rien renvoyer mais modifier la liste désignée par \texttt{A} sans changer sa longueur, en décalant ses valeurs de \texttt{k} places vers la droite et en insérant des $0$ à gauche.
+\begin{displaymath}
+  (1,0,0,1,0,0,1,0,0,1)\xrightarrow{\text{décalage de 3 places}}(0,0,0,1,0,0,1,0,0,1)
+\end{displaymath}
+  \item Soit $a$ le nombre binaire représenté par une liste \texttt{A} (de longueur $l+1$) et $a'$ le nombre binaire représenté par \texttt{A} après l'exécution de \texttt{shift(A,1)}. Exprimer $a'$ en fonction de $a$ et d'une valeur de la liste initiale.
+\end{enumerate}
+
+\item Carré.
+\lstinputlisting[firstline=38, lastline=51]{Cbrigglog.py}
+Dans le code au dessus, \texttt{A} désigne une liste de 0 et de 1 qui représente un nombre binaire $a$ et on note $c$ le nombre binaire représenté par \texttt{C} à la fin.
+\begin{enumerate}
+  \item Peut-on remplacer l'instruction \og\texttt{B = [a for a in A]}\fg~ par \og\texttt{B = A}\fg? Justifier soigneusement.
+  \item Soit $l\in \N^*$ fixé. Le produit de deux nombres binaires de longueur $l$ est-il un nombre binaire de longueur $l$? 
+  \item Calculer \texttt{ret} et \texttt{C} à la fin de l'appel \texttt{carre(A)} pour \texttt{A} désignant $[1,1,0,1,0]$.
+  \item Que renvoie cette fonction ? Quel est son principal défaut?
+\end{enumerate}
+\end{enumerate}
+
+\subsection{Calcul d'un logarithme décimal en binaire.}
+\begin{algorithm}
+  $n\leftarrow $ naturel non  nul\;
+  $x\leftarrow x_{0}$ nombre dans $[1,10[$\;
+  $B\leftarrow$ liste contenant seulement $b_0 = 0$ \;
+  $i\leftarrow 0$\;
+  \Tq{$i < n$}{
+    $x\leftarrow x * x$\;
+    \eSi{$x < 10$}{
+      $b\leftarrow 0$\;
+    }{
+      $b\leftarrow 1$\;
+      $x\leftarrow x / 10$\;
+    }
+    placer $b$ à la fin de la liste $B$\;
+    incrémenter $i$\;
+  }
+  \caption{Calcul de logarithme.}
+  \label{Ebrigglog_1}
+\end{algorithm}
+On désigne\footnote{d'après D. Knuth, \emph{The Art Of Computer Programming} vol 1, p24} par $x_1,x_2,\cdots,x_{n}$ et $b_1,b_2,\cdots,b_{n}$ les valeurs de $x$ et $b$ à la fin de chaque exécution de la boucle de l'algorithme \ref{Ebrigglog_1}.
+\begin{enumerate}
+  \item Exprimer $b_{k+1}$ et $x_{k+1}$ en fonction de $b_k$ et $x_k$.
+  \item Montrer que \og $x\in [1,10[$\fg et \og$B$ est une liste de 0 et de 1\fg~ sont des invariants de la boucle.
+  \item Montrer que, pour tous les $k$ entre $1$ et $n$:
+\begin{displaymath}
+  x_k = \frac{x_{0}^{2^k}}{10^{2^{k}\left(\frac{b_1}{2}+\frac{b_2}{2^2}+\cdots+ \frac{b_k}{2^k}\right) }}
+\end{displaymath}
+\item On note $b$ le nombre binaire représenté par la liste $B$ à la fin de l'algorithme. Montrer que
+\begin{displaymath}
+  b \leq \frac{\ln x_0}{ \ln 10} < b + \frac{1}{2^{n}}
+\end{displaymath}
+\end{enumerate}
+

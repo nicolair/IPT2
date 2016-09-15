@@ -1,0 +1,96 @@
+L'objet de ce TP est d'implémenter des outils permettant l'analyse de fréquences dans un texte.
+\subsection*{I - Outils}
+\begin{enumerate}
+  \item Les fonctions demandées mettent en \oe{}euvre les algorithmes présentés en pseudo-code dans le cours. Elles ne doivent pas s'appeler.
+\begin{enumerate}
+  \item Implémenter en Python une fonction nommée \verb|indice| prenant une liste et un objet comme paramètres et renvoyant l'indice correspondant de la liste lorsque l'objet y figure et une valeur convenue lorsqu'il n'y figure pas.
+  \item Implémenter une fonction \texttt{valeurMax} prenant une liste de nombres comme paramètre et renvoyant le plus grand.
+  \item Implémenter une fonction \texttt{indicesValeurMax} prenant une liste de nombres comme paramètre et renvoyant la liste des indices correspondants à la plus grande valeur.   
+\end{enumerate}
+   
+  \item On se donne une liste \texttt{L} de \texttt{l} valeurs numériques qui ne sont pas forcément deux à deux distinctes. On suppose que \texttt{l} est plus grand que 10 et on veut calculer une liste \texttt{ligv} (liste des indices de grande valeur) de 10 indices correspondants aux 10 plus grandes valeurs. \newline
+  Cela se traduit par : pour tout \texttt{j} (entre 0 et \texttt{l-1}) qui n'est pas une valeur de la liste \texttt{ligv} et tout indice \texttt{k} (entre 0 et\texttt{l-1}) qui est une valeur de la liste \texttt{ligv}, 
+  \begin{center}
+    \texttt{L[j]} $\leq$ \texttt{L[k]} 
+  \end{center}
+Il peut y avoir plusieurs listes vérifiant les conditions pour une liste donnée. Par exemple, si
+\begin{center}
+  \verb|L = [1,22,1,4,6,14,22,45,78,54,42,12,63,7,15,29,35,85,23]|  
+\end{center}
+une liste \texttt{ligv} possible est
+\begin{center}
+  \verb|ligv = [17, 8, 12, 9, 7, 10, 16, 15, 18, 6]|
+\end{center}
+Elle correspond aux valeurs
+\begin{center}
+\verb|[85, 78, 63, 54, 45, 42, 35, 29, 23, 22]|  
+\end{center}
+qui sont rangées par ordre décroissant.\newline
+Toute liste obtenue en permutant \texttt{ligv} serait aussi acceptable. On pourrait aussi remplacer le 6 de la fin (indice du deuxième 22 de \texttt{L}) par 1 (indice du premier 22)\newline  
+L'algorithme \ref{Efreqtexte_1} présente une méthode de calcul utilisant les noms suivants:
+\begin{itemize}
+  \item \texttt{L} : la liste donnée, longueur \texttt{l} plus grande que 10
+  \item \texttt{ligv} : une liste des 10 entiers entre 0 et \texttt{l - 1} (à la fin elle désignera la liste cherchée)  
+  \item \texttt{imin} : un entier entre 0 et 9 tel que pour tout \texttt{i} entre 0 et 9 :
+  \begin{displaymath}
+  \texttt{L[ ligv[ imin ] ]} \leq  \texttt{L[ ligv[ i ] ]}
+  \end{displaymath}
+  \item \texttt{j} : un entier entre 0 et \texttt{l - 1}
+\end{itemize}
+\begin{algorithm}
+  \Comment{initialisations}
+  \texttt{l} $\leftarrow$ longueur de \texttt{L}\;
+  \texttt{ligv} $\leftarrow$ liste des entiers de 0 à 9\;
+  actualiser  \texttt{imin}\;
+  \Comment{traitement des autres valeurs}
+  \texttt{j} $\leftarrow 10$\;
+  \Tq{j < l}{
+      \If{ \texttt{L[ligv[imin]]} < \texttt{L[j]} }{
+          $??? \leftarrow ???$\;
+          actualiser \texttt{imin}\;
+      }
+      incrémenter \texttt{j}
+  }
+  \caption{calcul d'une liste de 10 indices des plus grandes valeurs}
+  \label{Efreqtexte_1}
+\end{algorithm}
+\begin{enumerate}
+  \item Compléter l'instruction de l'algorithme \ref{Efreqtexte_1} contenant des points d'interrogation.
+  \item Coder une fonction \texttt{actuImin} qui ne prend aucun paramètre et qui renvoie une valeur  $k$ entre 0 et 9 tel que, pour tout $i$ entre 0 et 9:
+\begin{displaymath}
+  \texttt{L[ligv[k]]} \leq \texttt{L[ligv[i]]} 
+\end{displaymath}
+Cette fonction est à définir dans un contexte qui connait le nom \texttt{ligv}.
+  \item Coder une fonction désignée par \texttt{top10} prenant une liste de nombres (au moins 10) en paramètre et renvoyant une liste de 10 indices de plus grandes valeurs. Cette fonction utilisera les noms locaux \texttt{ligv}, \texttt{imin}, \texttt{j}, \texttt{actuImin}.
+\end{enumerate}
+\end{enumerate}
+
+\subsection*{II - Fréquences de caractères}
+On dispose d'un texte désigné par \verb|texte| (codé en UTF-8). On s'intéresse à la fréquence des caractères. On veut former une liste dont les valeurs sont les nombres d'occurrences et afficher les dix caractères les plus fréquents.\newline
+Deux listes seront utilisées :
+\begin{itemize}
+  \item \verb|CarNum| : (caractère numéro) désigne une liste dont chaque valeur est un caractère différent du texte.
+  \item \verb|NbOcCarNum| : (nombre d'occurrences du caractère numéro) désigne une liste dont chaque valeur est le nombre d'occurrences d'un caractère.
+  \item Ces listes sont liés par : \verb|NbOcCarNum[i]| est le nombre d'occurrences du caractère \verb|CarNum[i]|.
+\end{itemize}
+Pour faciliter la correction, vous devez utiliser ces noms.
+\begin{enumerate}
+  \item Comment s'exprime le nombre de caractères distincts du texte en fonction de ces listes?
+  \item Présenter en pseudo-code un algorithme permettant de remplir les deux listes \verb|CarNum| et \verb|NbOcCarNum|. Cet algorithme devra utiliser la fonction \verb|indice| de la question I.1.
+  \item Implémenter une fonction \verb|freqC| qui prend comme paramètre un texte, qui calcule les listes de nom local \verb|CarNum| et \verb|NbOcCarNum|comme en question 1 et qui affiche les 10 caractères les plus fréquents du texte avec le nombre d'occurrences pour chacun. 
+\end{enumerate}
+
+\subsection*{III - Fréquences de mots}
+On dispose toujours d'un texte désigné par \verb|texte| (codé en UTF-8) dont le premier caractère n'est pas un espace. On s'intéresse à la fréquence des mots.\newline Un mot est une chaîne de caractères présente dans le texte, ne contenant pas le caractère espace mais précédée (sauf pour le premier mot) et suivie par un caractère espace. On veut former une liste dont les valeurs sont les nombres d'occurrences et afficher les dix mots les plus fréquents.\newline
+Trois listes seront utilisées :
+\begin{itemize}
+  \item \texttt{Mots} : désigne la liste de tous les mots du texte. Le même mot peut apparaitre plusieurs fois comme valeur de cette liste.
+  \item \verb|MotNum| : désigne une liste dont chaque valeur est un mot différent du texte.
+  \item \verb|NbOcMotNum| : désigne une liste dont chaque valeur est le nombre d'occurrences d'un mot.
+  \item Ces listes sont liés par : \verb|NbOcMotNum[i]| est le nombre d'occurrences du mot \verb|MotNum[i]|.
+\end{itemize}
+Pour faciliter la correction, vous devez utiliser ces noms.
+\begin{enumerate}
+  \item Présenter en pseudo-code des algorithmes permettant de remplir les trois listes \texttt{Mots}, \verb|MotNum| et \verb|NbOcMotNum|.
+  \item Implémenter une fonction \verb|freqM| qui prend comme paramètre un texte et qui affiche les 10 mots les plus fréquents avec le nombre d'occurrences pour chacun. 
+\end{enumerate}

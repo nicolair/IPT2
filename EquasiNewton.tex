@@ -1,0 +1,28 @@
+%<dscrpt>Méthode de quasi-Newton</dscrpt>
+On suppose ne pas disposer de méthode pour calculer l'inverse d'un nombre. On se propose donc de réaliser ce calcul à l'aide d'une méthode de Newton. Pour un réel $a$ fixé, on considère la fonction mathématique $f_a$ de $\R$ dans $\R$: $x\mapsto ax - 1$.
+
+\begin{enumerate}
+  \item Question de cours.\newline
+  Soit $f$ une fonction quelconque de classe $\mathcal{C}^2([a,b])$, croissante sur $[a,b]$, vérifiant $f(a)< 0 < f(b)$ et telle que $f''$ soit de signe constant. La méthode de Newton de résolution approchée de l'équation $f(x)=0$ consiste à définir par récurrence une suite  $\left( x_n\right)_{n\in \N}$ qui converge vers l'unique solution dans $[a,b]$.\newline
+Présenter les relations définissant cette suite. On distinguera deux cas et chaque cas sera illustré par une figure.
+  \item On veut utiliser la méthode de Newton pour résoudre $f_a(x) = 0$.\newline
+  Comment s'exprimerait $x_{n+1}$ en fonction de $x_n$ ? Pourquoi est-ce inutilisable dans ce contexte?
+  \item Comme on ne peut pas utiliser la méthode de Newton, on choisit de définir une suite par
+\begin{displaymath}
+  x_{n+1} = x_{n}(2-ax_n)
+\end{displaymath}
+\begin{enumerate}
+  \item Justifier que cette méthode soit appelée de \emph{quasi-Newton}. Quelles sont les limites possibles pour $\left( x_n\right)_{n\in \N}$ ?
+  \item \'Ecrire du code Python permettant de calculer $x_p$ pour un entier $p$ et une valeur initiale $u$ donnés. Vous ne devrez utiliser que deux noms \texttt{n} et \texttt{x}.
+\end{enumerate}
+  \item Soit $A$ une matrice $p\times p$ à coefficients flottants. On définit une suite $\left( X_n\right)_{n\in \N}$ de matrices du même type par une valeur initiale $X_0$ et la relation
+\begin{displaymath}
+  X_{n+1} = X_n(2I_p -AX_n)
+\end{displaymath}
+\begin{enumerate}
+  \item On pense que cette suite permet d'approcher la matrice inverse. Proposer un test d'arrêt raisonnable.
+  \item En fonction de la taille $p$ de la matrice, combien d'opérations sur les flottants (addition et multiplication confondues) sont nécessaires à une itération?\newline
+  Question de cours: par quelle fonction de $p$ le nombre d'opérations nécessaires au calcul de la matrice inverse par la méthode du pivot de Gauss est-elle dominée?
+\end{enumerate}
+
+\end{enumerate}

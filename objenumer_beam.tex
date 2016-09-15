@@ -1,0 +1,190 @@
+\input{ipt_beamer.tex}
+
+\begin{document}
+
+\begin{frame}
+  \frametitle{Boucles d'énumération}
+En Python, la notion boucle \texttt{for}
+\begin{itemize}
+  \item  n'est pas une boucle non conditionnelle. Elle n'a rien à voir avec la boucle \texttt{while},
+  \item  est remplacée par une notion de \emph{boucle d'énumération} liée à des types particuliers d'objets dits \emph{énumérables}.
+\end{itemize}
+Un objet de type \emph{énumérable} est une sorte de conteneur qui rassemble \og dans une même boîte\fg~ divers objets que l'on peut énumèrer  à l'aide d'une boucle
+\begin{center}
+\texttt{for ... in ...}.  
+\end{center}
+On va présenter plusieurs types d'objets énumérables ...
+
+mais on utilisera essentiellement les chaînes de caractères et les listes.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Propriétés d'un type énumérable}
+Un objet énumérable est
+\begin{itemize}
+  \item \emph{mutable} lorsque l'on peut modifier un objet contenu,
+  \item \emph{indexable} lorsque l'on peut accéder directement (à l'aide d'un \emph{index}) à un objet contenu particulier sans les énumérer tous.
+\end{itemize}
+
+Dans l'écriture \emph{littérale} d'un objet énumérable,
+\begin{itemize}
+  \item le \emph{délimiteur} est le couple de caractères entourant les objets contenus,
+  \item le \emph{séparateur} est le caractère entre les désignations des objets contenus.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Principaux types d'objets énumérables}
+\begin{description}
+ \item [Chaînes de caractères] Strings (non mutable - indexable) 
+ \item [tuples] (non mutable - indexable) 
+ \item [Listes] (mutable - indexable)
+ \item [Ranges] (non mutable - indexable) En python 3, \texttt{range} renvoie un objet de ce type (et non une liste comme en 2) constituée d'entiers consécutifs. Minimise la place mémoire utilisée.
+ \item [Ensembles] (Sets) (mutable - non indexable) 
+ \item [Dictionnaires] (mutable - indexable) Un dictionnaire est formé par des couples (clé: valeur). 
+\end{description}
+\end{frame}
+
+\begin{frame}
+  \frametitle{index}
+  \begin{itemize}
+    \item Sauf pour les dictionnaires, les index sont dans $\llbracket 0, n-1 \rrbracket$ où $n$ désigne le nombre d'objets contenus.
+    \item On obtient le nombre d'objets contenus avec la fonction \texttt{len} (pour length -longueur).
+      \begin{center}
+        \texttt{len(NomContenant)}
+      \end{center}
+    \item Pour un dictionnaire le terme \emph{index} est remplacé par \emph{clé}. Il est raisonnable de se limiter aux types chaîne de caractères ou entier pour les clés.
+    \item On utilise un crochet \texttt{[]} pour attendre un objet avec une valeur de l'index
+      \begin{center}
+        \texttt{NomObjetIndexable[NomIndex]}
+      \end{center}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\'Ecriture littérale des principales classes énumérables}
+  \begin{description}
+    \item [Chaînes de caractères] délimiteur \texttt{" "} ou \texttt{' '}- pas de séparateur
+    \item [tuples] pas de délimiteur - séparateur \texttt{ ,}\newline
+    Parfois nécessaire d'utiliser des ( ) autour du tuple
+    \item [Listes] délimiteur \texttt{[ ]} - séparateur \texttt{ , }
+    \item [Ensembles] délimiteur \texttt{{ }} - séparateur \texttt{ ,}
+    \item [Dictionnaires] délimiteur \{ \} - séparateur \texttt{ , } entre les couples.\newline
+    Dans un couple, "\texttt{ : }" entre la clé (à gauche) et la valeur (à droite)
+  \end{description}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemples : chaînes, listes, ranges}
+  \lstinputlisting[firstline=1, lastline=10]{objenumer.py}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemples : tuples, ensembles, dictionnaires}
+  \lstinputlisting[firstline=12, lastline=20]{objenumer.py}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Assignation = Référence}
+Avec les objets dont le type est mutable, l'assignation est une \emph{référence} et non une copie.
+\lstinputlisting[firstline=23, lastline=33]{objenumer.py}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Syntaxe boucle d'énumération}
+Exécuter une boucle non conditionnelle, c'est parcourir les objets constituant un objet énumérable en les désignant tour à tour par un même nom et exécuter un bloc d'instructions. 
+\begin{verbatim}
+for nom in obj:
+  instruction1
+  instruction2
+  ...
+instructionapres la boucle\end{verbatim}
+\begin{itemize}
+  \item \texttt{obj} désigne un objet énumérable
+  \item \texttt{nom} : nom désignant successivement chacun des objets le constituant. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemples d'énumération}
+\lstinputlisting[firstline=34, lastline=42]{objenumer.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Chaînes: concaténation, délimiteurs, échappement}
+\begin{itemize}
+  \item L'opérateur de concaténation est \texttt{+}.
+  \item Les délimiteurs \texttt{' '} (apostrophe, single quote) ou \text{" "} (guillemets, double quote) sont équivalents.
+\end{itemize}
+Certains caractères jouent un rôle particulier: \og ils ne se représentent pas\fg. Que faire ?
+\begin{itemize}
+  \item Utiliser guillemets ou apostrophes pour apostrophes et guillemets
+  \item Utiliser le caractère \emph{d'échappement} \\ (anti-slash) qui enlève tout rôle au caractère qui le suit.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Chaînes: exemples}
+\lstinputlisting[firstline=46, lastline=51]{objenumer.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Chaînes, sous-chaînes, indexation, slicing}
+\begin{itemize}
+  \item caractère = chaîne de longueur 0.
+  \item sous-chaîne : formée avec des caractères consécutifs.
+  \item sous chaînes obtenues avec crochets, index et \texttt{:} (slicing)
+\end{itemize}
+\lstinputlisting[firstline=54, lastline=62]{objenumer.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Chaînes: opérateur \texttt{in}}
+  L'opérateur à valeur booléenne \texttt{in} permet de savoir si une chaîne est dans une chaîne.
+  \lstinputlisting[firstline=65, lastline=67]{objenumer.py}
+  Ce type d'algorithme  est un attendu du programme. (algorithmes usuels)
+  
+  Si le deuxième argument de l'opérateur n'est pas du type itérable, on obtient une erreur.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Listes: constructeurs, concaténation}
+  En plus du constructeur littéral avec crochets et virgules
+  \begin{itemize}
+    \item fonction \texttt{range} directement (P2) ou avec \texttt{list} (P3)
+    \item syntaxe de boucle d'itération à l'intérieur de crochets:
+      \begin{center}
+        \texttt{[i**2 for i in range(5)]}
+      \end{center}
+    \item concaténer deux listes avec +
+    \item concaténer une liste avec elle même un nombre entier de fois avec *.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Listes de listes}
+  On peut emboîter les listes :
+  \begin{itemize}
+    \item matrice = liste de ses lignes
+    \item matrice identité: matrice nulle modifiée en tirant parti du caractère mutable.
+  \end{itemize}
+  \lstinputlisting[firstline=74, lastline=79]{objenumer.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Listes de listes: pièges des références}
+  \lstinputlisting[firstline=81, lastline=86]{objenumer.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Listes: fonctions et méthodes}
+  \begin{itemize}
+    \item Instruction : \texttt{del} non spécifiques aux listes. Détruit le nom.
+    \item Fonctions : \texttt{len} pour tous les objets énumérables.
+    \item Méthodes : \texttt{append}, \texttt{pop},   \texttt{extend}, \texttt{insert}, \texttt{remove}, \texttt{index}, \texttt{count}, \texttt{sort}, \texttt{reverse}
+  \end{itemize}
+  méthode = fonction spécifique à une classe\newline
+  appelée en plaçant son nom avec un point après le nom de l'objet. Ne pas oublier les parenthèses pour les éventuels paramètres.
+\end{frame}
+
+\end{document}

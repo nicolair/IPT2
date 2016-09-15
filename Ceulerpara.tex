@@ -1,0 +1,41 @@
+\begin{enumerate}
+  \item Pour le schéma d'Euler usuel, les relations permettant de calculer les $v_i$ sont
+\begin{displaymath}
+\forall i\in \llbracket 0, n-1 \rrbracket,\; v_{i+1} = v_i + (g - Kv_i^2)h  
+\end{displaymath}
+
+  \item Une implémentation de la fonction \texttt{vpara} est donnée au dessous. 
+\lstinputlisting[firstline=10, lastline=19]{Ceulerpara.py}
+
+  \item Le code proposé permet d'afficher le graphe des vitesses calculées par la méthode d'Euler en fonction du temps pour des vitesses initiales de $0.$, $10.$, $20.$, $30.$ (dans les unités usuelles). Sur le graphique fourni, on constate que ces vitesses semblent converger vers une vitesse limite qui est indépendante de la vitesse initiale.
+  
+  \item On peut décomposer en éléments simples:
+\begin{displaymath}
+  \frac{1}{g - Kv^2} = \frac{\frac{1}{2\sqrt{g}}}{\sqrt{g} - \sqrt{K}v} + \frac{\frac{1}{2\sqrt{g}}}{\sqrt{g} + \sqrt{K}v}
+\end{displaymath}
+On en déduit qu'une primitive de $t\mapsto \frac{1}{g - Kv^2}$ est
+\begin{displaymath}
+  \frac{1}{2\sqrt{Kg}}\left( -\ln|\sqrt{g} - \sqrt{K}v| + \ln|\sqrt{g} + \sqrt{K}v|\right) 
+  = \frac{1}{2\sqrt{Kg}} \ln \left| \frac{\sqrt{g} + \sqrt{K}v}{\sqrt{g} - \sqrt{K}v}\right|
+\end{displaymath}
+En intégrant entre $t_0 = 0$ et $t$, on obtient
+\begin{displaymath}
+ \frac{1}{2\sqrt{Kg}}\ln \left| \frac{(\sqrt{g} + \sqrt{K}v)(\sqrt{g} - \sqrt{K}v_0)}{(\sqrt{g} - \sqrt{K}v)(\sqrt{g} + \sqrt{K}v_0)}\right| = t
+\end{displaymath}
+En posant 
+\begin{displaymath}
+  M = 2\sqrt{Kg},\hspace{1cm} A = \left|\frac{\sqrt{g} + \sqrt{K}v_0}{\sqrt{g} - \sqrt{K}v_0}\right|
+\end{displaymath}
+on en tire
+\begin{displaymath}
+\left|\frac{\sqrt{g} + \sqrt{K}v}{\sqrt{g} - \sqrt{K}v}\right|
+= Ae^{Mt}
+\end{displaymath}
+Comme cette expression diverge vers $+\infty$ en $+\infty$, on en déduit que $\sqrt{g} - \sqrt{K}v$ converge vers $0$. Ce calcul prouve l'existence d'une vitesse limite égale à $\sqrt{\frac{g}{K}}$.\newline
+Remarque.\newline
+Si on \emph{admet} l'existence d'une vitesse limite et la convergence vers $0$ de l'accélération, on obtient facilement l'expression de la vitesse limite à partir de l'équation différentielle:
+\begin{displaymath}
+  v'(t) = g - Kv(t) \rightarrow 0 \Rightarrow v(t)\rightarrow \sqrt{\frac{g}{K}}
+\end{displaymath}
+
+\end{enumerate}

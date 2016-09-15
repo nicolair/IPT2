@@ -1,0 +1,84 @@
+\input{ipt_beamer.tex}
+
+\begin{document}
+
+\begin{frame}
+  \frametitle{Morceau de code}
+  Que fait ce morceau de code ?
+\lstinputlisting[firstline=1, lastline=8]{exporap.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Développement binaire d'un entier}
+\begin{itemize}
+  \item Il met en \oe{}uvre l'algorithme de calcul du développement binaire d'un nombre.
+  \item Il affiche une chaine de caractère présentant la décomposition en base $2$ du nombre désigné par \texttt{nini}.
+\end{itemize}
+En exécutant le code, le mot \texttt{11001} s'affiche ce qui traduit
+\begin{displaymath}
+ 25 =  1\times 2^4 + 1\times 2^3 + 0\times 2^2 + 0\times 2^1 + 1\times 2^0  
+\end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Variante}
+Que fait ce code ?
+\lstinputlisting[firstline=11, lastline=17]{exporap.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Place des bits égaux à 1}
+Il affiche seulement les exposants du développement pour lesquels le coefficient est $1$ : soit $0$, $3$, $4$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Autre variante}
+\lstinputlisting[firstline=20, lastline=27]{exporap.py}  
+\begin{itemize}
+  \item Que désigne le nom \texttt{p} lors du déroulement de l'exécution?
+  \item Montrer que la valeur de \texttt{x} affichée à la fin est $7^{250}$.
+  \item Modifier le code précédent en introduisant un compteur \texttt{c} permettant de connaître et d'afficher le nombre de multiplications réellement exécutées.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Puissances de $a$}
+\begin{itemize}
+  \item Le troisième bloc dérive toujours de l'algorithme de numération avec la variante du second bloc.
+  \item Le nom \texttt{a} désigne toujours le même nombre (ici $7$).
+  \item Le nom \texttt{p} est initialisé à $a$ . Il est à chaque fois élevé au carré. La suite de ses valeurs est donc
+\begin{displaymath}
+ a=a^{1}=a^{2^{0}}, a^2=a^{2^{1}}, a^4=a^{2^{2}}, \cdots , a^{2^{k}}
+\end{displaymath}
+car 
+\begin{displaymath}
+ a^{2^{k-1}}a^{2^{k-1}}= a^{2^{k-1} + 2^{k-1}}=a^{2^{k}}
+\end{displaymath}
+\end{itemize}
+\texttt{p} désigne les puissances de $a$ avec des exposants qui sont les puissances de $2$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Calcul de $7^{250}$}
+Considérons la décomposition binaire de l'exposant $n$
+\begin{eqnarray*}
+ n &=& c_0 + c_1 2^1 + c_2 2^2+ \cdots +c_m 2^m \text{ avec les } c_k\in\{0,1\}\\
+ a^n &=& a^{c_0}a^{c_1 2^1} \cdots a^{c_m 2^m} \\
+ a^n &=& a^{2^{i_1}} a^{2^{i_2}} ...
+\end{eqnarray*}
+où les $i_1, i_2, \cdots$ sont les exposants pour lesquels les coefficients de la décomposition sont égaux à $1$.
+
+Le code :\begin{itemize}
+  \item calcule toutes les puissances d'exposant une puissance de $2$,
+  \item les multiplie quand il faut à une variable \texttt{x} initialisée à $1$.
+\end{itemize}
+\`A la fin, le nom \texttt{x} désigne donc bien $a^n$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exponentiation rapide}
+\lstinputlisting[firstline=31, lastline=38]{exporap.py}  
+Il suffit de 15 multiplications pour calculer $7^{250}$.
+\end{frame}
+
+\end{document}

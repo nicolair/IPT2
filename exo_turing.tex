@@ -1,0 +1,13 @@
+Une machine de Turing à 6 états s1, s2, s3, s4, s5 et ! représentant l'arrêt avec un alphabet 0, 1 est donnée par le tableau suivant
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|l|l|l|} \hline
+   & 0  & 1     \\ \hline
+s1 & !      & 0 D s2  \\ \hline
+s2 & 0 D s3 & 1 D s2  \\ \hline
+s3 & 1 G s4 & 1 D s3  \\ \hline
+s4 & 0 G s5 & 1 G s4  \\ \hline
+s5 & 1 D s1 & 1 G s5  \\ \hline
+\end{tabular}
+\end{center}
+Elle démarre avec le ruban ... 0 0 1 1 0 0 ... , la tête de lecture placée sur le 1 le plus à gauche et dans l'état s1. Quel est le ruban après l'arrêt de la machine ? Avec quels types de ruban peut-on généraliser? \`A quoi sert une telle machine?

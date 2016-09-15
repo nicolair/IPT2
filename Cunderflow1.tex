@@ -1,0 +1,78 @@
+\begin{enumerate}
+  \item Division euclidienne : $136 = 10 \times 13 + 6$ donc $\frac{136}{13} = 10 + \frac{6}{13}$ avec $10 = 2^3 + 2^1$.\newline
+Algorithme \og les grands d'abord\fg
+\begin{multline*}
+\frac{6}{13}: 0. ;\hspace{0.5cm} \frac{12}{13}: 0.0 ;\hspace{0.5cm} \frac{11}{13}: 0.01 ;\hspace{0.5cm} \frac{9}{13}: 0.011 ;\hspace{0.5cm} \frac{5}{13}: 0.0111;\\
+\frac{10}{13}: 0.01110 ;\hspace{0.5cm} \frac{7}{13}: 0.011101 ;\hspace{0.5cm}\frac{1}{13}: 0.0111011 ;\hspace{0.5cm}\frac{2}{13}: 0.01110110 ;\\
+\frac{4}{13}: 0.011101100 ;\hspace{0.5cm}\frac{8}{13}: 0.0111011000;\hspace{0.5cm} \frac{3}{13}: 0.01110110001;\\
+\frac{6}{13}: 0.011101100010;\hspace{0.5cm} \cdots  \text{ périodicité }
+\end{multline*}
+La décomposition cherchée est $ 1010.01110110001\,01110110001\, \cdots$.
+
+  \item On présente les résultats dans un tableau. Les décompositions sont obtenues pour le premier et le troisième nombre à partir des puissance de $2$ fournies
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|c|c|c|c|} \hline
+nombre          & décomposition             & exposant & mantisse                 \\ \hline
+$257$           & $2^8 + 2^0$               & $8$      & $1.000000010\cdots0$     \\ \hline
+$\frac{1}{31}$  & $2^{-5} + 2^{-10}+\cdots$ & $-5$     & $1.00001\,00001\,\cdots$ \\ \hline
+$512.001953125$ & $2^9 + 2^{-9}$            & $9$      & $1. \underset{17 \text{ zéros}}{\underbrace{0\cdots0}} 10\cdots 0$\\ \hline
+\end{tabular}
+\end{center}
+Pour la fraction:
+\begin{displaymath}
+  \frac{1}{31} = \frac{1}{2^5 - 1} = \frac{2^{-5}}{1-2^{-5}} = 2^{-5}\left(1 + 2^{-5} + 2^{-10} + 2^{-15} + \cdots  \right) 
+\end{displaymath}
+
+  \item La boucle permet de calculer les valeurs de suites définies par récurrence. Les noms \texttt{x} et \texttt{xx} désignent les valeurs de la suite définie par
+\begin{displaymath}
+x_0 = 2, \; x_1 = 2.5,\; x_{n+2} = \frac{5}{2} x_{n+1} - x_n   
+\end{displaymath}
+Le nom \texttt{y} désigne les valeurs de la suites géométrique $y_n = 2^n$.\newline
+On peut remarquer que lors de l'évaluation du test : \texttt{xx} désigne $x_{i+1}$ et \texttt{y} désigne $2^{i+1}$.\newline
+Les données sont initialisées comme des nombres en virgule flottante.\newline
+L'étude mathématique de la suite des $x_n$ conduit à
+\begin{displaymath}
+  \forall n \in \N,\; x_n = 2^{n} - 2^{-n}
+\end{displaymath}
+Mathématiquement, la condition $x^{i+1} \neq 2^{i+1}$ sera toujours vérifiée. Ce n'est pas le cas numériquement. Un erreur \og d'underflow\fg~ va se produire lorsque la mantisse du nombre normalisé ne peut plus représenter (sur 52 bits) la puissance négative.
+\begin{displaymath}
+  2^{i+1} + 2^{-i-1} = 2^{i+1}\left( 1 + 2^{-2i-2}\right) 
+\end{displaymath}
+Dès que $2i+2>52$ c'est à dire pour $i=26$, on aura \texttt{xx == y} et le programme s'achevera en affichant 26.
+\end{enumerate}
+On reproduit les affichages produits par l'exécution du code
+\begin{figure}[htp]
+  \centering
+\begin{verbatim}
+(4.25, 4.0, 0.25)
+(8.125, 8.0, 0.125)
+(16.0625, 16.0, 0.0625)
+(32.03125, 32.0, 0.03125)
+(64.015625, 64.0, 0.015625)
+(128.0078125, 128.0, 0.0078125)
+(256.00390625, 256.0, 0.00390625)
+(512.001953125, 512.0, 0.001953125)
+(1024.0009765625, 1024.0, 0.0009765625)
+(2048.00048828125, 2048.0, 0.00048828125)
+(4096.000244140625, 4096.0, 0.000244140625)
+(8192.000122070312, 8192.0, 0.0001220703125)
+(16384.000061035156, 16384.0, 6.103515625e-05)
+(32768.00003051758, 32768.0, 3.0517578125e-05)
+(65536.00001525879, 65536.0, 1.52587890625e-05)
+(131072.0000076294, 131072.0, 7.62939453125e-06)
+(262144.0000038147, 262144.0, 3.814697265625e-06)
+(524288.0000019073, 524288.0, 1.9073486328125e-06)
+(1048576.0000009537, 1048576.0, 9.5367431640625e-07)
+(2097152.000000477, 2097152.0, 4.76837158203125e-07)
+(4194304.000000238, 4194304.0, 2.384185791015625e-07)
+(8388608.00000012, 8388608.0, 1.1920928955078125e-07)
+(16777216.00000006, 16777216.0, 5.960464477539063e-08)
+(33554432.00000003, 33554432.0, 2.9802322387695312e-08)
+(67108864.00000001, 67108864.0, 1.4901161193847656e-08)
+(134217728.0, 134217728.0, 0.0)
+26
+\end{verbatim}
+\caption{Exécution et terminaison du code encadré en IV 3.}
+\end{figure}
+

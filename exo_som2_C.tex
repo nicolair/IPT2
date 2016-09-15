@@ -1,0 +1,41 @@
+\begin{algorithm}
+  $i\leftarrow 0$\;
+  $j\leftarrow n-1$\;
+  \Tq{ $i \leq j$ }{
+    \uSi{$L[i] + L[j] < x$}{
+      $i \leftarrow i+1$ \;
+    }
+    \SinonSi{$L[i] + L[j] > x$}{
+      $j \leftarrow j-1$ \;
+    }
+    \Sinon{
+       sortir de la boucle et renvoyer vrai\;
+    }
+  }
+   renvoyer faux\;
+  \caption{$x$ est-il somme de deux valeurs de $L$?}
+  \label{exo_som2_C_1}
+\end{algorithm}
+
+\begin{enumerate}
+  \item L'algorithme \ref{exo_som2_C_1} est complété pour résoudre le problème. L'énoncé ne le précise pas, les deux indices des valeurs de $L$ dont la somme doit valoir $x$ peuvent être égaux. Si on souhaite qu'ils soient distincts, il faut remplacer l'inégalité stricte de la condition d'exécution de la boucle "tant que" par une inégalité large.
+\item Implémentation de l'algorithme dans une fonction:
+\begin{verbatim}
+def EstSomme(L,x):
+    n = len(L)
+    i = 0
+    j = n-1
+    while i <= j:
+        if L[i] + L[j] < x:
+            i += 1
+        elif L[i] + L[j] > x:
+            j -= 1
+        else:
+            return True
+    return False
+    
+L = [1,2,4,6,8,9,11,15,18,20,22]
+print(EstSomme(L,21))
+\end{verbatim}
+
+\end{enumerate}

@@ -1,0 +1,32 @@
+%<dscrpt>Algorithme de Kronecker.</dscrpt>
+% <rel_id_type_rel>23</rel_id_type_rel> ``porte sur''
+% <rel_id_elt_enfant>6470</rel_id_elt_enfant> ``Calc formel''
+Ce TP utilise des polynômes d'interpolation de Lagrange, sa solution nécéssite une fonction permettant d'en générer.\\
+L'\emph{algorithme de Kronecker}\footnote{d'après \emph{Polynomials}, V.V. Prasolov (Springer)} permet de factoriser dans $\Z[X]$ un polynôme $P$ à coefficients entiers.\\
+Il repose sur l'essai exhaustif d'une famille de polynômes d'interpolation formée à partir des diviseurs des valeurs de $P$ en des points entiers donnés; par exemple $0,1,-1,2,-2,\cdots$. Cet algorithme est simple mais très coûteux.\newline
+Supposons $Q$ et $R$ dans $\Z[X]$ et vérifiant $P=QR$. Pour tout $x$ entier, la relation $\widetilde{P}(x)=\widetilde{Q(x)}\widetilde{R(x)}$ est alors une relation de divisibilité dans $\Z$.\\
+Supposons par exemple que $\deg Q=1$. Alors $\widetilde{Q}(0)$ est un diviseur de $\widetilde{P}(0)$ et $\widetilde{Q}(1)$ est un diviseur de $\widetilde{P}(1)$. Il faut supposer évidemment que $\widetilde{P}(0)$ et $\widetilde{P}(1)$ sont non nuls. Mais s'ils sont nuls il y a des diviseurs évidents. Comme l'ensemble des diviseurs d'un entier est fini, le diviseur $Q$ considéré est dans un ensemble \emph{fini} de polynomes d'interpolation basés sur $0$ et $1$ et de valeurs tous les couples de diviseurs possibles. On peut tester systématiquement tous les polynômes d'interpolation formés avec ces diviseurs.\\
+Pour chercher un diviseur de degré $2$, on considère les diviseurs de $\widetilde{P}(-1)$, $\widetilde{P}(0)$ et $\widetilde{P}(1)$ et ainsi de suite.\\
+On utilisera les modules de calcul formel \verb|sympy.polys|, \verb|sympy.polys.polyfunc| ainsi que \verb|sympy.abc|. En particuler,
+\begin{verbatim}
+from sympy.abc import X
+\end{verbatim}
+permet de définir un objet \verb|X| qui se comporte comme le polynôme $X$ mathématique.
+\begin{enumerate}
+\item Ici, \verb|n| désigne un entier naturel $n$ et \verb|U| , \verb|V| deux listes de $n+1$ nombres indexés de $0$ à $n$. Les $U_i$ sont deux à deux distincts.\newline
+Former une procédure dont l'appel \verb|interpoLag(n,U,V)| renvoie un polynôme $L$ de degré $n$ en $X$ développé et rangé suivant les puissance de $X$ tel que $L(U_i)=V_i$ pour $i$ entre $0$ et $n$. Ce polynôme est donné par la formule
+\begin{displaymath}
+ L=\sum_{i=0}^{n}V_i\prod_{j\in\{0,1,\cdots,n\}\setminus\{i\}}\frac{X-U_j}{U_i-U_j}
+\end{displaymath}
+
+ \item Former une procedure \verb|ldiv(n)| qui renvoie la liste des diviseurs (y compris négatifs) d'un entier désigné par \verb|n|. Utiliser \verb|%| qui renvoie le reste de la division entière d'un nombre par un autre. Il y a divisibilité lorsque ce reste est nul. Bien veiller à ce que la procédure fonctionne pour des valeurs négatives du paramètre.
+\item Former une procédure \verb|divKron1(P)| qui renvoie un polynôme de degré 1 à coefficients entiers divisant $P$ s'il en existe un et $0$ s'il n'en existe pas. 
+\item Former des procédures \verb|divKron2(P)| et \verb|divKron3(P)| qui renvoient respectivement un polynôme de degré 2 ou de degré $3$ à coefficients entiers divisant $P$ s'il en existe un et $0$ s'il n'en existe pas. 
+
+\item Factoriser en polynômes irréductibles de $\Z[X]$ le polynôme $P$ suivant :
+\begin{multline*}
+ 15X^9+49X^8-265X^7-620X^6+706X^5+834X^4+6719X^3\\-11483X^2-1665X+5950
+\end{multline*}
+Vérifier avec un \verb|expand| ou la fonction Maple \verb|factor|.
+\end{enumerate}
+

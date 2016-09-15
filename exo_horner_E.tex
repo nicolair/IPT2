@@ -1,0 +1,17 @@
+\begin{algorithm}
+  $A\leftarrow$ liste de $n+1$ nombres indexée à partir de $0$.\;
+  \Comment{on note $a_i$ le nombre désigné par $A[i]$.}
+  $y\leftarrow A[n]$\;
+  $i\leftarrow n$\;
+  \Tq{i $\geq$ 1}{
+    $i \leftarrow i-1$\;
+    $y\leftarrow A[i] + x * y$\;
+  }
+  \caption{Méthode de Hörner}
+  \label{exo_horner_E_1}
+\end{algorithm}
+Pour la boucle de l'algorithme \ref{exo_horner_E_1}, former un variant et montrer que 
+\begin{displaymath}
+  \Phi = \left( y == a_i + a_{i+1}x+\cdots +a_nx^{n-i} \right) 
+\end{displaymath}
+est un invariant de boucle. Que désigne $y$ à la fin ?

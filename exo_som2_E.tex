@@ -1,0 +1,26 @@
+\begin{algorithm}
+  $i\leftarrow 0$\;
+  $j\leftarrow n-1$\;
+  \Tq{ $?$ }{
+    \uSi{$L[i] + L[j] < x$}{
+      $?$ \;
+    }
+    \SinonSi{$L[i] + L[j] > x$}{
+      $?$ \;
+    }
+    \Sinon{
+       ?\;
+    }
+  }
+   ?\;
+  \caption{$x$ est-il somme de deux valeurs de $L$?}
+  \label{exo_som2_E_1}
+\end{algorithm}
+
+On se donne un nombre et une liste \emph{croissante} de $n$ nombres. On veut savoir si le nombre donné est la somme de deux valeurs de la liste.
+\begin{enumerate}
+  \item Compléter le pseudo-code proposé dans l'algorithme \ref{exo_som2_E_1} pour qu'il réponde au problème posé. Le nombre donné est désigné par $x$ et la liste par $L$. Elle est indexée de $0$ à $n-1$.
+  \item Implémenter en Python une fonction nommée \verb|EstSomme| prenant deux paramètres $L$ (désignant la liste croissante) et $x$ et renvoyant une valeur booléenne.  
+\end{enumerate}
+
+

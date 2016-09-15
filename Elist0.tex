@@ -1,0 +1,19 @@
+\begin{enumerate}
+  \item Calcul des coefficients du binôme avec des listes à partir de la définition par le triangle de Pascal.\newline
+On se donne un entier naturel \texttt{nmax}. On doit fabriquer une liste de listes nommée \texttt{CoeffBin}. Pour chaque $n$ entre 0 et la valeur de \texttt{nmax}, la liste \texttt{CoeffBin[n]} doit contenir les $n+1$ coefficients du binôme $\binom{n}{k}$ avec $k\in \llbracket 0,n\rrbracket$.
+
+ \item Qu'affiche le code suivant ?
+\begin{verbatim}
+n = 6
+p = 4
+num = 1
+den = 1
+for i in range(p):
+    num *= n - i
+    den *= p - i
+print(num // den)\end{verbatim}
+Pourquoi utiliser un double slash plutôt qu'un simple?
+
+\item Former un code qui retourne une liste donnée. Vous devrez utiliser une boucle \texttt{while  i < j} avec deux indices \texttt{i} (à incrémenter) et \texttt{j} (à décrémenter).  La même méthode peut-elle être utilisée avec une chaîne de caractères? Coder le retournement d'une chaîne de caractères.\newline
+Les listes possèdent une méthode \texttt{reverse} qui réalise ce retournement; la tester.
+ \end{enumerate}

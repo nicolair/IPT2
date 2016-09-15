@@ -1,0 +1,357 @@
+\input{ipt.tex}
+%En tete et pied de page
+\lhead{Cours IPT}
+\chead{Résolution numérique de systèmes d'équations linéaires}
+\begin{document}
+La méthode du pivot de Gauss consiste à transformer un système d'équations linéaires (sans changer l'ensemble des solutions) en un système triangulaire puis à résoudre\footnote{\og résoudre\fg ~ un système d'équations c'est trouver une description paramétrique de l'ensemble de ses solutions.} ce système triangulaire (phase de remontée).\newline
+Le programme d'informatique de la classe se limite aux systèmes linéaires inversibles (ou de Cramer). Dans de tels systèmes, le nombre d'équations est égal au nombre d'inconnues (notons le $p$) et le système admet une unique solution (qui est un $p$-uplet). Les cas plus généraux sont présentés dans le \href{http://back.maquisdoc.net/data/cours_nicolair/C2234.pdf}{cours de maths}.
+ 
+\section{Méthode du pivot de Gauss}
+\subsection{Opérations élémentaires}
+\index{opérations élémentaires} Les \emph{opérations élémentaires} transforment un système de $p$ équations à $q$ inconnues. Il s'agit exclusivement des opérations suivantes.
+\begin{itemize}
+ \item Permuter deux équations.
+ \item Pour $i$ et $i'$ entre $1$ et $p$ et $\lambda$ scalaire quelconque: ajouter l'équation $i'$ multipliée par $\lambda$ à la l'équation $i$. Bien noter que seule l'équation $i$ est modifiée.
+ \item Multiplier une équation par un scalaire $\lambda$ \emph{non nul}.
+\end{itemize}
+Les opérations élémentaires sont des équivalences; c'est à dire que le système obtenu par une transformation élémentaire a le même ensemble de solutions que le système de départ. En termes plus algorithmiques, l'ensemble des solutions est un invariant pour toute succession de transformations élémentaires.\newline
+Un système de $p$ équations à $q$ inconnues $x_1,\cdots x_q$
+\begin{displaymath}
+\left\lbrace 
+\begin{aligned}
+  a_{1 1}x_1 + a_{1 2}x_2 + \cdots + a_{1 q}x_q &= y_1\\
+  \vdots &= \vdots \\
+  a_{p 1}x_1 + a_{p 2}x_2 + \cdots + a_{p q}x_q &= y_p
+\end{aligned}
+\right. 
+\end{displaymath}
+se traduit par une équation matricielle $A X =Y$ avec 
+\begin{displaymath}
+A = 
+\begin{pmatrix}
+  a_{1 1} & a_{1 2} & \cdots & a_{1 q}\\
+  \vdots  &         &        & \vdots \\
+  a_{p 1} & a_{p 2} & \cdots & a_{p q}
+\end{pmatrix},
+\;
+X = 
+\begin{pmatrix}
+  x_1 \\ x_2 \\ \vdots \\ x_q
+\end{pmatrix},
+\;
+Y = 
+\begin{pmatrix}
+  y_1 \\ y_2 \\ \vdots \\ y_p
+\end{pmatrix}
+\end{displaymath}
+Pour un système de Cramer, $p=q$ et la matrice $A$ est inversible.
+\subsection{Méthode de Gauss}
+La méthode de Gauss est une succession d'opérations élémentaires qui transforme le système initial en un système triangulaire. Son pseudo-code est présentée comme algorithme \ref{resolsystlin_1}.
+\begin{algorithm}[h]
+  \Donnees{\;
+    $A$ tableau à deux entrées entre $1$ et $p$ représentant la matrice du système\;
+    $Y$ tableau indexé de $1$ à $p$ représentant le second membre\;
+    On suppose que le système est de Cramer
+  }
+  \Comment{initialisation}
+  $i\leftarrow 1$ : compteur\;
+  \Tq{ $i \leq p$}{
+    Chercher un indice-pivot $ip$ dans la fin de la colonne $i$\;
+    Permuter les lignes $ip$ et $i$ de $A$ et $Y$\;
+    Nettoyer les lignes $i+1$ à $p$ avec la ligne $i$\;
+    Incrémenter $i$
+  }
+  \caption{Méthode de Gauss}
+  \label{resolsystlin_1}
+\end{algorithm}
+
+\subsection{Chercher un indice-pivot}
+Parmi les valeurs $a_{i i}, a_{i+1 i}, \cdots a_{p i}$, en existe-t-il une non nulle? Si oui, on en choisit une (on l'appelle le \emph{pivot}) et on renvoie son indice comme \emph{indice-pivot} $ip$.
+\begin{rems}
+  \item Attention, tester l'égalité entre deux décimaux normalisés (ou vérifier si un décimal normalisé est non nul) est toujours une mauvaise pratique. On ne peut donc pas, pour la recherche d'un indice-pivot, se contenter de parcourir la fin de la colonne en s'arrêtant dès qu'un terme non nul est trouvé. Pour une résolution numérique, on choisira l'indice qui correspond à la plus grande valeur absolue des termes.
+  \item Dans le cas d'un calcul formel, par exemple si tous les coefficients sont rationnels, on choisira le plus \emph{simple} des coefficients. Cette simplicité est à préciser, par exemple pour des calculs sans machine les valeurs $1$ ou $-1$ seront choisis.
+  \item Dans le cas d'un système de Cramer, il existe un tel indice (voir le cours de maths). Si on implémente un algorithme qui peut s'exécuter pour un système qui n'est pas de Cramer, il convient de l'arrêter dans le cas où la recherche d'un indice-pivot échoue c'est à dire lorsque $a_{i i} = a_{i+1 i} = \cdots = \cdots a_{p i}=0$.  
+\end{rems}
+
+\subsection{Nettoyer les lignes}
+Le pseudo-code de cette partie de la méthode est présenté dans l'algorithme \ref{resolsystlin_2}. On multiplie la ligne $i$ par un coefficient tel que, après soustraction à la ligne $j$, le coefficient d'indice $i$ de la ligne $j$ soit nul.
+
+\begin{algorithm}[h]
+  \Donnees{\;
+    $A$ tableau à deux entrées entre $1$ et $p$ représentant la matrice du système\;
+    $Y$ tableau indexé de $1$ à $p$ représentant le second membre\;
+    $i$ compteur
+  }
+  \Comment{initialisation}
+  $j\leftarrow i+1$ : compteur\;
+  $\lambda$ : un coefficient \;
+  \Tq{ $j \leq p$}{
+    $\lambda \leftarrow \frac{a_{j i}}{a_{i i}}$\;
+    $L_j(A)\leftarrow L_j(A)-\lambda L_i(A)$\;
+    $y_j\leftarrow y_j-\lambda y_i$\;
+    Incrémenter $j$\;
+  }
+  \caption{Nettoyer les lignes}
+  \label{resolsystlin_2}
+\end{algorithm}
+
+Noter l'intervention de la variable $\lambda$ qui permet d'éviter l'erreur classique consistant à écrire, pour le nettoyage de la ligne $j$,
+
+\begin{algorithm}[h]
+  \Pour{ $numcol$ entre $1$ et $p$}{
+    $A[j, numcol] \leftarrow A[j, numcol] - \frac{A[j, i]}{A[i i]}A[i, numcol]$\;
+  }
+\end{algorithm}
+
+à la place de
+\begin{align*}
+    \lambda &\leftarrow \frac{a_{j i}}{a_{i i}}\\
+    L_j(A)  &\leftarrow L_j(A)-\lambda L_i(A)  
+\end{align*}
+En effet, lorsque $numcol$ prend la valeur $i$, la valeur de $A[j,i]$ est modifiée et le coefficient n'est plus le même pour la fin de la ligne.\newline
+Une propriété invariante par la séquence de nettoyage:
+\begin{displaymath}
+  \forall j \text{ tq } 0\leq j < i, \forall k\text{ tq } j<k\leq p, \; a_{k,j} = 0
+\end{displaymath}
+Pour $i=1$ la propriété est vraie car elle est vide.\newline
+Le nettoyage assure que cette propriété est vraie pour la valeur suivante de $i$.\newline
+\`A la fin, $i=p$. Le système est triangulaire supérieur avec des termes \emph{non nuls} sur la diagonale (les pivots).
+
+\subsection{Phase de remontée}
+\begin{algorithm}[h]
+  \Donnees{\;
+    $A$ tableau triangulaire supérieur à deux entrées entre $1$ et $p$\;
+    $Y$ tableau indexé de $1$ à $p$ représentant le second membre\;
+    $i$ compteur
+  }
+  \Comment{initialisation}
+  $i\leftarrow p$ : compteur\;
+  $X$ : tableau indexé de $1$ à $p$ qui contiendra la solution.\;
+  \Tq{ $i \geq 1$}{
+    $X[i] \leftarrow \frac{Y[i] -\sum_{k=i+1}^{p}A[i][k]X[k]}{A[i][i]} $\;
+    Décrémenter $i$\;
+  }
+  \caption{Phase de remontée}
+  \label{resolsystlin_3}
+\end{algorithm}
+
+
+\section{Complexités}
+\subsection{Résolution et inversion}
+La résolution d'un système de Cramer de $p$ équations par la méthode du pivot est de complexité $O(p^3)$.\newline
+Ceci se démontre en combinant les résultats des sections suivantes. On peut en déduire la complexité d'un algorithme d'inversion.\newline
+L'inversion d'une matrice inversible à $p$ lignes revient à la résolution de $p$ systèmes de Cramer: la solution du système attaché au second membre élémentaire
+\begin{displaymath}
+\begin{pmatrix}
+0 \\ \vdots \\ 1 \\ \vdots \\0   
+ \end{pmatrix}
+\end{displaymath}
+(avec le $1$ dans la ligne $k$) donnant la colonne $k$ de la matrice inverse. La complexité de l'inversion est donc en $O(p^4)$. Pour résoudre un système, il ne faut donc pas commencer par inverser la matrice.
+\subsection{Produits matriciels}
+Le calcul du produit d'une matrice colonne ($p$ lignes) par une matrice ligne ($p$ colonnes) nécessite $p$ multiplications et $p-1$ additions. Il est donc de complexité $O(p)$.\newline
+Pour calculer le produit d'une matrice carrée par une matrice colonne, il faut effectuer $p$ calculs du type précédent, complexité en $O(p^2)$.\newline
+Pour calculer le produit de deux matrices carrées, il faut effectuer $p^2$ fois des produits ligne $\times$ colonne, la complexité est en $O(p^3)$.
+\subsection{Système triangulaire équivalent}
+La complexité de la recherche d'un indice-pivot est en $O(p)$.\newline
+La complexité de la permutation de deux lignes est en $O(p)$.\newline
+La complexité du nettoyage des lignes $i+1$ à $p$ est en $O((p-i)p)$\newline
+Comme il faut exécuter ces opérations pour $i$ de $1$ à $p$, on obtient une complexité en $O(p^3)$. 
+\subsection{Phase de remontée}
+Pour le calcul de $x_p$: une addition et une division.\newline
+Pour le calcul de $x_{p-1}$: une multiplication, une addition, une division\newline
+Pour le calcul de $x_{p-2}$: deux multiplications, deux addition, une division\newline
+Pour le calcul de $x_{p-3}$: $3$ multiplications, $3$ additions, une division\newline
+En sommant, on obtient une complexité en $O(p^2)$. Il est assez remarquable que, pour une matrice triangulaire et une colonne données, la complexité de la résolution du système soit la même que celle d'une multiplication.
+
+\section{Implémentation Python}
+On choisit d'utiliser des listes de listes pour représenter les matrices. Plus précisément, chaque ligne est représentée par une liste de $p$ objets et la matrice est la liste de ces listes. Attention, en Python les listes sont indexées à partir de $0$.\newline
+Ce choix est discutable car certaines propriétés des listes ne sont pas utiles. Il serait sans doute plus efficace d'utiliser des types de données spécialement adaptés comme le type tableau (array) de la bibliothèque numpy.\newline
+Implémentation des sous-programmes.
+\lstinputlisting[firstline=8, lastline=24]{resolsystlin.py}
+Programme principal et test.\newline
+Pour un système de Cramer uniquement. Les valeurs de $A$ sont des float. La matrice $A$ doit être carrée et inversible sinon une erreur se produit à l'exécution.
+%\lstinputlisting[firstline=26, lastline=54]{resolsystlin.py}
+\begin{verbatim}
+def resol(A,Y):
+    # A et Y sont modifiés.
+    p = len(A)
+    #opérations élémentaires
+    for i in range(p):
+        iP = chercherIndPiv(A,i)
+        if iP > i:
+            permuter(A,i,iP)
+            Y[i][0] , Y[iP][0] = Y[iP][0] , Y[i][0]
+        for j in range(i+1,p):
+            coeff = -A[j][i]/A[i][i]
+            ajouter(A,j,i,coeff)
+            Y[j][0] += coeff * Y[i][0]
+    #phase de remontée
+    X = [0.]*p
+    X[p-1] = Y[p-1][0]/A[p-1][p-1]
+    i = p-2
+    while i >= 0:
+        X[i]=(Y[i][0] // coupure de présentation
+             -sum(A[i][k]*X[k] for k in range(i+1,p)))/A[i][i]
+        i -= 1
+    return X
+    
+A =[[2., 2., -3.],[-2., -1., -3.],[6.,4.,4.]]
+Y = [[2], [-5.], [16.]]
+print(resol(A,Y))
+\end{verbatim}
+
+\section{Exemple}
+En général, par cinq points distincts d'un plan passe une seule conique. L'équation de cette conique s'obtient en résolvant un système de $5$  équations linéaires à $5$ inconnues. On se propose, à titre d'exemple, d'expérimenter numériquement sur ce thème.
+\subsection{\'Equation d'une conique}
+Dans un plan muni d'un repère $\mathcal{R}$, les fonctions coordonnées sont notées $x$ et $y$. Une conique affine $\mathcal{C}$ est un ensemble de points dont l'équation est de degré $2$. Cela se traduit par : il existe des réels $a$, $b$, $c$, $d$, $e$, $f$ tels que 
+\begin{displaymath}
+  M\in \mathcal{C} \Leftrightarrow
+  ax(M)^2 +by(M)^2 + cx(M)y(M) + dx(M) + eY(M) +f = 0
+\end{displaymath}
+On remarque que si on multiplie par un réel non nul, on ne change pas l'ensemble des points $M$ vérifiant cette équation. D'autre part, $f=0$ si et seulement si l'origine $O$ du repère est dans $\mathcal{C}$.\newline
+Dans toute la suite, on ne considèrera que des coniques \emph{qui ne passent pas par} $O$. On peut donc diviser par $f$ ce qui revient à prendre $f=1$.\newline
+On se donne des points $M_1, M_2, M_3, M_4, M_5$ et on forme le système
+\begin{displaymath}
+\left\lbrace
+\begin{aligned}
+  ax(M_1)^2 +by(M_1)^2 + cx(M_1)y(M_1) + dx(M_1) + eY(M_1) = -1 \\
+  ax(M_2)^2 +by(M_2)^2 + cx(M_2)y(M_2) + dx(M_2) + eY(M_2) = -1 \\
+  ax(M_3)^2 +by(M_3)^2 + cx(M_3)y(M_3) + dx(M_3) + eY(M_3) = -1 \\
+  ax(M_4)^2 +by(M_4)^2 + cx(M_4)y(M_4) + dx(M_4) + eY(M_4) = -1 \\
+  ax(M_5)^2 +by(M_5)^2 + cx(M_5)y(M_5) + dx(M_5) + eY(M_5) = -1  
+\end{aligned}
+\right. 
+\end{displaymath}
+ aux inconnues $a$, $b$, $c$, $d$, $e$.\newline
+En général il est de Cramer et lorsque c'est le cas, une seule conique passe par les $5$ points.\newline
+Il existe des configurations dans lesquelles le système n'est pas de Cramer. Par exemple si la conique qui contient les cinq points passe par l'origine, ou si plusieurs coniques passent par les points (points alignés par exemple).
+
+\subsection{Implémentation en Python}
+On choisit aléatoirement cinq points $M_0, \cdots, M_4$ de coordonnées entre $0$ et $10$, on forme la matrice, puis le second membre et on résoud avec les procédures déjà écrites. On désigne par $E$ la solution du système.
+\begin{verbatim}
+############## génération aléatoire de 5 points
+import random as rdm
+M =   [ (rdm.random()*10 , rdm.random()*10) for i in range(5) ]
+############## formation de la matrice du système
+A = [0]*5
+for i in range(5):
+    x,y = M[i]
+    A[i] = [x**2 , y**2, x*y, x, y]
+############## second membre
+Y = [[-1.],[-1.],[-1.],[-1.],[-1.]]
+############## résolution
+E = resol(A,Y)
+\end{verbatim}
+Pour vérifier, on peut former la fonction qui permet d'écrire l'équation de la conique et évaluer aux points donnés.
+\begin{verbatim}
+def F(E,P):
+    a,b,c,d,e = E
+    x,y = P
+    return a*x*x + b*y*y + c*x*y + d*x + e*y +1
+for P in M:
+    plt.plot(P[0],P[1],'bo')
+    print(F(E,P))
+\end{verbatim}
+Les valeurs des $F(M_i)$ sont de l'ordre de $10^{-15}$ et résultent des erreurs d'arrondi.\newline
+\`A partir de l'équation, on peut former une paramétrisation rationnelle de la conique pour tracer d'autres points. Pour cela on coupe la conique par la droite $\mathcal{D}_t$ qui passe par $M_0$ et de direction le vecteur de coordonnées $(1,t)$. Les points de cette droite sont les $P_\lambda(t)$  de coordonnées $(x(M_0)+\lambda, y(M_0)+\lambda t)$. On a alors
+\begin{displaymath}
+P_\lambda \in \mathcal{C} \Leftrightarrow F(P_\lambda) = 0  
+\end{displaymath}
+Pour chaque $t$ fixé, c'est une équation du second degré en $\lambda$. De plus $\lambda=0$ est solution car $M_0\in \mathcal{C}$. L'équation se ramène donc à une équation du premier degré qui se résoud facilement. Pour chaque $t$ réel et $\lambda_t$ la solution de l'équation, l'application $\Phi : t \mapsto P_{\lambda_t}(t)$ est une paramétrisation (rationnelle) de la conique.
+\begin{verbatim}
+def phi(E,P,t):
+    a,b,c,d,e = E
+    x,y = P
+    num = 2.*a*x + c*y + d +(2.*b*y + c*x + e)*t
+    den = a + (b*t + c)*t
+    l = - num/den
+    return x + l , y+t*l
+\end{verbatim}
+Pour vérifier, on calcule les $t$ qui correspondent aux points donnés $M_1,\cdots M_4$ et on trace les points de la conique entre les valeurs extrèmes de ces $t$.
+\begin{verbatim}
+import matplotlib.pyplot as plt
+plt.clf()
+for P in M:
+    plt.plot(P[0],P[1],'bo')
+    print(F(E,P))
+
+t = [(M[i+1][1] - M[0][1])/(M[i+1][0] - M[0][0]) for i in range(4)]
+tmin = min(t)
+tmax = max(t)
+
+n = 30
+p = 5
+pas = (tmax - tmin)/n
+tt = tmin - p*pas
+    P = phi(E,M[0],tt)
+    plt.plot(P[0],P[1],'ro')
+    tt += pas
+\end{verbatim}
+On voit que les points ne se recouvrent pas exactement à cause des erreurs d'arrondi.
+
+\subsection{Implémentation en Scilab}
+En Scilab, le passage des paramètres dans une procédure se fait en copiant les valeurs. L'utilisation de procédures pour permuter ou nettoyer les lignes conduirait à des copies inutiles, on travaille donc directement dans la procédure principale.
+\begin{verbatim}
+function iP = chercherIndP(A,i)
+    p = size(A,1)
+    iP = i
+    for k = (i+1):p
+        if abs(A(k,i)) > abs(A(iP,i)) then 
+            iP = k
+        end
+    end
+endfunction
+
+function X = resol(A,Y)
+    p = size(A,1)
+    for i = 1:p
+        // chercher pivot
+        iP = chercherIndP(A,i)
+        // permuter
+        if i < iP then
+            L = A(i,:)
+            A(i,:) = A(iP,:)
+            A(iP,:) = L 
+            t = Y(i,1)
+            Y(i,1) = Y(iP,1)
+            Y(iP,1) = t
+        end
+        // nettoyer
+        for j = (i+1):p
+            coeff = -A(j,i)/A(i,i)
+            A(j,:) = A(j,:) + coeff*A(i,:)
+            Y(j,1) = Y(j,1) + coeff*Y(i,1)
+        end
+    end
+    //phase de remontée
+    X = zeros(p,1)
+    X(p,1) = Y(p,1)/A(p,p)
+    i = p-1
+    while i > 0 do
+        X(i,1) = (Y(i,1) - A(i,(i+1):p)*X((i+1):p,1))/A(i,i)
+        i = i-1
+    end 
+endfunction  
+\end{verbatim}
+Noter l'utilisation des ":" pour extraire des lignes des matrices.\newline
+Noter comment la phase de remontée s'écrit avec un produit matriciel. En Scilab, il faut toujours préferer ce genre de syntaxe à l'utilisation de boucles (pour profiter de l'optimisation des opérations vectorielles).\newline
+Le calcul de la conique passant par 5 points donnés peut s'écrire sous la forme suivante.
+\begin{verbatim}
+for i = 1:5
+    x = rand(1,1)*10
+    y = rand(1,1)*10
+    M(i,1) = x
+    M(i,2) = y
+    A(i,1) = x^2
+    A(i,2) = y^2
+    A(i,3) = x*y
+    A(i,4) = x
+    A(i,5) = y
+    Y(i,1) = -1
+end
+
+E = resol(A,Y)
+disp(A*E)
+\end{verbatim}
+
+\end{document}

@@ -1,0 +1,99 @@
+\input{ipt_beamer.tex}
+
+\begin{document}
+\begin{frame}
+  \frametitle{Un objet exécutable}
+\begin{itemize}
+  \item Une fonction est un objet contenant du code qui peut être exécuté.
+  \item Pour exécuter ce code, on \emph{appelle la fonction}.
+  \item Une fonction peut être nommée.
+\end{itemize}
+Il faut bien distinguer la définition de la fonction de ses appels.
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Syntaxe de définition}
+L'indentation (noter le ":") joue un rôle capital dans la délimitation du bloc de code à inclure dans la fonction.\newline
+Noter les deux nouveaux mots réservés \texttt{def} et \texttt{return} qui sont des éléments du langage.\newline
+L'expression à droite de \texttt{return} est ce que \emph{renvoie} la fonction.\newline
+Les noms \texttt{nom1}, \texttt{nom2}, ... sont les \emph{paramètres} de la fonction.
+\begin{verbatim}
+instructionendehors de la fonction
+def nomdelafonction(nom1, nom2, ...):
+  instruction1
+  ...
+  return expression
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Factorielle}
+\begin{verbatim}
+def factorielle1(n):
+    f = 1
+    while n > 1:
+        f *= n
+        n -= 1
+    return f
+def factorielle2(n):
+    f = 1
+    while n > 1:
+        f *= n
+        n -= 1
+    print f
+\end{verbatim}
+La fonction \texttt{factorielle1} \emph{renvoie} la factorielle, alors que \texttt{factorielle2} l'\emph{affiche} seulement.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Syntaxe d'appel}
+Faire suivre le nom de la fonction de parenthèses avec des expressions pour les paramètres.
+\begin{verbatim}
+f = factorielle1(5)
+print(f + 1)
+f = factorielle2(5)
+print(f + 1)
+\end{verbatim}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Portée des noms}
+\begin{itemize}
+  \item La \emph{portée d'un nom} est la zone de code dans laquelle ce nom désigne un objet.
+  \item Le même nom peut être utilisé plusieurs fois pour désigner des objets différents dans la mesure où les portées ne se mélangent pas.
+  \item Lorsqu'un nom est référencé à un objet à l'intérieur d'une définition de fonction, sa portée se limite au bloc de code formant cette définition. On dit que la variable (nom) est \emph{locale} à la fonction.
+  \item Un nom qui est assigné à l'extérieur de la définition de la fonction et qui (sans y être assigné) figure à l'intérieur désigne le même objet à l'intérieur et à l'extérieur.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Propriétés des paramètres}
+\begin{itemize}
+  \item Les concepts de passage de paramètres par \emph{valeur} ou par \emph{référence} ne sont pas pertinents en Python.
+  \item Les paramètres indiqués lors de la définition sont toujours des variables locales.
+  \item Lors de l'appel, ils référencent les objets qu'on leur passe.
+\end{itemize}
+Exemple :
+\begin{itemize}
+  \item la définition de la fonction contient le nom \texttt{nomloc} en position \texttt{i} dans les paramètres
+  \item lors de l'appel, le nom \texttt{nomglob} est position \texttt{i}
+\end{itemize}
+Alors: une assignation est réalisée au moment de l'appel.
+
+Le nom local \texttt{nomloc} et le nom global \texttt{nomglob} désignent le même objet.\newline
+\end{frame}
+
+\begin{frame}
+  \frametitle{Modification des paramètres}
+Un objet peut-il être modifié par une fonction?
+
+oui si il est modifiable (mutable).\newline
+\begin{itemize}
+  \item Si l'objet passé est mutable, il peut être modifié à l'intérieur de la fonction et le nom extérieur pointera vers le même objet modifié.
+  \item Si l'objet passé n'est pas mutable, alors il ne pourra pas être changé et le nom extérieur pointera vers le même objet. En revanche, le nom local pourra être réassigné (à un autre objet) dans le code de la fonction. 
+
+\end{itemize}
+\end{frame}
+
+\end{document}

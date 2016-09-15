@@ -1,0 +1,160 @@
+\input{ipt_beamer.tex}
+\lstset{language=Python,frame=single}
+\begin{document}
+\begin{frame}
+  \frametitle{Résolution numérique d'équations: principes généraux}
+Toute équation à une inconnue réelle peut se mettre sous la forme
+\begin{displaymath}
+  f(x) = 0
+\end{displaymath}
+où $f$ est une fonction définie dans une partie $I$ de $\R$. Deux étapes :
+\begin{itemize}
+  \item Séparation des solutions.\newline
+Trouver des intervalles $J$ dans $I$. Chaque $J$ contient au moins une solution et $f|_J$ a de \og bonnes\fg  propriétés.
+  \item \'Evaluation numérique. \newline
+  Algorithme, avec des données spécifiques à chaque intervalle $J$, renvoyant une valeur numérique approchant une solution dans $J$ avec une erreur plus petite qu'une valeur prescrite.
+\end{itemize} 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Méthode dichotomique: propriétés à vérifier}
+\begin{itemize}
+  \item $J$ est un segment $[a,b]$.
+  \item $f$ est continue sur $J$ et $f(a)f(b)\leq 0$. 
+\end{itemize}
+Conséquences
+\begin{itemize}
+  \item Thèorème des valeurs intermédiaires: il existe une solution dans $J$.
+  \item Si $f$ strictement monotone: unique solution dans $J$. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Méthode dichotomique: correction}
+Comme les valeurs renvoyées sont des binaires normalisés, majorant de l'erreur de la forme $\frac{1}{2^p}$.
+\begin{itemize}
+  \item Fonction de terminaison.
+\begin{displaymath}
+p-k + \lceil \frac{\ln(b-a)}{\ln 2}\rceil  
+\end{displaymath}
+  \item Invariant.
+\begin{displaymath}
+  f(a)f(b)\leq 0
+\end{displaymath}
+\end{itemize}
+
+Cet invariant assure qu'il existe toujours un zéro de la fonction dans l'intervalle, chaque nombre dans le segment est une valeur approchée à $e$ près d'un zéro.
+
+Pratiquement, on renvoie une extrémité ou on peut chercher à faire un peu mieux.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Méthode dichotomique: pseudo-code}
+\begin{algorithm}[H]
+  \Donnees{\;
+    $a$ et $b$ deux float définissant l'intervalle\;
+    $f$ fonction renvoyant un float pour toute donnée float entre $a$ et $b$\;
+    $e$ float : l'erreur doit être inférieure à $e$\;
+  }
+  
+  $va\leftarrow f(a)$   $vb\leftarrow f(b)$\;
+  
+  \Tq{ $b-a > e$}{
+    $m\leftarrow  \frac{a+b}{2}$ \;
+    $vm \leftarrow f(m)$\;
+    \eSi{ $vm\, va \leq 0$}{
+      $b \leftarrow m$       $vb \leftarrow vm$ \;
+    }{
+      $a \leftarrow m$       $va \leftarrow vm$ \;
+    }
+  }
+  Renvoyer $a$\;
+  \caption{Méthode dichotomique}
+  \label{resolnumequ_1}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Méthode dichotomique: implémentation Python}
+\lstinputlisting[firstline=11, lastline=24]{resolnumequ.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Méthode dichotomique: exercice (début)}
+Modifier le code Python du paragraphe précédent pour renvoyer
+\begin{enumerate}
+  \item le milieu du segment
+  \item la meilleure des deux extrémités (celle qui a la plus petite valeur de la fonction)
+  \item une moyenne des extrémités pondérée à l'aide des valeurs de la fonction de manière à privilégier l'extrémité dont la valeur est la plus petite.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Méthode dichotomique: exercice (fin)}
+
+Pour comparer les valeurs approchées de $\sqrt{2}$, tracer sur un même graphique les courbes des erreurs pour chaque méthode en fonction du nombre d'itérations.
+
+On prendra pour valeur \og exacte\fg la valeur renvoyée par la fonction \texttt{sqrt} de la bibiothèque \texttt{math}.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Méthode de Newton: propriétés à vérifier}
+\begin{itemize}
+  \item $J$ est un segment $[a,b]$
+  \item classe $\mathcal{C}^2$
+  \item strictement croissante, convexe $f''>0$
+  \item $f(a)<0$, $f(b)>0$. 
+\end{itemize}
+On peut être amené à remplacer $f$ par $-f$ pour que la condition de croissance soit vérifiée. 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Méthode de Newton: formalisme mathématique}
+\begin{itemize}
+  \item Il existe dans $[a,b]$ une unique solution notée $c$.
+  \item Remplacer l'extrémité droite de l'intervalle par l'intersection de la tangente en ce point avec l'axe des abscisses.
+  \item Traduction par une suite définie par récurrence
+\begin{displaymath}
+  b_0 = b,\hspace{0.5cm}\forall n\in\N,\;b_{n+1} = b_n -\frac{f(b_n)}{f'(b_n)}
+\end{displaymath}
+  \item Suite strictement décroissante qui converge vers $c$.
+  \item Convergence quadratique (majoration de l'erreur)
+\begin{displaymath}
+  0< b_n -c \leq \frac{M_2}{2m_1}(b_{n-1}-b_n)^2,\hspace{0.5cm} 0< b_{n+1} -c \leq \frac{M_2}{2m_1}(c-b_n)^2
+\end{displaymath}
+avec $m_1 = \min_{[a,b]} f'>0$ et $M_2 = \max_{[a,b]}\left|f''\right|$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Méthode de Newton et point fixe}
+Remplacer un problème de recherche de zéro par un problème de recherche de \emph{point fixe}.
+\begin{displaymath}
+  \Phi(x) = x -\frac{f(x)}{f'(x)}, \hspace{1cm} f(x) = 0 \Leftrightarrow \Phi(x) = x
+\end{displaymath}
+$c$ un zéro de $f$ implique $c$ point fixe de $\Phi$ \emph{super-attractif} c'est à dire que $\Phi'(c)=0$.
+
+Ceci explique la convergence très rapide (quadratique).
+
+Le nombre de décimales exactes double à chaque étape.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Méthode de Newton: implémentation Python}
+\lstinputlisting[firstline=84, lastline=97]{resolnumequ.py}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Méthode de Newton: exercice dans le champ complexe}
+\begin{itemize}
+  \item La méthode de Newton fonctionne encore dans le champ complexe.
+  \item Exemple: fonction $z\mapsto z^3 -1$.
+  \item Convergence sauf pour un ensemble dénombrable de valeurs initiales.
+  \item Si convergence, la limite est $1$ ou $j$ ou $j^2$.
+\end{itemize}
+
+Dessiner les bassins d'attraction de ces racines en coloriant chaque point suivant la limite de la suite de Newton formée avec cette condition initiale.
+\end{frame}
+
+\end{document}

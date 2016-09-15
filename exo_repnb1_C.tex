@@ -1,0 +1,18 @@
+\begin{enumerate}
+  \item Comme $88 = 75 + 10 + 3$, la représentation en base $5$ de $88$ est $123_5$.
+  \item Chaque bit représente $0$ ou $1$. Avec la convention de l'énoncé, la somme des nombres associés aux bits correspondants de $m$ et $m'$ vaut toujours $1$. On en déduit
+ \begin{displaymath}
+   n+n' =  2^0 + 2^1+\cdots + 2^7 = (2^0 + 2^1+\cdots + 2^7)(2-1)=2^8 - 1 =255 
+ \end{displaymath}
+
+  \item Si on se place au point de vue théorique, l'expression $y-x$ est invariante. En effet, notons $y_k$ et $x_k$ les nombres désignés par $y$ et $x$ après la $k+1$-ème exécution du corps de la boucle. On a alors
+\begin{displaymath}
+\left. 
+\begin{aligned}
+x_{k+1} &= 2x_k\\ y_{k+1} &= x_{k+1} +1  
+\end{aligned}
+\right\rbrace  \Rightarrow
+y_{k+1}-x_{k+1} =  1
+\end{displaymath}
+On en déduit que ce code conduit théoriquement à une boucle infinie. En fait pratiquement il s'arrête en affichant 53 sur ma machine. Cela tient à ce que les variables désignent des nombres en virgule flottantes. Comme la machine ne connait qu'un nombre fini de ces objets et que $x$ désigne les valeurs de la suite des puissance de $2$, lorsque sa valeur dépasse le plus grand exposant autorisé par la représentation en base $2$ le calcul devient inexact, $y-x$ ne désigne plus $1.0$ et on sort de la boucle.
+\end{enumerate}

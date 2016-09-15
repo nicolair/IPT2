@@ -1,0 +1,41 @@
+Soit $a \in \N^*$. Un nombre naturel $m$ est un \emph{multiple} de $a$ si et seulement si il existe $q\in \N$ tel que $m=qa$. On se limite dans ce texte aux entiers naturels sans considérer les multiples entiers relatifs négatifs.
+
+\begin{enumerate}
+  \item Expliquer ce que renvoie l'appel \texttt{continuer(lili)} où \texttt{lili} désigne une liste et prouver la correction de cette fonction.
+\lstinputlisting[firstline=1, lastline=6]{Eppcm_1.py}
+
+\begin{algorithm}
+  \Donnees{\;
+    $A \leftarrow$ liste des $a_0, \cdots , a_{p-1}$\;
+  }
+  \Comment{initialisation}
+    $M \leftarrow$ liste des $a_0, \cdots , a_{p-1}$\;
+    $imin$ désigne un entier naturel entre 0 et $p-1$\;
+  \Tq{ continuer(M)}{
+    $imin\leftarrow $ entier tel que $M[imin]=\min\left\lbrace M[0], \cdots, M[p]\right\rbrace$\;
+    $M[imin] \leftarrow M[imin] + A[imin]$\;
+  }
+  \caption{Calcul d'un ppcm}
+  \label{ppcm_1}
+\end{algorithm}
+
+  \item Soit $p$ un nombre naturel supérieur ou égal à $2$ et $a_0, \cdots , a_{p-1}$ des nombres naturels non nuls. On considère dans cette question l'algorithme \ref{ppcm_1} qui utilise la fonction \texttt{continuer} de la première question.
+\begin{enumerate}
+  \item Justifier mathématiquement l'existence d'un entier $\mu$ appelé \emph{plus petit commun multiple} (ppcm) de $a_0, \cdots , a_{p-1}$.
+  
+  \item Reformuler avec la plus petite et la plus grande valeur de $M$ la condition \og $continuer(M) == True$\fg~ d'exécution de la boucle. Montrer que la proposition 
+   \begin{center}
+     \og toutes les valeurs de $M$ sont inférieures ou égales à $\mu$\fg
+   \end{center}
+  est un invariant de la boucle.
+  
+  \item Préciser une fonction de terminaison de la boucle. Expliquez ce qui se passe après la sortie de la boucle et prouvez ce que vous affirmez.
+\end{enumerate}
+
+  \item 
+\begin{enumerate}
+  \item Coder une fonction dont l'appel \texttt{indiceMin(M)} renvoie l'entier tel que $M[imin]=\min\left\lbrace M[0], \cdots, M[p]\right\rbrace$ lorsque \texttt{M} est une liste de $p$ entiers naturels non nuls.
+  \item Coder une fonction dont l'appel \texttt{ppcm(A)} renvoie le ppcm des valeurs de \texttt{A} lorsque \texttt{A} est une liste d'entiers naturels non nuls. 
+\end{enumerate}
+
+\end{enumerate}

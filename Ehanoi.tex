@@ -1,0 +1,78 @@
+On imagine un tas\footnote{Le terme \emph{tas} désigne en informatique une structure précise. La structure décrite ici est bien un tas particulier} de nombres avec la contrainte que, de bas en haut, les nombres doivent strictement diminuer 
+\begin{displaymath}
+\begin{bmatrix}
+1 \\ 2  \\ 5                                                                                                          
+\end{bmatrix} 
+\end{displaymath}
+On peut enlever un nombre d'un tas: mais seulement celui du haut. On peut ajouter un nombre à un tas mais uniquement en haut du tas et seulement lorsqu'il est plus petit que celui qui est déjà en haut. Dans ces conditions, si on dispose de plusieurs tas, on peut déplacer un nombre d'un tas à un autre.
+\begin{displaymath}
+\begin{bmatrix}
+2 \\ 5  \\ 7                                                                                                          
+\end{bmatrix} 
+\begin{bmatrix}
+ 3  \\ 4                                                                                                          
+\end{bmatrix} 
+\hspace{0.5cm} \longrightarrow \hspace{0.5cm}
+\begin{bmatrix}
+ 5  \\ 7                                                                                                          
+\end{bmatrix} 
+\begin{bmatrix}
+2 \\ 3  \\ 4                                                                                                          
+\end{bmatrix} 
+\end{displaymath}
+En numérotant les tas "1" et "2" de gauche à droite, l'opération précédente est effectuée par l'instruction \verb|deplacer(1,2)|.
+\begin{enumerate}
+ \item On part de trois tas dont deux sont vides et on veut déplacer les nombres pour passer d'une configuration à une autre
+ \begin{displaymath}
+\begin{bmatrix}
+1 \\ 2  \\ 3                                                                                                          
+\end{bmatrix} 
+\begin{bmatrix}
+  \\   \\                                                                                                           
+\end{bmatrix} 
+\begin{bmatrix}
+ \\   \\                                                                                                           
+\end{bmatrix} 
+  \hspace{0.5cm} \longrightarrow \hspace{0.5cm}
+\begin{bmatrix}
+  \\   \\                                                                                                           
+\end{bmatrix} 
+\begin{bmatrix}
+ \\   \\                                                                                                           
+\end{bmatrix} 
+\begin{bmatrix}
+1 \\ 2  \\ 3                                                                                                          
+\end{bmatrix}   
+ \end{displaymath}
+ 
+Compléter les listes suivantes d'instructions pour exécuter la tâche.
+\begin{itemize}
+ \item liste A : \verb|deplacer(1,2)| \verb|deplacer(1,3)| ... 
+ \item liste B : \verb|deplacer(1,3)| \verb|deplacer(1,2)| ...
+\end{itemize}
+\item Démontrer par récurrence que, pour tout entier $n\geq 1$, il existe une séquence d'instructions permettant d'exécuter
+ \begin{displaymath}
+\begin{bmatrix}
+1 \\ 2  \\ \vdots \\ n                                                                                                          
+\end{bmatrix} 
+\begin{bmatrix}
+  \\   \\                                                                                                           
+\end{bmatrix} 
+\begin{bmatrix}
+ \\   \\                                                                                                           
+\end{bmatrix} 
+  \hspace{0.5cm} \longrightarrow \hspace{0.5cm}
+\begin{bmatrix}
+  \\   \\                                                                                                           
+\end{bmatrix} 
+\begin{bmatrix}
+ \\   \\                                                                                                           
+\end{bmatrix} 
+\begin{bmatrix}
+1 \\ 2  \\ \vdots \\ n                                                                                                          
+\end{bmatrix}   
+ \end{displaymath}
+(Vous ne devrez pas chercher à expliciter une telle séquence)\newline
+Préciser en fonction de $n$, le nombre d'instructions \texttt{deplacer} figurant dans une telle séquence. 
+\end{enumerate}
+

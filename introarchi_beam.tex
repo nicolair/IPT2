@@ -1,0 +1,291 @@
+\input{ipt_beamer.tex}
+
+\begin{document}
+\begin{frame}
+\frametitle{Machine théorique}
+Une de machine de Turing est constituée de:
+\begin{itemize}
+  \item un ruban (amovible) formé d'une infinité de cases chacune contenant une lettre d'un alphabet fini.
+  \item une tête qui peut :
+  \begin{itemize}
+    \item se déplacer (une case au plus vers la droite ou la gauche)
+    \item lire et écrire sur le ruban
+    \item se trouver dans plusieurs états
+  \end{itemize}
+\end{itemize}
+La tête de lecture-écriture-déplacement peut être dans plusieurs états physiques et ce qu'elle va faire (sur le ruban et sur elle même) dépend de ce qu'elle lit et de l'état dans lequel elle se trouve. 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Calculer ?}
+\begin{enumerate}
+  \item un ruban initial avec des lettres de l'alphabet est inséré dans la machine
+  \item la machine se déplace sur le ruban en remplaçant certaines lettres par d'autres
+  \item elle s'arrête
+\end{enumerate}
+Le ruban a été modifié : c'est la définition d'un \og calcul\fg. \newline
+Les actions de la machine sont déterminées à partir d'un \emph{tableau d'instructions} codées avec les lettres de l'alphabet dans la première ligne et les états de la machine dans la première colonne.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple de machine de Turing}
+  \begin{itemize}
+    \item alphabet : $\{0,1,*\}$
+    \item états : $\{1, 2, 3, !\}$. Dans l'état "!" la machine s'arrête.
+    \item tableau d'instructions
+\begin{center}    
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|l|l|l|} \hline
+  & 0  & 1   & *  \\ \hline
+1 & G2 & D   & 1D \\ \hline
+2 &    & 0G3 &    \\ \hline
+3 & D! & G   &    \\ \hline
+\end{tabular}
+\end{center}
+    \item ruban initial : "... 0 0 1 1 1 * 1 1 0 0 ..."
+    \item la tête de lecture est sur le "1" le plus à gauche.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple de calcul}
+\begin{columns}
+  \begin{column}{6cm}
+\begin{center}  
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|l|l|l|} \hline
+  & 0  & 1   & *  \\ \hline
+1 & G2 & D   & 1D \\ \hline
+2 &    & 0G3 &    \\ \hline
+3 & D! & G   &    \\ \hline
+\end{tabular} 
+\end{center}
+\begin{itemize}
+  \item temps 0: (initial) état 1, D :\\ ... 0 0 \textcolor{red}{1} 1 1 * 1 1 0 0 ...
+  \item temps 1:  état 1, D :\\ ... 0 0 1 \textcolor{red}{1} 1 * 1 1 0 0 ...
+  \item temps 3:  état 1, D :\\ ... 0 0 1 1 1 \textcolor{red}{*} 1 1 0 0 ...
+\end{itemize}
+
+  \end{column}
+
+  \begin{column}{6cm}
+\begin{itemize}
+  \item temps 4:  état 1, D :\\ ... 0 0 1 1 1 1 \textcolor{red}{1} 1 0 0 ...
+  \item temps 6:  état 1, G :\\ ... 0 0 1 1 1 1 1 1 \textcolor{red}{0} 0  ...
+  \item temps 7:  état 2, G :\\ ... 0 0 1 1 1 1 1 \textcolor{red}{1} 0 0  ...
+  \item temps 8:  état 3, G :\\ ... 0 0 1 1 1 1 \textcolor{red}{1} 0 0 0  ...
+  \item temps 13:  état 3, D :\\ .. 0 \textcolor{red}{0} 1 1 1 1 1 0 0 0  ...
+  \item temps 14:  état !, fin :\\ .. 0 0 \textcolor{red}{1} 1 1 1 1 0 0 0  ...
+\end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Autre machine}
+\begin{itemize}
+  \item 6 états: s1, s2, $\cdots$, s5, !
+  \item 2 lettres : 0, 1
+  \item Tableau d'instructions
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|l|l|l|} \hline
+   & 0  & 1     \\ \hline
+s1 & !      & 0 D s2  \\ \hline
+s2 & 0 D s3 & 1 D s2  \\ \hline
+s3 & 1 G s4 & 1 D s3  \\ \hline
+s4 & 0 G s5 & 1 G s4  \\ \hline
+s5 & 1 D s1 & 1 G s5  \\ \hline
+\end{tabular}
+\end{center}
+\item ruban initial ... 0 0 1 1 0 0 ... 
+\item tête de lecture placée sur le 1 le plus à gauche et dans l'état s1
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Autre calcul}
+\begin{columns}
+  \begin{column}{6cm}
+    \begin{itemize}
+     \item 0: ... 0 \textcolor{red}{1} 1 0 0 0 ... s1 (0 D s2)
+     \item 1: ... 0 0 \textcolor{red}{1} 0 0 0 ... s2 (1 D s2)
+     \item 2: ... 0 0 1 \textcolor{red}{0} 0 0 ... s2 (0 D s3)
+     \item 3: ... 0 0 1 0 \textcolor{red}{0} 0 ... s3 (1 G s4)
+     \item 4: ... 0 0 1 \textcolor{red}{0} 1 0 ... s4 (0 G s5)
+     \item 5: ... 0 0 \textcolor{red}{1} 0 1 0 ... s5 (1 G s5)
+     \item 6: ... 0 \textcolor{red}{0} 1 0 1 0 ... s5 (1 D s1)
+     \item 7: ... 0 1 \textcolor{red}{1} 0 1 0 ... s1 (0 D s2)
+     \item 8: ... 0 1 0 \textcolor{red}{0} 1 0 ... s2 (0 D s3)
+    \end{itemize}
+  \end{column}
+
+  \begin{column}{6.5cm}
+  \begin{itemize}
+    \item 9: ... 0 1 0 0 \textcolor{red}{1} 0 ... s3 (1 D s3)
+    \item 10: ... 0 1 0 0 1 \textcolor{red}{0} ... s3 (1 G s4)
+    \item 11: ... 0 1 0 0 \textcolor{red}{1} 1 ... s4 (1 G s4)
+    \item 12: ... 0 1 0 \textcolor{red}{0} 1 1 ... s4 (0 G s5)
+    \item 13: ... 0 1 \textcolor{red}{0} 0 1 1 ... s5 (1 D s1)
+    \item 14: ... 0 1 1 \textcolor{red}{0} 1 1 ... s1 (!)
+  \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Machines de Turing universelles}
+\begin{quotation}
+  Il existe des machines (c'est à dire des tableaux d'instructions particuliers) $U$ telles que, \emph{pour toute machine} $T$ et \emph{toute donnée} $D_i$ calculant $D_f$, on peut former une donnée $\Delta$ tel que le calcul de $\Delta$ par $U$ permet de récupérer $D_f$.
+\end{quotation} 
+Une telle machine $U$ est dite \emph{universelle}.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Machines de Turing universelles : principe}
+\begin{itemize}
+  \item  Systèmes de codage: un pour les données, un pour les machines.
+  \item \`A partir d'un couple $(T,D)$, former un ruban avec une case désignée comme centrale et 
+  \begin{center}
+    codage machine à gauche  -  codage donnée à droite.
+  \end{center}
+  \item  instructions conçues pour que la tête fasse des allers et retours entre les deux parties.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Machines matérielles}
+\begin{itemize}
+  \item Développées dans les années 1950 à partir de machines de Von Neumann plutôt que de Turing.
+  \item Les \emph{processeurs} modernes CPU (Central Process Unit) et GPU (Graphic Process Unit) sont des machines universelles.
+  \item Peuvent tout calculer à condition de les programmer pour chaque tâche.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Schématisation d'un processeur}
+\begin{itemize}
+  \item registres
+  \item unité de commande
+  \item unité de traitement
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Schématisation d'un processeur: registres}
+\begin{itemize}
+  \item mémoires très rapides à l'intérieur du processeur
+  \item reliés aux unités par un \emph{bus} de largeur 32 ou 64 bits qui permet d'écrire ou de lire des mots de cette largeur
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Schématisation d'un processeur: unité de commande}
+ Trois fonctions:
+ \begin{enumerate}
+  \item Aller chercher le code d'instruction en mémoire (fetch) et le charger dans un registre.
+  \item Reconnaître l'instruction (decode)
+  \item Indiquer à l'unité de traitement la suite (séquencement) de traitements arithmétiques ou les opérations logiques à effectuer (execute) 
+ \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Schématisation d'un processeur: unité de traitement}
+\begin{itemize}
+  \item Assure l'exécution des opérations élémentaires désignées par l'unité de commande.
+  \item C\oe{}ur : unité arithmétique et logique (U.A.L.)\newline
+  circuit logique combinatoire permettant de réaliser certaines opérations élémentaires sur le contenu des registres: additions, soustraction, OU, ET, OU exclusif, complémentation, etc  
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Analogies}
+\begin{itemize}
+  \item Ruban d'une machine de Turing universelle : 
+  \begin{center}
+à gauche le \emph{programme} -  à droite les \emph{données}    
+  \end{center}
+  \item Pour la tête de lecture,\newline une case du ruban = \emph{instruction} à exécuter.
+  \item Le ruban = \emph{dispositif de stockage} des données.
+  \item La tête = \emph{unité d'échange} avec le dispositif de stockage.
+  \item La machine doit pouvoir changer d'état. On la dote de dispositifs physiques contrôlables pouvant prendre plusieurs états : des \emph{mémoires} = \emph{registres} dans le cas d'un processeur.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Modules de base: mémoire}
+\begin{itemize}
+  \item mémoire \emph{vive}, dépend de la source d'énergie de l'ordinateur
+  \item représentée par le ruban dans l'image des machines de Turing.
+  \item contient du code représentant le programme et les données sur lequel il travaille
+\end{itemize}
+ 
+\end{frame}
+
+\begin{frame}
+\frametitle{Modules de base: processeur}
+Dans l'image d'une machine de Turing, un processeur est une machine universelle.\newline
+Il répète (avec une fréquence donnée) la séquence de tâches:
+ \begin{itemize}
+  \item recherche de l'instruction (fetch)
+  \item décodage de l'instruction (decode)
+  \item exécution de l'instruction (execute)
+  \item écriture du résultat (write back)
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Modules de base: autres}
+\begin{description}
+ \item[Périphériques.] Des dispositifs physiques recevant, fournissant (ou les deux) des données. E/S. Mémoire de masse (permanente), clavier, ports matériels. Les périphériques ne sont pas inertes, ils peuvent réagir aux données qu'ils reçoivent. 
+ 
+ \item[Unités d'échange.]Contrôleurs. Des dispositifs gérant l'échange de données entre le processeur et les périphériques. Ils répondent aux instructions envoyées par le processeur. Ils permettent au processeur de voir les périphériques comme de la mémoire.
+ 
+ \item[Bus externes.] Des dispositifs physiques reliant les modules entre eux. La largeur d'un bus est le nombre de lignes le constituant. Un bus de largeur 16 permet de transmettre 16 bits simultanément.
+\end{description}
+\end{frame}
+
+\begin{frame}
+\frametitle{Operating System}
+O.S. : programmes permettant l'utilisation de l'ordinateur
+
+couche logicielle entre le matériel et les applications. 
+
+Les principaux programmes sont lancés dès le démarrage
+\begin{description}
+ \item[Interface de programmation]: A.P.I.
+ \item[Ordonnanceur]: Contrôle le déroulement des programmes.
+ \item[Communication inter Processus]:
+ \item[Gestion de la mémoire]:
+ \item[Pilotes]:
+ \item[Système de fichiers]: gestion de la mémoire de masse.
+ \item[Réseau]:
+ \item[Contrôle d'accès]: utilisateur, administrateur
+ \item[Interface utilisateur]: graphique ou ligne de commande.
+\end{description}
+\end{frame}
+
+\begin{frame}
+\frametitle{Langages}
+Opération sur des données:  elle doit être traduite à travers des couches successives de codage (langages).
+\begin{itemize}
+ \item Un texte écrit dans un langage compilé est donné à un \emph{compilateur} qui le transforme en un fichier exécutable par l'OS.
+ \item Un texte écrit dans un langage interprété est donné à un \emph{interpréteur} qui fait exécuter directement par l'OS les instructions qu'il lit dans le fichier.
+\end{itemize}
+On utilisera deux langages interprétés : un généraliste \emph{Python} et un orienté vers le calcul numérique \emph{SciLab}.
+\end{frame}
+
+\begin{frame}
+\frametitle{Environnement de travail}
+\begin{itemize}
+  \item Pour écrire et exécuter du code en Python, vous pouvez utiliser un simple éditeur de texte et une ligne de commande. 
+  \item Un environnement de développement donne des fonctionnalités supplémentaires (la coloration syntaxique ou exécution en un click). L'établissement a choisi \emph{spyder}.
+  \item logiciels sont libres et disponibles pour tous les OS.
+  \item Python existe en version 2.7 ou 3.3. installer de préférence 3.3. Différences significatives entre les deux.
+  \item Vous aurez besoin d'un système de stockage permettant l'échange entre l'établissement et vos machines personnelles. N'utilisez une clé USB qu'en dépannage, préférez un stockage web et constituez vous un compte googleDrive ou dropBox. 
+\end{itemize}
+\end{frame}
+
+\end{document}
+

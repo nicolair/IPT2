@@ -1,0 +1,76 @@
+%<dscrpt>Décomposition LU et algorithme de Doolittle.<dscprt>
+Dans ce problème, une $(p,q)$-matrice est un objet Python constitué d'une liste (longueur $p$) de listes (longueurs $q$) de flottants. Une matrice mathématique à $p$ lignes et $q$ colonnes sera représenté par une $(p,q)$-matrice. Si \texttt{A} représente une matrice $A$, la liste \texttt{A[i]} représente la ligne $i+1$ de la matrice $A$. On rappelle que les indices des listes Python commencent à $0$ alors que les lignes et colonnes des matrices mathématiques sont indexées à partir de $1$. 
+
+On étudie la possibilité de factoriser une matrice carrée $A$ sous la forme $LU$ où $L$ est triangulaire inférieure avec des $1$ sur la diagonale et $U$ triangulaire supérieure. On exploite ensuite une telle factorisation. 
+\begin{enumerate}
+  \item Un exemple. Pour $A$ matrice $3\times 3$ donnée, on cherche $L$ et $U$ tels que 
+\begin{displaymath}
+\underset{=L}{\underbrace{
+\begin{pmatrix}
+  1 & 0 & 0 \\ . & 1 & 0 \\ . & . & 1
+\end{pmatrix}
+}}
+\underset{=U}{\underbrace{
+\begin{pmatrix}
+  . & . & . \\ 0 & . & . \\ 0 & 0 & .
+\end{pmatrix}
+}}
+= 
+\underset{=A}{\underbrace{
+\begin{pmatrix}
+2 & -1 & -2  \\ -4 & 6 & 3 \\ -4 & -2 & 8  
+\end{pmatrix}
+}}
+\end{displaymath}
+où les $.$ représentent les coefficients des matrices à calculer.\newline
+On désigne par $x_1,x_2,\cdots, x_9$ les coefficients à calculer. On les numérote de la manière suivante:
+\begin{displaymath}
+\begin{pmatrix}
+  1 & 0 & 0 \\ x_4 & 1 & 0 \\ x_5 & x_8 & 1
+\end{pmatrix}
+\begin{pmatrix}
+  x_1 & x_2 & x_3 \\ 0 & x_6 & x_7 \\ 0 & 0 & x_9
+\end{pmatrix}
+= 
+\begin{pmatrix}
+2 & -1 & -2  \\ -4 & 6 & 3 \\ -4 & -2 & 8  
+\end{pmatrix}
+\end{displaymath}
+Expliquer comment on calcule les $x_i$ \emph{dans l'ordre donné}. Effectuer ce calcul sur l'exemple. Pour une autre matrice $A$, ce calcul est-il toujours possible?  
+
+  \item 
+\begin{enumerate}
+  \item Algorithme de Doolittle. Présenter (en pseudo-code) un algorithme généralisant la méthode de l'exemple pour des matrices $p\times p$.
+  \item \'Ecrire en Python une fonction \texttt{lulu(A,p)} implémentant l'algorithme de Doolittle et pour laquelle :
+\begin{itemize}
+  \item \texttt{p} désigne un entier naturel $p$,
+  \item \texttt{A} désigne une $(p,p)$-matrice. 
+\end{itemize}
+Cette fonction renverra un code conventionnel d'erreur ou bien les matrices $L$ et $U$ vérifant les conditions demandées et stockées (dans cet ordre) dans une liste de deux $(p,p)$-matrices.
+\end{enumerate}
+    
+    \item 
+\begin{enumerate}
+  \item \'Ecrire en Python une fonction \texttt{resinf(L,Y,p)} pour laquelle
+\begin{itemize}
+  \item \texttt{p} désigne un entier naturel,
+  \item \texttt{L} désigne une $(p,p)$-matrice représentant une matrice $L$ triangulaire inférieure avec des $1$ sur la diagonale,
+  \item \texttt{Y} désigne une $(p,1)$-matrice représentant une matrice colonne $Y$.
+\end{itemize}
+Cette fonction renverra une $(p,1)$-matrice représentant la matrice colonne $X$ telle que $LX = Y$.
+  \item \'Ecrire en Python une fonction \texttt{ressup(U,Y,p)} pour laquelle
+\begin{itemize}
+  \item \texttt{p} désigne un entier naturel,
+  \item \texttt{U} désigne une $(p,p)$-matrice représentant une matrice $U$ triangulaire supérieure avec des termes non nuls sur la diagonale,
+  \item \texttt{Y} désigne une $(p,1)$-matrice représentant une matrice colonne $Y$.
+\end{itemize}
+Cette fonction renverra une $(p,1)$-matrice représentant la matrice colonne $X$ telle que $UX = Y$.
+\end{enumerate}
+  \item En utilisant seulement \texttt{lulu}, \texttt{resinf} et \texttt{resup}, écrire en Python une fonction \texttt{res(A,Y,p)} pour laquelle
+\begin{itemize}
+  \item \texttt{p} désigne un entier naturel,
+  \item \texttt{A} désigne une $(p,p)$-matrice représentant une matrice $A$,
+  \item \texttt{Y} désigne une $(p,1)$-matrice représentant une matrice colonne $Y$.
+\end{itemize}
+Cette fonction renverra une erreur ou une $(p,1)$-matrice représentant une matrice colonne $X$ telle que $AX = Y$.
+\end{enumerate}

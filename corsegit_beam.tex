@@ -1,0 +1,246 @@
+\input{ipt_beamer.tex}
+
+\begin{document}
+
+\begin{frame}
+  \frametitle{Preuve d'un segment itératif}
+Un \emph{segment itératif} est une boucle \texttt{tant que}.
+
+On a \og prouvé\fg~ le segment lorsque :
+\begin{itemize}
+  \item il se termine
+  \item il fait ce qu'il doit faire
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Modèle logique de correction}
+\begin{algorithm}[H]
+  \Tq{ Condition}{
+      instruction 1\;
+      $\vdots $\;
+      instruction p\;
+  }
+  \Comment{Après la boucle une propriété $\mathcal{P}$ doit être vraie.}
+  \caption{Un segment itératif}
+  \label{corsegit_1}
+\end{algorithm}
+\begin{itemize}
+  \item $Condition$ doit s'évaluer à \texttt{False} après un nombre fini d'exécutions de la boucle.
+  \item Lorsque $Condition$ s'évalue à \texttt{False}, la propriété $\mathcal{P}$ doit s'évaluer à \texttt{True}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fonction de terminaison : définition}
+\begin{defi}
+Une \emph{fonction de terminaison}, on dit aussi \emph{variant de boucle} est une expression telle que :
+\begin{itemize}                                                                                                                                                                                                                                               \item les valeurs que prend l'expression sont des entiers naturels
+\item la valeur que prend l'expression \emph{diminue strictement} à chaque exécution de la séquence.                                                                                                                                                                                                                             \end{itemize}
+\end{defi}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fonction de terminaison : utilisation}
+\begin{prop}
+  Si un segment itératif admet une fonction de terminaison de valeur initiale $m$, il se termine en au plus $m$ itérations.
+\end{prop}
+\begin{itemize}
+  \item Soit $A$ ensemble des valeurs prises par la fonction.
+  \item $A$ est une partie de $\N$ majorée par $m$ donc finie; soit $n$ son nombre d'éléments.
+  \item Après $n-1$ exécutions exactement, on sort de la boucle.
+  \item $n\leq m+1 \Rightarrow n-1 \leq m$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Invariant de boucle : définition}
+\begin{defi}
+  Un \emph{invariant de boucle} est une expression vérifiant les propriétés suivantes:
+\begin{itemize}
+  \item à valeurs booléennes (on dit que c'est une propriété),
+  \item sa valeur est le même après chaque itération
+\end{itemize}
+\end{defi}
+En principe sa valeur intiale est \texttt{True}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Invariant de boucle : utilisation}
+\begin{prop}
+S'il existe une fonction de terminaison $V$ et un invariant $\Phi$ tels que
+\begin{displaymath}
+  \left( \left( \text{ non } Condition\right) \text{ et } \Phi \right) \Rightarrow \mathcal{P}
+\end{displaymath}
+alors le segment itératif est correct et se termine.
+\end{prop}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple 1}
+\begin{algorithm}[H]
+  \Comment{Initialisation}
+  $a$, $b$, $c$ désignent des entiers\;
+  $a\longleftarrow$ un entier naturel\;
+  $b\longleftarrow a$\;
+  $c\longleftarrow 0$\;
+  \Tq{ b > 0}{
+      $c\longleftarrow c + a$\;
+      $b\longleftarrow b - 1$\;
+  }
+  \Comment{fin du segment itératif}
+  afficher $c$\;
+  \caption{Calcul du carré d'un entier.}
+  \label{corsegit_2}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple 1: preuves}
+\begin{itemize}
+  \item fonction de terminaison : $b$
+  \item invariant : propriété $a^2 = c +b*a$
+\end{itemize}
+Preuve de l'invariance.\newline
+Après $p$ séquences, $b$ désigne $b_p$ et $c$ désigne $c_p$.\newline
+Après $p+1$ séquences : $b$ désigne $b_p-1$ et $c$ désigne $c_p+a$ donc $c+b*a$ désigne
+  \begin{displaymath}
+   c_p + a + (b_p-1)*a = c_p + b_p*a = a^2 
+  \end{displaymath}
+Preuve de l'algorithme.\newline
+Comme il existe une fonction de terminaison, la boucle se termine avec $b$ désignant $0$ donc $c+b*a$ s'évaluant à $c$.
+\`A cause de l'invariant $c$ désigne bien $a^2$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple 2.}
+\begin{algorithm}[H]
+  \Comment{Initialisation}
+  $a$, $n$, $r$ désignent des entiers\;
+  $a\longleftarrow$ un entier naturel non nul\;
+  $n\longleftarrow$ un entier naturel non nul\;
+  $r\longleftarrow 1$\;
+  \Tq{ n > 0}{
+      $r\longleftarrow r * a$\;
+      $n\longleftarrow n - 1$\;
+  }
+  \Comment{fin du segment itératif}
+  afficher $r$\;
+  \caption{Calcul d'une puissance.}
+\end{algorithm}
+\begin{itemize}
+  \item fonction de terminaison $n$
+  \item invariant $\Phi = r * a^n$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple 3.}
+\begin{algorithm}[H]
+  l $\leftarrow$ longueur de L\;
+  ligv $\leftarrow$ liste des entiers de 0 à 9\;
+  actualiser  imin\;
+  j $\leftarrow 10$\;
+  \Tq{j < l}{
+      \If{ L[ligv[imin]] < L[j] }{
+          ligv[imin] $\leftarrow$ j\;
+          actualiser imin\;
+      }
+      incrémenter \texttt{j}
+  }
+  \caption{liste de 10 indices des plus grandes valeurs}
+\end{algorithm}
+fonction de terminaison $V = l-j$ et invariant
+\begin{displaymath}
+  \Phi = 
+\left( 
+\left. 
+\begin{aligned}
+  &u \text{ et } v \leq j\\
+  &u \text{ n'est pas une valeur de }ligv \\
+  &v \text{ est une valeur de }ligv 
+\end{aligned}
+\right\rbrace 
+\Rightarrow L[u] \leq L[v]
+\right) 
+\end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple 4.}
+\begin{algorithm}[H]
+  \Comment{Initialisations}
+  $a\longleftarrow$ un entier naturel non nul\;
+  $b\longleftarrow$ un entier naturel non nul\;
+  $u\longleftarrow a$\;
+  $v\longleftarrow b$\;
+  \Tq{ u != v}{
+      \eIf{u > v}{
+        $u\longleftarrow u - v$\;
+      }{
+        $v\longleftarrow v - u$\;
+      }
+  }
+  afficher $u$\;
+  \caption{Calcul d'un pgcd.}
+\end{algorithm}
+fonction de terminaison $V = u + v$ et invariant 
+\begin{displaymath}
+ \Phi = \left( \text{pgcd}(a,b) == \text{pgcd}(u,v)\right) 
+\end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple 5. Présentation d'un problème de \og complétion\fg~}
+\begin{itemize}
+  \item Une relation $\mathcal{R}$ est définie dans un ensemble fini $\Omega$ contenant $n$ éléments.
+  \item Pour chaque élément $e\in \Omega$, on désigne par $V(e)$ l'ensemble des $f\in \Omega$ qui sont en relation avec $e$.
+  \item Une partie $A$ de $\Omega$ est donnée.
+\end{itemize}
+ On cherche une partie $B$ de $\Omega$ contenant $A$ et vérifiant la propriété
+\begin{displaymath}
+  \mathcal{P}: \hspace{0.5cm} \forall b \in B, V(b) \subset B
+\end{displaymath}
+On pourrait prendre $B=\Omega$ mais on veut $B$ aussi petit que possible.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple 5. Algorithme}
+\begin{algorithm}[H]
+  \Comment{Initialisation}
+  $B \leftarrow A$ liste donnée d'éléments 2 à 2 distincts de $\Omega$\;
+  $i \leftarrow 0$\;
+  \Tq{ $i < $ longueur de $B$}{
+     $e \leftarrow $ valeur d'indice $i$ de $B$\;
+     \PourCh{$f \in \Omega$ en relation avec $e$}{
+       \Si{$f$ n'est pas dans $B$}{
+          placer $f$ à la fin de $B$\;
+       }
+     }
+     incrémenter $i$\;
+  }
+  \caption{Complété d'une partie pour une relation}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple 5. Preuve}
+\begin{itemize}
+  \item deux boucles imbriquées. Terminaisons ?
+  \begin{itemize}
+    \item boucle interne: l'ensemble des éléments en relation avec un élément donné est fini.
+    \item boucle externe: ???? car la liste $B$ est modifiée \emph{à l'intérieur de la boucle}.
+  \end{itemize}
+  \item fonction de terminaison: $n-i$. (décroissance facile)
+  \item invariant1: \og les valeurs de $B$ sont deux à deux distinctes\fg~
+  \item invariant2:
+\begin{displaymath}
+  \bigcup_{k< i}V(b_k) \subset \left\lbrace \text{ valeurs de }B \right\rbrace 
+\end{displaymath}
+
+\end{itemize}
+L'invariant 1 prouve $n-i \geq 0$ donc c'est bien une fonction de terminaison. L'invariant 2 prouve la complétion.
+\end{frame}
+
+
+\end{document}

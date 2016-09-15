@@ -1,0 +1,22 @@
+\begin{enumerate}
+ \item Soit $x\in ]0,1[$. Montrer qu'il existe un unique couple $(a,y)\in \N^* \times [0,1[$ tel que
+ \begin{displaymath}
+  x =  \frac{1}{a+y}
+ \end{displaymath}
+On note $h(x)$ l'unique $y$ ainsi formé à partir de $x$. Ceci définit une fonction $h$ de $]0,1[$ dans $[0,1[$.
+
+\item Former le code Python implementant le pseudo-code
+\begin{verbatim}
+x <-- un float > 0
+tant que h(x) > 0
+  x <-- h(x)
+\end{verbatim}
+Vous ne devez pas écrire de fonction ou de procedure  (la syntaxe de ces objets n'a pas encore été introduite). Que peut-on dire de $x$ lorsque la boucle se termine ?
+\item Comme rien ne justifie que la boucle de l'algorithme précédent se termine, ajouter ce qu'il faut pour former un code qui n'exécute le bloc que $n$ fois au plus ($n$ entier fixé à l'avance). Expérimentez l'exécution de ce code qui se termine toujours avec quelques valeurs de $x$.
+
+\item Existe-t-il un (ou plusieurs) $x>0$ tels que
+\begin{displaymath}
+ x = 1 + \frac{1}{2+x}
+\end{displaymath}
+Que peut-on en conclure quant à la terminaison de la boucle?
+\end{enumerate}

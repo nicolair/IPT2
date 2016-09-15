@@ -1,0 +1,78 @@
+\begin{enumerate}
+ \item \'Ecrire du code calculant et affichant la factorielle d'un entier strictement positif.
+ \item Soit $n$ un entier  supérieur ou égal à 2 désigné par une variable \verb|n|. \'Ecrire un code affichant \verb|premier| ou \verb|composé| suivant que $n$ est premier ou non. \'Ecrire un code calculant et affichant le nombre de diviseurs naturels de $n$.
+ \item Implémenter le pseudo-code suivant
+ \begin{verbatim}
+n <-- un entier
+code <-- une chaine de caractère vide
+tant que n > 0
+  si n est pair
+    n <-- m tel que n = 2m
+    concaténer "P" à droite de code
+  si n est impair
+    n <-- m tel que n = 2m + 1
+    concaténer "I" à droite de code
+afficher code
+ \end{verbatim}
+Modifier ce code pour qu'il calcule la chaine de caractère égale à la décomposition binaire de l'entier fourni. Elle commence par \texttt{'0b'}. Modifier encore pour fournir la décomposition en base 3. Elle commence par \texttt{'0t'}.
+
+ \item Former une phrase qui s'évalue à VRAI après l'initialisation et après l'exécution de chaque bloc de la boucle du code suivant. \`A quoi sert ce code ? Comment l'améliorer ?
+ \begin{verbatim}
+n = 2554 ; p = 39
+i = 0
+while n > p :
+  n -= p
+  i += 1
+print(n,i)
+ \end{verbatim}
+ 
+\item Dessiner avec \texttt{print}.\newline
+\texttt{print} (mot-clé ou statement en 2.7, fonction en 3) ne fait qu'une chose: se placer au début d'une nouvelle ligne et afficher caractère par caractère la chaîne qu'on lui passe.
+\begin{enumerate}
+  \item On se donne des entiers \texttt{l}, \texttt{c}, \texttt{q}. En utilisant seulement les trois caractères \texttt{'-'} (tiret horizontal), \texttt{'|'} (tiret vertical) et \texttt{' '} (espace), écrire un code qui affiche un tableau vide 
+  \begin{verbatim}
+                -----------------            
+                |   |   |   |   |          Exemple avec
+                |   |   |   |   |             l = 6
+                |   |   |   |   |             c = 4
+                |   |   |   |   |             q = 3   
+                -----------------
+  \end{verbatim}    
+  formé de \texttt{p} lignes. Chacune (sauf les deux bords) contient \texttt{c} cellules constituées de \texttt{q} espaces.
+  
+  \item On souhaite afficher un cercle approximatif uniquement avec \texttt{print}.\newline
+  Un entier naturel désigné par \texttt{r} est fourni. On utilisera aussi deux noms \texttt{x} et \texttt{y} qui désignent les coordonnées entières des points du plan d'impression muni d'un repère (défini en figure \ref{fig:Epremexos_1}) ainsi que \texttt{e} qui désigne un flottant caractérisant le degré d'imprécision que l'on se laisse.\newline
+\begin{figure}[h]
+  \centering
+  \includegraphics{./Epremexos_1.pdf}
+  % Epremexos_1.pdf: 0x0 pixel, 0dpi, 0.00x0.00 cm, bb=
+  \caption{Repère dans le plan d'impression}
+  \label{fig:Epremexos_1}
+\end{figure}
+Le cercle à tracer est de rayon $r$, les coordonnées de son centre sont $(r,r)$. Imprimer approximativement ce cercle à partir de la donnée d'un \texttt{r}. Vous serez amené à utiliser l'expression
+\begin{center}
+  \texttt{abs((x-r)**2 + (y-r)**2 -r**2) < e}
+\end{center}
+et à expérimenter sur les valeurs de \texttt{e} et sur les caractères à imprimer pour obtenir un résultat acceptable.
+\end{enumerate}
+
+\item La suite de Syracuse est définie par son premier terme $u_0$ (entier naturel non nul) et la relation de récurrence
+\begin{displaymath}
+ u_{n+1} = 
+ \left\lbrace 
+ \begin{aligned}
+  \frac{u_n}{2} &\text{ si } u_n \text{ est pair}\\
+  3u_n+1 &\text{ sinon }
+ \end{aligned}
+ \right.
+\end{displaymath}
+\begin{enumerate}
+ \item Former un programme qui affiche les 20 premiers termes de la suite pour $u_0=15$.
+ \item Modifier le programme précédent pour qu'il affiche seulement le plus petit $n$ tel que $u_n=1$.
+ \item On admet que, pour tout $x$ entre $1$ et $20$, la suite de Syracuse initialisée par $u_0=x$ prend la valeur $1$ pour un indice plus petit que $20$. On note $i(x)$ le plus petit de ces indices pour un $x$ fixé. Calculer 
+\begin{displaymath}
+  \max\left\lbrace i(x), x\in\llbracket 0, n \rrbracket\right\rbrace 
+\end{displaymath}
+\end{enumerate}
+
+\end{enumerate}

@@ -1,0 +1,69 @@
+\subsection{Chaines}
+\begin{enumerate}
+  \item Le script 1 affiche \verb|Bonsoir| sur une seule ligne car le mot est reconstitué caractère par caractère dans ce que désigne \verb|resultat| avant d'être affiché.\newline
+  Le script 2 affiche un mot par ligne par ligne avec le nouveau caractère placé à droite car l'instruction \verb|print| est à l'intérieur de la boucle de parcours de la chaîne.
+\begin{verbatim}
+  B
+  Bo
+  Bon
+  Bons
+  Bonso
+  Bonsoi
+  Bonsoir
+\end{verbatim}
+Le script 3 affiche une seule ligne \verb|riosnoB| car les lettres sont placées à gauche du mot désigné par \verb|resultat| et l'affichage se fait après la fin du parcours de la chaîne.
+
+  \item Le script 1 n'est pas correct car il renverra \verb|True| sauf si une des lettres est correcte. Il peut produire des faux positifs par exemple si la chaîne ne contient que des lettres incorrectes. Il produit aussi des faux négatifs (et même systématiquement), pour toute chaîne correcte, il renvoie \verb|False|.\newline
+  Le script 2 n'est pas correct car il renverra \verb|False| sauf si une des lettres est correcte (mais pas forcément toutes). Il peut produire des faux positifs; par exemple si la chaîne contient à la fois des lettres correctes et incorrectes. Il ne produit pas de faux négatifs: s'il renvoie \verb|False| c'est que toutes les lettres sont incorrectes, la chaîne l'est donc aussi.\newline
+  Le script 3 est correct.\newline
+  Le script 4 est correct aussi. Il s'agit du même algorithme que le précédent en détaillant la phase de comparaison de chaque caractère aux caractères corrects par une boucle sur les caractères corrects.
+  \item Le script proposé produit en général une boucle infinie. Si le premier caractère de la chaîne (\verb|chaine[0]|) n'est pas le caractère cherché, l'incrémentation de \verb|k| ne se fait pas et on ne sort pas de la boucle \verb|while|.\newline
+  Pour rendre le script correct, il suffit de faire sortir l'incrémentation de la structure de contrôle \verb|if| en désindentant l'instruction et de renvoyer la bonne valeur en la stockant dans \verb|i|.
+\begin{verbatim}
+def fonction_q3 (carac, chaine):
+    i = -1
+    k = 0
+    while i == -1 and k <len(chaine):
+        if carac == chaine[k]:
+            i = k
+        k = k + 1
+    return i
+\end{verbatim}
+\end{enumerate}
+
+\subsection{\'Evolution de caractères et liens entre espèces.}
+\begin{enumerate}
+  \item L'instruction 1 est l'instruction correcte.
+  \item Le code indiqué ajoute un caractère à chaque espèce. Après exécution du code, \verb|donnees_phylo| désigne la liste
+\begin{verbatim}
+  [[0,0,0,0,1],[0,0,0,0,1],[0,0,1,0,0]]
+\end{verbatim}
+
+  \item On rappelle que \verb|donnees_phylo| désigne une liste de listes. On teste que le nombre de caractères de la nouvelle espèce est le même que ceux des espèces déjà présentes puis on insère cette liste à la fin de la liste. 
+\begin{verbatim}
+def add_espece(d_phyl,nouv_espece):
+    if len(d_phyl[0]) == len(nouv_espece):
+        d_phyl.append(nouv_espece)
+\end{verbatim}
+Bine noter qu'il ne faut pas de \verb|return| car le nom \verb|d_phyl| désigne une liste qui, étant un type de données \emph{modifiable}, sera effectivement modifiée lors de l'exécution de la fonction.
+  \item Le code proposé affiche (sur des lignes différentes:
+\begin{verbatim}
+5 False 4 False
+\end{verbatim}
+Les deux scripts sont corrects pour le problème posé. Le second est préférable car il permet de sortir de la boucle dès qu'une condition assurant qu'il faut renvoyer \verb|False| est trouvée. C'est pour cela que l'affichage de la valeur de \verb|i| est plus petite.
+  \item Une implémentation d'une fonction calculant le nombre de descendants peut être :
+\begin{verbatim}
+def nombre_descendants(d_phyl,esp):
+    """
+    renvoie le nb de descendants de espece
+    compte tenu des donnees de d_phyl
+    """
+    nb_desc = 0
+    for esp_connue in d_phyl:
+        if est_ancetre2(esp,esp_connue):
+            nb_desc += 1
+    return nb_desc
+\end{verbatim}
+On remarquera que comme \verb|est_ancetre2| renvoie \verb|True| lorsque l'on teste une espèce contre elle même. Le nombre de descendants est au moins 1 lorsque l'espèce est dans la liste \verb|d_phyl|.\newline
+On rappelle que \verb|for| sert à parcourir les éléments des types de données \emph{énumérables}. Si on écrit \verb|for i in range(len(d_phyl)):|, on parcourt la \emph{liste} des indices et ces indices permettent d'atteindre les valeurs. Il vaut mieux, puisqu'on le peut, parcourir directement la liste des valeurs.
+\end{enumerate}

@@ -1,0 +1,64 @@
+L'objet de cet exercice est de faire comprendre que lorsque l'on considère des suites de la forme
+\begin{displaymath}
+  \left( \sum_{k=1}^n a_k \right)_{n\in \N^*} 
+\end{displaymath}
+où $\left( a_n\right)_{n\in \N^*}$ est une suite de nombres réels fixée, l'ordre dans lequel on somme les $a_k$ peut jouer un rôle absolument capital (en particulier lorsque les $a_k$ ne sont pas du même signe).\newline
+On considère pour cela la suite définie par
+\begin{displaymath}
+  \forall k\in \N^*:\;a_k = \frac{(-1)^{k+1}}{k}
+  =
+  \left\lbrace 
+  \begin{aligned}
+    &\frac{1}{k} &\text{ si $k$ est impair}\\
+    &-\frac{1}{k} &\text{ si $k$ est pair}\\
+  \end{aligned}
+\right. 
+\end{displaymath}
+On admettra (ce qui a été démontré en cours de maths) que
+\begin{displaymath}
+    \left( \sum_{k=1}^n \frac{1}{k} \right)_{n\in \N^*}\rightarrow +\infty,\hspace{0.5cm}
+    \left( \sum_{k=1}^n \frac{1}{2k} \right)_{n\in \N^*}\rightarrow +\infty,\hspace{0.5cm}
+    \left( \sum_{k=1}^n \frac{1}{2k+1} \right)_{n\in \N^*}\rightarrow +\infty
+\end{displaymath}
+On considère une fonction bijective croissante $\varphi$ de $\N^*$ dans $\N^*$ et on forme la suite
+\begin{displaymath}
+  S_{\varphi} = \left( \sum_{k=1}^n a_{\varphi(k)} \right)_{n\in \N^*}
+\end{displaymath}
+\begin{enumerate}
+  \item Que fait le code suivant ? Pourquoi avoir ajouté le branchement \texttt{if} à la fin ?
+\begin{verbatim}
+n = 507 # un entier >= 2
+nini = 1 ; pepe = 2 ; S = 0
+while nini<= n and pepe <= n:
+    S += 1/float(nini) -1/float(pepe) 
+    nini += 2
+    pepe += 2
+if nini < n:
+    S += 1/nini
+\end{verbatim}
+  \item Le code suivant calcule certains termes d'une somme $S_{\varphi}$.
+\begin{verbatim}
+n = 507 # un entier >= 2
+p = 5 ; i = 4
+nini = 1 ; pepe = 2 ; S = 0
+cptE = 0
+while cptE < n:
+    cpt = 0
+    while cpt < i:
+      S += 1/float(nini) 
+      nini += 2
+      cpt += 1
+    cpt = 0
+    while cpt < p:
+      S += -1/float(pepe)
+      pepe += 2
+      cpt += 1
+    cptE += 1
+\end{verbatim}
+Expliquer comment se construit la bijection $\varphi$ et préciser les indices des termes calculés. Comparer la valeur de \texttt{S} à $\ln(1+\frac{i}{p})$ pour de grandes valeurs de $n$.\newline
+Modifier le code précédent pour qu'il renvoie, dans une liste nommée \texttt{fifi} les premières valeurs $\varphi(1),\varphi(2),\cdots$ de la fonction $\varphi$.
+
+\item Soit $x$ un réel quelconque et $\varepsilon$ un réel strictement positif petit. Il existe une bijection croissante $\varphi$ telle que la suite $S_{\varphi}$ converge vers $x$.\newline
+On ne demande pas de le prouver mais de construire ses premiers termes. Modifier le code de la question précédente pour renvoyer les premières valeurs de $\varphi$ permettant de calculer une valeur de $S_{\varphi}$ dans l'intervalle $]x-\varepsilon, x]$.\newline
+La convergence est très lente. Il est inutile de prendre des valeurs de $\varepsilon$ trop petites, le processus numériques ne sera plus pertinent à cause des erreurs d'arrondi et des boucles infinies se formeront alors que l'argumentation mathématique est valable. Tester votre programme avec $x=0.4$ et $\varepsilon = 10^{-3}$.
+\end{enumerate}

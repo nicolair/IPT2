@@ -1,0 +1,70 @@
+\input{ipt.tex}
+\lhead{Cours IPT}
+\chead{Représentation binaire d'un rationnel: résumé pratique}
+\begin{document}
+\section{Opérations}
+Soit $x$ un nombre rationnel strictement positif. 
+\begin{enumerate}
+  \item Division euclidienne : partie entière, partie fractionnaire
+\begin{displaymath}
+  x = \frac{a}{q},\hspace{0.5cm} a = mq + r, \hspace{0.5cm} x = m + \frac{r}{q}
+\end{displaymath}
+  \item Algorithme \og les petits d'abord\fg~ : développement de la partie entière pour placer les chiffres à gauche de la virgule
+  \begin{center}
+    tant que >0 : noter le reste mod 2; remplacer par le quotient de la division par 2
+  \end{center}
+
+  \item Algorithme \og les grands d'abord\fg~ développement de la partie fractionnaire pour placer les chiffres à droite de la virgule.
+  \begin{center}
+    Pour obtenir le nombre de chiffres souhaités:\newline
+    multiplier par 2 : si $\geq 1$ noter 1 sinon noter 0; remplacer par la partie fractionnaire
+  \end{center}
+  On constatera que la suite devient périodique à partir d'un certain rang.
+  
+  \item Décaler la virgule et trouver l'exposant pour la forme normalisée. La mantisse est un nombre dans $[1,2[$.
+\end{enumerate}
+
+Tout nombre décimal est rationnel. La méthode est absolument la même.
+  \section{Exemple}
+Exemple  : $x=\frac{65}{12}$.
+\begin{enumerate}
+  \item Division euclidienne $65 = 5 \times 12 +5$ 
+\begin{displaymath}
+  x = \underset{\text{partie entière}}{\underbrace{5}} + \underset{\text{partie fractionnaire}}{\underbrace{\frac{5}{12}}}
+\end{displaymath}
+
+  \item \og Les petits d'abord.\fg
+\begin{displaymath}
+\renewcommand{\arraystretch}{1.7}
+\begin{array}{lccc}
+5& = 2\times 2 + 1                           &:  & 1,0  \\
+2& = 1\times 2 + 0                           &:  & 01,0  \\
+1& = 0\times 2 + 1                           &:  & 101,0  \\
+0& \text{STOP}                               & :  & 101,0
+\end{array}
+\end{displaymath}
+
+
+  \item \og Les grands d'abord.\fg
+\begin{displaymath}
+\renewcommand{\arraystretch}{1.7}
+\begin{array}{lccc}
+\frac{5}{12}&                                &:  & 0,  \\
+\frac{10}{12}&                               &:  & 0,0  \\
+\frac{20}{12}&\rightarrow \frac{8}{12}       &:  & 0,01  \\
+\frac{16}{12}&\rightarrow \frac{4}{12}       &:  & 0,011  \\
+\frac{8}{12}&                                &:  & 0,0110  \\
+\frac{16}{12}&\rightarrow \frac{4}{12}       &:  & 0,01101  \\
+\frac{8}{12}&                                &:  & 0,011010  
+\end{array}
+\end{displaymath}
+Le développement devient périodique : $0,01\,10\,10\,\cdots \,10$.
+
+  \item Décalage. La mantisse doit appartenir à $[1,2[$.
+\begin{displaymath}
+  101,01\,10\,10\,\cdots \,10 \;\rightarrow \; \underset{\text{mantisse}}{\underbrace{1,0101\,10\,10\,\cdots \,10}}\;\times 2^2
+\end{displaymath}
+On rappelle que pour la mantisse, seuls les chiffres \emph{après la virgule} sont stockés (sur 52 bits pour la norme IEEE 754).
+\end{enumerate}
+
+\end{document}

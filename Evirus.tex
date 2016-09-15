@@ -1,0 +1,53 @@
+L'objet de ce TP est d'introduire à la manipulation par un script Python des fichiers du système sur lequel ce script est exécuté. Ces manipulations vont conduire à l'implémentation d'un virus\footnote{d'après \emph{Les virus informatiques: théorie, pratique et applications}, \'Eric Filiol, \emph{Springer}}. Plus précisément, un virus est un programme qui en plus de sa fonction principale (la \emph{charge virale}) possède une fonction de reproduction consistant à
+\begin{itemize}
+  \item repérer dans le système local les fichiers à infecter,
+  \item se recopier dans les fichiers cibles.
+\end{itemize}
+En général, les virus ont une troisième fonction qui est de \og se cacher\fg.\newline
+On souhaite développer un virus implémentant seulement la fonction de reproduction sans charge virale ni camouflage.\newline
+Ce virus n'est pas dangereux par lui même mais il convient d'être très rigoureux dans le choix du dossier dans lequel on va le placer.
+
+\section*{I. Fichiers et dossiers}
+Tous les fichiers que vous aller créer devront s'insérer dans un même dossier dont le nom doit contenir la chaîne \verb|infect|. Vous devez donc commencer par créer ce dossier dans votre dossier de travail habituel. Vous pouvez aussi créer des sous-dossiers avec les noms que vous voulez, ils ne seront pas utilisés mais enrichissent la situation.\newline 
+ Les scripts attachés à chaque question seront placés dans des fichiers différents.\newline
+En Python, les objets de type \verb|file| représentent les fichiers. Les modules contenant les fonctions utiles pour la manipulation de fichiers sont \verb|os| et \verb|os.path|.
+\begin{enumerate}
+  \item
+\begin{enumerate}
+\item Chercher, dans les modules indiqués, une fonction renvoyant le dossier dans lequel le script s'exécute, une fonction renvoyant la liste des fichiers d'un dossier, une fonction renvoyant l'extension d'un nom de fichier. De quels types sont les objets renvoyés?
+\item \'Ecrire un script affichant d'abord le chemin du dossier dans lequel il est placé puis tous les noms des fichiers de ce dossier.
+\end{enumerate}
+\item
+\begin{enumerate}
+  \item Trouver l'aide sur la fonction \verb|open| et les méthodes \verb|close|, \verb|seek| des objets de type \verb|file|.
+  \item Former un script affichant le texte d'un autre fichier du même dossier.
+  \item Former un script affichant le nombre de lignes d'un autre fichier texte puis ses 5 dernières lignes.
+\end{enumerate}
+\item
+\begin{enumerate}
+  \item Trouver l'aide sur la méthode \verb|write| des objets de type \verb|file|.
+  \item Former un fichier nommé \verb|cible.py|. Former un script ajoutant la chaîne \verb|"BLA BLA BLA"| à la fin du fichier \verb|cible.py|.
+  \item Former un fichier nommé \verb|message.py| contenant ce que vous voulez. Former un script recopiant le texte de \verb|message.py| à la fin de \verb|cible.py|. 
+\end{enumerate}
+
+\end{enumerate}
+
+\section*{II. Virus}
+Dans un script Python, on peut utiliser une constante \verb|__file__| désignant le chemin vers le script lui même. Noter le double \verb|_| (underscore) dans la constante.
+\begin{enumerate}
+  \item Chercher l'aide des fonctions \verb|basename|, \verb|dirname|, \verb|splitext| dans \verb|os.path|. Former un script qui affiche le nom de tous les scripts Python de son répertoire. De plus, son propre nom doit être suivi de \verb|"COUCOU c'est moi!"|. 
+  \item 
+\begin{enumerate}
+  \item Trouver l'aide sur la méthode \verb|find| des objets de type \verb|string|.
+  \item Former un script qui affiche les noms de tous les scripts Python autres que lui même et qui contiennent la chaine de caractères \verb|""" à infecter """|. Selon les systèmes, l'accent du \verb|à| peut poser un problème d'encodage et devra être supprimé.
+\end{enumerate}
+
+  \item Former un script nommé \verb|vivi.py| dont le nombre de lignes est désigné par $p$. Ce script contiendra une chaine de caractère particulière (de votre choix) appelée \emph{signature} dans cet énoncé. La fonction de ce script est de :\newline
+  pour chaque fichier (désigné par \verb|cible|) python (autre que lui même et ne contenant pas la chaine de signature) du dossier de \verb|vivi.py| et contenant \verb|""" à infecter """| 
+  \begin{itemize}
+    \item recopier les $p$ dernières lignes de lui même à la fin de \verb|cible|.
+  \end{itemize}
+Pourquoi demande-t-on de recopier les $p$ dernières lignes du fichier et non le fichier lui même? \`A quoi sert la signature ?
+
+  \item Former un script \verb|antivivi.py|. Bien préciser la fonction de ce script et procéder avec précaution, un antivirus est aussi intrusif qu'un virus et susceptible d'endommager vos fichiers.
+\end{enumerate}

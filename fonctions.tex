@@ -1,0 +1,104 @@
+\input{ipt.tex}
+%En tete et pied de page
+\lhead{Cours IPT}
+\chead{Programmation - Fonctions}
+\begin{document}
+\section{Un objet exécutable}
+Une fonction est un objet qui contient du code. Un tel objet \og fonctionnel\fg~ peut être nommé comme n'importe quel objet. Ce qui caractérise une fonction c'est qu'elle peut être \emph{appelée}. L'appel d'une fonction provoque l'exécution du code qu'elle contient. Les points à bien comprendre sont: la syntaxe de définition, la syntaxe d'appel, les conditions de l'exécution du code appelé.
+\subsection{Syntaxe de définition}
+\begin{verbatim}
+def nomdelafonction(nom1, nom2, ...):
+  instruction1
+  ...
+  return expression
+instructionendehors de la fonction
+\end{verbatim}
+Noter les deux nouveaux mots réservés \verb|def| et \verb|return| qui sont des éléments du langage. L'indentation joue un rôle capital dans la délimitation du bloc de code à inclure dans la fonction. 
+Les noms \verb|nom1|, \verb|nom2| sont les \emph{paramètres} \index{paramètres} de la fonction. L'expression à droite de \verb|return| est ce que \emph{renvoie} la fonction.\newline
+La fonction \texttt{factorielle1} renvoie la factorielle, alors que \texttt{factorielle2} l'affiche.
+\begin{verbatim}
+def factorielle1(n):
+    f = 1
+    while n > 1:
+        f *= n
+        n -= 1
+    return f
+def factorielle2(n):
+    f = 1
+    while n > 1:
+        f *= n
+        n -= 1
+    print f
+\end{verbatim}
+
+\subsection{Syntaxe d'appel}
+Pour appeler une fonction on utilise une expression formée avec le \emph{nom de la fonction suivi de parenthèses} avec des expressions séparées par des virgules entre les parenthèses. Ces expressions sont les \emph{paramètres de l'appel}. Exemple \verb|factorielle1(5)|. Cette expression est un appel de la fonction. Elle provoque l'exécution du code contenu dans la définition. De plus l'expression elle même est évaluée à ce que renvoie la fonction (si elle ne renvoie rien elle est évaluée à \verb|None|).\newline
+Exemple d'appel avec les factorielles déjà définies
+\begin{verbatim}
+f = factorielle1(5)
+print(f + 1)
+f = factorielle2(5)
+print(f + 1)
+\end{verbatim}
+
+
+\section{Portée des noms}
+La \emph{portée d'un nom}\index{portée d'un nom} est la zone de code dans laquelle il est significatif c'est àdire qu'il désigne un objet. Le même nom peut être utilisé plusieurs fois pour désigner des objets différents dans la mesure où les portées ne se mélangent pas.\newline
+Lorsqu'un nom est utilisé pour la première fois (pour désigner un objet, c'est à dire qu'il est placé à gauche d'une assignation) à l'intérieur de la définition d'une fonction, sa portée se limite au bloc de code formant cette définition. On dit que le nom (variable) est \emph{local} à la fonction. Ce principe est la règle par défaut, on peut y déroger mais on essaiera dans un premier temps de pas le faire.\newline
+Un nom qui est assigné à l'extérieur de la définition de la fonction et qui (sans y être assigné) figure à l'intérieur désigne le même objet à l'intérieur et à l'extérieur.
+\begin{verbatim}
+f = "tagada"
+ext = 2
+def factorielle1(n):
+    f = 1
+    while n > 1:
+        f *= n
+        n -= 1
+    print ext
+    return f 
+truc = factorielle1(5)
+print(f,truc) 
+\end{verbatim}
+Les concepts de passage de paramètres par \emph{valeur} ou par \emph{référence} ne sont pas pertinents en Python.\newline
+Les paramètres indiqués lors de la définition sont toujours des variables locales. Lors de l'appel, ils référencent les objets qu'on leur passe.\newline
+Considérons par exemple le cas où la définition de la fonction contient le nom \texttt{nomloc} en position \texttt{i} dans les paramètres. Si lors de l'appel, le nom \texttt{nomglob} est position \texttt{i}, une assignation est réalisée. Le nom local \texttt{nomloc} et le nom global \texttt{nomglob} désignent le même objet.\newline
+Tout dépend ensuite du caractère mutable ou nom de cet objet.\newline
+Si l'objet passé est mutable, il peut être modifié à l'intérieur de la fonction et le nom extérieur pointera vers le même objet modifié. Si l'objet passé n'est pas mutable, alors il ne pourra pas être changé et le nom extérieur pointera vers le même objet évidemment inchangé puisque c'est dans sa nature. En revanche, le nom local pourra être réassigné dans le code de la fonction. 
+
+\section{Exemple}
+Le code Python suivant présente l'implémentation de l'algorithme de recherche d'un motif dans une chaîne de caractère amélioré par rapport à l'algorithme naïf dans le cas où le motif est dans répétition. (voir le cours sur les algorithmes usuels)
+\begin{verbatim}
+def NbCarComm(M,T):
+    m = len(M)
+    i = 0
+    while i < m and M[i] == T[i]:
+        i += 1
+    return i
+    
+aiguille = "bon"
+meule = "bonbonbon,  voila un bien beau bonbon."
+
+print(meule[1:4])
+print(NbCarComm(aiguille,meule))
+
+def ChercheMot(M,T):
+    m = len(M)
+    t = len(T)
+    O = []
+    i = 0
+    while i <= t - m:
+        p = NbCarComm(M,T[i:i+m])
+        print(i,p,T[i:i+m])
+        if p == m:
+            O.append(i)
+        if p > 1:
+            i += p
+        else:
+            i += 1
+    return O
+    
+liste_occurences = ChercheMot(aiguille, meule)
+print(liste_occurences)
+\end{verbatim}
+
+\end{document}

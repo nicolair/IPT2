@@ -1,0 +1,270 @@
+\begin{enumerate}
+ \item 
+ \begin{enumerate}
+  \item  Implémentation en pseudo-code pour \verb|tronq|
+\begin{itemize}
+ \item (\verb|texte| désigne une chaîne de caractère de longueur $\geq L$.)
+ \item \verb|tronq| $\longleftarrow$ une chaîne vide
+ \item \verb|i| $\longleftarrow 0$
+ \item  tant que \verb|i < L|
+   \begin{itemize}
+    \item \verb| tronq = tronq + texte[i]|
+    \item incrémenter \verb|i|
+   \end{itemize}
+ \item renvoyer \verb|tronq|
+\end{itemize}
+Implémentation en Python
+\begin{verbatim}
+def tronq(texte,L):
+    i = 0
+    tronq = ""
+    while i < L :
+        tronq = tronq + texte[i]
+        i += 1
+    return tronq
+\end{verbatim}
+
+Implémentation en pseudo-code pour \verb|compl|
+\begin{itemize}
+ \item (les caractères d'une chaîne de longueur $l$ sont indexés de $0$ à $l-1$)
+ \item (\verb|texte| désigne une chaîne de caractère de longueur $< L$.)
+ \item \verb|l| $\longleftarrow$ la longueur de \verb|texte|
+ \item faire $L - l$ fois
+   \begin{itemize}
+    \item \verb|texte| = \verb|texte + " "| 
+   \end{itemize}
+ \item renvoyer \verb|texte|
+\end{itemize}
+Implémentation en Python
+\begin{verbatim}
+def compl(texte,L):
+    l = len(texte)
+    for i in range(L -l):
+        texte = texte + " "
+    return texte
+\end{verbatim}
+
+\item Implémentation en pseudo-code pour \verb|boustro1|
+\begin{itemize}
+  \item Tronquer ou compléter le texte suivant sa longueur
+  \item \verb|rep| $\longleftarrow$ une liste de $q$ mots vides.
+  \item \verb|j|   $\longleftarrow$  0 (initialisation de l'index dans la liste \verb|rep|)
+  \item \verb|i|   $\longleftarrow$  0 (initialisation de l'index dans le texte)
+  \item \verb|sens| $\longleftarrow$ \verb|"gd"| (de gauche à droite au départ)
+  \item pour chaque caractère \verb|c| du texte
+  \begin{itemize}
+   \item si gauche-droite \verb|rep[j]|$\longleftarrow$ \verb|rep[j] + c|
+   \item si droite-gauche \verb|rep[j]|$\longleftarrow$ \verb|c + rep[j]|
+   \item incrémenter \verb|i|
+   \item si $ i \equiv 0 \mod p$ : changer de sens, incrémenter \verb|j|
+  \end{itemize}
+  \item renvoyer \verb|rep|
+\end{itemize}
+Implémentation en Python
+\begin{verbatim}
+def changer(sens):
+    if sens == "gd":
+        return "dg"
+    if sens == "dg":
+        return "gd"
+
+def boustro1(texte,p,q):
+    # tronquer ou compléter
+    if len(texte) < p*q:
+        texte = compl(texte,p*q)
+    else :
+        texte = tronq(texte,p*q)
+    #print(len(texte))
+    rep = ["" for j in range(q)]
+    i = 0
+    j = 0
+    sens = "gd"
+    for c in texte:
+        #print(i,j, rep[j],c)
+        if sens == "gd" :
+            rep[j] = rep[j] + c
+        if sens == "dg" :
+            rep[j] = c + rep[j]
+        i += 1
+        if i % p == 0 :
+            sens = changer(sens)
+            j += 1
+    return rep
+\end{verbatim}
+
+\item Un Lorem Ipsum est un faux texte arbitraire formé à la renaissance à partir d'un texte de Ciceron et destiné à tester des mises en pages d'imprimerie. Il n'a pas de sens car certains mots seulement sont conservés (choisis pour leurs longueurs et leur agencement les uns par rapport aux autres). Il est toujours utilisé pour cela aujourd'hui. Le Lorem Ipsum utilisé depuis le début des années 1500 est facilement disponible sur le web. Pour l'afficher en boustrophédon, il suffit d'imprimer tour à tour les mots que de la liste renvoyée par la fonction de la question précédente.
+\begin{verbatim}
+texte = "Lorem ipsum dolor sit amet, consectetur ... "
+lili = boustro1(texte,30,10)
+for i in range(10):
+    print(lili[i])
+>>>>>
+Lorem ipsum dolor sit amet, co
+es ,tile gnicisipida rutetcesn
+d do eiusmod tempor incididunt
+ila angam erolod te erobal tu 
+qua. Ut enim ad minim veniam, 
+allu noitaticrexe durtson siuq
+mco laboris nisi ut aliquip ex
+ua siuD .tauqesnoc odommoc ae 
+te irure dolor in reprehenderi
+llic esse tilev etatpulov ni t
+\end{verbatim}
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item L'ensemble $\mathcal{E}$ est délimité par les deux droites d'équation $i+j=0$ et $i-j=0$. Si un point de coordonnées $(i,j)$ appartient à $\mathcal{E}$, on doit donc avoir $i+j \geq 0$ et $i-j \leq 0$. Il y a aussi une contrainte de parité: pour les lignes de numéros pair ($j=0, 2, 4, \cdots$) le numéro de la colonne doit aussi être pair, de même $j$ impair entraîne $i$ impair. Les coordonnées $i$ et $j$ doivent donc être de même parité. Cela se traduit par $i-j \equiv 0 \mod 2$. La réciproque est évidente.
+  \begin{displaymath}
+    \forall(i,j)\in \Z\times \N:\;(i,j)\in\mathcal{E} \Leftrightarrow 
+    \left\lbrace 
+    \begin{aligned}
+      &i+j\geq 0 \\ &i-j \leq 0 \\ &i-j \equiv 0 \mod 2
+    \end{aligned}
+    \right. 
+  \end{displaymath}
+
+\item Le numéro d'un point est le nombre de points strictement avant lui dans l'ordre boustrophédonique. Pour un point de coordonnées $(i,j)$, quels sont les points strictement avant lui?\newline
+D'abord tous ceux des lignes strictement au dessus c'est à dire de numéro $0,1,\cdots, j-1$. Ils sont au nombre de $1+2+\cdots+j=\frac{j(j+1)}{2}$.\newline
+Pour les points de la ligne $j$, il faut tenir compte du sens c'est à dire de la parité de $j$. Présentons les deux cas dans un tableau
+\begin{center}
+\renewcommand{\arraystretch}{1.8}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+       & $-j$ & $-j+2$ & $\cdots$ & $i-2$ & $i$ & $i+2$ & $\cdots$ & $j-2$ & $j$ & Nb   \\ \hline
+pair   & $*$    & $*$  & $\cdots$ & $*$   &     &       &          &       &     & $\frac{i+j}{2}$\\ \hline
+impair &      &        &          &       &     & *     & $\cdots$ & $*$   & $*$   & $\frac{j-i}{2}$
+\end{tabular}
+\end{center}
+En combinant les deux, on obtient
+\begin{displaymath}
+  \text{ numéro de $(i,j)$ est }: \frac{j(j+1)}{2} + \frac{j+(-1)^ji}{2}
+\end{displaymath}
+
+\item Le déplacement sur une ligne se fait en ajoutant $\pm 2$ suivant le sens qui dépend de la parité de $j$. On regroupe les deux cas en ajoutant $(-1)^{j}\,2$ au numéro de la colonne.\newline
+Lors d'un passage à une nouvelle ligne, on ajoute $(-1)^j$ (au lieu de $\pm 2$) au numéro de la colonne et $1$ au numéro de la ligne.\newline
+Comment savoir s'il y a lieu de passer à la ligne ? La nullité de $(i-j)(i+j)$ caractérise les points qui sont au bord du domaine aussi bien au début d'une ligne qu'à la fin. La condition caractérisant le fait d'être à la fin d'une ligne doit tenir compte du sens de parcours de la ligne. Elle s'écrit $i - (-1)^jj=0$.\newline
+On peut implémenter la fonction en pseudo-code de la manière suivante
+\begin{itemize}
+  \item si \verb|(i,j)| représente une fin de ligne
+  \begin{itemize}
+    \item \verb|i|$\longleftarrow i+(-1)^j$
+    \item  \verb|j|$\longleftarrow j+1$
+  \end{itemize}
+  \item sinon
+  \begin{itemize}
+    \item \verb|i|$\longleftarrow i+(-1)^j*2$
+  \end{itemize}
+  \item renvoyer $(i,j)$
+\end{itemize}
+Une implémentation en Python
+\begin{verbatim}
+def suivant(i,j):
+    if i + j*(-1)**j == 0:
+        i += (-1)**j
+        j += 1
+    else:
+      i += 2*(-1)**j
+    return i,j
+print(suivant(1,3))
+>>>> (-1,3)
+\end{verbatim}
+\item  On parcourt tous les points en incrémentant un compteur jusqu'à trouver le point donné. On peut implémenter en pseudo-code la fonction demandée de la manière suivante
+\begin{itemize}
+  \item si $(i,j)\not\in\mathcal{E}$ renvoyer $-1$
+  \item \verb|P| $\longleftarrow 0,0$
+  \item \verb|n| $\longleftarrow 0$
+  \item tant que $P \neq i,j$
+  \begin{itemize}
+    \item \verb|P| $\longleftarrow$ \verb|suivant(P)|
+    \item \verb|n| $\longleftarrow$ \verb|n + 1|
+  \end{itemize}
+  \item renvoyer \verb|n|
+\end{itemize}
+Le code Python est le suivant, il comporte aussi une vérification croisée.
+\begin{verbatim}
+def suivant(i,j):
+    if i - j*(-1)**j == 0:
+        i += (-1)**j
+        j += 1
+    else:
+      i += 2*(-1)**j
+    return i,j
+#print(suivant(-3,3))
+
+def num(i,j):
+    if i-j>0 or i+j<0 or not( (i-j) % 2 == 0):
+        return -1
+    P = 0,0
+    n = 0
+    while P[0] != i or P[1] != j:
+        P = suivant(P[0],P[1])
+        n += 1
+    return n
+print(num(3,7))
+# à titre de vérification
+i = 3
+j = 7
+print((j*(j+1)+j+i*(-1)**j)/2)
+\end{verbatim}
+
+\item La fonction \verb|boustro2| utilise une fonction nommée \verb|Vsuivant| qui prend un paramètre \verb|P| désignant un point "augmenté" du sens représenté par une liste de trois nombres, les deux premiers sont les coordonnées du point, le troisième est $+1$ ou $-1$ suivant que le point suivant est à droite ou à gauche. On pourrait se passer de cette troisième donnée mais il faudrait alors la calculer à chaque fois. La fonction \verb|Vsuivant| a deux actions: elle \emph{modifie} la liste désignée par \verb|P| en la faisant passer au point suivant et elle \emph{renvoie} la valeur associée au point suivant.\newline
+Le pseudo-code de \verb|boustro2| est très simple.
+\begin{itemize}
+  \item \verb|P| $\longleftarrow$ \verb|[0,0,1]| (initialisation du point augmenté)
+  \item \verb|Valeur| $\longleftarrow$ \verb|{(0,0):1}| (initialisation du dictionnaire des valeurs)
+  \item \verb|c| $\longleftarrow 1$ (initialisation du compteur de mots du dictionnaire)
+  \item tant que \verb|c < n|
+  \begin{itemize}
+    \item \verb|v| $\longleftarrow$ \verb|Vsuivant(P)|
+    \item \verb|Valeur[P[0],P[1]]| $\longleftarrow$ \verb|v| (écrire dans le dictionnaire)
+    \item incrémenter \verb|c|
+  \end{itemize}
+  \item renvoyer \verb|Valeur|
+\end{itemize}
+Celui de \verb|Vsuivant| est un peu plus compliqué
+\begin{itemize}
+  \item \verb|sens| $\longleftarrow$ \verb|P[2]| (pour rendre le code plus clair) 
+  \item si $P$ est en fin de ligne
+  \begin{itemize}
+    \item \verb|P[0]| $\longleftarrow$ \verb|P[0] + sens| (première coord.)
+    \item \verb|P[1]| $\longleftarrow$ \verb|P[1] + 1| (deuxième coord)
+    \item \verb|P[2]| $\longleftarrow$ \verb|-P[2] = P[2]| (chgt de sens)
+    \item renvoyer 0
+  \end{itemize}
+  \item \verb|a| $\longleftarrow$ \verb|P[0]| (la première coord. avant modif)
+  \item \verb|P[0]| $\longleftarrow$ \verb|a + 2*sens|
+  \item (renvoyer la somme des valeurs de l'ancien point et du point du dessus)
+  \item renvoyer \verb|Valeur[a,P[1]] + Valeur[a+sens,P[1]-1]|
+\end{itemize}
+Le code Python est le suivant
+\begin{verbatim}
+def boustro2(n):
+    # initialisations
+    P = [0,0,1]
+    Valeur = {(0,0):1}
+    c = 1
+    def Vsuivant(P):
+        sens = P[2]
+        if P[0] - sens*P[1] == 0:
+            P[0] += sens
+            P[1] += 1
+            P[2] *= -1
+            return 0
+        a = P[0]
+        P[0] += 2*sens
+        return  Valeur[a,P[1]] + Valeur[a+sens,P[1]-1] 
+    # boucle principale
+    while c < n:
+        v = Vsuivant(P)
+        Valeur[P[0],P[1]] = v
+        c += 1
+    return  Valeur
+    
+print(boustro2(10))
+>>>>
+{(-3, 3): 2, (-1, 1): 1, (0, 0): 1, (3, 3): 0, (-1, 3): 2,
+ (-2, 2): 0, (0, 2): 1, (1, 3): 1, (2, 2): 1, (1, 1): 0}
+\end{verbatim}
+
+\end{enumerate}
+\end{enumerate}

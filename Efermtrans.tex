@@ -1,0 +1,38 @@
+Dans cet exercice, tous les couples, triplets, $\cdots$, $p$-uplets mathématiques seront représentés en Python par des \emph{listes}. Un entier naturel $n\geq 2$ est fixé.\newline
+Les éléments d'un ensemble $\Omega$ à $p$ éléments sont numérotés de $0$ à $n-1$. Une relation sur cet ensemble est donnée par un ensemble $\mathcal{R}_0$ de couples d'éléments de $\Omega$ $(i,j)$. Cette relation sera représentée informatiquement par une liste \texttt{R} (l'ordre est sans importance) de couples de numéros, chaque couple sera représenté par une liste de deux entiers entre $0$ et $n-1$.\newline
+Exemple avec un ensemble à $10$ éléments, $n=9$.
+\begin{displaymath}
+  \mathcal{R}_0 = \left\lbrace (1,2), (2,7), (0,2), (9,0), (8,1), (2,3), (7,4), (7,6), (5,6), (7,5), (5,9)\right\rbrace 
+\end{displaymath}
+On remarque que la relation n'est pas transitive. Par exemple $(1,2)$ et $(2,3)$ sont dans $\mathcal{R }_0$ mais pas $(1,3)$.\newline
+L'objet de cet exercice est de calculer un ensemble de couples $\mathcal{R}$ contenant  $\mathcal{R}_0$ telle que la relation soit transitive et que $\mathcal{R}$ soit aussi petit que possible (fermeture transitive de $\mathcal{R}_0$).
+\begin{enumerate}
+  \item Initialisation.
+\begin{enumerate}
+  \item \'Ecrire le code Python assignant à \texttt{R0} une liste représentant $\mathcal{R}_0$.
+  \item Pour stocker la relation, on utilise un tableau \texttt{r} à double entrée et valeur booléenne plutôt qu'une suite de couples. Initialiser \texttt{r} de sorte que
+  \begin{displaymath}
+    \forall(i,j)\in \llbracket 0, n-1\rrbracket,\;
+\texttt{r[i][j]} 
+\left\lbrace 
+\begin{aligned}
+  \leftarrow &\texttt{False} \text{ si } (i,j)\notin \mathcal{R}_0 \\
+  \leftarrow &\texttt{True} \text{ si } (i,j)\in \mathcal{R}_0
+\end{aligned}
+\right. 
+  \end{displaymath}
+  \item \'Ecrire le code Python permettant de former une liste nommée \texttt{T} dont les valeurs sont tous les $(i,j,k)\in \llbracket 0, n-1\rrbracket$. L'ordre dans lequel les triplets apparaissent dans \texttt{T} est sans importance. 
+\end{enumerate}
+
+\item Condition de transitivité.
+\begin{enumerate}
+\item Soit $\mathcal{R}$ un ensemble de couples de $\Omega$. Compléter la proposition suivante:
+\begin{displaymath}
+  \text{La relation associée à $\mathcal{R}$ n'est pas transitive} \Leftrightarrow \exists (i,j,k) \in \Omega^3 \text{ tel que } \cdots
+\end{displaymath}
+\item Comment s'écrit la condition précédente à l'aide du tableau \texttt{r}.
+\end{enumerate}
+
+\item En liaison avec la question 1, remplacer les \texttt{???} dans l'encadré suivant par du code convenable pour calculer la fermeture transitive représentée par \texttt{r}.
+\lstinputlisting[firstline=1, lastline=23]{Efermtrans.py}
+\end{enumerate}

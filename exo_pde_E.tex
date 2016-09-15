@@ -1,0 +1,35 @@
+Soit $b\in \Z$ et $a\in \N^*$, la division euclidienne de $b$ par $a$ se traduit par:
+\begin{displaymath}
+  \exists q\in \Z \text{ et } r\in \llbracket 0, a \llbracket \text{ tq } b = qa +r
+\end{displaymath}
+On désigne par \emph{pseudo division euclidienne} (pde) de $b$ par $a$ la propriété :
+\begin{displaymath}
+  \exists q\in \Z \text{ et } r\in \llbracket 0, a \llbracket \text{ tq } b = qa - r
+\end{displaymath}
+On dira encore que $q$ est le quotient et $r$ le reste dans la pseudo division de $b$ par $a$.
+\begin{enumerate}
+  \item Exprimer avec les symboles $\lfloor\;\rfloor$ et $\lceil\;\rceil$ le quotient de $b$ par $a$ pour chaque division.
+  \item 
+\begin{algorithm}
+  $b\leftarrow$ un naturel non nul\;
+  $a\leftarrow a_{ini}$ un naturel non nul strictement plus petit que $b$\;
+  $L\leftarrow$ une liste vide\;
+  $s\leftarrow 0$\;
+  $Q\leftarrow 1$\;
+  \Tq{ a > 0}{
+    $q\leftarrow$ quotient de la pde de $b$ par $a$\;
+    $r\leftarrow$ reste de la pde de $b$ par $a$\;
+    $a\leftarrow r$\;
+    $Q\leftarrow Q * q$\;
+    $s \leftarrow s + \frac{1}{Q}$\;
+    placer $Q$ à la fin de $L$\;
+  }
+  \caption{Un développement}
+  \label{exo_pde_E_1}
+\end{algorithm}
+Pour la boucle de l'algorithme \ref{exo_pde_E_1}, montrer que $a$ est un variant et 
+\begin{displaymath}
+  \Phi = \left( sb + \frac{a}{Q} == a_{ini}\right) 
+\end{displaymath}
+est un invariant. Que désigne $a$ après la sortie de la boucle? Quelle sorte de décomposition cet algorithme permet-il de calculer?
+\end{enumerate}

@@ -1,0 +1,51 @@
+\subsection{Résolution d'équations}
+Voir cours.
+
+\subsection{Matrices échelonnées}
+\begin{enumerate}
+  \item La matrice suivante satisfait aux conditions
+\begin{displaymath}
+\begin{pmatrix}
+  1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+  0 & 4 & 1 & 2 & 5 & 5 & 4 & 0 \\
+  0 & 0 & 0 & 2 & 1 & 0 & 2 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 & 9 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 
+\end{pmatrix}  
+\end{displaymath}
+
+  \item On modifie l'algorithme du pivot partiel de la manière suivante.\newline
+Lorsque la recherche d'un pivot dans le bas de la colonne $i$ a échoué, on le cherche dans le bas (indice de ligne supérieur ou égal à $i$) de la colonne $i+1$ et ainsi de suite. La recherche d'un pivot echouera donc seulement si tout le bas de la matrice est nul c'est à dire dans la même configuration que pour le pivot total. Il est toutefois inutile de permuter les colonnes car tout ce qui est à gauche d'un pivot trouvé de cette manière est nul. La phase de nettoyage se poursuit donc sans changement. Le pseudo code est présenté comme algorithme \ref{pivech_1}.\newline
+La fonction \og Chercher un indice-pivot $ip$ après $i$ dans la colonne $j$\fg ~  renvoie un indice $i\leq k\leq p$ tel que $a_{k j}\neq 0$ et renvoie $p+1$ si tous les $a_{k j}$ sont nuls. 
+\begin{algorithm}[h]
+  \Donnees{\;
+    $A$ tableau $p$ lignes, $q$ colonnes\;
+  }
+  \Comment{initialisation}
+  $i\leftarrow 1$ : compteur\;
+  $ip\leftarrow  0$ : pour entrer dans la boucle\;
+  \Tq{ $i \leq p$ et $ip \leq p$}{
+    $j\leftarrow i$ : un numéro de colonne\;
+    $continue\leftarrow True$ : un booléen pour controler une boucle \;
+    \Tq{$continue$ et $j\leq q$ }{
+      $ip \leftarrow$ Chercher un indice-pivot $ip$ après $i$ dans la colonne $j$\;
+      \eSi{$ip >p$}{
+        $j\leftarrow j+1$ : changement de colonne\;
+      }{
+        $continue\leftarrow False$: sortie de la boucle \;
+      }
+    }
+    \Si{$ip \leq p$}{
+      Permuter les lignes $ip$ et $i$ de $A$ et $Y$\;
+      Nettoyer les lignes $i+1$ à $p$ avec la ligne $i$\;
+      Incrémenter $i$\;
+    }
+  }
+  \caption{Méthode du pivot échelonné}
+  \label{pivech_1}
+\end{algorithm}
+
+  \item Considérons une matrice $A$ échelonnée en lignes et en colonnes. Notons $s$ sa fonction d'échelonnement définie sur $\llbracket 1,p\rrbracket$ et $t$ celle de sa transposée définie sur $\llbracket 1, q\rrbracket$. Examinons sa première colonne: comme $s(i)\geq 2$, tous les éléments $a_{k,1}$ de la première colonne sauf $a_{1 1}$ sont nuls. Considérons sa première ligne, par transposition, elle devient la première colonne de la transposée et le raisonnement précédent montre que tous les $a_{1,k}$ sont nuls sauf le premier.\newline
+  La matrice extraite obtenue en supprimant la première ligne et la première colonne est encore échelonnée en lignes et en colonnes et on peut continuer tant que la matrice est non nulle. On en déduit qu'une matrice échelonnée en ligne est colonne est diagonale avec des termes non nul seulement sur le début de la diagonale. Elle a la même forme que $J_r$ sauf que la diagonale ne contient pas forcément que des $1$.
+
+\end{enumerate}

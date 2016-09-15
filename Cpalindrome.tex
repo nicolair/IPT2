@@ -1,0 +1,137 @@
+\subsubsection{Retournement d'une liste}
+Dans l'algorithme de retournement, il faut faire attention à ne pas permuter deux fois.
+\begin{itemize}
+  \item \verb|i| $\longleftarrow 0$ (index du début)
+  \item \verb|n| $\longleftarrow$ (longueur de \verb|L|)$-1$ (index de la fin)
+  \item tant que \verb| i < j|
+  \begin{itemize}
+    \item échanger les valeurs de \verb|L[i]| et \verb|L[j]|
+    \item incrémenter \verb|i|
+    \item décrémenter \verb|j|
+  \end{itemize}
+\end{itemize}
+Le code Python et un petit test
+\begin{verbatim}
+def retournL(L):
+    i = 0
+    j = len(L) - 1
+    while i < j:
+        L[i] , L[j] = L[j] , L[i]
+        i += 1
+        j -= 1
+
+L = [1,2,3,4,5,6]
+print(L)
+retournL(L)
+print(L)
+>>>>
+[1, 2, 3, 4, 5, 6]
+[6, 5, 4, 3, 2, 1]
+\end{verbatim}
+
+\subsubsection{Décomposition et composition}
+\begin{enumerate}
+  \item Il s'agit de l'algorithme de numération
+\begin{itemize}
+  \item \verb|p| $\longleftarrow$ le plus grand des $10^k$ tels que $ 10^k \leq n$
+  \item \verb|L| $\longleftarrow$ une liste vide
+  \item tant que \verb|p >= 1|
+  \begin{itemize}
+    \item ajouter le quotient de la division de $n$ par $p$ à \verb|L|
+    \item \verb|n| $\longleftarrow$ le reste de la division de $n$ par $p$ à \verb|L|
+    \item \verb|p| $\longleftarrow$ $p// 10$
+  \end{itemize}
+  \item renvoyer \verb|L|
+\end{itemize}
+L'implémentation en Python est
+\begin{verbatim}
+def decomp(n):
+    p = 1
+    while p <= n:
+        p *= 10
+    p = p // 10
+    L = []
+    while p >= 1:
+        L.append( n // p)
+        n = n % p
+        p = p // 10
+    return L
+\end{verbatim}
+\item
+\begin{enumerate}
+  \item Les deux algorithmes renvoient le nombre dont la liste \verb|L| est la représentation décimale. On suppose que cette liste est de longueur $n$.\newline
+  Dans le premier algorithme, l'opération \verb|v| $\longleftarrow$ \verb|v + c*10**i| est exécutée $n$ fois. Or cette opération comprend une addition et $i$ multiplication. Le premier algorithme effectue donc $n$ additions et $\frac{n(n+1}{2}$ multiplications.\newline
+  Dans le deuxième algorithme, l'opération \verb|v| $\longleftarrow$ \verb|10*v + L[i]| est aussi exécutée $n$ fois mais elle comprend une seule addition et une seule multiplication. Le deuxième algorithme effectue donc $n$ additions et multiplications.  
+  \item Le deuxième algorithme est implémenté par le code suivant
+\begin{verbatim}
+def comp(L):
+    v = 0
+    i = 0
+    while i < len(L):
+        v = 10*v + L[i]
+        i += 1
+    return v
+\end{verbatim}
+\end{enumerate}
+
+\end{enumerate}
+
+\subsubsection{Retournement d'un nombre}
+\begin{enumerate}
+  \item \begin{enumerate}
+  \item Les fonctions demandées sont immédiates
+\begin{verbatim}
+def retournN(n):
+    L = decomp(n)
+    L.reverse()
+    return comp(L)
+    
+def sym(n):
+    return n + retournN(n)
+\end{verbatim}
+\item Le pseudo-code de \verb|delta| est immédiat
+\begin{itemize}
+  \item \verb|i| $\longleftarrow 0$ (un compteur)
+  \item \verb|s| $\longleftarrow$ \verb|retournN(n)|
+  \item tant que \verb|s != n| et que \verb|i <= p|
+  \begin{itemize}
+    \item \verb|n| $\longleftarrow$ \verb| n + s|
+    \item \verb|s| $\longleftarrow$ \verb|retournN(n)|
+    \item incrémenter \verb|i|
+  \end{itemize}
+  \item afficher \verb|n|
+  \item renvoyer \verb|i|
+\end{itemize}
+Avec un tel code, \verb|delta(n,p)| est un nombre inférieur ou égal à $p+1$. S'il est inférieur ou égal à $p$ c'est bien $\delta_n$ mais s'il est égal à $p+1$, on sait seulement que $\delta_n$ (s'il existe) est strictement supérieur à $p$.
+Code Python
+\begin{verbatim}
+def delta(n,p):
+    i = 0
+    s = retournN(n)
+    while s != n and i <= p:
+        n = n + s
+        s = retournN(n)
+        i += 1
+    print(n)
+    return i
+\end{verbatim}
+\item En utilisant le code
+\begin{verbatim}
+p = 5000
+n = 197
+d = 0
+nmax = 1
+dmax = 0
+while d <= p and n <= 300 :
+    if d > dmax:
+        dmax = d
+        nmax = n
+    n += 1
+    d = delta(n,p)
+
+print(n,nmax,dmax)
+\end{verbatim}
+d'abord avec $n=1$, on trouve que le premier nombre suspect est 196. Le suivant que j'ai trouvé (qui n'est pas palindromisé par 5000 itérations) est 295. Le nombre 196 a fait l'objet de nombreux calculs. Quelques millions d'itérations ne conduisent pas à un palindrome sans que l'on sache pour autant montrer qu'il est impossible d'obtenir un palindrome par itérations.
+\end{enumerate}
+
+\end{enumerate}

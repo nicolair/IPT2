@@ -1,0 +1,311 @@
+\input{ipt_beamer.tex}
+\lstset{language=Scilab,frame=single}
+\begin{document}
+\begin{frame}
+  \frametitle{Scilab : présentation}
+Langage de programmation interprété associé à une collection d'algorithmes \emph{numériques}
+
+L'espace de travail est constitué de plusieurs fenêtres:
+\begin{itemize}
+  \item la console pour exécuter des commandes
+  \item l'éditeur pour écrire des programmes
+  \item les fenêtres graphiques pour afficher des graphiques
+  \item le navigateur d'aide
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Scilab: console}
+Exécution interactive de commandes 
+
+Fenêtre en haut à droite : "Navigateur de variables" pour garder la maîtrise de ce que représentent les noms déjà définis.
+
+Après l'invite \texttt{---->}, saisir une commande et appuyer sur la touche "Entrée" ou "Retour".
+\begin{verbatim}
+  --> 57/4
+  -->1 + 2
+\end{verbatim}
+si ";" après une commande: rien ne s'affiche.
+
+Pour interrompre un programme en cours d'exécution, passer par le menu "Contrôle" de la barre de menu.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Scilab: données}
+\begin{itemize}
+  \item Le point du \texttt{3.} dans le deuxième exemple signifie que ce qui est renvoyé est de type float.
+  \item En Scilab, tous \emph{les calculs sont numériques} (norme IEEE 754 en double précision sur 64 bits).
+  \item Les objets mathématiques sont hors de portée. Scilab ne peut en fournir que des valeurs numériques approchées.\newline
+ \texttt{\%e } et \texttt{\%pi} désignent les valeurs approchées des nombres $e$ et $\pi$ et non ces nombres eux mêmes.
+  \item En fait Scilab manipule essentiellement des \emph{matrices} de nombres flottants.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Scilab: navigateur d'aide}
+Le \emph{navigateur d'aide} est le principal outil.
+
+ouvrir le navigateur d'aide :
+\begin{itemize}
+  \item avec le "?" de la barre de menu puis "Aide de Scilab"
+  \item en tapant simplement sur le "F1" du clavier
+\end{itemize}
+se déplacer dans le navigateur d'aide
+\begin{itemize}
+  \item dans le navigateur d'aide : table des matières ou ligne de recherche.
+  \item dans la console taper \texttt{--> help mot} (avec guillemets)
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Scilab: éditeur de scripts}
+L'éditeur est appelé sciNotes.\newline
+Fichiers de code: extension ".sce".\newline
+Pour l'ouvrir: premiere icone de la barre d'outils ou  "Applications>SciNotes" de la barre de menus.\newline
+Enregistrement par "Fichier>Enregistrer" de la barre de menus ou par l'icone de la barre d'outils. \newline
+Exécution du code dans la console par "Exécuter>...fichier.." de la barre de menus. Possibilités d'afficher ou non les commandes.\newline
+Les commentaires sont précédés par "//".\newline
+En principe une seule commande par ligne, plusieurs en les séparant par des "," ou des ";".\newline
+Espaces ignorés, casse (majuscule / minuscule) significative.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Scilab: types de données}
+\begin{itemize}
+  \item "nombres réels" : float
+  \item matrices de nombres
+  \item booléens \texttt{\%t} ou \texttt{\%T}, \texttt{\%f} ou \texttt{\%F}. Les opérateurs 
+  \begin{verbatim}
+    &  |  ~  ==  ~=  <>  <  >  <=  >=
+  \end{verbatim}
+renvoient des valeurs booléennes. Noter que \verb|~a| est la négation de \texttt{a} et que l'on peut utiliser indifféremment \verb|~=| ou \texttt{<>}.
+\item \texttt{\&}: forme infixe de la fonction préfixe \texttt{and}. Idem pour \texttt{|} et \texttt{or}.
+\item Entiers : plusieurs sortes d'entiers en dehors des "entiers flottants".
+\item Chaînes de caractères: délimiteurs \texttt{"} (guillemets).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Scilab: fonctions usuelles}
+Syntaxe d'appel : nom de la fonction suivie des paramètres entre parenthèses.
+\begin{itemize}
+  \item opérations usuelles : "+", "*", "\textasciicircum" (puissance).
+  \item \texttt{disp} affiche l'évaluation de son argument.
+  \item \texttt{tic} , \texttt{toc} déclenche et arrête un chronomètre.
+  \item \texttt{format} nombre de chiffres \emph{présentés} (le nombre des chiffres \emph{utilisés} non modifié)
+  \item \texttt{x} désignant un nombre complexe: \texttt{sqrt(x)} (partie réelle $\geq 0$), \texttt{exp(x)}, \texttt{abs(x)}, \texttt{int(x)} (troncature), \texttt{floor(x)}, \texttt{ceil(x)}
+  \item \texttt{x} désignant une matrice: \texttt{sum(x)}, \texttt{prod(x)}, \texttt{gsort(x)} (trier), \texttt{length(x)} , \texttt{size(x)}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Scilab: matrices, construction}
+\begin{itemize}
+  \item Toutes les données sont des matrices.
+  \item Les nombres (éventuellement complexes mais float) sont des matrices $1\times1$.
+  \item Constructeur-délimiteur : les crochets "\texttt{[ ]}" avec des séparateurs 
+  \begin{itemize}
+    \item "," pour des matrices lignes
+    \item ";" pour des matrices colonnes
+  \end{itemize}
+\begin{verbatim}
+  disp([1,3,7]) ; disp([1;3;7]);
+  truc = [1,2,[4;8],[77,55,88]];
+\end{verbatim}
+
+  \item L'opérateur "\texttt{:}" renvoie une matrice ligne de nombres (incrément 1 par défaut) . On peut introduire un deuxième ":". Le terme du milieu désigne l'incrément.
+\begin{verbatim}
+  disp(1.2:5.1); disp(1.2:0.5:5.1);
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Scilab: matrices, itération}
+L'itérateur \texttt{for} permet de parcourir une matrice ligne 
+\begin{verbatim}
+  // matrice est le nom d'une matrice
+  for truc = matrice
+    // truc désigne l'élément courant de la matrice 
+    instructions;
+  end
+\end{verbatim}
+Pour faire varier un compteur \texttt{i} en l'incrémentant de 1 entre deux entiers désignés par \texttt{a} et \texttt{b}, utiliser 
+\begin{verbatim}
+  for i = a:b instructions; end
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Scilab: matrices, valeurs}
+\begin{itemize}
+  \item Parenthèses pour accéder aux valeurs et les modifier.
+  \item Si \texttt{nomv} est le nom d'une variable, c'est le nom d'une matrice. Si \texttt{i} entier, \texttt{nomv(i)} évalué comme la ieme valeur de la matrice ou erreur d'index si \texttt{i} ne désigne pas un indice acceptable.
+\begin{verbatim}
+u = [1,2,3,4,7,8]; disp(u(4)); disp(u(9));  
+u = [1;2;3;4;7;8]; disp(u(4)); disp(u(9)); 
+u = [[1,2];[3,4];[7,8]]]; disp(u(1)); 
+disp(u(2)); disp(u(3));disp(u(4)); disp(u(9));  
+\end{verbatim}
+  \item Si \texttt{nomv(i)} est à gauche d'un signe \texttt{=} et si l'expression à droite est évaluée à un type compatible avec \texttt{nomv}, la matrice est étendue par des valeurs nulles jusqu'à l'indice \texttt{i}.
+\begin{verbatim}
+  u = 4:10 ; u(15) = 17.5; disp(u)
+\end{verbatim}
+  \item Attention le premier indice d'une matrice est $1$ et non pas $0$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Scilab: noms}
+\begin{itemize}
+  \item Langage non typé.
+  \item Un nom désigne une matrice ou une fonction.
+  \item Syntaxe d'assignation d'un nom de matrice: nom = expression.
+  \item Si le résultat d'un calcul n'est pas assigné à un nom, il l'est par défaut à \texttt{ans}. (answer)
+  \item Syntaxe de définition d'une fonction. Le nom doit être placé à \emph{droite} de l'égalité:
+\begin{verbatim}
+function sortie = nom_de_fonction(entree)
+  instructions assignant une valeur à sortie;
+endfunction
+\end{verbatim}
+\texttt{sortie} et \texttt{entree} sont locaux au code entre \texttt{function} et \texttt{endfunction}. Ils peuvent être remplacés par n'importe quels autres mots (non utilisés).
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Scilab: contrôles}
+\begin{itemize}
+  \item Syntaxe du \texttt{if} (\texttt{cond} s'évalue en booléen)
+\begin{verbatim}
+  if ( cond ) then
+    instructions
+  else
+    autres intructions
+  end
+\end{verbatim}
+Le \texttt{else} et le segment de code qui suit sont facultatifs. On peut introduire des segments de code avec des \texttt{elseif}.
+
+\item Le branchement \texttt{select} permet de combiner plusieurs \texttt{if} pour diriger vers plusieurs possibilités. Voir l'aide.
+
+\item La syntaxe de la boucle \texttt{while} 
+\begin{verbatim}
+  while ( cond )
+    instructions
+  end
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Des suites définies par récurrence}
+On considère des suites de nombres réels définies par une relation de récurrence d'ordre $2$ et deux valeurs initiales.
+\begin{displaymath}
+  u_1>0,\; u_2>0,\;
+  \forall n>2:\;
+  u_{n}= 111 - \frac{1130}{u_{n-1}} + \frac{3000}{u_{n-1}u_{n-2}}
+\end{displaymath}
+On se propose de les explorer numériquement avec Scilab.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Implémentation numérique Scilab 1}
+On garde la matrice de toutes les valeurs de la suite
+\lstinputlisting[language=Scilab, firstline=5, lastline=12]{introcalcnum.sce}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Implémentation numérique Scilab 2}
+On ne garde que les valeurs permettant le calcul.
+\lstinputlisting[language=Scilab, firstline=14, lastline=20]{introcalcnum.sce}
+
+Pour les conditions initiales proposées, il semble que la suite converge vers $100$ et pour $(\frac{11}{2},\frac{61}{11})$ ?
+\end{frame}
+
+\begin{frame}
+  \frametitle{Implémentation numérique Python}
+Comme la précédente, mais en Python
+\lstinputlisting[language=Python, firstline=7, lastline=15]{introcalcnum.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Implémentation formelle Python}
+Valeurs initiales dans $\Q$ $\Rightarrow$ toutes les valeurs de la suite dans $\Q$.\newline
+Pour calculer dans $\Q$: bibliothèque de calcul formel sympy.
+\lstinputlisting[language=Python, firstline=26, lastline=34]{introcalcnum.py}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Maths avec Scilab et SymPy}
+Si convergence, la limite est une racine du polynôme
+\begin{displaymath}
+  X^3 - 111X^2+1130X-3000
+\end{displaymath}
+\'Evaluation numérique des racines avec Scilab
+\begin{verbatim}
+P = poly([-3000,1130,-111,1],"X","coeff")
+disp(P)
+racines = roots(P)  
+\end{verbatim}
+Il semble que les racines soient $5$, $6$ et $100$. Preuve avec Sympy
+\begin{verbatim}
+X = sympy.symbols('X')
+P = (X-5)*(X-6)*(X-100)
+P = sympy.expand(P)
+print(P)
+\end{verbatim}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Interprétation géométrique}
+$\mathcal{P} = \R^2$ privé des deux axes de coordonnées, $F$ de $\mathcal{P}$ dans $\R^2$ 
+\begin{displaymath}
+ F:\; (x,y)\mapsto (y, 111 - \frac{1130}{y} + \frac{3000}{xy})
+\end{displaymath}
+Les suites de nombres sont associées à des suites de points:
+\begin{displaymath}
+  P_1 = (u_1,u_2),\; \forall n\geq 2, P_n = (u_n,u_{n+1}) = F(P_{n-1})
+\end{displaymath}
+\begin{itemize}
+  \item Points fixes pour $F$: $A=(5,5)$, $B=(6,6)$, $C=(100,100)$.
+  \item Numériquement $C$ stable et $A$, $B$ instables.
+  \item Mathématiquement incohérent.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Une explication}
+\begin{itemize}
+  \item Il existe une courbe $\Gamma$ (contenant $A$ et $B$ mais pas $C$) et globalement stable: $M\in \Gamma \Rightarrow f(M)\in \Gamma$.
+  \item Point initial $\in\Gamma$ $\Rightarrow$ suite sur $\Gamma$ et converge vers $B$.
+  \item Point initial $\notin \Gamma$ $\Rightarrow$ suite de points converge vers $C$.
+  \item \'Equation de la courbe à coefficients entiers, calcul formel exact avec un point initial $\in \Gamma$, la convergence mathématique se réalise.
+  \item Calcul numérique. Erreurs d'arrondi $\Rightarrow$ les points sortent de $\Gamma$ et sont capturés par le bassin d'attraction de $C$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Comment trouver la courbe stable?}
+\begin{itemize}
+  \item Avec SymPy. Mais calcul formel sorti du programme.
+  \item Numériquement.
+  \begin{itemize}
+    \item On considére tous les points d'abscisse entre $1.1$ et $10$.
+    \item On forme la suite dont les valeurs initiales sont les coordonnées du point.
+    \item On trace le point seulement si le nombre d'itérations nécessaire pour être proche de $100$ est supérieur à une valeur donnée.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Implémentation Scilab: bonindice}
+\lstinputlisting[language=Scilab, firstline=23, lastline=33]{introcalcnum.sce}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Implémentation Scilab: tracé}
+\lstinputlisting[language=Scilab, firstline=35, lastline=50]{introcalcnum.sce}
+\end{frame}
+
+\end{document}
+

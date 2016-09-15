@@ -1,0 +1,16 @@
+Il est bien évident que $i$ est un variant pour la boucle.\newline
+Pour montrer que $\Phi$ est un invariant, introduisons des notations.  Après l'exécution de $k\in \N$ fois le corps de la boucle, notons $i_p$ l'entier désigné par $i$, $y_p$ l'objet désigné par $y$ et $\Phi_p$ l'évaluation de $\Phi$.\newline
+Dans cette convention, $y_0$ et $i_0$ représentent les valeurs désignées \emph{avant} la première exécution. Soit $y_0=a_n$ et $i_0=n$ ce qui montre que $\Phi$ s'évalue à \verb|vrai| à cette étape.\newline
+Montrons maintenant que $\Phi_p = \verb|vrai|$ entraîne $\Phi_{p+1} = \verb|vrai|$.
+\begin{displaymath}
+\left. 
+\begin{aligned}
+i_{p+1} = i_{p} -1\\
+  y_{p+1} = a_{i_{p+1}} +x*y_p\\ 
+  \Phi_p = \verb|vrai|\Leftrightarrow y_p=a_{i_p}+\cdots+a_nx^{n-i_p}
+\end{aligned}
+\right\rbrace 
+\Rightarrow
+y_{p+1} = a_{i_{p+1}} +x*y_p
+\end{displaymath}
+d'où $y=a_{i_{p+1}} + a_{i_p}x+\cdots a_nx^{n-i_p+1}$ avec $n-i_p +1 = n-i_{p+1}$.

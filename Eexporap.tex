@@ -1,0 +1,36 @@
+%<dscrpt>Exponentiation rapide.</dscrpt>
+% <rel_id_elt_parent>6469</rel_id_elt_parent> id de ``Algorithmique''
+% <rel_id_type_rel>14</rel_id_type_rel> id de ``contient sans ordre l'élément''
+Que fait ce morceau de code ?
+\begin{verbatim}
+n = 25
+mot = "."
+while n > 0:
+  mot = str(n % 2) + mot
+  n = n // 2
+print(mot) 
+\end{verbatim}
+et celui là?
+\begin{verbatim}
+n = 25
+e = 0
+while n > 0:
+  if n % 2 == 1:
+    print(e)
+  n = n // 2
+  e += 1
+\end{verbatim}
+Dans le morceau de code suivant,
+\begin{verbatim}
+n = 250 ; a = 7
+p = a ; x = 1
+while n > 0:
+  if n % 2 == 1:
+    x = x*p
+  n = n // 2
+  p = p*p
+print(x) 
+\end{verbatim}
+que désigne le nom \verb|p| lors du déroulement de l'exécution? Montrer que la valeur de \verb|x| affichée à la fin est $7^{250}$.\newline
+Modifier le code précédent en introduisant un compteur \verb|c| permettant de connaître et d'afficher le nombre de multiplications réellement exécutées.
+

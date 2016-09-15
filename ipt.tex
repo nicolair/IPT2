@@ -1,0 +1,82 @@
+%!  pour pdfLatex
+\documentclass[a4paper]{article}
+%\usepackage[hmargin={1.5cm,1.5cm},vmargin={2.4cm,2.4cm},headheight=13.1pt]{geometry}
+\usepackage[a4paper,landscape,twocolumn,
+            hmargin=1.8cm,vmargin=2.2cm,headheight=13.1pt]{geometry}
+
+\usepackage[pdftex]{graphicx,color}
+\usepackage[pdftex,colorlinks={true},urlcolor={blue},pdfauthor={remy Nicolai}]{hyperref}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[frenchb]{babel}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\usepackage{floatflt}
+\usepackage{maths}
+
+\usepackage{parcolumns}
+\setlength{\parindent}{0pt}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{makeidx}
+
+\usepackage[french,ruled,vlined]{algorithm2e}
+\SetKwComment{Comment}{\#}{}
+\SetKwFor{Tq}{tant que}{}{}
+\SetKwFor{Pour}{pour}{}{}
+\DontPrintSemicolon
+\SetAlgoLined
+
+\usepackage{listings}
+\lstset{language=Python,frame=single}
+
+%pr{\'e}sentation des compteurs de section, ...
+\makeatletter
+\renewcommand{\thesection}{\Roman{section}.}
+\renewcommand{\thesubsection}{\arabic{subsection}.}
+\renewcommand{\thesubsubsection}{\arabic{subsubsection}.}
+\renewcommand{\labelenumii}{\theenumii.}
+\makeatother
+
+
+\newtheorem*{thm}{Théorème}
+\newtheorem{thmn}{Théorème}
+\newtheorem*{prop}{Proposition}
+\newtheorem{propn}{Proposition}
+\newtheorem*{pa}{Présentation axiomatique}
+\newtheorem*{propdef}{Proposition - Définition}
+\newtheorem*{lem}{Lemme}
+\newtheorem{lemn}{Lemme}
+
+\theoremstyle{definition}
+\newtheorem*{defi}{Définition}
+\newtheorem*{nota}{Notation}
+\newtheorem*{exple}{Exemple}
+\newtheorem*{exples}{Exemples}
+
+
+\newenvironment{demo}{\renewcommand{\proofname}{Preuve}\begin{proof}}{\end{proof}}
+%\renewcommand{\proofname}{Preuve} doit etre après le begin{document} pour fonctionner
+
+\theoremstyle{remark}
+\newtheorem*{rem}{Remarque}
+\newtheorem*{rems}{Remarques}
+
+%\usepackage{maths}
+%\newcommand{\dbf}{\leftrightarrows}
+
+%En tete et pied de page
+\lhead{Informatique}
+%\chead{Introduction aux systèmes informatiques}
+\rhead{MPSI B Hoche}
+\lfoot{\tiny{Cette création est mise à disposition selon le Contrat\\ Paternité-Partage des Conditions Initiales à l'Identique 2.0 France\\ disponible en ligne http://creativecommons.org/licenses/by-sa/2.0/fr/  
+} 
+\rfoot{\tiny{Rémy Nicolai \jobname  \today } }
+}
+\makeindex

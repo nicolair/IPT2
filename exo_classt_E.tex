@@ -1,0 +1,26 @@
+On rappelle qu'une proposition est un expression formée avec des noms de l'espace courant (variables) et qui s'évalue à une valeur booléenne.
+
+\begin{algorithm}
+  \If{ a > b}{
+      $ t \leftarrow a$ \;
+      $ a \leftarrow b$ \;
+      $ b \leftarrow t$ \;
+  }
+  \Comment{pause 1}
+  \If{ a > c}{
+      $ t \leftarrow a$ \;
+      $ a \leftarrow c$ \;
+      $ c \leftarrow t$ \;
+  }
+  \Comment{pause 2}
+  \If{ b > c}{
+      $ t \leftarrow b$ \;
+      $ b \leftarrow c$ \;
+      $ c \leftarrow t$ \;
+  }
+  \Comment{pause 3}
+  \Comment{fin}
+  \caption{Enchaînement de branchements conditionnels}
+  \label{exo_classt_E_1}
+\end{algorithm}
+Pour l'algorithme \ref{exo_classt_E_1}, former trois propositions $\mathcal{P}_1$, $\mathcal{P}_2$, $\mathcal{P}_3$ telle que $\mathcal{P}_i$ s'évalue à \verb|vrai| à la pause $i$. Justifier que les trois propriétés s'évaluent encore à \verb|vrai| à la fin. Que peut-on en conclure?   

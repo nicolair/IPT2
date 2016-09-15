@@ -1,0 +1,53 @@
+Un palindrome\footnote{ "Tu l'as trop écrasé, César, ce Port-Salut ! " (alexandrin attribué à Victor Hugo)} est un mot ou une phrase qui se lit dans les deux sens. Un \emph{nombre entier sera dit palindrome}\footnote{\href{http://fr.wikipedia.org/wiki/Nombre\_palindrome}{http://fr.wikipedia.org/wiki/Nombre\_palindrome}} lorsque son écriture décimale est un palindrome de chiffres (comme 141 par exemple).
+
+\subsubsection{Retournement d'une liste}
+Former en Python une procédure nommée \verb|retournL| qui prend un paramètre \verb|L| désignant une \emph{liste} et le modifie en le renversant. La procédure de renverra rien.\newline
+En Python, les objets du type liste possèdent une méthode \verb|reverse()| qui a le même effet, vous pouvez l'utiliser dans la suite à la place de la fonction que vous avez écrite car elle est vraisemblablement plus efficace.
+
+\subsubsection{Décomposition et composition}
+\begin{enumerate}
+  \item Former une fonction nommée \verb|decomp| qui prend un paramètre \verb|n| désignant un nombre entier et qui renvoie la liste écrite dans le sens habituel des chiffres de son écriture décimale.
+  \item Le nom \verb|L| désignant une liste de nombres entre $0$ et $9$ (indexée à partir de $0$), on considère les algorithmes représentés par les pseudo-codes suivants \newline
+Algorithme I (naïf)
+  \begin{itemize}
+    \item \verb|i| $\longleftarrow$ (longueur de \verb|L|) $-1$
+    \item \verb|v| $\longleftarrow 0$
+    \item pour $c$ décrivant les valeurs de \verb|L| en partant du plus grand index
+    \begin{itemize}
+      \item \verb|v| $\longleftarrow v + c* 10^i$
+      \item décrémenter \verb|i|
+    \end{itemize}
+    \item renvoyer \verb|v|
+  \end{itemize}
+Algorithme II (Hörner)
+\begin{itemize}
+  \item \verb|v| $\longleftarrow 0$
+  \item \verb|i| $\longleftarrow 0$
+  \item tant que \verb|i < longueur(L)|
+  \begin{itemize}
+    \item \verb|v| $\longleftarrow$ \verb|10*v + L[i]|
+    \item incrémenter \verb|i|
+  \end{itemize}
+  \item renvoyer \verb|v|
+\end{itemize}
+\begin{enumerate}
+  \item Montrer que les deux algorithmes renvoient le même nombre. Pour une chaîne de longueur $n$, calculer le nombres d'additions et de multiplications effectuées par chaque algorithme.
+  \item Former une fonction nommée \verb|comp| qui prend un paramètre $L$ et qui renvoie le nombre dont cette liste est l'écriture décimale habituelle. 
+\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Retournement d'un nombre}
+Pour tout entier naturel $n$, on désigne par $\overleftarrow{n}$ le nombre dont le développement décimal est obtenu en retournant la liste du développement de $n$. Par exemple, si $n = 2453$ alors $\overleftarrow{n}=3542$.\newline
+Pour tout nombre entier $n$, on considère la suite $\left( n_i \right)_{i\in\N}$ définie par $n_0 = n$ et 
+\begin{displaymath}
+  \forall i\in \N : n_{i+1} = n_i + \overleftarrow{n_i}
+\end{displaymath}
+Il semblerait (conjecture) que, pour tout $n$, il existe un $i$ tel que $n_i$ soit un nombre palindrome. Lorsqu'il existe de tels $i$, on note $\delta(n)$ le plus petit d'entre eux. Lorsqu'il n'existe pas un tel $i$ le nombre $n$ est dit \emph{de Lychrel}. On ne connait pas de nombre de Lychrel mais on ne sait pas non plus montrer qu'il n'en existe pas.
+\begin{enumerate}
+\item \'Ecrire une fonction nommée \verb|retournN| qui prend un paramètre \verb|n| désignant un entier naturel $n$ et qui renvoie $\overleftarrow{n}$ puis une fonction \verb|sym| qui renvoie $n+\overleftarrow{n}$.
+\item 
+\begin{enumerate}
+ \item Former une fonction \verb|delta(n,p)| qui renvoie $\delta(n)$ lorsque $\delta(n)\leq p$. 
+ \item Déterminer les deux plus petits nombres dont vous ne savez pas montrer qu'ils ne sont pas de Lychrel.
+\end{enumerate}
+\end{enumerate}

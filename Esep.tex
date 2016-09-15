@@ -1,0 +1,27 @@
+\begin{algorithm}
+  $L \leftarrow $ liste de $l$ nombres\;
+  $v \leftarrow $ un nombre qui n'est pas forcément une valeur de $L$\;
+  $g \leftarrow 0$\;
+  $d \leftarrow l-1$\;
+  \Tq{ $g \leq d$}{
+    \Tq{$g\leq d$ et $L[g] \leq v$}{
+      incrémenter $g$\;
+    }
+    \Tq{$g\leq d$ et $L[d] > v$}{
+      décrémenter $d$\;
+    }
+    \Si{$g \leq d$}{
+      échanger les valeurs de $g$ et $d$ dans $L$\;
+      incrémenter $g$\;
+      décrémenter $d$\;
+    }
+  }
+  \caption{Séparation}
+  \label{Esep_1}
+\end{algorithm}
+L'algorithme \ref{Esep_1} comprend deux boucles (dites internes) imbriquées dans une troisième (dite externe).
+\begin{enumerate}
+  \item Pour chacune des trois boucles, préciser une fonction de terminaison et justifier les propriétés qu'elle doit vérifier.
+  \item \'Enoncer soigneusement la propriété vérifiée par la liste désignée par $L$ à la fin de l'algorithme. 
+  \item \'Ecrire en Python, une fonction nommée \texttt{sep} prenant deux paramètres \texttt{L} et \texttt{v} et implémentant cet algorithme. Cette fonction devra modifier la liste qui lui est passée sans rien afficher ni rien renvoyer.
+\end{enumerate}

@@ -1,0 +1,21 @@
+\begin{algorithm}
+  $n \leftarrow$ un naturel non nul $n_{ini}$\;
+  $x \leftarrow $ un nombre $x_{ini}$\;
+  $p \leftarrow 1$\;
+  \Tq{ $n > 0$ }{
+    \eSi{ $n$ est pair}{
+      $x \leftarrow x * x$\;
+      $n \leftarrow \frac{n}{2}$\;
+    }{
+      $p \leftarrow p *x$\;
+      $n\leftarrow n - 1$\;
+    }
+  }
+  \caption{calcul rapide d'une puissance}
+  \label{exo_puisrap_E_1}
+\end{algorithm}
+Pour le pseudo-code présenté dans l'algorithme \ref{exo_puisrap_E_1}, montrer que $n$ est un variant et que 
+\begin{displaymath}
+  \Phi = \left( px^n == x_{ini}^{n_{ini}} \right) 
+\end{displaymath}
+est un invariant. Que désignent $n$ et $p$ après la sortie de la boucle? Combien de multiplications sont effectuées lors de l'exécution avec $n_{ini} = 79$?

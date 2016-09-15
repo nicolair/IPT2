@@ -1,0 +1,411 @@
+\input{ipt_beamer.tex}
+\lstset{language=Python,frame=single}
+\begin{document}
+\begin{frame}
+\frametitle{Méthode du pivot de Gauss}
+\begin{itemize}
+  \item La méthode du pivot de Gauss permet de résoudre un système d'équations linéaires ($p$ équations, $q$ inconnues).\newline
+Cas particulier: système de Cramer: $p=q$ et unique solution (qui est un $p$-uplet).
+  \item Résoudre un système d'équations c'est trouver une description paramétrique de l'ensemble des solutions.
+  \item Méthode
+\begin{itemize}
+  \item Transformer par \emph{opérations élémentaires} (sans changer l'ensemble des solutions) en un système triangulaire.
+  \item Résoudre ce système triangulaire (phase de remontée).
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Traduction matricielle}
+Un système de $p$ équations à $q$ inconnues $x_1,\cdots x_q$
+\begin{displaymath}
+\left\lbrace 
+\begin{aligned}
+  a_{1 1}x_1 + a_{1 2}x_2 + \cdots + a_{1 q}x_q &= y_1\\
+  \vdots\hspace{0.5cm} &= \; \vdots \\
+  a_{p 1}x_1 + a_{p 2}x_2 + \cdots + a_{p q}x_q &= y_p
+\end{aligned}
+\right. 
+\end{displaymath}
+se traduit par une équation matricielle $A X = Y$ avec 
+\begin{displaymath}
+A = 
+\begin{pmatrix}
+  a_{1 1} & a_{1 2} & \cdots & a_{1 q}\\
+  \vdots  &         &        & \vdots \\
+  a_{p 1} & a_{p 2} & \cdots & a_{p q}
+\end{pmatrix},
+\;
+X = 
+\begin{pmatrix}
+  x_1 \\ x_2 \\ \vdots \\ x_q
+\end{pmatrix},
+\;
+Y = 
+\begin{pmatrix}
+  y_1 \\ y_2 \\ \vdots \\ y_p
+\end{pmatrix}
+\end{displaymath}
+Système de Cramer $\Leftrightarrow$ $p=q$ et $A$ inversible.
+
+\end{frame}
+\begin{frame}
+  \frametitle{Opérations élémentaires}
+Il s'agit exclusivement des opérations suivantes (système de $p$ équations à $q$ inconnues).
+\begin{itemize}
+ \item Permuter deux équations.
+ \item Pour $i$ et $i'$ entre $1$ et $p$ et $\lambda$ scalaire quelconque: ajouter l'équation $i'$ multipliée par $\lambda$ à l'équation $i$. Bien noter que seule l'équation $i$ est modifiée.
+ \item Multiplier une équation par un scalaire $\lambda$ \emph{non nul}.
+\end{itemize}
+Le système obtenu par une transformation élémentaire a le même ensemble de solutions que le système de départ.\newline
+Formulation algorithmique: l'ensemble des solutions est un invariant pour toute transformation élémentaire.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Méthode de Gauss: pseudo-code}
+\begin{algorithm}[H]
+  \Donnees{\;
+    $A$ tableau à deux entrées entre $1$ et $p$: la matrice du système\;
+    $Y$ tableau indexé de $1$ à $p$: le second membre\;
+    On suppose que le système est de Cramer
+  }
+  \Comment{initialisation}
+  $i\leftarrow 1$ : compteur\;
+  \Tq{ $i \leq p$}{
+    Chercher un indice-pivot $ip$ dans la fin de la colonne $i$\;
+    Permuter les lignes $ip$ et $i$ de $A$ et $Y$\;
+    Nettoyer les lignes $i+1$ à $p$ avec la ligne $i$\;
+    Incrémenter $i$
+  }
+  \caption{Méthode de Gauss}
+  \label{resolsystlin_1}
+\end{algorithm}
+\og Chercher un indice pivot\fg~ et \og Nettoyer les lignes\fg~ sont à préciser.  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Chercher un indice pivot}
+Parmi les valeurs $a_{i i}, a_{i+1 i}, \cdots a_{p i}$, en existe-t-il une non nulle? 
+\begin{itemize}
+  \item Si oui, on en choisit une (on l'appelle le \emph{pivot}) et on renvoie son indice comme \emph{indice-pivot} $ip$.
+  \item Si non, l'algorithme s'arrête.
+\end{itemize}
+Le fait de chercher un pivot uniquement dans le bas de colonne est caractéristique de la méthode dite du pivot \emph{partiel}.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Comment chercher?}
+\begin{itemize}
+  \item Tester si un flottant est non nul est une mauvaise pratique.
+  \item Choisir l'indice de la plus grande valeur absolue des termes.
+  \item Pour un système de Cramer, il existe un pivot non nul.
+  \item Si on implémente un algorithme qui peut s'exécuter pour un système qui n'est pas de Cramer: l'arrêter lorsque la recherche d'un indice-pivot échoue c'est à dire lorsque
+\begin{displaymath}
+a_{i i} = a_{i+1 i} = \cdots = \cdots a_{p i}=0  
+\end{displaymath}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Nettoyer les lignes}
+\begin{itemize}
+  \item Faire apparaître (\emph{avec des opérations élémentaires}) des $0$ aux places $i+1$ à $p$ de la colonne $i$.
+  \item En multipliant la ligne $i$ par un coefficient tel que, après soustraction à la ligne $j$, le terme d'indice $j,i$ soit nul.
+  \item La ligne $i$ n'est pas modifiée.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Nettoyer les lignes: pseudo-code}
+\begin{algorithm}[H]
+  \Donnees{\;
+    $A$ tableau à deux entrées entre $1$ et $p$: la matrice du système.\;
+    $Y$ tableau indexé de $1$ à $p$: le second membre.\;
+    $i$ compteur.
+  }
+  \Comment{initialisation}
+  $j\leftarrow i+1$ : compteur\;
+  $\lambda$ : flottant un coefficient multiplicatif\;
+  \Tq{ $j \leq p$}{
+    $\lambda \leftarrow \frac{a_{j i}}{a_{i i}}$\;
+    $L_j(A)\leftarrow L_j(A)-\lambda L_i(A)$\;
+    $y_j\leftarrow y_j-\lambda y_i$\;
+    Incrémenter $j$\;
+  }
+  \caption{Nettoyer les lignes}
+  \label{resolsystlin_2}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Nettoyer les lignes: erreur usuelle}
+\'Ecrire
+\begin{algorithm}[H]
+  \Pour{ $numcol$ entre $1$ et $p$}{
+    $A[j, numcol] \leftarrow A[j, numcol] - \frac{A[j, i]}{A[i, i]}A[i, numcol]$\;
+  }
+\end{algorithm}
+à la place de
+\begin{align*}
+    \lambda &\leftarrow \frac{a_{j i}}{a_{i i}}\\
+    L_j(A)  &\leftarrow L_j(A)-\lambda L_i(A)  
+\end{align*}
+Lorsque $numcol$ prend la valeur $i$, la valeur de $A[j,i]$ est modifiée et le coefficient n'est plus le même pour la fin de la ligne.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Forme du sytème à l'issue du nettoyage}
+Une propriété \emph{invariante} par la séquence de nettoyage:
+\begin{displaymath}
+  \mathcal{P}(i) = \left( \forall j \text{ tq } 0\leq j < i,\; \forall k\text{ tq } j<k\leq p: \; a_{k,j} = 0\right) 
+\end{displaymath}
+\begin{itemize}
+  \item Pour $i=1$ la propriété est vraie car elle est vide.\newline
+  \item Le nettoyage assure que cette propriété est vraie pour la valeur suivante de $i$.\newline
+  \item \`A la fin, $i=p$. Le système est triangulaire supérieur avec des termes \emph{non nuls} sur la diagonale (les pivots).
+\end{itemize}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Phase de remontée}
+\begin{algorithm}[H]
+  \Donnees{\;
+    $A$ tableau triangulaire supérieur à deux entrées entre $1$ et $p$\;
+    $Y$ tableau indexé de $1$ à $p$: le second membre\;
+    $i$ compteur
+  }
+  \Comment{initialisation}
+  $i\leftarrow p$ : compteur\;
+  $X$ : tableau indexé de $1$ à $p$ qui contiendra la solution.\;
+  \Tq{ $i \geq 1$}{
+    $X[i] \leftarrow \frac{Y[i] -\sum_{k=i+1}^{p}A[i][k]X[k]}{A[i][i]} $\;
+    Décrémenter $i$\;
+  }
+  \caption{Phase de remontée}
+  \label{resolsystlin_3}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Complexité: produits matriciels}
+\begin{itemize}
+  \item Matrice colonne ($p$ lignes) par matrice ligne ($p$ colonnes) :\newline
+  $p$ multiplications et $p-1$ additions. Complexité $O(p)$.
+  \item Matrice carrée par matrice colonne: $p$ calculs du type précédent. Complexité en $O(p^2)$.
+  \item Produit de deux matrices carrées: $p^2$ fois des produits ligne $\times$ colonne. Complexité en $O(p^3)$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Complexité: système triangulaire équivalent}
+\begin{itemize}
+  \item Recherche d'un indice-pivot: $O(p)$.
+  \item Permutation de deux lignes: $O(p)$.
+  \item Nettoyage des lignes $i+1$ à $p$: $O((p-i)p)$
+  \item Exécuter ces opérations pour $i$ de $1$ à $p$ 
+\end{itemize}
+Complexité en $O(p^3)$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Complexité: phase de remontée}
+\begin{itemize}
+  \item Calcul de $x_p$: une addition et une division.
+  \item Calcul de $x_{p-1}$: $1$ multiplication, $1$ addition, une division.
+  \item Calcul de $x_{p-2}$: $2$ multiplications, $2$ additions, une division.
+  \item Calcul de $x_{p-3}$: $3$ multiplications, $3$ additions, une division.
+  \item $\vdots$
+\end{itemize}
+En sommant:  complexité en $O(p^2)$.
+
+Pour une matrice triangulaire et une colonne données:
+\begin{center}
+complexité de la résolution = complexité d'une multiplication  
+\end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Complexité: méthode de Gauss}
+En combinant les résultats précédents. 
+
+Résolution d'un système de Cramer de $p$ équations par la méthode du pivot: complexité $O(p^3)$.
+\end{frame}
+
+\begin{frame}
+\frametitle{Complexité: inversion d'une matrice}
+L'inversion d'une matrice inversible à $p$ lignes revient à la résolution de $p$ systèmes de Cramer avec des second membres élémentaires
+\begin{displaymath}
+\begin{pmatrix}
+0 \\ \vdots \\ 1 \\ \vdots \\0   
+ \end{pmatrix}
+\end{displaymath}
+(avec le $1$ dans la ligne $k$) donnant la colonne $k$ de la matrice inverse.
+
+
+ Complexité de l'inversion: en $O(p^4)$.
+ 
+ Pour résoudre numériquement un système de Cramer, \emph{il ne faut pas commencer par inverser la matrice}.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Implémentation Python: types de données}
+\begin{itemize}
+  \item Choix: représenter les matrices par des listes de listes.
+  \item Chaque ligne est représentée par une liste de $p$ objets et la matrice est la liste de ces listes.
+  \item Attention, en Python, les listes sont indexées à partir de $0$.
+  \item Choix discutable: certaines propriétés des listes ne sont pas utiles. Il serait plus efficace d'utiliser des types de données spécialement adaptés comme le type tableau (array) de la bibliothèque numpy.
+\end{itemize} 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Implémentation Python: outils}
+\lstinputlisting[firstline=16, lastline=24]{resolsystlin.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Implémentation Python: chercher l'indice d'un pivot}
+\lstinputlisting[firstline=8, lastline=14]{resolsystlin.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Implémentation Python: nettoyage}
+\lstinputlisting[firstline=30, lastline=36]{resolsystlin.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Implémentation Python: remontée}
+\lstinputlisting[firstline=37, lastline=43]{resolsystlin.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple avec des coniques}
+En général, par cinq points distincts d'un plan passe une seule conique.
+
+L'équation de cette conique s'obtient en résolvant un système de $5$  équations linéaires à $5$ inconnues.
+
+On se propose, à titre d'exemple, d'expérimenter numériquement sur ce thème.
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{\'Equation d'une conique}
+Dans un plan muni d'un repère $\mathcal{R}$, les fonctions coordonnées sont notées $x$ et $y$.\newline
+Une conique affine $\mathcal{C}$ est un ensemble de points dont l'équation est de degré $2$.\newline
+Il existe des réels $a$, $b$, $c$, $d$, $e$, $f$ tels que 
+\begin{displaymath}
+  M\in \mathcal{C} \Leftrightarrow
+  ax(M)^2 +by(M)^2 + cx(M)y(M) + dx(M) + eY(M) +f = 0
+\end{displaymath}
+Si on multiplie par un réel non nul, on ne change pas l'ensemble des points $M$ vérifiant cette équation.\newline
+$f=0$ si et seulement si l'origine $O$ du repère est dans $\mathcal{C}$.\newline
+On ne considère que des coniques \emph{qui ne passent pas par} $O$. On peut diviser par $f$ ce qui revient à $f=1$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Système d'équations}
+On se donne des points $M_1, M_2, M_3, M_4, M_5$ et on forme le système
+\begin{displaymath}
+\left\lbrace
+\begin{aligned}
+  ax(M_1)^2 +by(M_1)^2 + cx(M_1)y(M_1) + dx(M_1) + eY(M_1) = -1 \\
+  ax(M_2)^2 +by(M_2)^2 + cx(M_2)y(M_2) + dx(M_2) + eY(M_2) = -1 \\
+  ax(M_3)^2 +by(M_3)^2 + cx(M_3)y(M_3) + dx(M_3) + eY(M_3) = -1 \\
+  ax(M_4)^2 +by(M_4)^2 + cx(M_4)y(M_4) + dx(M_4) + eY(M_4) = -1 \\
+  ax(M_5)^2 +by(M_5)^2 + cx(M_5)y(M_5) + dx(M_5) + eY(M_5) = -1  
+\end{aligned}
+\right. 
+\end{displaymath}
+ aux inconnues $a$, $b$, $c$, $d$, $e$.\newline
+En général il est de Cramer. Dans ce cas, une seule conique passe par les $5$ points.\newline
+Il existe des configurations dans lesquelles le système n'est pas de Cramer en particulier si plusieurs coniques passent par les points (points alignés par exemple).
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Implémentation Python}
+\begin{verbatim}
+############## génération aléatoire de 5 points
+import random as rdm
+M=[(rdm.random()*10,rdm.random()*10)\\
+                           for i in range(5)]
+############## formation de la matrice du système
+A = [0]*5
+for i in range(5):
+    x,y = M[i]
+    A[i] = [x**2 , y**2, x*y, x, y]
+############## second membre
+Y = [[-1.],[-1.],[-1.],[-1.],[-1.]]
+############## résolution
+E = resol(A,Y)
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Vérification}
+Pour vérifier, on forme la fonction qui permet d'écrire l'équation de la conique et on l'évalue aux points donnés.
+\begin{verbatim}
+def F(E,P):
+    a,b,c,d,e = E
+    x,y = P
+    return a*x*x + b*y*y + c*x*y + d*x + e*y +1
+for P in M:
+    plt.plot(P[0],P[1],'bo')
+    print(F(E,P))
+\end{verbatim}
+Les valeurs des $F(M_i)$ sont de l'ordre de $10^{-15}$ et résultent des erreurs d'arrondi.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Paramétrisation rationnelle}
+Pour tracer d'autres points: \emph{paramétrisation rationnelle}.
+
+$\mathcal{D}_t$ : droite passant par $M_0$ et de direction le vecteur de coordonnées $(1,t)$.
+
+Les points de  $\mathcal{D}_t$ sont les $P_\lambda(t)$  de coordonnées $(x(M_0)+\lambda, y(M_0)+\lambda t)$ et:
+\begin{displaymath}
+P_\lambda(t) \in \mathcal{C} \Leftrightarrow F(P_\lambda(t)) = 0  
+\end{displaymath}
+Pour $t$ fixé: équation du second degré en $\lambda$ dont $0$ est solution. 
+
+L'équation se ramène à une équation du premier degré.
+
+Pour chaque $t$ réel, $\lambda_t$ la solution de l'équation, l'application $\Phi : t \mapsto P_{\lambda_t}(t)$ est une paramétrisation rationnelle.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Paramétrisation: implémentation}
+\begin{verbatim}
+def phi(E,P,t):
+    a,b,c,d,e = E
+    x,y = P
+    num = 2.*a*x + c*y + d +(2.*b*y + c*x + e)*t
+    den = a + (b*t + c)*t
+    l = - num/den
+    return x + l , y+t*l
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Tracé}
+Calcul des $t$ associés aux $M_1,\cdots M_4$. Tracé entre les valeurs extrêmes des $t$.
+\begin{verbatim}
+import matplotlib.pyplot as plt
+plt.clf()
+for P in M:
+    plt.plot(P[0],P[1],'bo')
+    print(F(E,P))
+t = [(M[i+1][1] - M[0][1])/(M[i+1][0]\\
+     - M[0][0]) for i in range(4)]
+tmin, tmax = min(t), max(t)
+n,p = 30,5
+pas = (tmax - tmin)/n
+tt = tmin - p*pas
+    P = phi(E,M[0],tt)
+    plt.plot(P[0],P[1],'ro')
+    tt += pas
+\end{verbatim}
+\end{frame}
+
+
+
+\end{document}

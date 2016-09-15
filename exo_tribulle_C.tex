@@ -1,0 +1,37 @@
+L'expression $n-i$ est bien à valeurs dans $\N$ mais elle ne décroît pas strictement. Elle est incrémentée dans le cas de l'échange. Le nombre de montées n'est pas non plus un variant car il est conservé lorsqu'il n'y a pas d'échange. Comment évolue-t-il lors d'un échange?\newline
+Supposons que $i$ désigne $i_0$ avant un échange. Alors $(i_0,i_0+1)$ est une montée. classons les autres couples susceptibles d'être des montées : 
+\begin{itemize}
+  \item les couples $(k,i_0)$ et $(k,i_0+1)$ avec $k<i_0$.
+  \item les couples $(i_0,l)$ et $(i_0+1,l)$ avec $i_0+1 < l$.
+  \item les couples $(k,l)$ avec $k<i_0$ et $i_0+1<l$.
+\end{itemize}
+Pour chaque paire indiquée, le nombre de montées parmi ces couples peut être $0$, $1$ ou $2$ avant l'échange. Il reste identique après l'échange des valeurs. On en déduit que le nombre de montées diminue de $1$ par un échange.\newline
+Notons $m$ le nombre de montées et considérons $V = n-i +2m$. Il est bien à valeurs entières. S'il n'y a pas d'échange, $i$ augmente de $1$ et $m$ reste identique donc $V$ décroît de $1$. S'il y a échange, $i$ augmente de $1$ et $2m$ diminue de $2$ donc $V$ décroît encore de $1$.  $V$ est donc bien un variant qui prouve que la boucle se termine.\newline
+Considérons la propriété
+\begin{displaymath}
+\Phi : \forall k\in \N, 0 \leq k < i \Rightarrow A[k]\geq A[k+1]   
+\end{displaymath}
+Elle est vraie après l'initialisation quand $i$ désigne $0$ car il n'existe pas de $k$ vérifiant $0\leq k <i$.\newline
+Notons $i_0$ ce que désigne $i$ avant un échange et supposons que $\Phi$ est vraie à ce moment. Après l'échange, $i$ désigne $i_0-1$. Comme $k<i_0-1$ entraîne $k+1<i_0$, les valeurs du tableau intervenant dans $\Phi$ ne sont pas modifiés donc $\Phi$ reste vraie. Si on incrémente $i$ sans échanger, les deux dernières valeurs de $A$ sont dans le bon ordre donc $\Phi$ reste vraie. 
+La propriété $\Phi$ est donc un invariant.\newline
+\`A la sortie de la boucle, $i$ désigne $n$ car la condition de réalisation est fausse. L'invariant montre alors que, pour tous les $i$ entre $0$ et $n-1$, $A[i+1]\leq A[i]$ c'est à dire que la liste est décroissante.
+
+\begin{verbatim}
+def TriBulle(A):
+    n = len(A)
+    i = 0
+    nbPerm = 0
+    while i < n-1:
+        if A[i]<A[i+1]:
+            A[i],A[i+1] = A[i+1],A[i]
+            nbPerm += 1
+            if i > 0:
+                i -= 1
+        else:
+            i += 1
+    return nbPerm
+
+A = [1,2,4,5,1,47,52,35,14,41]
+print(TriBulle(A))
+print(A)  
+\end{verbatim}

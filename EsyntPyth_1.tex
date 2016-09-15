@@ -1,0 +1,177 @@
+%<dscrpt>Syntaxe Python.</dscrpt>
+\subsection{Chaines}
+\begin{enumerate}
+  \item 
+Qu'affichent les scripts suivants ?
+\begin{verbatim}
+#script 1
+resultat = ""
+for c in "Bonsoir":
+    resultat = resultat + c
+print(resultat)
+
+#script 2
+resultat = ""
+for c in "Bonsoir":
+    resultat = resultat + c
+    print(resultat)
+    
+#script 3
+resultat = ""
+for c in "Bonsoir":
+    resultat =  c + resultat
+print(resultat)
+\end{verbatim}
+\item Parmi les scripts suivants, lesquels permettent de déterminer si une chaine de caractère n'est formée que par les caractères "A", "C", "G", "T"?
+\begin{verbatim}
+#script 1
+def fonction_q2(chaine):
+    resultat = True
+    for c in chaine :
+        if c == "A" or c == "C" or c == "G" or c == "T":
+            resultat = False
+    return resultat
+
+#script 2
+def fonction_q2(chaine):
+    resultat = False
+    for c in chaine :
+        if c == "A" or c == "C" or c == "G" or c == "T":
+            resultat = True
+    return resultat
+
+#script 3
+def fonction_q2(chaine):
+    c_valids = "ACGT"
+    resultat = True
+    for c in chaine :
+        if c not in c_valids:
+            resultat = False
+    return resultat
+
+#script 4
+def fonction_q2(chaine):
+    c_valids = "ACGT"
+    resultat = True
+    for c in chaine :
+        temp = False
+        for cv in c_valids:
+            if c == cv:
+              temp = True
+        if not temp:
+            resultat = False
+    return resultat
+\end{verbatim}
+On distingue trois types de scripts incorrects, ceux qui produisent des \emph{faux positifs} peuvent indiquer qu'une chaine n'est constituée que de "A", "C", "G", "T" alors que ce n'est pas vrai, ceux qui produisent des \emph{faux négatifs} peuvent indiquer qu'une chaine n'est pas constituée de "A", "C", "G", "T" alors qu'elle l'est et ceux qui peuvent faire les deux erreurs.\newline
+Indiquer les types d'erreur que peuvent faire les scripts incorrects.
+
+\item On veut disposer d'une fonction \verb|fonction_q3| qui renvoie l'index de la première occurrence d'un caractère dans une chaine s'il y est présent et $-1$ sinon. Le script suivant fait-il cela? S'il ne le fait pas, comment le modifier?
+\begin{verbatim}
+def fonction_q3 (carac, chaine):
+    i = -1
+    k = 0
+    while i == -1 and k <len(chaine):
+        if carac == chaine[k]:
+            i = i + 1
+            k = k + 1
+    return i
+\end{verbatim}
+\end{enumerate}
+
+\subsection{\'Evolution de caractères et liens entre espèces.}
+On s'intéresse aux liens de parentés de $m$ espèces à partir de l'évolution de $n$ caractères.\newline
+Deux espèces distinctes ont au moins un caractère différent.\newline
+Chaque caractère possède deux états: un état \emph{originel} (noté $0$) et un état \emph{dérivé} (noté 1). Il existe une espèce particulière (ancêtre commun) pour laquelle tous les caractères sont dans l'état 0.\newline
+Voici un exemple avec 7 espèces A, B, C, D, E, F, G et 6 caractères $c_0$, $c_1$, $c_2$, $c_3$, $c_4$, $c_5$. Le tableau donne pour chaque espèce l'état de chaque caractère.
+\begin{center}
+\begin{tabular}{lllllll}
+ & $c_0$ & $c_1$ & $c_2$ & $c_3$ & $c_4$ & $c_5$\\ \hline
+A & 0 & 1 & 0 & 0 & 0 & 1\\ \hline
+B & 0 & 0 & 0 & 1 & 0 & 1\\ \hline
+C & 1 & 0 & 0 & 0 & 0 & 0\\ \hline
+D & 0 & 0 & 0 & 0 & 0 & 1\\ \hline
+E & 0 & 0 & 0 & 0 & 0 & 0\\ \hline
+F & 0 & 0 & 1 & 0 & 0 & 1\\ \hline
+G & 0 & 0 & 0 & 1 & 1 & 1 \\ \hline
+\end{tabular}
+\end{center}
+Par exemple, pour l'espèce A, les caractères $c_1$ et $c_5$ sont à l'état dérivé, les autres sont à l'état originel. L'espèce E est l'ancêtre commun.\newline
+Chaque espèce est représentée par une liste (Python), l'état du caractère $c_i$ est représenté par la valeur $0$ ou $1$ de la valeur d'index $i$ dela liste. L'ensemble des espèces est lui même stocké (par ordre alphabétique des noms) dans une liste désignée par \verb|d_phyl| (données phylogéniques).
+\begin{enumerate}
+  \item En considérant uniquement les trois premières espèces (A,B,C) et les trois premiers caractères ($c_0$, $c_1$, $c_2$) de l'exemple ci dessus, indiquer quelle instruction d'affectation en donne une représentation exacte.
+\begin{verbatim}
+#instruction 1
+donnees_phylo = [[0,1,0],[0,0,0],[1,0,0]] 
+#instruction 2
+donnees_phylo = [[0,0,1],[1,0,0],[0,0,0]] 
+\end{verbatim}
+\item Que désigne \verb|donnees_phylo| après l'exécution du code suivant
+\begin{verbatim}
+def add_caractere(d_phyl,nouv_carac):
+    if len(d_phyl) == len(nouv_carac):
+        for i in range(len(d_phyl)):
+            d_phyl[i] = d_phyl[i] + [nouv_carac[i]]
+
+donnees_phylo = [[0,0,0,0],[0,0,0,0],[0,0,1,0]]
+add_caractere(donnees_phylo,[1,1,0])
+\end{verbatim}
+\item Proposer une fonction pour ajouter une nouvelle espèce à la liste \verb|d_phyl| en complétant le code suivant
+\begin{verbatim}
+def add_espece(d_phyl,nouv_espece):
+    if len(
+\end{verbatim}
+\item On considère deux espèces distinctes $a$ et $b$.
+\begin{itemize}
+  \item L'espèce $b$ est dite \emph{descendante} de l'espèce $a$ si et seulement si chaque caractère présent à l'état originel dans l'espèce $b$ est aussi dans l'état originel pour l'espèce $a$. On dit aussi que l'espèce $a$ est ancêtre de l'espèce $b$.
+  \item L'espèce $b$ est dite descendante immédiate de l'espèce $a$ si et seulement si $b$ est descendante de $a$ après la mutation d'un seul caractère. On dit aussi que $a$ est ancêtre immédiat de $b$.
+\end{itemize}
+On suppose que chaque espèce sauf l'ancêtre commun possède un seul ancêtre immédiat.\newline
+Dans l'exemple, G est descendante de D car les caractères à l'état originel de l'espèce G ($c_0$, $c_1$, $c_2$) sont aussi à l'état originel pour D. \newline
+Dans le but de tester si une espèce est ancêtre d'une autre, on propose les deux fonctions suivantes
+\begin{verbatim}
+def est_ancetre1(esp_1, esp_2):
+    """
+    renvoie True si esp_1 est ancetre de esp_2
+    false sinon
+    """
+    resultat = True
+    if len(esp_1) == len(esp_2):
+        for i in range(len(esp_1)):
+            if esp_2[i] == 0 and esp_1[i] == 1:
+                resultat = False
+    print(i)
+    return resultat
+
+def est_ancetre2(esp_1, esp_2):
+    """
+    renvoie True si esp_1 est ancetre de esp_2
+    false sinon
+    """
+    resultat = True
+    if len(esp_1) == len(esp_2):
+        i = 0
+        while i < len(esp_1) and resultat:
+            if esp_2[i] == 0 and esp_1[i] == 1:
+                resultat = False
+            i += 1
+    print(i)
+    return resultat
+    
+e1 = [0,0,0,1,0,1]
+e2 = [0,0,1,0,0,1]
+print(est_ancetre1(e1,e2))
+print(est_ancetre2(e1,e2))
+\end{verbatim}
+Quel est l'affichage produit par l'exécution de ce code?
+\item Compléter le code suivant en utilisant \verb|est_ancetre2|(dans lequel ou aura supprimé l'instruction d'affichage).
+\begin{verbatim}
+def nombre_descendants(d_phyl,esp):
+    """
+    renvoie le nombre nb de descendants de espece
+    compte tenu des données stockées dans d_phyl
+    """
+    
+    return nb
+\end{verbatim}
+
+\end{enumerate}

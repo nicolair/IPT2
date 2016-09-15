@@ -1,0 +1,130 @@
+\subsection{Calcul de carrés}
+\begin{enumerate}
+  \item Dans une expression \texttt{ a // b}, les noms \texttt{a} et \texttt{b} doivent désigner des objets du type entier. L'expression s'évalue alors au quotient entier de la division de \texttt{a} par \texttt{b}. 
+  \item Tous les nombres (y compris $a$ et $b$) représentés par des listes de longueur $l+1$ sont plus petits que
+\begin{displaymath}
+  1 + \frac{1}{2} + \frac{1}{2^2} + \cdots + \frac{1}{2^l} = \frac{1-\frac{1}{2^{l+1}}}{1-\frac{1}{2}}= 2 -\frac{1}{2^l} < 2
+\end{displaymath}
+Il est commode de considérer une troisième propriété: \og \texttt{t} désigne 0 ou 1 ou 2 ou 3\fg. Les trois propriétés sont des invariants car:
+\begin{multline*}
+\left. 
+\begin{aligned}
+a_i \in \{0,1\}\\ b_i \in \{0,1\} \\r_i \in\{0,1\}  
+\end{aligned}
+\right\rbrace 
+\Rightarrow t_{i+1} \in \{0,1,2,3\}\\
+\Rightarrow
+\left\lbrace 
+\begin{aligned}
+&l_{i+1} \in\{0,1\}\text{ (reste de $t_{i+1}$ modulo 2)}\\
+&r_{i+1} \in\{0,1\}\text{ (quotient de la div. de $t_{i+1}$ par 2)}  
+\end{aligned}
+\right. 
+\end{multline*}
+\`A la fin, la \og retenue\fg~ \texttt{ret} peut prendre la valeur 0 ou 1. La liste $S$ représente $a+b$ lorsque $a+b<2$ c'est à dire lorsque \texttt{ret} désigne $0$. Sinon $s+2 = a+b$.
+  \item 
+\begin{enumerate}
+  \item Codage Python
+\lstinputlisting[firstline=28, lastline=36]{Cbrigglog.py}
+\item Désignons par $a_l$ la dernière valeur de la liste \texttt{A} avant le décalage.
+\begin{displaymath}
+  a' =
+\left\lbrace 
+\begin{aligned}
+&\frac{a}{2}&\text{ si } a_l = 0 \\
+&\frac{a}{2} - \frac{1}{2^{l+1}}&\text{ si } a_l = 1 
+\end{aligned}
+\right. 
+\end{displaymath}
+\end{enumerate}
+
+\item
+\begin{enumerate}
+  \item Si on remplace l'instruction \og\texttt{B = [a for a in A]}\fg~ par \og\texttt{B = A}\fg, on change profondément l'algorithme. En effet les deux noms désignent alors la même liste et cette liste sera modifiée par l'appel \texttt{shift(B,d)}. En effet cette fonction modifie l'objet (modifiable) désignée par \texttt{B}. Cela va pertuber la boucle d'énumération des objets de \texttt{A} :\og \texttt{for a in A}\fg~ puisqu'ils sont modifiés à l'intérieur même de l`énumération.
+  
+  \item Le produit de deux nombres binaires de longueur $l$ n'est pas forcément un nombre binaire de longueur $l$. Par exemple, si $a$ et $b$ sont dans $\llbracket 0,l \rrbracket$ avec $a+b >l$, les nombres $2^{-a}$ et $2^{-b}$ sont binaires de longueur $l$ mais pas leur produit.
+  
+  \item L'appel de la fonction correspond à une suite de décalages et d'additions
+\begin{align*}
+\begin{array}{clllll}
+                &0 & 0 & 0 & 0 & 0\\
+\text{shift 0}: &1 & 1 & 0 & 1 & 0
+\end{array}
+\Rightarrow 
+\left\lbrace
+\begin{aligned}
+&ret \rightarrow 0 \\ &C \rightarrow (1,1,0,1,0)  
+\end{aligned}
+\right. \\
+\begin{array}{clllll}
+                &1 & 1 & 0 & 1 & 0\\
+\text{shift 1}: &0 & 1 & 1 & 0 & 1
+\end{array}
+\Rightarrow 
+\left\lbrace
+\begin{aligned}
+&ret \rightarrow 1 \\ &C \rightarrow (0,0,1,1,1)  
+\end{aligned}
+\right. \\
+\begin{array}{clllll}
+                &0 & 0 & 1 & 1 & 1\\
+\text{shift 2}: &0 & 0 & 0 & 1 & 1
+\end{array}
+\Rightarrow 
+\left\lbrace
+\begin{aligned}
+&ret \rightarrow 1 \\ &C \rightarrow (0,1,0,1,0)  
+\end{aligned}
+\right. 
+\end{align*}
+
+  \item Cette fonction renvoie une valeur approchée par défaut du carré d'un nombre binaire de $[0,1[$. Un tel nombre est dans $[0,4[$, la retenue permet de savoir s'il est plus grand que $2$. Il est bien clair que le nombre renvoyé est plus petit que le carré. Le principal reproche à faire à cette fonction c'est que l'erreur n'est pas facile à majorer. En particulier, pour certains $x$, le nombre renvoyé \emph{ne sera pas} l'approximation binaire par défaut de $x^2$.
+\end{enumerate}
+
+\end{enumerate}
+
+\subsection{Calculs de logarithmes particuliers}
+\begin{enumerate}
+  \item Les suites $\left( x_n\right)_{n\in \N}$, $\left( b_n\right)_{n\in \N}$ vérifient les relations de récurrence:
+\begin{displaymath}
+b_{k+1} =
+\left\lbrace 
+\begin{aligned}
+  &0 &\text{ si } x_k^2 < 10 \\
+  &1 &\text{ si } x_k^2 \geq 10
+\end{aligned}
+\right., \\
+\hspace{1cm} x_{k+1} = \frac{x_k^2}{10^{b_{k+1}}}
+\end{displaymath}
+
+\item Le nom $x$ désigne au départ un nombre entre $1$ et $10$. Après chaque assignation $x \leftarrow x *x$, il désigne un nombre entre $0$ et $100$. On teste s'il est plus grand que 10 et on le divise par 10 si c'est le cas (ce qui redonne un nombre plus petit que $10$). On en déduit que \og $x\in [1,10[$\fg est un invariant de boucle.\newline
+La liste $B$ est augmentée par la valeur de $b$ qui n'est assigné qu'à 0 ou 1. On en tire que \og$B$ est une liste de 0 et de 1\fg est aussi un invariant de boucle. 
+
+\item On montre par récurrence la relation demandée en l'élevant au carré et en utilisant $x_{k+1}10^{b_{k+1}}=x_k^{2}$.
+\begin{multline*}
+  x_{k+1} = 
+\left( 
+\frac{x_{ini}^{2^k}}{10^{2^{k}\left(\frac{b_1}{2}+\frac{b_2}{2^2}+\cdots+ \frac{b_k}{2^k}\right) }}
+\right)^2 \frac{1}{10^{b_{k+1}}}
+=
+\frac{x_{0}^{2^{k+1}}}{10^{2^{k+1}\left(\frac{b_1}{2}+\frac{b_2}{2^2}+\cdots+ \frac{b_k}{2^k}\right) +b_{k+1}}}\\
+=
+\frac{x_{0}^{2^{k+1}}}{10^{2^{k+1}\left(\frac{b_1}{2}+\frac{b_2}{2^2}+\cdots+ \frac{b_k}{2^k} + \frac{b_{k+1}}{2^{k+1}}\right) }}
+\end{multline*}
+
+\item Par définition, comme la liste $B$ commence par un $0$, le nombre binaire représenté est
+\begin{displaymath}
+  b = \frac{b_1}{2}+\frac{b_2}{2^2}+\cdots+ \frac{b_n}{2^n}
+\end{displaymath}
+La relation de la question 3 s'écrit alors
+\begin{multline*}
+x_n 10^{2^nb} = x_0^{2^{n}}
+\Rightarrow
+\ln x_n + 2^n\,b\,\ln 10 = 2^n \ln x_0
+\Rightarrow
+\frac{\ln x_0}{\ln 10} = b + 2^{-n}\frac{\ln x_n}{\ln 10}\\
+\Rightarrow
+b \leq \frac{\ln x_0}{\ln 10} < b + 2^{-n}
+\end{multline*}
+car on a montré que $0<x_n<10$. Cet algorithme permet donc de calculer le développement binaire du logarithme décimal d'un nombre entre $1$ et $10$.
+\end{enumerate}

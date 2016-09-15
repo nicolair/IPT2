@@ -1,0 +1,44 @@
+\begin{algorithm}
+  $L \leftarrow$ une liste de $n$ objets comparables indexée à partir de $0$.\;
+  $i\leftarrow 0$\;
+  \Tq{$i < n$}{
+    \Comment{recherche de la plus petite valeur pour les indices $\geq i$}
+    $imin \leftarrow i$\;
+    $vmin \leftarrow L[i]$\;
+    $j \leftarrow i+1$\;
+    \Tq{$j<n$}{
+      \Si{ $L[j] < vmin$}{
+        $imin \leftarrow j$\;
+        $vmin \leftarrow L[j]$\;
+      }
+      $j \leftarrow j +1$\;
+    }
+    \Comment{échanger les valeurs}
+    $L[imin]\leftarrow L[i]$\;
+    $L[i]\leftarrow vmin$\;
+    \Comment{incrémenter $i$}
+    $i \leftarrow i+1$\;
+  }
+  \label{exo_trisel_C}
+  \caption{tri par sélection}
+\end{algorithm}
+L'algorithme \ref{exo_trisel_C} présente en pseudo-code le tri par sélection. Le code suivant propose une implémentation en Python
+\begin{verbatim}
+L = [4,1,2,5,8,7,9,12,36,45,78,5,12,51]
+n = len(L)
+i = 0
+while i < n:
+    imin = i
+    vmin = L[i]
+    j = i+1
+    while j < n:
+        if L[j] < vmin:
+            imin = j
+            vmin = L[j]
+        j += 1
+    L[imin] = L[i]
+    L[i] = vmin
+    i += 1
+    
+print(L)
+\end{verbatim}

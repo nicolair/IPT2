@@ -1,0 +1,134 @@
+\input{ipt.tex}
+
+%En tete et pied de page
+%\lhead{Cours IPT}
+\chead{Introduction aux systèmes informatiques}
+
+
+\begin{document}
+\section{Machines théoriques}
+\subsection{Machines de Turing}
+Imaginons une machine constituée d'un ruban (amovible) formé d'une infinité de cases contenant des lettres d'un alphabet fini et d'une tête qui peut se déplacer le long du ruban et lire ou écrire sur les cases.\newline
+On place dans la machine un ruban particulier sur lequel des lettres sont écrites. On la met en marche; elle se déplace sur le ruban en remplaçant certaines lettres par d'autres puis elle s'arrête. Le ruban a été modifié : la transformation du ruban est un \og calcul\fg. \newline
+Un tel dispositif est une \emph{machine de Turing}. Précisons la manière dont la machine \og calcule\fg.\newline
+La tête de lecture-écriture-déplacement peut être dans plusieurs états physiques et ce qu'elle va faire (sur le ruban et sur elle même) dépend de ce qu'elle lit et de l'état dans lequel elle se trouve. 
+
+Prenons l'exemple d'une machine particulière.
+\begin{itemize}
+  \item L'alphabet contient trois lettres "0", "1", "*".
+  \item La machine peut se trouver dans quatre états : "1", "2", "3", "!". L'état "!" est l'état final; lorsque la machine se trouve dans cet état, elle s'arrête. 
+\end{itemize}
+Les actions de la machine sont déterminées à partir d'un \emph{tableau d'instructions} codées avec les lettres de l'alphabet dans la première ligne et les états de la machine dans la première colonne.
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|l|l|l|} \hline
+  & 0  & 1   & *  \\ \hline
+1 & G2 & D   & 1D \\ \hline
+2 &    & 0G3 &    \\ \hline
+3 & D! & G   &    \\ \hline
+\end{tabular}
+\end{center}
+Par exemple, lorsque la machine lit un "0" dans la case courante du ruban et qu'elle est dans l'état "1", le "G2" du tableau se traduit par: elle n'écrit rien, elle déplace la tête de lecture vers la gauche, elle se met dans l'état "2".\newline
+Lorsqu'elle lit un "1" en étant dans l'état "2", elle écrit un "0" dans la case courante, se déplace vers la gauche et se met dans l'état "3".\newline Lorsqu'elle lit un "0" en étant dans l'état "3", elle n'écrit rien se déplace vers la droite et s'arrête. Les autres cas se comprennent bien.\newline
+Calculons à partir d'un ruban "... 0 0 1 1 1 * 1 1 0 0 ..." en le plaçant dans la machine; la tête de lecture/écriture devant le "1" le plus à gauche.\newline
+Après l'arrêt de la machine, le ruban contient " ... 0 0 1 1 1 1 1 0 0 0 ..." avec la tête de lecture devant le "1" le plus à gauche et la machine dans l'état "!".\newline
+On peut se convaincre facilement que si on part avec $p$ fois la lettre "1" à gauche de "*" et $q$ fois à droite, on obtient $p+q$ fois "1" comme résultat du calcul. Cette machine réalise donc des additions pour des rubans codées convenablement.
+
+La machine décrite au dessus est appellée une \emph{machine de Turing}. Elle sert à modéliser le concept de \emph{calculabilité} et permet de prouver des résultats théoriques en particulier celui qui est présenté dans la section suivante.
+
+\textbf{Exercice.}\newline
+Une machine de Turing à 6 états s1, s2, s3, s4, s5 et ! représentant l'arrêt avec un alphabet 0, 1 est donnée par le tableau d'instructions suivant
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|l|l|l|} \hline
+   & 0  & 1     \\ \hline
+s1 & !      & 0 D s2  \\ \hline
+s2 & 0 D s3 & 1 D s2  \\ \hline
+s3 & 1 G s4 & 1 D s3  \\ \hline
+s4 & 0 G s5 & 1 G s4  \\ \hline
+s5 & 1 D s1 & 1 G s5  \\ \hline
+\end{tabular}
+\end{center}
+Elle démarre avec le ruban ... 0 0 1 1 0 0 ... , la tête de lecture placée sur le 1 le plus à gauche et dans l'état s1. Quel est le ruban après l'arrêt de la machine ? Avec quels types de ruban peut-on généraliser? \`A quoi sert une telle machine?
+
+\subsection{Machines universelles}
+Une machine de Turing est caractérisée par son tableau d'instructions. La machine présentée dans l'exercice ne peut faire qu'une chose : additionner.\newline
+En fait, il existe des machines qui peuvent faire ce que fait n'importe quelle machine. Précisons cette universalité.\newline
+Un calcul se fait avec une machine $T$ (désignant le tableau d'instructions qui la caractérise) et un ruban initial (donnée) $D_i$. Le résultat du calcul est un ruban final $D_f$. Le résultat extraordinaire est 
+\begin{quotation}
+  Il existe des machines (c'est à dire des tableaux d'instructions particuliers) $U$ telles que, \emph{pour toute machine} $T$ et \emph{toute donnée} $D_i$ calculant $D_f$, on peut former une donnée $\Delta$ tel que le calcul de $\Delta$ par $U$ permet de récupérer $D_f$.
+\end{quotation} 
+Une telle machine $U$ est dite \emph{universelle}.
+
+On peut se faire une idée précise de la démonstration dans l'article \og\href{http://smf4.emath.fr/Publications/Gazette/2013/135/smf_gazette_135_17-31.pdf}{Ce qu'Alan Turing nous a laissé}\fg~ \footnote{Gazette des mathématiciens 2013 n$^o$ 135} dont cette première partie est tirée.
+
+Le principe général est de convenir de systèmes de codage dans l'alphabet de $U$: un pour les données, un pour les machines. \`A partir d'un couple $(T,D)$, on forme un ruban avec une case désignée comme centrale en plaçant le codage de la machine sur la partie gauche et celui de la donnée sur la partie droite. Les instructions de la machine universelle sont conçues pour que la tête fasse des allers et retours entre les deux parties.
+
+\section{Machines matérielles}
+Les \emph{processeurs} modernes (en particulier les CPU\footnote{Central Process Unit} et les GPU \footnote{Graphic Process Unit}) sont des réalisations matérielles de telles machines universelles. Ils peuvent calculer tout ce qui est calculable mais il faut les programmer pour chaque tâche. Historiquement, les machines physiques ont été développées dans les années 1950 à partir de machines de Von Neumann plutôt que de Turing mais celles ci permettent de comprendre les principes.
+
+L'image du ruban dans une machine de Turing universelle permet de se représenter deux concepts fondamentaux : à gauche le \emph{programme} qui modélise la machine particulière, à droite les \emph{données} sur lesquelles la machine particulière travaille. Pour la tête de lecture, cette notion de droite et de gauche n'a pas de signification, une case du ruban est un \emph{instruction} qu'elle doit exécuter.
+
+Le ruban réprésente un \emph{dispositif de stockage} des données sur lesquelles on souhaite travailler. La tête représente une \emph{unité d'échange} entre la machine et le dispositif de stockage. La machine doit aussi pouvoir avoir plusieurs états et changer d'état. Pour cela, on la dote de dispositifs physiques contrôlables pouvant prendre plusieurs états : des \emph{mémoires} qui seront appellés \emph{registres} dans le cas d'un processeur.
+
+\subsection{Schématisation d'un processeur}
+Un processeur\footnote{on décrit ici plutôt un CPU qu'un GPU. Pour ce dernier, les opérations à exécuter sont plus spécifiques.} renferme deux unités fonctionnelles: \emph{l'unité de commande} et \emph{l'unité de traitement} ainsi que \emph{des registres}.
+\begin{description}
+ \item[registres] Ce sont des mémoires très rapides à l'intérieur même du processeur. Ils sont reliés aux unités par un \emph{bus} de largeur 32 ou 64 bits qui permet d'écrire ou de lire des mots de cette largeur.
+ \item[unité de commande] Elle remplit trois fonctions:
+ \begin{enumerate}
+  \item Aller chercher le code d'instruction en mémoire (fetch) et le charger dans un registre.
+  \item Reconnaître l'instruction (decode)
+  \item Indiquer à l'unité de traitement la suite (séquencement) de traitements arithmétiques ou les opérations logiques à effectuer (execute) 
+ \end{enumerate}
+ \item[unité de traitement] Elle assure l'exécution des opérations élémentaires désignées par l'unité de commande. Le coeur de l'unité de traitement est l'unité arithmétique et logique (U.A.L.) Il s'agit d'un circuit logique combinatoire permettant de réaliser certaines opérations élémentaires sur le contenu des registres: additions, soustraction, OU, ET, OU exclusif, complémentation, etc 
+\end{description}
+
+\subsection{Modules de base}
+Convenons d'appeler \emph{modules} les divers composants d'un ordinateur, le CPU n'est que l'un de ces modules. Détaillons les fonctions de quelques modules.
+\begin{description}
+ \item[Mémoire.] Il s'agit de la mémoire \emph{vive} c'est à dire qu'elle dépend de la source d'énergie de l'ordinateur. Dans l'image de la machine de Turing, elle est représentée par le ruban. Elle doit donc être assez grande car le ruban est théoriquement infini. Elle contient du code représentant le programme et les données sur lequel il travaille. La mémoire est inerte c'est à dire qu'elle ne fait rien par elle même.
+\item[Processeur.] Dans l'image d'une machine de Turing, un processeur est une machine universelle. Il répète (avec une fréquence donnée) la séquence de tâches:
+ \begin{itemize}
+  \item recherche de l'instruction (fetch)
+  \item décodage de l'instruction (decode)
+  \item exécution de l'instruction (execute)
+  \item écriture du résultat (write back)
+ \end{itemize}
+ \item[Périphériques.] Des dispositifs physiques recevant, fournissant (ou les deux) des données. E/S. Mémoire de masse (permanente), clavier, ports matériels. Les périphériques ne sont pas inertes, ils peuvent réagir aux données qu'ils reçoivent. 
+ 
+ \item[Unités d'échange.]Contrôleurs. Des dispositifs gérant l'échange de données entre le processeur et les périphériques. Ils répondent aux instructions envoyées par le processeur. Ils permettent au processeur de voir les périphériques comme de la mémoire.
+ 
+ \item[Bus externes.] Des dispositifs physiques reliant les modules entre eux. La largeur d'un bus est le nombre de lignes le constituant. Un bus de largeur 16 permet de transmettre 16 bits simultanément.
+\end{description}
+
+\section{Introduction à la notion d'Operating System}
+L'O.S. (Operating System) est l'ensemble de programmes qui permettent l'utilisation des capacités de l'ordinateur en isolant les applications des détails du matériel. Les principaux programmes de cet ensemble sont lancés dès le démarrage de l'ordinateur. L'O.S. forme une couche logicielle entre le matériel et les applications. \'Enumérons quelques fonctions d'un tel système.
+\begin{description}
+ \item[Interface de programmation]: A.P.I.
+ \item[Ordonnanceur]: Contrôle le déroulement des programmes.
+ \item[Communication inter Processus]:
+ \item[Gestion de la mémoire]:
+ \item[Pilotes]:
+ \item[Système de fichiers]: gestion de la mémoire de masse.
+ \item[Réseau]:
+ \item[Contrôle d'accès]: utilisateur, administrateur
+ \item[Interface utilisateur]: graphique ou ligne de commande.
+\end{description}
+
+\section{Environnement de travail}
+Comme on l'a vu dans l'introduction, un calcul s'effectue à partir de données et d'instructions. Dans une machine, les données comme les instructions ont une traduction matérielle dans les mémoires du système. Pour traduire matériellement une opération simple sur des données simples, il est indispensable de passer par des couches successives de codage (langage).
+\begin{itemize}
+ \item Un texte écrit dans un langage compilé est donné à un \emph{compilateur} qui le transforme en un fichier exécutable par l'OS.
+ \item Un texte écrit dans un langage interprété est donné à un \emph{interpréteur} qui fait exécuter directement par l'OS les instructions qu'il lit dans le fichier.
+\end{itemize}
+On utilisera deux langages interprétés : un généraliste \emph{Python} et un orienté vers le calcul numérique \emph{SciLab}.
+
+Pour écrire et exécuter du code en Python, vous pouvez utiliser un simple éditeur de texte et une ligne de commande. Il est toutefois commode de disposer de fonctionnalités supplémentaires (la coloration syntaxique par exemple ou l'exécution en un click). Un environnement de développement est un logiciel qui propose de telles fonctionnalités pour un langage particulier (ou plusieurs). L'établissement a choisi \emph{spyder}.
+
+La notion de couche peut se retrouver aussi dans l'utilisation de Python. Comme il est généraliste, on utilise des couches spécifiques (bibliothèques) spécialisées dans de domaines particuliers.
+
+Les trois logiciels sont libres et disponibles pour tous les OS. Le langage Python existe en version 2.7 ou 3.3. Vous pouvez les télécharger et les installer sur vos machines personnelles. Il existe des différences significatives entre les deux versions et certaines bibliothèques ne sont pas disponibles pour 3.3. Installez les deux si vous pouvez. Si vous pouvez n'en installer qu'une préférez 2.7.  Si vous le souhaitez, vous pourrez utiliser vos machines personnelles en TP.
+
+Vous aurez besoin d'un système de stockage permettant l'échange entre l'établissement et vos machines personnelles. N'utilisez une clé USB qu'en dépannage, préférez un stockage web et constituez vous un compte googleDrive ou dropBox. Ceci DOIT \^ETRE FAIT AVANT LE PREMIER TP DE LUNDI.
+\end{document}

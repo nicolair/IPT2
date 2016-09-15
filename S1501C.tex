@@ -1,0 +1,47 @@
+\input{ipt.tex}
+%En tete et pied de page
+\lhead{IPT}
+\chead{Corrigé DS 1 le 9/12/15}
+\begin{document}
+\section{Questions de cours.}
+\begin{enumerate}
+  \item Un \og segment itératif\fg~ est une boucle de type \og tant que \fg. On doit montrer deux points :
+\begin{itemize}
+  \item que l'on sort de la boucle,
+  \item que la boucle résoud le problème proposé.
+\end{itemize}
+Pratiquement, la preuve de terminaison se fait en justifiant l'existence d'une fonction à valeurs dans $\N$ et qui décroit strictement à chaque itération. Pour la deuxième propriété, on caractérise le problème par une proposition qui doit être vérifiée à la fin de la boucle.
+  
+  \item Quels entiers relatifs sont représentables en 64 bits sur les machines actuelles?
+Les machines actuelles utilisent la représentation des entiers par complément à $2$. Les entiers relatifs de
+\begin{displaymath} 
+  \llbracket -2^{63} , 2^{63} -1 \rrbracket
+\end{displaymath}
+sont représentables.
+\begin{itemize}
+  \item Les entiers de $\llbracket -2^{63} , 2^{63} -1 \rrbracket$ sont représentés par leur décomposition binaire sur 64 bits. Le bit de poids fort est $0$.
+  \item Les entiers $x$ de $\llbracket -2^{63} , 2^{63} -1 \rrbracket$ sont représentés par la décomposition binaire de $2^{64} -x$ sur 64 bits. Le bit de poids fort est $1$.
+\end{itemize}
+
+  \item Quelle est le représentant par complément à 2 sur 8 bits de $-8$ ? \newline
+On représente $-8$ par la décomposition binaire de $-8 + 2^{8}$
+\begin{displaymath}
+  2^{8} - 2^{3} = (2-1)(2^{7} +2^{6} +2^{5} +2^{4} +2^{3})
+\end{displaymath}
+soit
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|l|} \hline
+bit de poids fort &   &   &   &   &   &   & bit de poids faible \\ \hline
+1 & 1 & 1 & 1 & 1 & 0 & 0 & 0 \\ \hline
+\end{tabular}
+\end{center}
+
+\end{enumerate}
+
+\section{Listes. Fermeture transitive.}
+\input{Cfermtrans}
+\section{Plus petit commun multiple.}
+\input{Cppcm}
+\section{Calculs en binaire.}
+\input{Cunderflow1}
+\end{document}

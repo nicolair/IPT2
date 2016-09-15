@@ -1,0 +1,233 @@
+\input{ipt_beamer.tex}
+
+\begin{document}
+\begin{frame}
+  \frametitle{Problèmes usuels}
+  \begin{itemize}
+    \item Recherches linéaires.
+    \begin{itemize}
+      \item premier indice d'une valeur
+      \item plus grande valeur
+      \item indice de la plus grande valeur
+    \end{itemize}
+    \item Dichotomie
+    \begin{itemize}
+      \item encadrer un nombre par deux valeurs consécutives d'une liste croissante
+      \item équation $f(x)=0$ pour $f$ croissante
+    \end{itemize}
+    \item Motif dans une chaîne de caractères
+    \begin{itemize}
+      \item méthode naïve
+      \item amélioration pour un motif sans répétition
+    \end{itemize}
+
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Comparaison de problèmes}
+  \begin{center}
+Soient deux problèmes $\mathcal{P}_1$ et $\mathcal{P}_2$.
+
+\bigskip
+Si une solution de $\mathcal{P}_2$ permet d'obtenir une solution de $\mathcal{P}_1$, alors :
+
+\bigskip
+ $\mathcal{P}_2$ est \emph{plus difficile} que $\mathcal{P}_1$. 
+     
+  \end{center}
+
+Pour résoudre $\mathcal{P}_1$,  vouloir résoudre $\mathcal{P}_2$ est une MAUVAISE ID\'EE.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Premier indice d'une valeur dans une liste}
+\begin{algorithm}[H]
+  \Donnees{\;
+     $ L \leftarrow$ une liste de $n$ objets indexée à partir de 0\;
+     $O \leftarrow$ un objet}
+  \Comment{initialisation}
+  $i\leftarrow$ 0 \;
+  \Tq{ i < n \rm et \it L[i] != O}{
+      incrémenter $i$\;
+  }
+  \Comment{après la boucle, $i$ est inférieur ou égal à $n$}
+  \Comment{Si $i<n$, il désigne l'indice cherché.}
+  \Comment{Si $i=n$, l'objet ne figure pas dans la liste}
+  \caption{}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+\frametitle{Recherche de la plus grande valeur d'une liste}
+\begin{algorithm}[H]
+  \Donnees{\;
+     $ L \leftarrow$ une liste (indexée de 0 à $n$) d'objets comparables}
+  \Comment{initialisation}
+  $vmax\leftarrow L[0]$  \;
+  $i \leftarrow 1$\;
+  \Tq{ i < n}{
+      \Si{vmax < L[i]}{vmax = L[i]}
+      incrémenter $i$\;
+  }
+  \Comment{$vmax$ désigne la plus grande valeur}
+  \caption{}
+\end{algorithm}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recherche de l'indice de la plus grande valeur}
+  Comment modifier l'algorithme précédent ?
+
+\begin{algorithm}[H]
+\only<2->{
+\Donnees{\;
+     $ L \leftarrow$ une liste (indexée de 0 à $n$) d'objets comparables}
+  \Comment{initialisation}
+  $vmax\leftarrow L[0]$  \;
+  \only<3->{$imax \leftarrow 0$ \;}
+  $i \leftarrow 1$\;
+  \Tq{ i < n}{
+      \Si{vmax < L[i]}{vmax = L[i] \; \only<3->{$imax \leftarrow i$ \;}}
+      incrémenter $i$\;
+  }
+  \Comment{$vmax$ désigne la plus grande valeur\;}
+  \only<3->{\Comment{$imax$ désigne un indice de la plus grande valeur\;}}
+  \caption{}
+}
+\end{algorithm}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Encadrement par dichotomie}
+\begin{algorithm}[H]
+  \Donnees{\;
+    $L \leftarrow$ une liste (indexée à partir de 0) croissante (pas forcément strictement) de $n$ nombres\;
+    $v \leftarrow$ un nombre vérifiant $L[0]\leq v < L[n-1]$\;
+  }
+  \Comment{initialisation}
+  $i\leftarrow 0$\;
+  $j\leftarrow n-1$\;
+  \Comment{$k$ désignera un entier strictement entre $i$ et $j$}
+  \Tq{ j-i > 1}{
+    $k\leftarrow$ partie entière de $\frac{i+j}{2}$ \;
+    \eSi{L[k] $\leq$ v}{
+      $i\leftarrow k$ \;
+    }{
+      $j\leftarrow k$
+    }
+  }
+  \Comment{$i$ désigne l'indice cherché.}
+  \caption{}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recherche d'un mot : problème}
+On cherche les occurences d'un mot $M$ de longueur $m>0$ dans un texte $T$ de longueur $t$. Les chaînes de caractères sont indexées à partir de 0.
+\bigskip
+
+Pour chaque indice $i$ entre $0$ et $t-m$, on note $T_i$ le mot dont les caractères sont $T[i] T[i+1] \cdots T[i+m-1]$.
+\bigskip
+
+L'algorithme naïf de recherche de motif consiste simplement à comparer $M$ à chaque $T_i$.
+\bigskip
+
+En Python $T_i$ peut s'obtenir avec la syntaxe \texttt{T[i:i+m]}
+\end{frame}
+
+\begin{frame}
+\frametitle{Recherche d'un mot : algorithme naïf}
+\begin{algorithm}[H]
+  \Donnees{\;
+    $M \leftarrow$ une chaîne de $m$ caractères (mot)\;
+    $T \leftarrow$ une chaîne de $t$ caractères (texte)\;
+  }
+  \Comment{initialisation}
+  $O$ désigne la liste qui recevra les indices d'occurence du mot\;
+  $i\leftarrow 0$ un indice pour le texte \;
+  \Tq{i $\leq$ t - m}{
+    \If{ M = $T_i$}{
+      placer $i$ à la fin de la liste $O$\;
+    }
+    incrémenter $i$
+  }
+  \caption{}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Principe d'une amélioration}
+\begin{center}
+  \item Utiliser le travail fourni en comparant $M$ à $T_i$ pour incrémenter $i$ plus efficacement afin d'éviter des comparaisons dont on peut savoir à l'avance qu'elles échoueront. 
+\end{center}
+
+Exemple :
+
+Implémenter une fonction $NbCarComm(M,T_i)$ qui renvoie le nombre de caractères (entre 0 et $m$) que les deux mots ont en commun (au début des mots).
+
+Par exemple, si $T_i$ désigne \texttt{'tstt-tsst'} et $M$ désigne \texttt{'tsoin'}, la fonction renverra $2$ car seuls les deux premiers caractères \texttt{'c'} et \texttt{'s'} sont communs.
+
+Les mots sont égaux si et seulement si la fonction renvoie $m$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Cas particulier d'un mot sans répétition}
+Si
+\begin{itemize}
+  \item les $p$ premiers caractères de $M$ et $T_i$ sont égaux
+  \item $p<m$ c'est à dire $M\neq T_i$
+  \item les caractères de $M$ sont deux à deux distincts
+\end{itemize}
+alors:
+\begin{itemize}
+  \item le premier caractère des mots $T_{i+1}, T_{i+2},\cdots T_{i+p}$ est différent du premier caractère de $M$ (puisqu'il s'agit d'un des caractères suivants de $M$.)
+  \item les mots $T_{i+1}, T_{i+2},\cdots T_{i+p-1}$ sont distincts de $M$
+\end{itemize}
+On peut incrémenter $i$ de $\max(1,p)$ (au lieu de 1)
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fonction \texttt{NbCarComm}}
+\begin{algorithm}[H]
+  \Donnees{\;
+    $M \leftarrow$ une chaîne de $m$ caractères\;
+    $T \leftarrow$ une chaîne de $m$ caractères\;
+  }
+  \Comment{initialisation}
+  $i\leftarrow 0$ (nombre de premiers indices avec les mêmes valeurs)\;
+  \Tq{ i < m et M[i] = T[i]}{
+    incrémenter $i$\;
+  }
+  renvoyer $i$\;
+  \caption{}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recherche d'un motif sans répétition}
+\begin{algorithm}[H]
+  \Donnees{\;
+    $M \leftarrow$ une chaîne de $m$ caractères (mot) sans répétition\;
+    $T \leftarrow$ une chaîne de $t$ caractères (texte)\;
+  }
+  \Comment{initialisation}
+  $O$ désigne la liste qui recevra les indices d'occurence du mot\;
+  $i\leftarrow 0$ un indice pour le texte \;
+  $NbCarComm \leftarrow$ une fonction comme décrite plus haut\;
+  \Tq{i $\leq$ t - m}{
+    $p \leftarrow NbCarComm(M , T_i)$\; 
+    \If{ p = m}{
+      \Comment{dans ce cas $M=T_i$}
+      placer $i$ à la fin de la liste $O$\;
+    }
+    \Comment{incrémenter $i$}
+    $i \leftarrow i + \max(1,p)$\;
+  }
+  \caption{}
+\end{algorithm}
+\end{frame}
+
+
+\end{document}

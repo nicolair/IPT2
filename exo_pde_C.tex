@@ -1,0 +1,26 @@
+\begin{enumerate}
+  \item La définition de la division euclidienne conduit à l'encadrement $q\leq \frac{b}{a} < q+1$. On en déduit $q=\lfloor \frac{b}{a}\rfloor$.\newline
+La définition de la pseudo division euclidienne conduit à l'encadrement $q-1 < \frac{b}{a} \leq  q$. On en déduit $q=\lceil \frac{b}{a}\rceil$.
+\item Par définition, le reste d'une pde est strictement plus petit que le nombre par lequel on divise. L'expression $a$ est donc bien un variant.\newline
+Par convention, représentons avec un indice $k$ les valeurs désignées par les noms après l'exécution de $k$ fois le corps de boucle.\newline
+Après l'initialisation et avant la boucle: $s_0=0$, $a_0=a_{ini}$, $Q_0=1$ donc $s_0b+\frac{a_0}{Q_0}=a_{ini}$ ce qui assure que $\Phi_0=\verb|vrai|$.\newline
+Après la $k+1$-ème exécution:
+\begin{multline*}
+\left. 
+\begin{aligned}
+b = q_{k+1}a_k - a_{k+1}\\
+Q_{k+1} = Q_k q_{k+1}\\
+s_{k+1} = s_k + \frac{1}{Q_k q_{k+1}}
+\end{aligned}
+\right\rbrace \Rightarrow
+s_{k+1}b + \frac{a_{k+1}}{Q_{k+1}}=
+s_kb+\frac{1}{Q_kq_{k+1}}(b+a_{k+1})\\
+= s_kb+\frac{1}{Q_kq_{k+1}}(q_{k+1}a_k)
+= s_kb+\frac{a_k}{Q_k} = a_{ini}
+\end{multline*}
+Après la sortie de la boucle $a$ désigne forcément $0$ car $a$ désigne toujours un reste de division. Cet algorithme décompose un nombre rationnel en une somme d'inverses.
+\begin{displaymath}
+  \frac{a_{ini}}{b} = \frac{1}{q_1}+ \frac{1}{q_1q_2}+ \cdots
+\end{displaymath}
+
+\end{enumerate}

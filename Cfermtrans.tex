@@ -1,0 +1,30 @@
+
+\begin{enumerate}
+  \item 
+\begin{enumerate}
+  \item L'initialisation de \texttt{R0} est présenté dans les lignes 1 et 2 du code présenté à la fin. Le code est sur 2 lignes uniquement pour faciliter la présentation. Il faut reformer une seule ligne pour l'exécution.
+  \item L'initialisation se fait en deux temps. On assigne d'abord la valeur \texttt{False} partout. Puis, en parcourant le tableau \texttt{R0}, on assigne les valeurs \texttt{True} aux couples en relation. Voir les lignes 5, 6, 7 du code.\newline
+Pour la première assignation, il faut faire attention à ne pas utiliser\newline
+\texttt{r = [[False]*n]*n}
+Car on multiplie les références à un \emph{même} tableau élémentaire. 
+
+  \item On utilise trois boucles imbriquées (lignes 10 à 14).
+\end{enumerate}
+
+  \item 
+\begin{enumerate}
+  \item La relation associée à $\mathcal{R}$ n'est pas transitive si et seulement si
+\begin{displaymath}
+ \exists (i,j,k) \in \Omega^3 \text{ tel que } a \mathcal{R} b \text{ et } b \mathcal{R} c \text{ et } \left( a \mathcal{R} c \text{ FAUX}\right) 
+\end{displaymath}
+
+  \item Avec le tableau à valeurs booléennes, la condition s'écrit
+\begin{multline*}
+ \exists (i,j,k) \in \Omega^3 \text{ tel que } \texttt{r[a][b] == TRUE} \text{ et } \texttt{r[b][c] == TRUE}\\ \text{ et } \texttt{r[a][c] == FALSE} 
+\end{multline*}
+\end{enumerate}
+Dans ce code, les lignes ont été coupées pour permettre l'insertion dans le texte. Il convient de les recoller pour exécuter.
+\lstinputlisting[firstline=1, lastline=25]{Cfermtrans.py}
+  \item La condition booléenne \texttt{pasTrans} caractérise la non transitivité du tableau. Elle est vraie si et seulement si il existe un triplet comme dans les question précédentes. La boucle s'effectue tant que le tableau n'est pas transitif. On ne demandait pas de fonction de terminaison. Le nombre de \texttt{False} dans le tableau en est une. 
+  
+\end{enumerate}

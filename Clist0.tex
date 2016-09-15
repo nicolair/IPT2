@@ -1,0 +1,36 @@
+\begin{enumerate}
+  \item 
+ 
+\begin{verbatim}
+nmax = 4
+CoeffBin = range(nmax + 1)
+for n in range(nmax + 1):
+  CoeffBin[n] = range(n+1)
+  CoeffBin[n][0] = CoeffBin[n][n] = 1
+  for p  in range(n-1):
+    CoeffBin[n][p+1] = CoeffBin[n-1][p+1] + CoeffBin[n-1][p]  
+print(CoeffBin)
+>>> 
+[[1], [1, 1], [1, 2, 1], [1, 3, 3, 1], [1, 4, 6, 4, 1]]\end{verbatim}
+
+  \item Le coefficient du binôme $\binom{6}{4}=15$ calculé avec le quotient de produits.
+
+  \item Inversion de listes.
+\begin{verbatim}lili = [0,1,0,0,0,1]
+l = len(lili)
+i = 0
+j = l-1
+while i < j:
+    lili[i],lili[j] = lili[j],lili[i]
+    i += 1
+    j-= 1
+print(lili)\end{verbatim}
+Elle peut se faire en place (en modifiant l'objet) car une liste est modifiable.\newline
+En revanche une chaîne de caractères n'est pas modifiable, il faut un nouvel objet.
+\begin{verbatim}str = 'tagada'
+rnv = ''
+for chacha in str:
+    rnv = chacha + rnv
+print(rnv)\end{verbatim}
+
+\end{enumerate}

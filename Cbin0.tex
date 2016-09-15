@@ -1,0 +1,133 @@
+\begin{enumerate}
+  \item Pour calculer la décomposition binaire d'un entier.
+\begin{verbatim}
+n = 12
+print(bin(n))
+bibi = ""
+while n > 0 :
+    bibi = str( n % 2) + bibi
+    n = n // 2
+bibi = "0b" + bibi
+print(bibi)
+\end{verbatim}
+
+ \item Code utilisant \texttt{in} et \texttt{index}
+\begin{verbatim}p = 5
+q = 12
+list_r = []
+n = 0
+while not( p in list_r):
+    list_r.append(p)
+    p = (p*2)  % q
+    n += 1
+nmin = list_r.index(p)
+print(nmin, n - nmin)
+print(list_r,p)\end{verbatim}
+
+\item La question a. est purement mathématique. Code pour la question 2.
+\begin{verbatim}p = 7
+q = 16
+
+list_r = []
+dev_bin = []
+n = 0
+while not( p in list_r):
+    list_r.append(p)
+    dev_bin.append((2*p) // q)
+    p = (p*2)  % q
+    n += 1
+nmin = list_r.index(p)
+
+print(nmin, n - nmin)
+print(list_r,p)
+print(dev_bin)\end{verbatim}
+
+\item Calcul de la première somme et vérification.
+\begin{verbatim}lili = [1,0,1,1,0,1]
+s = 0
+for v in lili:
+    s = s*2 + v
+print(lili,s,bin(s))\end{verbatim}
+
+
+Calcul de la deuxième somme et vérification du développement.
+\begin{verbatim}
+lili = dev_bin
+s = 0.
+p = 0.5
+for v in lili:
+    s += v*p
+    p = p / 2
+print(s, float(p0)/float(q0))
+\end{verbatim}
+où \texttt{p0} et \texttt{q0} désignent les valeurs initiales de $p$ et $q$.
+
+\item Le code proposé devrait afficher 1. \`A l'exécution, il affiche effectivement $1$ pour $n=26$ mais $-1$ pour $n=27$.\newline
+En effet, dans ce cas, après la première affectation, \texttt{truc} désigne
+\begin{displaymath}
+  2^{-26} + 2^{27} = (1 + 2^{-53})\times 2^{27} \simeq 1 \times 2^{27}
+\end{displaymath}
+car Python respecte la norme IEEE 754 qui affecte seulement 52 bits à la représentation de la mantisse. La suite des calculs se déroule normalement et \texttt{truc} désigne successivement
+\begin{displaymath}
+  2^{27}-2^{27}=0\hspace{0.5cm} 0-2^{-27} = -2^{-27}
+  \hspace{0.5cm} -2^{-27}\,2^{27} = -1
+\end{displaymath}
+
+\item Code pour l'addition d'entiers en décomposition binaire
+\begin{verbatim}lili = [1,0,1,1,0,1]
+bibi = [0,1,0,1,1,0]
+l = len(lili)
+soso = [0 for k in range(l)]
+ret = 0
+for k in range(l):
+    truc = ret + lili[l-k-1] + bibi[l-k-1]
+    soso[l-k-1] = truc % 2
+    ret = truc // 2
+if ret == 1:
+    print('erreur')
+else:
+    print(soso)\end{verbatim}
+
+\item Nombres palindromes.
+\begin{enumerate}
+  \item Code pour calculer la somme d'un nombre et de son renversé
+\begin{verbatim}nb = 12450
+nb_str = str(nb) 
+rnv = ''
+for chacha in nb_str:
+    rnv = chacha + rnv
+nn = nb + int(rnv) 
+print(nn)\end{verbatim}
+
+\item Code pour expérimenter autour des nombres de Lycrel
+\begin{verbatim}n = 1
+imax = 26
+while n < 300:
+    n += 1
+    nb = n
+    i = 0
+
+    nb_str = str(nb) 
+    rnv = ''
+    for chacha in nb_str:
+        rnv = chacha + rnv
+    bn = int(rnv)    
+    i += 1
+    palindrome = nb == bn
+    nb = nb + bn
+
+    while (not palindrome) and i < imax:
+        nb_str = str(nb) 
+        rnv = ''
+        for chacha in nb_str:
+            rnv = chacha + rnv
+        bn = int(rnv)    
+        i += 1
+        palindrome = nb == bn
+        nb = nb + bn
+    if i == imax:
+        print(str(n)+': '+ str(bn) + ', '+str(i-1))\end{verbatim}
+En expérimentant avec ce code, les deux premiers nombres dont on ne sait pas montrer qu'ils ne sont pas de Lychrel sont $196$ et $295$.
+\end{enumerate}
+
+\end{enumerate}

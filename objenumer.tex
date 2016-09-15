@@ -1,0 +1,154 @@
+\input{ipt.tex}
+%En tete et pied de page
+\lhead{Cours IPT}
+\chead{Objets énumérables - Boucles d'énumération}
+\begin{document}  \index{objets énumérables} \index{boucle for} \index{boucle d'énumération}
+En Python, la notion de boucle non conditionnelle (boucle \texttt{for}) est remplacée par une notion de \emph{boucle d'énumération} liée à des types particuliers d'objets dits \emph{énumérables}.\newline
+Un objet de type \emph{énumérable} est une sorte de conteneur, il rassemble \og dans une même boîte\fg~ divers objets. On peut accéder à ces objets à l'aide d'une boucle d'énumération \texttt{for ... in ...}.\newline
+On présente plusieurs types d'objets énumérables: on utilisera essentiellement les chaînes de caractères et les listes.
+
+\section{Types d'objets énumérables}
+Un objet énumérable est \emph{mutable} \index{objet mutable} lorsque l'on peut modifier un objet contenu: penser à une bouteille plus ou moins pleine.\newline
+Un objet est \emph{indexable} \index{indexable} lorsque l'on peut accéder directement à un objet contenu particulier sans les énumérer tous.\newline
+Dans la construction littérale d'un objet énumérable, le délimiteur \index{délimiteur} est le couple de caractères entourant les objets contenus et le séparateur\index{séparateur} est le caractère entre les définitions littérales des objets contenus.
+\begin{description}
+ \item [Chaînes de caractères] Strings (non mutable - indexable) Construction : délimiteur guillemets \verb|" "| ou apostrophes \verb|' '|- pas de séparateur.
+ \item [tuples] (non mutable - indexable) Construction : pas de délimiteur - séparateur virgule \verb|,|. Dans certain cas, il est nécessaire d'utiliser des parenthèses autour du tuple.
+ \item [Listes] (mutable - indexable) Construction: délimiteur crochet \verb|[ ]| - séparateur virgule \verb|,|.
+ \item [Ranges] (non mutable - indexable) A partir de python 3, \texttt{range} renvoie un objet de ce type (et non une liste) constituée d'entiers consécutifs.
+ \item [Ensembles] (Sets) (mutable - non indexable) Construction: délimiteur accolade \verb|{ }| - séparateur virgule \verb|,|.
+ \item [Dictionnaires] (mutable - indexable) Un dictionnaire est formé par des couples (clé: valeur). La construction se fait avec le délimiteur accolade et le séparateur virgule entre les couples. \`A l'intérieur d'un couple, un "\verb|:|" sépare la clé (à gauche) de la valeur (à droite)
+ \begin{verbatim}
+  dico = {"riri" : 10.1 , "fifi" : 15. , "loulou" : 0.7} \end{verbatim}
+ Il est raisonnable de se limiter aux types chaîne de caractères ou entier pour les clés.
+\end{description}
+Sauf pour les chaînes de caractères, les objets qui figurent dans ces objets énumérables n'ont pas à être de même type.\newline
+La fonction \verb|len(obj)| renvoie le nombre d'objets constituant l'objet désigné par \verb|obj| lorsque celui ci est de type énumérable.\newline
+Lorsqu'un objet est d'un type indexable, on peut atteindre et modifier les objets qui le constituent à l'aide d'un \emph{index} entre crochets \verb|[ ]|.
+\begin{itemize}
+ \item Pour un dictionnaire, on utilise la clé comme index \verb|dico["fifi"]|.
+ \item Pour un objet de nom \verb|obj| d'un autre type indexable, l'index est un entier entre 0 et la longueur(\verb|len(obj)|) moins un. 
+\end{itemize}
+Avec les objets dont le type est mutable, il faut être particulièrement attentif au fait que l'assignation est une référence et non une copie.
+\begin{verbatim}
+lili = range(5)
+fifi = lili
+fifi[3] = 54555
+print(lili)
+>>>> [0, 1, 2, 54555, 4]\end{verbatim}
+Alors que 
+\begin{verbatim}
+stringy = "meuh meuh"
+chacha = stringy
+chacha[3] = "B"
+print(chacha)
+>>>>> TypeError: 'str' object does not support item assignment\end{verbatim}
+
+\section{Boucle d'énumération}
+Exécuter une boucle non conditionnelle, c'est parcourir les objets constituant un objet énumérable en les désignant tour à tour par un même nom et exécuter un bloc d'instructions. 
+La syntaxe est
+\begin{verbatim}
+for nom in obj:
+  instruction1
+  instruction2
+  ...
+instructionapres la boucle\end{verbatim}
+où \texttt{obj} désigne un objet énumérable et \texttt{nom} est le nom par lequel on désigne successivement chacun des objets le constituant. 
+
+Exemples
+\begin{verbatim}
+truc = "tagada"                        n = 5                     
+for charly in truc:                    f = 1
+    print(charly)                      for i in range(5):
+print(type(truc))                          f *= i
+                                       print(f)
+                                       
+for i in range(5):
+  print(i)
+                                       \end{verbatim}
+
+\section{Chaines de caractères}
+\subsection{Concaténation et échappement}
+L'opérateur de concaténation est \texttt{+}. Les délimiteurs \texttt{' '} (apostrophe, single quote) ou \text{" "} (guillemets, double quote) sont complètement équivalents. On peut les utiliser en particulier pour des chaînes de caractères contenant des guillemets ou des apostrophes.
+\begin{verbatim}
+  stringy = "L'apostrophe ' est un délimiteur de chaîne. " 
+  stringy = stringy + 'Le guillemet " est un délimiteur de chaîne'.
+  print(stringy)\end{verbatim}
+On peut aussi utiliser \verb|\| (anti-slash) comme \emph{caractère d'échappement}. \index{caractère d'échappement}
+\begin{verbatim}
+  stringy = "les apostrophes \"' '\" sont des délimiteurs de chaîne"\end{verbatim}
+
+\subsection{Indexation et sous-chaînes}
+En Python il n'existe pas de type représentant un seul caractère: un caractère tout seul est une chaîne de longueur 0. Une sous-chaîne d'une chaîne donnée est une chaîne formée avec des caractères consécutifs. Les caractères et les sous chaînes d'une chaîne désignée par un nom sont obtenus à l'aide de crochets et d'index.
+\begin{verbatim}
+  stringy = "L'apostrophe ' est un délimiteur de chaîne. "
+  l = len(stringy)
+  print(stringy[3])
+  print(stringy[l - 3])
+  print(stringy[-3])
+  stringounet = stringy[0:5]
+  print(stringounet)
+  print(stringy[5:])
+  print(stringy[5:-2])\end{verbatim}
+L'utilisation de crochets et de \verb|:| s'appelle le \emph{slicing}. Utiliser cette terminologie pour obtenir de l'aide sur toutes les possibilités.
+
+\subsection{Test d'appartenance}
+L'opérateur à valeur booléenne \texttt{in} permet de savoir si un caractère est dans une chaîne.
+\begin{verbatim}
+  stringy = "L'apostrophe ' est un délimiteur de chaîne. "
+  charly = "e"
+  print(charly in stringy)\end{verbatim}
+En fait \texttt{in} permet de savoir si une sous-chaine est dans la chaîne. Connaitre les algorithmes réalisant ceci est un attendu du programme. Ces algorithmes seront étudiés plus loin dans le document sur les algorithmes usuels. Python utilise certainement une version optimisée de l'un de ces algorithmes.   
+\begin{verbatim}
+  stringy = "L'apostrophe ' est un délimiteur de chaîne. "
+  stringounet = "e ' e"
+  print(stringounet in stringy)\end{verbatim}
+Remarque, si le deuxième argument de l'opérateur n'est pas du type itérable, on obtient une erreur de type.
+
+\subsection{Conversion - transtypage}
+On peut convertir des objets \texttt{int} ou \texttt{float} en chaîne de caractère à l'aide de la fonction \texttt{str}. Par exemple \texttt{str(12)} et \texttt{str(1.2)} prennent respectivement un entier ou un float comme paramètre et renvoient des chaînes de caractères.
+
+\section{Listes}
+\subsection{Constructeurs}
+En plus du constructeur littéral avec crochets et virgules, on dispose d'autres manières de construire des listes.\newline
+L'appel de fonction \verb|range(n)| avec \verb|n| désignant un entier naturel $n$ renvoie (en Python 2) la liste des entiers de $0$ à $n-1$ (en particulier \verb|range(0)| renvoie la liste vide ne contenant rien). En Python 3, \texttt{range} renvoie un objet de la classe \texttt{range} que l'on peut transtyper avec la fonction \texttt{list}.\newline
+On peut aussi utiliser la syntaxe de boucle d'itération à l'intérieur de crochets pour définir une liste. Par exemple pour former la liste des premiers carrés d'entiers: \verb|[i**2 for i in range(5)]|.\newline
+On peut aussi concaténer les listes avec + et concaténer une liste avec elle même un nombre entier de fois avec *.
+
+\subsection{Listes de listes}
+On peut emboîter les listes, par exemple pour former une matrice comme liste de ses lignes.\newline
+Par exemple, pour former une matrice identité, on forme d'abord une matrice nulle que l'on modifie en tirant parti du caractère mutable des listes.
+\begin{verbatim}
+n = 4
+MatId = [[0 for j in range(n)] for i in range(n)]
+print(MatId)
+for i in range(n):
+    MatId[i][i] = 1
+print(MatId)\end{verbatim}
+
+\subsection{Concaténation - Adjonction - Suppression}
+L'opérateur \texttt{+} est toujours un opérateur de concaténation, lorsque les deux opérandes sont des listes, il forme une nouvelle liste en les plaçant bout à bout : \newline\texttt{['riri','fifi','loulou'] + [1,2]}.
+
+On peut adjoindre ou supprimer un élément en bout de liste avec les méthodes \texttt{append} ou \texttt{pop} ou avec l'instruction \texttt{del}:
+\begin{verbatim}
+lili = ["riri","fifi","loulou"]
+lili.append("vivi")
+print(len(lili))
+lili.pop()
+del lili[0]
+print(len(lili))\end{verbatim}
+Ces deux méthodes permettent d'utiliser des listes comme des \emph{piles}. La méthode \texttt{pop} peut aussi accepter un index en argument.
+
+\subsection{Méthodes de liste}
+Il existe d'autres méthodes : \texttt{extend}, \texttt{insert}, \texttt{remove}, \texttt{index}, \texttt{count}, \texttt{sort}, \texttt{reverse}
+
+\subsection{Indexation et sous-listes}
+Le couple clé-valeur qui est le concept fondamental des dictionnaires est valide pour les listes. On dit plutôt index que clé pour les listes et les index sont des entiers consécutifs entre $0$ et $l-1$ où $l$ est la longueur de la liste. 
+Les valeurs d'une liste sont accessibles directement avec crochet et index. On peut aussi obtenir des sous-listes avec des crochets et "\texttt{:}" (slicing).\newline
+L'opérateur booléen \texttt{in} est aussi utilisable avec une liste pour déterminer si un objet est une valeur de la liste.
+
+\subsection{Conversion - transtypage}
+On peut convertir une chaîne de caractère en liste avec la fonction \texttt{list}:\newline
+\texttt{print(list('tagada'))}
+
+\end{document}

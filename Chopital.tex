@@ -1,0 +1,258 @@
+\subsection*{I. Rappels de cours et compléments}
+Ce TP utilise des éléments de langage SQL à la frontière du programme d'IPT. 
+\subsubsection*{\'Eléments de cours}
+\begin{enumerate}
+  \item Noter les apostrophes obliques pour délimiter les noms et le point pour les champs d'une table (espace de noms).
+  \item Les requêtes de sélections simples. La clause qui suit le \texttt{WHERE} limite les lignes sélectionnées, elle est facultative. 
+\begin{verbatim}
+SELECT ... FROM ... WHERE ...  
+\end{verbatim}
+Ce qui suit le \texttt{SELECT} est une liste de champs figurant dans les table ou d'expressions constituées à partir de ces champs. Les champs ou expressions de cette liste sont séparés par des virgules. On peut aussi compléter en \texttt{SELECT DISTINCT} pour que chaque ligne ne se soit présenté qu'une fois (R12).
+
+\item On peut utiliser des \emph{fonctions} pour former des expressions. Le programme de la classe n'en donne pas de liste. Citons ici \texttt{LEFT()} dans R4 ou \texttt{CONCAT()} dans R14.
+
+\item Les requêtes de sélection avec jointure (éventuellement multiple)
+\begin{verbatim}
+SELECT ... FROM ... JOIN ... ON ... WHERE ...  
+\end{verbatim}
+Ce type de jointure décrit une partie du produit cartésien des tables. La clause qui suit le \texttt{ON} est à regarder comme une équation cartésienne limitant les lignes à extraire à celles qui vérifient cette condition. Cette clause peut être constituée de plusieurs sous-clauses reliées par des \texttt{AND} comme un sous-espace défini par un \emph{système} d'équations (par exemple une droite dans un espace de dimension 3 est définie par 2 équations). Un exemple de clause multiple de ce type est présent dans la requête R13.
+
+\item Les requêtes de sélection avec groupement.
+\begin{verbatim}
+SELECT ... FROM ... WHERE ...
+  GROUP BY ...
+\end{verbatim}
+L'expression qui suit le \texttt{GROUP BY} est une des expressions figurant dans la liste après le \texttt{SELECT}. Chaque ligne présente une valeur différente de l'expression sur laquelle se fait le groupement. La liste des expressions sélectionnées contient généralement une expression fabriquée à partir d'une \emph{fonction d'agrégation} qui fait un calcul sur le sous ensembles des lignes ayant la même valeur du champ de groupement. Parmi les fonctions d'agrégation usuelles citons
+\begin{verbatim}
+  COUNT( ...)     COUNT(DISTINCT ...)   AVG(...)    
+\end{verbatim}
+
+\item On peut compléter toute requête de sélection par un \texttt{ORDER BY} suivi d'une liste de champs précisés par \texttt{ASC} ou \texttt{DSC}.
+
+\end{enumerate}
+
+
+\subsection*{Compléments de cours}
+Les notions présentées ici sont moins élémentaires.
+\begin{enumerate}
+  \item On ne peut pas filtrer selon les valeurs d'une fonction d'agrégation à l'intérieur d'une requête avec regroupement.\newline
+On doit le faire à l'extérieur à l'aide d'une clause \texttt{HAVING ...}. Exemple en R7.
+  \item On doit utiliser des jointure dites \emph{gauches} avec la syntaxe \texttt{LEFT JOIN}. Considérons 
+\begin{verbatim}
+SELECT * FROM `tab1` 
+  LEFT JOIN `tab2` ON `tab1`.`truc` = `tab2`.`machin` 
+\end{verbatim}
+La requête sans le \texttt{LEFT} renvoie un nombre $m$ de lignes avec $m\leq n_1,n_2$. Chaque ligne est un couple de lignes des deux tables mais seulent figurent certains de ces couples ceux vérifiant la clause  \texttt{ON} c'est à dire celles pour lesquelles les champs \og truc\fg et \og machin\fg sont égaux.\newline
+En revanche avec la jointure \texttt{LEFT JOIN}, la requête renverra davantage de lignes. En plus des couples précédents, les autres lignes de \og tab1\fg, celles pour lesquelles il n'existe pas d'enregistrements de \og tab2\fg vérifiant la clause seront également présents et, pour les lignes ne validant pas la clause, les champs sélectionnés venant de la deuxième table seront \texttt{NULL}. Cette notion permet de trouver des enregistrements \emph{qui ne vérifient pas} quelque chose. (Exemple R10) 
+\end{enumerate}
+
+
+\subsection*{II. Requêtes}
+\begin{enumerate}
+  \item[R1] 
+\begin{verbatim}
+SELECT `prenom`,`nom` FROM `malade` WHERE `mutuelle`='MAAF'
+\end{verbatim}
+
+  \item[R2]
+\begin{verbatim}
+SELECT `employe`.`prenom`, `employe`.`nom` 
+  FROM `employe` JOIN `infirmier` 
+     ON `employe`.`numero` = `infirmier`.`numero` 
+  WHERE `rotation` = 'nuit'
+\end{verbatim}
+
+  \item[R3]
+\begin{verbatim}
+SELECT `service`.`nom`, `service`.`batiment`, 
+     `employe`.`prenom`,`employe`.`nom`, `docteur`.`specialite`
+FROM `service` 
+    JOIN `docteur` ON `service`.`directeur` = `docteur`.`numero`
+    JOIN `employe` ON `docteur`.`numero` = `employe`.`numero`
+\end{verbatim}
+
+  \item[R4]
+\begin{verbatim}
+SELECT `hospitalisation`.`lit`, `hospitalisation`.`no_chambre`,
+       `service`.`nom`, `malade`.`prenom`, 
+       `malade`.`nom`,  `malade`.`mutuelle` 
+FROM `malade`
+    JOIN `hospitalisation` 
+       ON `malade`.`numero` = `hospitalisation`.`no_malade`
+    JOIN `service`
+       ON `hospitalisation`.`code_service` = `service`.`code` 
+WHERE 
+   `service`.`batiment` = 'B'
+  AND
+   LEFT(`malade`.`mutuelle`,2) = 'MN'
+\end{verbatim}
+
+  \item[R5]
+\begin{verbatim}
+SELECT `code_service`, AVG(`salaire`) 
+  FROM `infirmier` 
+  GROUP BY `code_service`
+\end{verbatim}
+
+  \item[R6]
+\begin{verbatim}
+SELECT `service`.`nom`, AVG(`chambre`.`nb_lits`)
+  FROM `service` JOIN `chambre`
+     ON `service`.`code` = `chambre`.`code_service`
+  WHERE `service`.`batiment` = 'A'
+  GROUP BY `service`.`code`
+\end{verbatim}
+
+  \item[R7]
+\begin{verbatim}
+SELECT `malade`.`nom`,`malade`.`prenom`,
+       COUNT(`docteur`.`numero`),
+       COUNT(DISTINCT `docteur`.`specialite`)
+  FROM `malade` 
+    JOIN `soigne` ON `malade`.`numero` = `soigne`.`no_malade`
+    JOIN `docteur` ON `docteur`.`numero` = `soigne`.`no_docteur`
+  GROUP BY `malade`.`numero`
+  HAVING COUNT(`docteur`.`numero`) > 3
+\end{verbatim}
+
+  \item[R8]
+\begin{verbatim}
+SELECT `service`.`nom`,
+  COUNT(DISTINCT `infirmier`.`numero`)/
+  COUNT(DISTINCT `hospitalisation`.`no_malade`) 
+  FROM `service`
+    JOIN `infirmier` 
+      ON `service`.`code` = `infirmier`.`code_service` 
+    JOIN `hospitalisation` 
+      ON `service`.`code` = `hospitalisation`.`code_service`
+  GROUP BY `service`.`code`
+\end{verbatim}
+
+  \item[R9]
+\begin{verbatim}
+SELECT `employe`.`nom`, `employe`.`prenom`, `soigne`.`no_malade`
+  FROM `employe` 
+    JOIN `docteur` ON `docteur`.`numero` = `employe`.`numero`
+    JOIN `soigne` ON `docteur`.`numero` = `soigne`.`no_docteur`
+    JOIN `hospitalisation`
+       ON `hospitalisation`.`no_malade` = `soigne`.`no_malade`
+  GROUP BY `docteur`.`numero`
+ORDER BY `employe`.`nom`  
+\end{verbatim}
+
+  \item[R10]
+\begin{verbatim}
+SELECT `employe`.`nom`, `employe`.`prenom`
+  FROM `employe` 
+    JOIN `docteur` ON `docteur`.`numero` = `employe`.`numero`
+    JOIN `soigne` ON `docteur`.`numero` = `soigne`.`no_docteur`
+    LEFT JOIN `hospitalisation` 
+       ON `hospitalisation`.`no_malade` = `soigne`.`no_malade`
+GROUP BY `docteur`.`numero`
+HAVING COUNT(DISTINCT `hospitalisation`.`no_malade`) = 0
+ORDER BY `employe`.`nom`  
+\end{verbatim}
+
+  \item[R11]
+\begin{verbatim}
+SELECT `employe`.`nom`, `employe`.`prenom`,
+       COUNT(DISTINCT `hospitalisation`.`no_malade`)
+  FROM `employe` 
+    JOIN `docteur` ON `docteur`.`numero` = `employe`.`numero`
+    JOIN `soigne` ON `docteur`.`numero` = `soigne`.`no_docteur`
+    LEFT JOIN `hospitalisation` 
+       ON `hospitalisation`.`no_malade` = `soigne`.`no_malade`
+GROUP BY `docteur`.`numero`
+ORDER BY `employe`.`nom`  
+\end{verbatim}
+
+  \item[R12]
+\begin{verbatim}
+SELECT DISTINCT `hospitalisation`.`code_service`, 
+                `hospitalisation`.`no_chambre`
+  FROM `hospitalisation`
+\end{verbatim}
+
+  \item[R13]
+\begin{verbatim}
+SELECT  `service`.`batiment`, `chambre`.`no_chambre`
+ FROM `chambre` 
+  JOIN `service` ON `chambre`.`code_service` = `service`.`code`
+  LEFT JOIN `hospitalisation`
+   ON (`chambre`.`code_service`=`hospitalisation`.`code_service`
+     AND `chambre`.`no_chambre` =`hospitalisation`.`no_chambre`)
+  WHERE `hospitalisation`.`no_malade` IS NULL
+\end{verbatim}
+
+  \item[R14]
+\begin{verbatim}
+SELECT CONCAT(`service`.`batiment`,`chambre`.`no_chambre`),
+    `chambre`.`nb_lits`, COUNT(`hospitalisation`.`no_malade`)
+ FROM `chambre` 
+  JOIN `service` ON `chambre`.`code_service` = `service`.`code`
+  LEFT JOIN `hospitalisation` 
+   ON (`chambre`.`code_service`=`hospitalisation`.`code_service` 
+     AND `chambre`.`no_chambre` =`hospitalisation`.`no_chambre`)
+GROUP BY CONCAT(`service`.`batiment`,`chambre`.`no_chambre`)
+\end{verbatim}
+
+  \item[R15]
+\begin{verbatim}
+SELECT `docteur`.`numero`
+  FROM `docteur`
+    JOIN `soigne` ON `docteur`.`numero` = `soigne`.`no_docteur`
+    JOIN `hospitalisation` 
+    ON `soigne`.`no_malade` = `hospitalisation`.`no_malade`
+GROUP BY `docteur`.`numero`
+HAVING COUNT(DISTINCT `hospitalisation`.`code_service`) = 3
+\end{verbatim}
+
+  \item[R16] J'ai trouvé cette requête assez difficile à élaborer. Je propose quelques requêtes intermédiaires pour illustrer la construction.
+On commence par lister les patients et les médecins soignant dans les chambres surveillées par 'Roddick'.
+\begin{verbatim}
+SELECT `chambre`.`code_service`,`chambre`.`no_chambre`,
+   `hospitalisation`.`no_malade` , `soigne`.`no_docteur`
+ FROM `chambre`
+  JOIN `employe` ON `chambre`.`surveillant` = `employe`.`numero`
+  JOIN `hospitalisation` 
+   ON (`chambre`.`code_service`=`hospitalisation`.`code_service` 
+      AND `chambre`.`no_chambre`=`hospitalisation`.`no_chambre`)
+    JOIN `soigne` 
+       ON `hospitalisation`.`no_malade` = `soigne`.`no_malade`
+  WHERE `employe`.`nom` = 'Roddick'
+  GROUP BY `soigne`.`no_docteur`
+\end{verbatim}
+On regroupe ensuite par médecin, pour compter les patients
+\begin{verbatim}
+SELECT COUNT(`chambre`.`code_service`), `soigne`.`no_docteur`
+ FROM `chambre`
+  JOIN `employe` 
+    ON `chambre`.`surveillant` = `employe`.`numero`
+  JOIN `hospitalisation` 
+   ON (`chambre`.`code_service`=`hospitalisation`.`code_service` 
+      AND `chambre`.`no_chambre`=`hospitalisation`.`no_chambre`)
+    JOIN `soigne` 
+        ON `hospitalisation`.`no_malade` = `soigne`.`no_malade`
+  WHERE `employe`.`nom` = 'Roddick'
+  GROUP BY `soigne`.`no_docteur`
+\end{verbatim}
+On récupère les coordonnées des médecins avec nouvelle jointure avec la tables des employés. Un alias est nécessaire.
+\begin{verbatim}
+SELECT COUNT(`chambre`.`code_service`), emp.`prenom`, emp.`Nom`
+ FROM `chambre`
+  JOIN `employe` ON `chambre`.`surveillant` = `employe`.`numero`
+  JOIN `hospitalisation` 
+   ON (`chambre`.`code_service`=`hospitalisation`.`code_service` 
+     AND `chambre`.`no_chambre`=`hospitalisation`.`no_chambre`)
+  JOIN `soigne` 
+     ON `hospitalisation`.`no_malade` = `soigne`.`no_malade`
+  JOIN `employe` emp ON `soigne`.`no_docteur` = emp.`numero`
+ WHERE `employe`.`nom` = 'Roddick'
+ GROUP BY `soigne`.`no_docteur`
+\end{verbatim}
+Il ne reste plus alors qu'à filtrer par
+\begin{verbatim}
+HAVING COUNT(`chambre`.`code_service`) = 3
+\end{verbatim}
+
+\end{enumerate}

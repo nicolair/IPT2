@@ -1,0 +1,43 @@
+\begin{enumerate}
+  \item La fonction \texttt{continuer(lili)} renvoie une valeur booléenne. La boucle se termine avec $i=p$ ou (exclusif) $lili[i] \neq lili[i-1]$. Dans le premier cas toutes les valeurs sont égales. Onpeut donc conclure que \texttt{continuer(lili)} renvoie 
+\begin{itemize}
+  \item \texttt{TRUE} si toutes les valeurs de \texttt{lili} ne sont pas égales entre elles,
+  \item \texttt{FALSE} si toutes les valeurs de \texttt{lili} sont égales entre elles.
+\end{itemize}
+
+  
+  \item
+\begin{enumerate}
+  \item Il existe des multiples communs à $a_0, \cdots , a_{p-1}$, par exemple le produit de tous. L'ensemble des multiples communs est donc une partie non vide de $\N^*$. Elle admet un plus petit élément (propriété de $\N$). Il existe des entiers $q_0,\cdots q_{p-1}$ tels que $\mu = q_ia_i$ pour tous les $i \in \llbracket 0, p-1\rrbracket$.
+  
+  \item La condition \texttt{continuer(M)} est vérifiée si et seulement si les valeurs du tableau \texttt{M} ne sont pas toutes égales entre elles c'est à dire si et seulement si la plus petite des valeurs (notons la $v$) est strictement plus petite que la plus grande (notons la $V$).\newline
+  Toutes les valeurs de \texttt{M} sont inférieures ou égales à $\mu$ si et seulement si $V \leq \mu$. Cette condition est réalisée à l'initialisation car $\mu$ est un multiple de $V$. Montrons qu'elle est invariante.\newline
+  Après $k$ itérations notons $V_k$ la plus grande valeur et $v_k$ la plus petite. Supposons $V_k\leq \mu$ et que l'on entre dans l'itération suivante c'est à dire $v_k < V_k$. Une seule valeur change, celle de l'indice $i$ tel que $M[i]=v_k$. On en déduit que
+\begin{displaymath}
+  V_{k+1}=
+\left\lbrace 
+\begin{aligned}
+  V_k        &\text{ si } v_k + a_i \leq V_k \\
+  v_k + a_i &\text{ si } v_k + a_i > V_k
+\end{aligned}
+\right. 
+\end{displaymath}
+Si $V_{k+1}=V_k$, on a toujours $V_{k+1}\leq \mu$. Dans l'autre cas, $V_{k+1}=v_k+a_i$. Remarquons que l'on ne fait qu'ajouter dans le tableau les valeurs initiales. Il existe donc un \emph{entier} $u_i$ tel que 
+\begin{displaymath}
+v_k = u_i a_i< V_k \leq \mu = q_i a_i \Rightarrow u_i < q_i  \Rightarrow u_i + 1 \leq q_i \Rightarrow V_{k+1} \leq \mu 
+\end{displaymath}
+
+  \item Lors du déroulement de la boucle, la somme $S$ des valeurs de $M$ est strictement croissante. De plus $S \leq p \mu$ d'après l'invariant de la question précédente. On en déduit que $p \mu - S$ est une fonction de terminaison.\newline
+Après la sortie de la boucle, toutes les valeurs de $M$ sont égales entre elles. Cette valeur est un multiple commun à tous les $a_i$ par construction de l'algorithme elleest donc supérieure ou égale à $\mu$ . Elle est forcément égale à $\mu$ car lors de l'itération précédente toutes les valeurs étaient inférieures à $\mu$ et une seule a changé.   
+\end{enumerate}
+
+  \item
+\begin{enumerate}
+  \item La recherche du plus petit indice est usuelle.
+\lstinputlisting[firstline=8, lastline=16]{Cppcm.py}
+
+  \item Il faut recopier les \emph{valeurs} de la liste initiale dans la variable locale \texttt{M} car ce sont elles qui sont ajoutées et non assigner deux alias à la même liste.
+\lstinputlisting[firstline=18, lastline=25]{Cppcm.py}
+\end{enumerate}
+
+\end{enumerate}

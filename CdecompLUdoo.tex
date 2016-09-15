@@ -1,0 +1,114 @@
+\begin{enumerate}
+  \item On calcule $x_1$, $x_2$, $x_3$ en formant les trois produits avec la première ligne de la matrice de gauche.
+\begin{align*}
+&\begin{pmatrix}
+  1 & 0 & 0
+\end{pmatrix} 
+\begin{pmatrix}
+  x_1 \\ 0 \\ 0
+\end{pmatrix}
+= 2 &\Rightarrow x_1 = 2 \\
+&\begin{pmatrix}
+  1 & 0 & 0
+\end{pmatrix}
+\begin{pmatrix}
+  x_2 \\ x_6 \\ 0
+\end{pmatrix}
+= -1 &\Rightarrow x_2 = -1 \\
+&\begin{pmatrix}
+  1 & 0 & 0
+\end{pmatrix}
+\begin{pmatrix}
+  x_3 \\ x_7 \\ x_9
+\end{pmatrix}
+= -2 &\Rightarrow x_3 = -2 
+\end{align*}
+On calcule $x_5$ et $x_6$ en formant les produits des lignes 2 et 3 de la matrice de gauche avec la colonne 1 de celle de droite en utilisant $x_1 = 2$ déjà calculé.
+\begin{align*}
+&\begin{pmatrix}
+  x_4 & 1 & 0
+\end{pmatrix}
+\begin{pmatrix}
+  2 \\ 0 \\ 0
+\end{pmatrix}=-4 &\Rightarrow 2 x_4 = -4 \Rightarrow x_4 = -2 \\
+&\begin{pmatrix}
+  x_5 & x_8 & 1
+\end{pmatrix}
+\begin{pmatrix}
+  2 \\ 0 \\ 0
+\end{pmatrix}=-4 &\Rightarrow 2 x_5 = -4 \Rightarrow x_5 = -2  
+\end{align*}
+Ce calcul a été possible car $x_1=2$ n'est pas nul.\newline
+On calcule $x_6$ et $x_7$ avec la ligne 2 à gauche ($x_4=-2$) et les colonnes 2 et 3 à droite ($x_2=-1$, $x_3=-2$).
+\begin{align*}
+&\begin{pmatrix}
+  -2 & 1 & 0
+\end{pmatrix}
+\begin{pmatrix}
+  -1 \\ x_6 \\ 0
+\end{pmatrix} = 6 \Rightarrow (-2)(-1) + x_6 = 6 \Rightarrow x_6 = 4 \\
+&\begin{pmatrix}
+  -2 & 1 & 0
+\end{pmatrix}
+\begin{pmatrix}
+  -2 \\ x_7 \\ x_9
+\end{pmatrix} = 3 \Rightarrow (-2)(-2) + x_7 = 3 \Rightarrow x_7 = -1   
+\end{align*}
+On calcule $x_8$ avec la ligne 3 à gauche ($x_5=-2$) et la colonne 2 à droite ($x_2=-1$, $x_6=4$):
+\begin{displaymath}
+\begin{pmatrix}
+  -2 & x_8 & 1
+\end{pmatrix}
+\begin{pmatrix}
+  -1 \\ 4 \\ 0
+\end{pmatrix} = -2 \Rightarrow (-2)(-1)+4x_8 = -2 \Rightarrow x_8 = -1  
+\end{displaymath}
+On calcule enfin $x_9$ avec la ligne 3 ($x_5=-2$, $x_8=-1$) et la colonne 3 ($x_3=-2$, $x_7=-1$):
+\begin{displaymath}
+\begin{pmatrix}
+  -2 & -1 & 1
+\end{pmatrix}
+\begin{pmatrix}
+  -2 \\ -1 \\ x_9
+\end{pmatrix} = 8 \Rightarrow (-2)(-2)+(-1)(-1)=x_9=8 \Rightarrow x_9 = 3
+\end{displaymath}
+Ce calcul n'est pas possible avec toutes les matrices $A$ inversibles, car les termes $x_4$, $x_5$ $x_8$ nécessitent des divisions. Pour que cela soit possible, il faut que les termes diagonaux $x_1$ et $x_6$ déjà calculés soient  non nuls.
+  \item 
+\begin{enumerate}
+  \item L'algorithme \ref{CdecompLUdoo_1} de Doolittle consiste (pour $i$ entre $1$ et $p$) à calculer dans cet ordre la ligne $i$ de $U$ et la colonne $i$ de $L$ en formant des produits bien choisis.
+\begin{algorithm}
+  \Pour{$i$ de 1 à $p$}{
+      \Comment{calcul de la ligne $i$ de \texttt{U}}
+      \Pour{$j$ de $i$ à $p$}{
+        \Comment{(ligne $i$ de \texttt{L}) $\times$ (colonne $j$ de \texttt{U}) donne \texttt{U[i][j]}}
+      }
+      \Comment{calcul de la colonne $i$ de $L$}
+      \Pour{$j$ de $i+1$ à $p$}{
+        \Comment{(ligne $j$ de \texttt{L}) $\times$ (colonne $i$ de \texttt{U}) donne \texttt{L[j][i]}}
+      }
+  }
+  \caption{Algorithme de Doolittle}
+  \label{CdecompLUdoo_1}
+\end{algorithm}
+
+  \item Pour implémenter l'algorithme dans la fonction \texttt{lulu}, on commence par détailler les commentaires avant d'exprimer les coefficients calculés. La vérification proposée utilise la bibliothèque \texttt{linag} de \texttt{numpy}. 
+\lstinputlisting[firstline=10, lastline=39]{CdecompLUdoo.py}
+\end{enumerate}
+
+  \item
+\begin{enumerate}
+  \item Les coefficients $x_1,x_2,\cdots$ de la colonne $X$ se calculent par récurrence suivant le code suivant:
+\lstinputlisting[firstline=42, lastline=53]{CdecompLUdoo.py}
+
+  \item La fonction \texttt{ressup} implémente la phase de remontée de la méthode du pivot. Cette fois les coefficients se calculent à partir du bas.\newline Noter qu'il faut diviser par les coefficients diagonanaux de $U$ qui doivent être non nuls.
+\lstinputlisting[firstline=56, lastline=68]{CdecompLUdoo.py}
+\end{enumerate}
+
+\item Lorsque la matrice du système est sous la forme $LU$, on peut résoudre successivement deux systèmes triangulaires.
+\begin{displaymath}
+\left( A = LU, \hspace{0.5cm} LX_1 = Y, \hspace{0.5cm} UX = X_1 \right)  \Rightarrow AX = Y
+\end{displaymath}
+Si on dispose des fonctions \texttt{lulu}, \texttt{resinf} et \texttt{ressup}, on peut les combiner facilement pour résoudre le système.
+\lstinputlisting[firstline=70, lastline=85]{CdecompLUdoo.py}
+La fin du code propose une vérification utilisant \texttt{linalg}.
+\end{enumerate}

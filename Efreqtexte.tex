@@ -1,0 +1,92 @@
+L'objet de ce TP est d'implémenter des outils permettant l'analyse de fréquences dans un texte.
+\subsection*{I - Outils}
+\begin{enumerate}
+  \item \`A partir de l'algorithme présenté en pseudo-code dans le cours, implémenter en Python une fonction désignée par \verb|indice| prenant une liste et un objet comme paramètres et renvoyant l'indice correspondant de la liste lorsque l'objet y figure et une valeur convenue lorsqu'il n'y figure pas.
+  
+  \item On veut calculer la liste des 10 indices correspondants aux 10 plus grandes valeurs par ordre décroissant de ces valeurs et sans se préoccuper de l'ordre dans lequel se placent les valeurs égales (ex aequo) d'une liste donnée. \newline
+  Par exemple, pour la liste donnée\newline
+  \verb|[1,2,1,4,6,14,22,45,78,54,42,12,63,7,15,29,35,85,23]|\newline
+  la liste des 10 indices des plus grandes valeurs est\newline
+  \verb|[17, 8, 12, 9, 7, 10, 16, 15, 18, 6]|. Elle correspond aux valeurs\newline
+  \verb|[85, 78, 63, 54, 45, 42, 35, 29, 23, 22]|.
+On propose un algorithme \ref{Efreqtexte_1} utilisant les variables suivantes:
+\begin{itemize}
+  \item $L$ une liste de $n>10$ valeurs comparables.
+  \item $Imax\leftarrow$ une liste (pour les 10 indices de plus grande valeur).
+  \item $Vmax\leftarrow$ une liste (les 10 plus grandes valeurs).
+  \item $Imax[0]\leftarrow 0$ .
+  \item $Vmax[0]\leftarrow L[0]$.
+  \item $p\leftarrow 1$ nombre de valeurs dans ces listes au début.
+  \item $i\leftarrow 1$ indice dans $L$.
+\end{itemize}
+Cet algorithme est incomplet. Remplacer les "???" par ce qu'il faut pour qu'il réponde au problème posé.\newline
+Implémenter en Python une fonction désignée par \verb|top10| prenant une liste de nombres (au moins 10) en paramètre et renvoyant cette liste des 10 indices de plus grandes valeurs.
+\begin{algorithm}
+  \Comment{traitement des premières valeurs}
+  \Tq{ i < 10}{
+    \eIf{L[i] $\leq$ Vmax[p-1]}{
+      $Vmax[p]\leftarrow L[i]$\;
+      $Imax[p]\leftarrow ???$\;
+    }{
+      $j\leftarrow p-1$\;
+      \Tq{j$\geq 0$ et L[i] > Vmax[j]}{
+        $Vmax[j+1]\leftarrow Vmax[j]$\;
+        $Imax[j+1]\leftarrow Imax[j]$\;
+        $j\leftarrow ???$\;
+      }
+      \Comment{ici $L[i]\leq Vmax[j]$}
+      $Vmax[???]\leftarrow L[i]$\;
+      $Imax[???]\leftarrow i$\;
+    }
+    $i\leftarrow i+1$\;
+    $p\leftarrow p+1$\;
+  }
+  \Comment{traitement des autres valeurs}
+  $p\leftarrow 10$\;
+  \Tq{i < n}{
+      $j\leftarrow p-1$\;
+      \Tq{$j\geq 0$ et L[i] > Vmax[j]}{
+        \If{j < p-1}{
+          $??? \leftarrow Vmax[???]$\;
+          $Imax[???]\leftarrow Imax[???]$\;
+        }
+        $j\leftarrow ???$\;
+      }
+      \Comment{ici j=-1 ou $L[i] \leq Vmax[j]$ }
+      \If{ j < 9}{
+        $??? \leftarrow ???$\;
+        $??? \leftarrow ???$\;
+      }
+    $i\leftarrow i+1$\;
+  }
+  \caption{Algorithme pour top10}
+  \label{Efreqtexte_1}
+\end{algorithm}
+\end{enumerate}
+\subsection*{II - Fréquences de caractères}
+On dispose d'un texte désigné par \verb|texte| (codé en ASCII). On s'intéresse à la fréquence des caractères. On veut former une liste dont les valeurs sont les nombres d'occurences et afficher les dix caractères les plus fréquents.\newline
+Deux listes seront utilisées :
+\begin{itemize}
+  \item \verb|CarNum| : désigne une liste dont chaque valeur est un caractère du texte.
+  \item \verb|NbOcCarNum| : désigne une liste dont chaque valeur est le nombre d'occurrences d'un caractère.
+  \item Ces listes sont liés par : \verb|NbOcCarNum[i]| est le nombre d'occurences du caractère \verb|CarNum[i]|.
+\end{itemize}
+Pour faciliter la correction, vous devez utiliser ces noms.
+\begin{enumerate}
+  \item Présenter en pseudo-code un algorithme permettant de remplir les deux listes \verb|CarNum| et \verb|NbOcCarNum|. Cet algorithme devra utiliser la fonction \verb|indice| de la question I.1.
+  \item Implémenter une fonction \verb|freqC| qui prend comme paramètre un texte et qui affiche les 10 caractères les plus fréquents avec le nombre d'occurences pour chacun. 
+\end{enumerate}
+
+\subsection*{III - Fréquences de mots}
+On dispose toujours d'un texte désigné par \verb|texte| (codé en ASCII). On s'intéresse à la fréquence des mots. Un mot est une chaîne de caractères présente dans le texte, ne contenant pas le caractère espace mais précédée et suivie par un caractère espace. On veut former une liste dont les valeurs sont les nombres d'occurences et afficher les dix mots les plus fréquents.\newline
+Deux listes seront utilisées :
+\begin{itemize}
+  \item \verb|MotNum| : désigne une liste dont chaque valeur est un mot du texte.
+  \item \verb|NbOcMotNum| : désigne une liste dont chaque valeur est le nombre d'occurrences d'un mot.
+  \item Ces listes sont liés par : \verb|NbOcMotNum[i]| est le nombre d'occurences du mot \verb|MotNum[i]|.
+\end{itemize}
+Pour faciliter la correction, vous devez utiliser ces noms.
+\begin{enumerate}
+  \item Présenter en pseudo-code un algorithme permettant de remplir les deux listes \verb|MotNum| et \verb|NbOcMotNum|.
+  \item Implémenter une fonction \verb|freqM| qui prend comme paramètre un texte et qui affiche les 10 mots les plus fréquents avec le nombre d'occurences pour chacun. 
+\end{enumerate}

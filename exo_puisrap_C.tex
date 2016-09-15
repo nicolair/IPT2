@@ -1,0 +1,35 @@
+Le nom $n$ désigne l'entier naturel $n_{ini}$ après l'initialisation. Dans le corps de la boucle, la valeur qu'il désigne est soit divisée par $2$ dans le cas pair (la nouvelle valeur est donc un entier strictement plus petit), soit diminuée de $1$. C'est donc toujours un entier et strictement diminué, l'expression $n$ est bien un variant pour la boucle.\newline
+Notons respectivement $p_k$, $n_k$, $x_k$, $\Phi_k$ les valeurs désignées par $p$, $n$ $\Phi$ après l'exécution de $k$ fois le corps de la boucle.
+\begin{itemize}
+  \item Après l'initialisation $k=0$ et $p_0x^{n_0}=1\times x_{ini}^{n_{ini}}$ donc $\Phi_0 = \verb|vrai|$.
+  \item Après la $k+1$-ième itération:
+\begin{itemize}
+  \item si $n_k$ était pair: 
+\begin{displaymath}
+\left. 
+\begin{aligned}
+  x_{k+1} &= x_k^2\\ n_{k+1} &= \frac{n_k}{2} \\ p_{k+1} &= p_k
+\end{aligned}
+\right\rbrace \Rightarrow
+p_{k+1}x_{k+1}^{n_{k+1}}=p_k(x_k^2)^{\frac{n_k}{2}} = p_kx_k^{n_k}
+\end{displaymath}
+donc $\Phi_k=\verb|vrai|$ entraîne $\Phi_{k+1}=\verb|vrai|$.
+
+  \item si $n_k$ était impair: 
+\begin{displaymath}
+\left. 
+\begin{aligned}
+  x_{k+1} &= x_k\\ n_{k+1} &= n_k-1 \\ p_{k+1} &= p_k x_k
+\end{aligned}
+\right\rbrace \Rightarrow
+p_{k+1}x_{k+1}^{n_{k+1}}=p_k x_k(x_k)^{n_k -1} = p_kx_k^{n_k}
+\end{displaymath}
+donc $\Phi_k=\verb|vrai|$ entraîne $\Phi_{k+1}=\verb|vrai|$.
+\end{itemize}
+\end{itemize}
+Lors de la sortie de la boucle, $n$ désigne $0$ car le nombre désigné est un entier qui n'est pas strictement positif. L'invariant montre alors que $p$ désigne la puissance $x_{ini}^{n_{ini}}$.\newline
+Formons les entiers successivement désignés par $n$ dans le corps de la boucle:
+\begin{displaymath}
+  79 \rightarrow 78 \rightarrow 39 \rightarrow 38 \rightarrow 19 \rightarrow 18 \rightarrow 9 \rightarrow 8 \rightarrow 4 \rightarrow 2 \rightarrow 1 \rightarrow 0
+\end{displaymath}
+Le corps de la boucle a été exécuté 11 fois. Une seule multiplication est faite à chaque fois :  11 multiplications seulement ont été nécessaires pour calculer une puissance 79.

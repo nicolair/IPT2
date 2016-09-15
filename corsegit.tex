@@ -1,0 +1,200 @@
+\input{ipt.tex}
+%En tete et pied de page
+\lhead{Cours IPT}
+\chead{Algorithmique - Correction de segments itératifs}
+\begin{document}
+\section{Variants et invariants}
+En algorithmique, on désigne par \emph{segment itératif} une boucle du type \og\verb|tant que|\fg.\newline
+L'objectif de cette section est de dégager des outils théoriques permettant de prouver que le segment itératif se termine et qu'il réalise effectivement ce qu'on veut qu'il réalise. Cette dernière condition se traduit par le fait qu'une certaine propriété doit être vraie après l'achèvement de la boucle.
+\begin{algorithm}
+  \Tq{ Condition}{
+      instruction 1\;
+      $\vdots $\;
+      instruction p\;
+  }
+  \Comment{Après la boucle une propriété $\mathcal{P}$ doit être vraie.}
+  instruction suivant le segment étudié\;
+  \caption{Un segment itératif}
+  \label{corsegit_1}
+\end{algorithm}
+On doit \emph{démontrer} que la condition devient fausse après l'exécution (un nombre fini de fois) de la séquence des $p$ instructions et qu'alors la propriété $\mathcal{P}$ est vraie. On dira que le segment itératif est correct.
+\begin{defi}
+Un \emph{variant de boucle}, on dit aussi \emph{fonction de terminaison} est une expression formée avec des noms\footnote{certains préfèrent le terme \og variable\fg} significatifs dans l'algorithme et vérifiant les propriétés suivantes.
+\begin{itemize}                                                                                                                                                                                                                                               \item Les valeurs que prend l'expression sont des entiers naturels.
+\item La valeur que prend l'expression \emph{diminue strictement} à chaque exécution de la séquence.                                                                                                                                                                                                                             \end{itemize}
+\end{defi}
+\begin{prop}
+  S'il existe une fonction de terminaison pour le segment itératif alors il se termine.
+\end{prop}
+\begin{demo}
+  On considère l'ensemble $A$ des valeurs prises par la fonction lors de l'exécution de l'algorithme. C'est une partie de $\N$ majorée par la valeur de la fonction avant la première exécution de la séquence (notons la $m$), elle est donc finie. Si $n$ est le nombre d'éléments de cette partie la séquence s'est exécutée $n-1$ fois car à chaque exécution la valeur diminue strictement. 
+\end{demo}
+Il est utile de remarquer qu'une fonction de terminaison permet aussi de majorer le nombre de fois où la séquence s'est exécutée. En effet, le nombre d'éléments de $A$ est inférieur ou égal à $m+1$ donc $n\leq m+1$ donc le nombre d'exécution est inférieur ou égal à $m$.
+\begin{defi}
+  Un \emph{invariant de boucle} est une expression formée avec des noms significatifs dans l'algorithme et vérifiant les propriétés suivantes.
+\begin{itemize}
+  \item L'expression est à valeurs booléennes (on dit que c'est une propriété).
+  \item L'expression est évaluée à \verb|true| (la propriété est vraie) avant l'exécution des séquences et elle le reste après chaque exécution.
+\end{itemize}
+\end{defi}
+\begin{prop}
+S'il existe un variant $V$ et un invariant $\Phi$ et si de plus
+\begin{displaymath}
+  \left( \left( \text{ non } Condition\right) \text{ et } \Phi \right) \Rightarrow \mathcal{P}
+\end{displaymath}
+alors le segment itératif est correct.
+\end{prop}
+
+\section{Exemples}
+Les deux premiers exemples sont tirés d'un \href{http://prolland.free.fr/Cours/Cycle1/MIAS/MIAS2/Complexite/terminaison1.html}{cours de DEUG MIAS}. 
+\subsection{Calcul du carré d'un entier.}
+On considère l'algorithme \ref{corsegit_2}.
+\begin{algorithm}
+  \Comment{Initialisation}
+  $a$, $b$, $c$ désignent des entiers\;
+  $a\longleftarrow$ un entier naturel\;
+  $b\longleftarrow a$\;
+  $c\longleftarrow 0$\;
+  \Tq{ b > 0}{
+      $c\longleftarrow c + a$\;
+      $b\longleftarrow b - 1$\;
+  }
+  \Comment{fin du segment itératif}
+  afficher $c$\;
+  \caption{Calcul du carré d'un entier.}
+  \label{corsegit_2}
+\end{algorithm}
+Il existe un variant $V = b$. Cette expression ne prend que des valeurs dans $\N$, elle décroît après chaque séquence. On en déduit que la boucle se termine.\newline
+Désignons par $\Phi$ l'expression $a^2 == c +b*a$ et montrons par récurrence que c'est un invariant de boucle.
+\begin{itemize}
+  \item Après l'initialisation, elle est vraie car $b$ désigne $a$ et $c$ désigne $0$.
+  \item Si après $p$ séquences, $b$ désigne $b_p$ et $c$ désigne $c_p$, alors après la séquence suivante, $b$ désigne $b_p-1$ et $c$ désigne $c_p+a$ donc $\Phi$ désigne
+  \begin{displaymath}
+   c_p + a + (b_p-1)*a = c_p + b_p*a = a^2 
+  \end{displaymath}
+\end{itemize}
+Après la terminaison de la boucle,
+\begin{displaymath}
+  \left. 
+  \begin{aligned}
+a^2 &= c + b*a \\ b&=0     
+  \end{aligned}
+\right\rbrace 
+\Rightarrow a^2 = c
+\end{displaymath}
+On a donc \emph{démontré} que lorsqu'on affiche $c$ à la fin c'est bien $a^2$ qui affiché.
+
+\subsection{Calcul d'une puissance}
+\begin{algorithm}
+  \Comment{Initialisation}
+  $a$, $n$, $r$ désignent des entiers\;
+  $a\longleftarrow$ un entier naturel non nul\;
+  $n\longleftarrow$ un entier naturel non nul\;
+  $r\longleftarrow 1$\;
+  \Tq{ n > 0}{
+      $r\longleftarrow r * a$\;
+      $n\longleftarrow n - 1$\;
+  }
+  \Comment{fin du segment itératif}
+  afficher $r$\;
+  \caption{Calcul d'une puissance.}
+  \label{corsegit_3}
+\end{algorithm}
+On prouve l'algorithme \ref{corsegit_3} avec le variant $V = n$ et l'invariant $\Phi = r * a^n$.
+
+
+\subsection{Recherche des indices de plus grandes valeurs}
+Dans l'algorithme \ref{corsegit_4}, \texttt{ligv} est une liste de 10 indices d'une liste \texttt{L} de longueur $l$. On désigne par \texttt{imin} le nombre entre 0 et 9 minimisant les valeurs \texttt{L[ligv[k]]}. Actualiser \texttt{imin} signifie assigner la nouvelle valeur de \texttt{imin} après une modification de \texttt{ligv}.
+\begin{algorithm}
+  \Comment{initialisations}
+  l $\leftarrow$ longueur de L\;
+  ligv $\leftarrow$ liste des entiers de 0 à 9\;
+  actualiser  imin\;
+  \Comment{traitement des autres valeurs}
+  j $\leftarrow 10$\;
+  \Tq{j < l}{
+      \If{ L[ligv[imin]] < L[j] }{
+          ligv[imin] $\leftarrow$ j\;
+          actualiser imin\;
+      }
+      incrémenter \texttt{j}
+  }
+  \caption{calcul d'une liste de 10 indices des plus grandes valeurs}
+  \label{corsegit_4}
+\end{algorithm}
+
+On prouve l'algorithme \ref{corsegit_4} avec la fonction de terminaison $V = l-j$ et l'invariant
+\begin{displaymath}
+  \Phi = 
+\left( 
+\left. 
+\begin{aligned}
+  &u \text{ et } v \leq j\\
+  &u \text{ n'est pas une valeur de }ligv \\
+  &v \text{ est une valeur de }ligv 
+\end{aligned}
+\right\rbrace 
+\Rightarrow L[u] \leq L[v]
+\right) 
+\end{displaymath}
+
+\subsection{Calcul d'un pgcd}
+\begin{algorithm}
+  \Comment{Initialisations}
+  $a$, $b$, $u$, $v$  désignent des entiers\;
+  $a\longleftarrow$ un entier naturel non nul\;
+  $b\longleftarrow$ un entier naturel non nul\;
+  $u\longleftarrow a$\;
+  $v\longleftarrow b$\;
+  \Tq{ u != v}{
+      \eIf{u > v}{
+        $u\longleftarrow u - v$\;
+      }{
+        $v\longleftarrow v - u$\;
+      }
+  }
+  \Comment{fin du segment itératif}
+  afficher $u$\;
+  \caption{Calcul d'un pgcd.}
+  \label{corsegit_5}
+\end{algorithm}
+On prouve l'algorithme \ref{corsegit_5} avec le variant $V = u + v$ et l'invariant 
+\begin{displaymath}
+ \Phi = \left( \text{pgcd}(a,b) == \text{pgcd}(u,v)\right) 
+\end{displaymath}
+
+
+\subsection{Relations}
+Une relation $\mathcal{R}$ est définie dans un ensemble fini $\Omega$ contenant $n$ éléments. Pour chaque élément $e\in \Omega$, on désigne par $V(e)$ l'ensemble des $f\in \Omega$ qui sont en relation avec $e$.\newline
+Une partie $A$ de $\Omega$ est donnée. On cherche une partie $B$ de $\Omega$ contenant $A$ et vérifiant la propriété
+\begin{displaymath}
+  \mathcal{P}: \hspace{0.5cm} \forall b \in B, V(b) \subset B
+\end{displaymath}
+On pourrait prendre $B=\Omega$ mais on veut $B$ aussi petit que possible.
+
+\begin{algorithm}
+  \Comment{Initialisation}
+  $B \leftarrow A$ liste donnée d'éléments 2 à 2 distincts de $\Omega$.\;
+  $i \leftarrow 0$\;
+  \Tq{ $i < $ longueur de $B$}{
+     $e \leftarrow $ valeur d'indice $i$ de $B$\;
+     \PourCh{$f\in \Omega$ en relation avec $e$}{
+       \Si{$f$ n'est pas dans $B$}{
+          placer $f$ à la fin de $B$\;
+       }
+     }
+     incrémenter $i$\;
+  }
+  \caption{Complété d'une partie pour une relation}
+  \label{corsegit_6}
+\end{algorithm}
+L'algorithme \ref{corsegit_6} contient deux boucles imbriquées. La boucle interne se termine car l'ensemble des éléments en relation avec un élément donné est fini. En revanche, la terminaison de la boucle externe n'est pas évidente car la liste $B$ est modifiée à l'intérieur de cette boucle. \newline
+On va montrer que $n-i$ est une fonction de terminaison.\newline
+Il est clair que sa valeur décroît strictement.\newline
+D'autre part, la propriété \og les valeurs de la liste $B$ sont deux à deux distinctes\fg~ est un invariant de boucle car on ne place un nouvel élément à la fin de $B$ que dans le cas où il ne s'y trouve pas déjà. La longueur de cette liste représente donc le nombre d'éléments de l'ensemble des valeurs de $B$. Comme cet ensemble est inclus dans $\Omega$ la propriété $i$ strictement inférieure à la longueur de $B$ montre que $n-i>0$ tant que la boucle n'est pas terminée. On peut former un deuxième invariant:
+\begin{displaymath}
+  \bigcup_{k< i}V(b_k) \subset \left\lbrace \text{ valeurs de }B \right\rbrace 
+\end{displaymath}
+Il prouve la complétion après la sortie de la boucle externe car si $i$ est la longueur de $B$ c'est aussi le nombre d'éléments de l'ensemble de ses valeurs et l'union à gauche est cet ensemble.
+
+\end{document}

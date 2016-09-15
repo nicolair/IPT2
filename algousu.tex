@@ -1,0 +1,171 @@
+\input{ipt.tex}
+%En tete et pied de page
+\lhead{Cours IPT}
+\chead{Algorithmique - Algorithmes usuels}
+\begin{document}
+On présente ici quelques problèmes simples et les algorithmes usuels qui les résolvent.\newline
+Quand on cherche un algorithme répondant à un problème donné, on doit commencer par examiner si ce problème peut se ramener à un de ces problèmes (ou à une combinaison). Lorsque c'est le cas, il faut adapter ces algorithmes usuels.\newline
+Il ne faut pas chercher à résoudre un problème plus difficile que celui qui vous est proposé. Comment préciser cette notion de difficulté?\newline
+Imaginons deux problèmes $\mathcal{P}_1$ et $\mathcal{P}_2$. Si une solution de $\mathcal{P}_2$ vous permet d'obtenir facilement une solution de $\mathcal{P}_1$, alors on peut dire que $\mathcal{P}_2$ est \emph{plus difficile} que $\mathcal{P}_1$. Dans ces conditions, si $\mathcal{P}_1$ vous est proposé, commencer par vouloir résoudre $\mathcal{P}_2$ est une MAUVAISE ID\'EE qu'il faut en général rejeter.  Par exemple, si vous cherchez \emph{un} objet vérifiant certaines propriétés, vous ne devez pas chercher \emph{tous} les objets vérifiant cette propriété.
+\section{Recherches dans une liste} 
+\subsection{Problématique}
+On se donne une liste d'objets (on la désigne par \texttt{L}) et un objet quelconque (désignons le par \verb|O|). L'objet \verb|O| est-il une valeur de \texttt{L}? Quel est le le premier indice pour lequel la valeur associée dans \texttt{L} est \verb|O|?\newline
+Si les valeurs de \texttt{L} sont des nombres que l'on peut comparer, quelle est la plus grande valeur? Pour quels indices cette plus grande valeur est-elle atteinte?  Quelle est la valeur moyenne de la liste? Quelle est la variance de la liste?\newline
+Si $L$ est une liste indexée de $0$ à $n-1$, les formules pour la moyenne et la variance sont les suivantes
+\begin{displaymath}
+  m = \frac{1}{n}\sum_{k=0}^{n-1}L[k], \hspace{0.5cm}
+  v = \frac{1}{n}\sum_{k=0}^{n-1}(L[k]-m)^2
+\end{displaymath}
+
+\subsection{Pseudo-code}
+L'algorithme \ref{algousu_1} présente la recherche d'une valeur dans une liste et l'algorithme \ref{algousu_2} la recherche de la plus grande valeur. 
+\begin{algorithm}
+  \Donnees{\;
+     $ L \leftarrow$ une liste de $n$ objets indexée à partir de 0\;
+     $O \leftarrow$ un objet}
+  \Comment{initialisation}
+  $i\leftarrow$ 0 \;
+  \Tq{ i < n \rm et \it L[i] != O}{
+      incrémenter $i$\;
+  }
+  \Comment{après la boucle, $i$ est inférieur ou égal à $n$}
+  \Comment{Si $i<n$, il désigne l'indice cherché.}
+  \Comment{Si $i=n$, l'objet ne figure pas dans la liste}
+  \caption{Recherche dans une liste du premier indice associé à une valeur}
+  \label{algousu_1}
+\end{algorithm}
+\begin{algorithm}
+  \Donnees{\;
+     $ L \leftarrow$ une liste (indexée de 0 à $n$) d'objets comparables}
+  \Comment{initialisation}
+  $i \leftarrow 0$\;
+  $vmax\leftarrow L[i]$  \;
+  \Comment{$vmax$ est la plus grande des valeurs de $L$ pour les indices $\leq i$}
+  \Tq{ i < n-1}{
+      incrémenter $i$\;
+      \Si{vmax < L[i]}{vmax = L[i]}
+      \Comment{$vmax$ est la plus grande des valeurs de $L$ pour les indices $\leq i$}
+  }
+  \Comment{$i$ désigne $n-1$ dernier indice}
+  \Comment{$vmax$ désigne la plus grande valeur}
+  \caption{Recherche dans une liste de la plus grande valeur}
+  \label{algousu_2}
+\end{algorithm}
+
+
+\subsection{Exercices}
+\begin{enumerate}
+  \item Former un algorithme pour calculer la valeur moyenne ou la variance d'une liste de nombres.
+  \item Former un algorithme pour calculer la liste de tous les indices correspondant à la plus grande valeur d'une liste donnée de nombres.
+  \item Former un algorithme pour calculer la liste de tous les indices correspondant à la deuxième plus grande valeur d'une liste donnée de nombres.
+\end{enumerate}
+
+\section{Recherches par dichotomie}
+\subsection{Problématique}
+Les objets de la liste $L$ sont ici des nombres rangés par ordre croissant. Les recherches dans la liste sont facilitées.\newline
+Soit $L$ une liste croissante (indexée à partir de 0) de $n$ nombres et $v$ un nombre vérifiant $L[0] \leq v < L[n-1]$. On cherche l'indice $i$ tel que $L[i]\leq v < L[i+1]$. On ne suppose pas que $L$ soit strictement croissante.\newline
+Un autre problème est de chercher un encadrement $u\leq s < v$ d'une solution $s$ d'une équation $f(x)=0$ dans le cas où $f$ est une fonction strictement croissante sur un intervalle $[a,b]$ et vérifiant $f(a) < 0 < f(b)$. Il faut aussi se donner un nombre (petit) $\varepsilon$ caractérisant la précison demandée. On peut envisager deux possibilités pour le test de précison: soit $b-a < \varepsilon$ soit $|f(s)|< \varepsilon$.
+\subsection{Pseudo-code}
+L'algorithme \ref{algousu_3} permet d'encadrer un nombre donné par deux valeurs consécutives d'une suite croissante. Les commentaires justifient la correction de l'algorithme.
+\begin{algorithm}
+  \Donnees{\;
+    $L \leftarrow$ une liste (indexée à partir de 0) croissante (pas forcément strictement) de $n$ nombres\;
+    $v \leftarrow$ un nombre vérifiant $L[0]\leq v < L[n-1]$\;
+  }
+  \Comment{initialisation}
+  $i\leftarrow 0; $ 
+  $j\leftarrow n-1$\;
+  \Comment{$L[i]\leq v < L[j]$ est vrai}
+  \Comment{$k$ désignera un entier strictement entre $i$ et $j$}
+  \Tq{ j-i > 1}{
+    $k\leftarrow$ partie entière de $\frac{i+j}{2}$ \;
+    \eSi{L[k] $\leq$ v}{
+      $i\leftarrow k$ 
+      \Comment{donc $L[i]\leq v < L[j]$ est vrai}
+    }{
+      $j\leftarrow k$
+      \Comment{alors $L[i]\leq v < L[j]$ est vrai car $v < L[k]$}
+    }
+    \Comment{$L[i]\leq v < L[j]$ est vrai et $j-i$ a strictement décru}
+  }
+  \Comment{$i$ désigne l'indice cherché.}
+  \caption{Encadrement par dichotomie dans une liste}
+  \label{algousu_3}
+\end{algorithm}
+
+\subsection{Exercice}
+Soit $f$ une fonction strictement croissante continue dans un intervalle $[a,b]$ avec $f(a)<0$ et $f(b)>0$, soit $\varepsilon>0$. On note $s$ l'unique réel entre $a$ et $b$ tel que $f(s)=0$. Former un algorithme calculant des réels $u$ et $v$ tels que $u\leq s < v$ avec $v-u < \varepsilon$.  
+
+\section{Recherche d'un mot dans une chaîne}
+\subsection{Problématique}
+On dit aussi recherche de motif. On cherche les occurences d'un mot $M$ de longueur $m>0$ dans un texte $T$ de longueur $t$. Les chaînes de caractères sont indexées à partir de 0. Pour chaque indice $i$ entre $0$ et $t-m$, on note $T_i$ le mot dont les caractères sont $T[i] T[i+1] \cdots T[i+m-1]$. L'algorithme naïf de recherche de motif consiste simplement à comparer $M$ à chaque $T_i$. 
+\subsection{Pseudo-code}
+\begin{algorithm}
+  \Donnees{\;
+    $M \leftarrow$ une chaîne de $m$ caractères (mot)\;
+    $T \leftarrow$ une chaîne de $t$ caractères (texte)\;
+  }
+  \Comment{initialisation}
+  $O$ désigne la liste qui recevra les indices d'occurence du mot\;
+  $i\leftarrow 0$ un indice pour le texte \;
+  \Tq{i $\leq$ t - m}{
+    \If{ M = $T_i$}{
+      placer $i$ à la fin de la liste $O$\;
+    }
+    incrémenter $i$
+  }
+  \caption{Recherche de motif (algorithme naïf)}
+  \label{algousu_4}
+\end{algorithm}
+Pour une implémentation en Python, il est utile de remarquer que $T_i$ s'obtient simplement avec la syntaxe \verb|T[i:i+m]|. Cette syntaxe est désignée par le terme \emph{slice} dans la documentation.
+
+Il existe de nombreux algorithmes de recherche de motifs\footnote{par exemple algorithmes de Rabin-Karp, utilisant des automates finis ou de Knuth-Morris-Pratt (tirés de \emph{Introduction à l'algorithmique} Dunod)}. Une des idées pour améliorer l'algorithme \ref{algousu_4} (naïf) est d'utiliser le travail fourni en comparant $M$ à $T_i$ pour incrémenter $i$ plus efficacement afin d'éviter des comparaisons dont on peut savoir à l'avance qu'elles échoueront.\newline
+Comparons $M$ et $T_i$ en appelant une fonction $NbCarComm(M,T_i)$ qui renvoie le nombre de caractères (entre 0 et $m$) que les deux mots ont en commun (au début des mots).\newline
+Par exemple, si $T_i$ désigne \verb|tstt-tsst| et $M$ désigne \verb|tsoin|, la fonction renverra $2$ car seuls les deux premiers caractères \verb|c| et \verb|s| sont communs. Les mots sont donc égaux si et seulement si la fonction renvoie $m$.\newline
+Plaçons nous maintenant dans le cas particulier où les caractères de $M$ sont deux à deux distincts.\newline
+Si les $p$ premiers caractères de $M$ et $T_i$ sont égaux avec $p<m$, comme les caractères de $M$ sont deux à deux distincts, il est certain que le premier caractère des mots $T_{i+1}, T_{i+2},\cdots T_{i+p-1}$ est différent du premier caractère de $M$ puisqu'il s'agit d'un des caractères suivants de $M$.\newline
+On peut donc modifier l'algorithme précédent en formant les algorithmes \ref{algousu_5} et \ref{algousu_6}.
+\begin{algorithm}
+  \Donnees{\;
+    $M \leftarrow$ une chaîne de $m$ caractères\;
+    $T \leftarrow$ une chaîne de $m$ caractères\;
+  }
+  \Comment{initialisation}
+  $i\leftarrow 0$ (nombre de premiers indices avec les mêmes valeurs)\;
+  \Tq{ i < m et M[i] = T[i]}{
+    incrémenter $i$\;
+  }
+  renvoyer $i$\;
+  \caption{Fonction NbCarComm}
+  \label{algousu_5}
+\end{algorithm}
+\begin{algorithm}
+  \Donnees{\;
+    $M \leftarrow$ une chaîne de $m$ caractères (mot) sans répétition\;
+    $T \leftarrow$ une chaîne de $t$ caractères (texte)\;
+  }
+  \Comment{initialisation}
+  $O$ désigne la liste qui recevra les indices d'occurence du mot\;
+  $i\leftarrow 0$ un indice pour le texte \;
+  $NbCarComm \leftarrow$ une fonction comme décrite plus haut\;
+  \Tq{i $\leq$ t - m}{
+    $p \leftarrow NbCarComm(M , T_i)$\; 
+    \If{ p = m}{
+      \Comment{dans ce cas $M=T_i$}
+      placer $i$ à la fin de la liste $O$\;
+    }
+    \Comment{incrémenter $i$}
+    $i \leftarrow i + \max(1,p) $\;
+  }
+  \caption{Recherche d'un motif sans répétition}
+  \label{algousu_6}
+\end{algorithm}
+
+\section{Autres exercices: fusion de listes croissantes}
+\begin{enumerate}
+  \item (dans une troisième liste) On se donne deux listes (nommées $L1$ et $L2$) croissantes de nombres. Former un algorithme calculant une troisième liste $L$ constituée des valeurs de $L1$ et $L2$ rangées par ordre croissant.
+  
+  \item (en place) On se donne une seule liste $L$ indexée de $id$ (i début) à $if$ (i final) et contenant deux sous-listes croissantes. C'est à dire qu'il existe un indice $im$ tel que $id \leq im < if$ avec $L$ soit croissante de $id$ à $im -1$ (si $id < im$) et de $im$ à $if$. Il s'agit cette fois de former un algorithme modifiant $L$ pour que ses valeurs soient rangées par ordre croissant de $id$ à $if$.
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,22 @@
+Une \emph{montée} dans une liste $A$ dont les valeurs sont des objets comparables est un couple d'indices $(i,j)$ tels que $A[i] < A[j]$ avec $i<j$.
+
+\begin{algorithm}
+  $A \leftarrow$ une liste de $n$ objets comparables indexée à partir de 0.\;
+  $i\leftarrow 0$\;
+  \Tq{ i < n-1}{
+    \eIf{A[i] < A[i+1]}{
+      permuter les valeurs d'indice $i$ et $i+1$ dans $A$.\;
+      \If{$i > 0$}{
+        $i\leftarrow i-1$\;
+      }
+    }{
+      $i\leftarrow i+1$\;
+    }
+  }
+  \caption{tri bulle}
+  \label{exo_tribulle_E_1}
+\end{algorithm}
+Pour la boucle de l'algorithme \ref{exo_tribulle_E_1} , $n-i$ est-il un variant? Le nombre de montées est-il un variant? Former un variant et un invariant. En les utilisant, prouver que la boucle termine et, qu'après la sortie, les valeurs de $A$ sont décroissantes avec les indices.
+
+Implémenter l'algorithme en Python dans une fonction \verb|TriBulle| qui prend comme seul paramètre la liste à ranger et qui renvoie le nombre de permutations effectuées.\newline
+Après l'exécution d'une ligne \verb|print(TriBulle(A))|. Que désigne \verb|A|?

@@ -1,0 +1,32 @@
+%<dscrpt>Questions de cours calculs numériques.<dscrpt>
+\subsection{Résolution d'équations}
+Soit $f$ une fonction définie dans un intervalle $[a,b]$ avec $f(a)<0<f(b)$.
+\begin{enumerate}
+  \item Quelles autres hypothèses doit-elle vérifier pour que la méthode de Newton permette d'approcher une solution dans $[a,b]$ de l'équation $f(x)=0$ ?
+  \item Implémenter en pseudo-code la méthode de Newton. On supposera disposer de fonctions \verb|f| et \verb|f'| qui renvoient les valeurs numériques de la fonction à étudier et de sa dérivée. La valeur renvoyée sera la première pour laquelle la valeur absolue de la différence avec la valeur précédente est plus petite qu'un flottant désigné par \verb|espsilon| donné à l'avance.
+\end{enumerate}
+\subsection{Matrices échelonnées}
+Soit $A\in \mathcal{M}_{p q}$. On définit une fonction $s$  en posant, pour chaque $i \in \{1,\cdots p\}$,
+\begin{displaymath}
+  s(i)=
+\left\lbrace 
+\begin{aligned}
+  &q+1 &\text{ si }\forall j\in\{1,\cdots q\}, a_{i j}=0\\
+  &\min\{j\in\{1,\cdots q\}\text{ tq }a_{i j}\neq 0\} &\text{ sinon}
+\end{aligned}
+\right. 
+\end{displaymath}
+On dit que $A$ est \emph{échelonnée en lignes} lorsqu'il existe un entier $r\in \{1,\cdots,p\}$ tel que
+\begin{displaymath}
+s(1)<\cdots <s(r) \text{ avec } s(r+1)=\cdots = s(p)=q+1\text{ si } r<p
+\end{displaymath}
+On dit que $A$ est \emph{échelonnée en colonnes} lorsque sa transposée est échelonnée en lignes.
+
+\begin{enumerate}
+  \item Exemple. Former une matrice échelonnée en lignes  (5 lignes et 8 colonnes) avec une fonction vérifiant 
+\begin{displaymath}
+  s(1)=1,\; s(2)=2,\; s(3)= 4,\; s(4)= 7,\; s(5) = 9
+\end{displaymath}
+\item Implémenter en pseudo-code une variante de la méthode du pivot partiel pour transformer une matrice en matrice échelonnée en lignes.
+\item Quelle est la forme d'une matrice échelonnée à la fois en lignes et en colonnes? Peut-on implémenter une variante de la méthode du pivot pour transformer une matrice en une matrice échelonnée à la fois en lignes et en colonnes? Quel résultat mathématique retrouve-t-on ainsi?
+\end{enumerate}

@@ -1,0 +1,59 @@
+On rappelle que la fonction \texttt{bin} renvoie la décomposition binaire d'un entier.
+\begin{enumerate}
+  \item Former un code calculant la décomposition binaire d'un entier comme une chaîne de caractère commençant par \texttt{0b}. Vérifier avec \texttt{bin}.
+  
+  \item On vous demande ici d'utiliser la  méthode de liste \texttt{index()} et l'opérateur \texttt{in}.\newline
+  Lorsque \texttt{lili} est une liste, l'appel \texttt{lili.index(x)} renvoie le plus petit index \texttt{i} tel que \texttt{x = lili[i]} et provoque une erreur si \texttt{x} n'est pas une valeur de la liste.\newline
+  On rappelle (cours) que l'opérateur \texttt{in} est à valeurs booléennes et assigne au nom à sa gauche la valeur suivante de l'objet itérable à sa droite.\newline
+  Soit $p$ et $q$ des entiers naturels tels que $p < q$. On note $r_n$ le reste de la division de $p\,2^n$ par $q$. Cette suite est périodique de période $T$ à partir d'un certain rang $nmin$.\newline
+  En utilisant l'opérateur \texttt{in} et la méthode \texttt{index}, former un code calculant le plus petit $n$ pour lequel il existe $m>n$ tel que $r_m = r_n$. Afficher $nmin$ et la période $T$.
+  
+  \item On reprend les notations de la question précédente.\label{dev_bin}
+\begin{enumerate}
+  \item Montrer que $\lfloor \frac{2p}{q} \rfloor$ est le quotient de la division de $2p$ par $q$ et que $\{ \frac{2p}{q} \}$ est le reste divisé par $q$. 
+  \item En modifiant le code de la question précédente, former, comme une liste, le développement binaire du nombre rationnel $\frac{p}{q}$ jusqu'à l'ordre $nmin$. Pousser plus loin le développement pour constater expérimentalement la périodicité. On peut prendre $p=7$ et $q=13$ comme exemple.
+\end{enumerate}
+
+  \item Une liste \texttt{lili} de longueur $l$ contient uniquement des $0$ et des $1$.
+\begin{enumerate}
+  \item   Calculer les sommes
+  \begin{displaymath}
+   \sum_{k=0}^{l-1}\texttt{lili[k]} \times 2^{l-k-1}\hspace{1cm}
+   \sum_{k=0}^{l-1}\texttt{lili[k]} \times 2^{-k}
+  \end{displaymath}
+Bien noter que la première somme est un entier mais que la deuxième doit être calculée comme un float. Pour le calcul de la première somme, on utilisera obligatoirement la \emph{forme de Hörner}
+\begin{displaymath}
+  a_02^{l-1}+a_12^{l-2}+a_22^{l-3}+ \cdots = 
+\left( \cdots \left( \left( (0\times 2 + a_0) \times 2 + a_1\right) \times 2 + a_2\right) \cdots \right) 
+\end{displaymath}
+
+  \item Utiliser \texttt{bin} pour vérifier le calcul de la première somme. Utiliser le calcul de la deuxième somme pour vérifier numériquement le développement obtenu en question \ref{dev_bin}.
+\end{enumerate} 
+
+\item Que devrait afficher le code suivant? Qu'affiche-t-il réellement à l'exécution pour $n =26$ et pour $n=27$? Pourquoi?
+\begin{verbatim}
+a = 2**(-n)
+b = 2**(n)
+truc = 2*a + b
+truc = truc - b
+truc = truc - a
+truc = truc * b
+print(truc)
+\end{verbatim}
+
+\item Les listes \texttt{lili} et \texttt{bibi} de longueur $l$ contiennent uniquement des $0$ et des $1$. Elles représentent la décomposition binaire de deux entiers $\lambda$ et $\beta$ de $\llbracket 1, 2^l -1\rrbracket$. On note $s=\lambda + \beta$.\newline
+Former un code qui affiche la décomposition binaire de $s$ si $s\in \llbracket 1, 2^l -1\rrbracket$ et \texttt{'erreur'} sinon. 
+
+\item Nombres palindromes.\newline
+Pour tout entier naturel $n$, on désigne par $\overleftarrow{n}$ le nombre dont le développement décimal est obtenu en retournant la liste du développement de $n$. Par exemple, si $n = 2453$ alors $\overleftarrow{n}=3542$.\newline
+Pour tout nombre entier $n$, on considère la suite $\left( n_i \right)_{i\in\N}$ définie par $n_0 = n$ et 
+\begin{displaymath}
+  \forall i\in \N : n_{i+1} = n_i + \overleftarrow{n_i}
+\end{displaymath}
+Il semblerait (conjecture) que, pour tout $n$, il existe un $i$ tel que $n_i$ soit un nombre palindrome. Lorsqu'il existe de tels $i$, on note $\delta(n)$ le plus petit d'entre eux. Lorsqu'il n'existe pas un tel $i$ le nombre $n$ est dit \emph{de Lychrel}. On ne connait pas de nombre de Lychrel mais on ne sait pas non plus montrer qu'il n'en existe pas.
+\begin{enumerate}
+  \item Former du code Python permettant de calculer $n+\overleftarrow{n}$ pour $n$ entier donné. Vous pouvez utiliser les fonctions de conversion \texttt{int} et \texttt{str}.
+  \item Déterminer les deux plus petits nombres dont vous ne savez pas montrer qu'ils ne sont pas de Lychrel.
+\end{enumerate}
+
+\end{enumerate}

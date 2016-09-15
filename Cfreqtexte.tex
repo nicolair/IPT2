@@ -1,0 +1,112 @@
+\subsection*{I - Outils}
+\begin{enumerate}
+  \item Les indices en Python commencencent à $0$, on convient donc que la fonction \verb|indice(lili,obj)| doit renvoyer \verb|-1| lorsque \verb|obj| n'est pas une valeur de la liste \verb|lili|. On peut implémenter cette fonction avec le code suivant:
+\begin{verbatim}
+def indice(lili,obj):
+    # n nb de valeurs de la liste
+    n = len(lili)
+    #indice dans la liste
+    i = 0
+    while i< n:
+        if lili[i] == obj:
+            return i
+        else:
+            i = i + 1
+    return -1  
+\end{verbatim}
+
+  \item 
+Dans l'algorithme \ref{Cfreqtexte_1} proposé, on utilise les variables suivantes:
+\begin{itemize}
+  \item $L$ une liste de $n>10$ valeurs comparables.
+  \item $Imax\leftarrow$ une liste (pour les 10 indices de plus grande valeur).
+  \item $Vmax\leftarrow$ une liste (les 10 plus grandes valeurs).
+  \item $Imax[0]\leftarrow 0$ .
+  \item $Vmax[0]\leftarrow L[0]$.
+  \item $p\leftarrow 1$ nombre de valeurs dans ces listes au début.
+  \item $i\leftarrow 1$ indice dans $L$.
+
+\end{itemize}
+\begin{algorithm}
+  \Comment{traitement des premières valeurs}
+  \Tq{ i < 10}{
+    \eIf{L[i] $\leq$ Vmax[p-1]}{
+      $Vmax[p]\leftarrow L[i]$\;
+      $Imax[p]\leftarrow i$\;
+    }{
+      $j\leftarrow p-1$\;
+      \Tq{j$\geq 0$ et L[i] > Vmax[j]}{
+        $Vmax[j+1]\leftarrow Vmax[j]$\;
+        $Imax[j+1]\leftarrow Imax[j]$\;
+        $j\leftarrow j-1$\;
+      }
+      \Comment{ici $L[i]\leq Vmax[j]$}
+      $Vmax[j+1]\leftarrow L[i]$\;
+      $Imax[j+1]\leftarrow i$\;
+    }
+    $i\leftarrow i+1$\;
+    $p\leftarrow p+1$\;
+  }
+  \Comment{traitement des autres valeurs}
+  \Tq{i < n}{
+    \If{L[i] > Vmax[p-1]}{
+      $j\leftarrow p-1$\;
+      \Tq{$j\geq 0$ et L[i] > Vmax[j]}{
+        $Vmax[j]\leftarrow Vmax[j-1]$\;
+        $Imax[j]\leftarrow Imax[j-1]$\;
+        $j\leftarrow j-1$\;
+      }
+      \Comment{ici $L[i] \leq Vmax[j]$ }
+      $Vmax[j+1]\leftarrow L[i]$\;
+      $Imax[j+1]\leftarrow i$\;    
+    }
+    $i\leftarrow i+1$\;
+  }
+  \caption{Algorithme pour top10}
+  \label{Cfreqtexte_1}
+\end{algorithm}
+Le code suivant est une implémentatio en Python de la fonction demandée
+\begin{verbatim}
+def top10(L):
+    n = len(L)
+    Imax = ["" for i in range(10)]
+    Vmax = ["" for i in range(10)]
+    Imax[0] = 0
+    Vmax[0] = L[0]
+    p = 1
+    i = 1
+    #traitement des premières valeurs
+    while i < 10:
+        if L[i] <= Vmax[p-1]:
+            Vmax[p] = L[i]
+            Imax[p] = i
+        else:
+            j = p-1
+            #print( (j>=0) & (L[i] > Vmax[j]))
+            while (j>=0) & (L[i] > Vmax[j]):
+                Vmax[j+1] = Vmax[j]
+                Imax[j+1] = Imax[j]
+                j = j-1
+            Vmax[j+1] = L[i]
+            Imax[j+1] = i
+        i += 1
+        p += 1
+    print(Imax)
+    #traitement des autres valeurs
+    while i < n:
+        if L[i] > Vmax[p-1]:
+            j = p-1
+            while (j>=0) & (L[i] > Vmax[j]):
+                Vmax[j] = Vmax[j-1]
+                Imax[j] = Imax[j-1]
+                j = j-1
+            Vmax[j+1] = L[i]
+            Imax[j+1] = i
+        i += 1
+    return Imax  
+\end{verbatim}
+
+\end{enumerate}
+
+\subsection*{II - Fréquences de caractères}
+\subsection*{III - Fréquences de mots}

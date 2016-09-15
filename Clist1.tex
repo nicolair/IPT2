@@ -1,0 +1,13 @@
+Pour que la fonction \texttt{randint} soit disponible, ne pas oublier d'exécuter
+\begin{center}
+  from random import randint
+\end{center}
+dans la console d'exécution de Python.
+\begin{enumerate}
+  \item On initialise les deux listes par le code suivant
+\lstinputlisting[firstline=1, lastline=10]{Clist1.py}
+  \item Le calcul de la table des fréquences se fait à l'aide d'une boucle \texttt{while} imbriquée dans la boucle d'énumération.
+\lstinputlisting[firstline=12, lastline=22]{Clist1.py}
+Remarquer le calcul de la somme des fréquences à titre de vérification.
+  \item Si on exécute avec une grande valeur pour $n$, on observe que les fréquences tendent à prendre des valeurs égales. La fonction \texttt{randint} émule une distribution aléatoire uniforme de nombres entiers entre $0$ et $200$.
+\end{enumerate}

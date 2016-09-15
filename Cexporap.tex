@@ -1,0 +1,63 @@
+Le premier bloc de code met en \oe{}uvre l'algorithme de calcul du développement binaire d'un nombre. Il affiche une chaine de caractère présentant la décomposition en base $2$ du nombre désigné par \verb|n|.\newline
+En exécutant le code, le mot \verb|11001| s'affiche ce qui traduit
+\begin{displaymath}
+ 25 = 1\times 2^0 + 0\times 2^1 + 0\times 2^2 + 1\times 2^3 + 1\times 2^4  
+\end{displaymath}
+
+Le deuxième bloc est une variante du premier mais cette fois il affiche seulement les exposants du développement pour lesquels le coefficient est $1$ : soit $0$, $3$, $4$.
+
+Le troisième bloc dérive toujours de l'algorithme de numération avec la variante du second bloc. On introduit le nom \verb|a| qui désignera toujours le même nombre (ici $7$) lors de l'exécution du code. 
+Le nom \verb|p| est initialisé à la valeur de \verb|a| (notons la $a$ pour plus de généralité). Il est à chaque fois élevé au carré. La suite de ses valeurs est donc
+\begin{displaymath}
+ a=a^{1}=a^{2^{0}}, a^2=a^{2^{1}}, a^4=a^{2^{2}}, \cdots , a^{2^{k}}
+\end{displaymath}
+car 
+\begin{displaymath}
+ a^{2^{k-1}}a^{2^{k-1}}= a^{2^{k-1} + 2^{k-1}}=a^{2^{k}}
+\end{displaymath}
+Le nom \verb|p| désigne donc successivement les puissances de $a$ à un exposant qui est une puissance de $2$.
+
+Pour montrer ce qui nous est demandé, considérons la décomposition binaire de l'exposant $n$
+\begin{eqnarray*}
+ n &=& c_0 + c_1 2^1 + c_2 2^2+ \cdots +c_m 2^m \text{ avec les } c_k\in\{0,1\}\\
+ a^n &=& a^{c_0}a^{c_1 2^1} \cdots a^{c_m 2^m} \\
+ a^n &=& a^{2^{i_1}} a^{2^{i_2}} ...
+\end{eqnarray*}
+où les $i_1, i_2, \cdots$ sont les exposants pour lesquels les coefficients de la décomposition sont non nuls donc égaux à $1$.\newline
+Le code calcule toutes les puissances d'exposant une puissance de $2$ et les multiplie quand il faut à une variable \verb|x| initialisée à $1$. \`A la fin, le nom \verb|x| désigne donc bien $a^n$.
+
+Pour compter les multiplications, il suffit d'insérer un compteur et de l'incrémenter pour chacune.
+\begin{verbatim}
+n = 250
+a = 7
+p = a
+x = 1
+c = 0
+while n > 0:
+  if n % 2 == 1:
+    x = x*p
+    c += 1
+  n = n // 2
+  p = p*p
+  c += 1
+print(x)
+print(x-7 ** 250)
+print(c)
+\end{verbatim}
+L'exécution de ce code montre que seulement 14 multiplications sont effectuées. Il introduit aussi une ligne de vérification.
+
+Le premier cas est celui où l'exposant $e$ est une puissance de 2. Pour calculer
+\begin{displaymath}
+ x_m = a^{(2^m)}
+\end{displaymath}
+on peut utiliser seulement $m$ (au lieu de $2^m$) multiplications en remarquant que
+\begin{displaymath}
+ x_0=a , x_{m+1} = x_m^2
+\end{displaymath}
+Dans le cas général, on peut utiliser la décomposition de $e$ en base 2. Les coefficients sont 0 ou 1 et seuls les 1 "comptent" dans le calcul de la puissance
+\begin{enumerate}
+ \item Mettre en oeuvre le principe précédent pour calculer $a^e$ sur un exemple en décomposant $e$ en base 2 (par une succession d'opérations sans chercher à former un programme). Vérifier en calculant directement.
+ \item On modifie légèrement l'algorithme de décomposition de $e$ en base 2 en calculant toutes les puissances de $a$ dont l'exposant est une puissance de 2 et en multipliant ces nombres lorsque c'est nécessaire. Ce nouvel algorithme est présenté dans le diagramme de la figure que vous devez traduire dans la syntaxe Maple.
+\end{enumerate}
+L'algorithme \emph{d'exponentiation rapide} permet de calculer $a^n$ où $a$ et $e$ sont des nombres naturels en effectuant moins (beaucoup moins !) de $n$ multiplications.
+

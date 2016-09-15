@@ -1,0 +1,96 @@
+\input{ipt.tex}
+%En tete et pied de page
+\lhead{IPT}
+\chead{Corrigé DS 1 le 10/12/14}
+\begin{document}
+\section{Questions de cours}
+\begin{enumerate}
+  \item Quels entiers relatifs sont représentables en 64 bits sur les machines actuelles?\newline
+Les machines actuelles utilisent la représentation des entiers par complément à $2$. Les entiers relatifs de
+\begin{displaymath} 
+  \llbracket -2^{63} , 2^{63} -1 \rrbracket
+\end{displaymath}
+sont représentables.
+\begin{itemize}
+  \item Les entiers de $\llbracket -2^{63} , 2^{63} -1 \rrbracket$ sont représentés par leur décomposition binaire sur 64 bits. Le bit de poids fort est $0$.
+  \item Les entiers $x$ de $\llbracket -2^{63} , 2^{63} -1 \rrbracket$ sont représentés par la décomposition binaire de $2^{64} -x$ sur 64 bits. Le bit de poids fort est $1$.
+\end{itemize}
+
+  \item Quelle est le représentation par complément à 2 sur 64 bits de $-2^{62}$ ?\newline
+En suivant les principes de la question précédente, la représentation en binaire sur 64 bits de 
+\begin{displaymath}
+2^{64}-2^{62} = (4-1)2^{62} = 3\times 2^{62} = 2^{63} + 2^{62} 
+\end{displaymath}
+est
+\begin{displaymath}
+  (1, 1, \underset{62 \text{ zéros}}{\underbrace{0, \cdots,0}})
+\end{displaymath}
+
+  \item Représentation normalisée de $\frac{8}{7}$? de $\frac{128}{15}$?\newline
+Les nombres normalisés sont ceux de la forme
+\begin{displaymath}
+  s\times m \times 2^{n}\text{ avec }
+\left\lbrace 
+\begin{aligned}
+  &s\in \{-1,1\} &:&\; 1\text{ bit}\\
+  &m\in[1,2[ \text{ binaire } &:&\; 52 \text{ bits}\\
+  &n \in \llbracket -1022, 1023 \rrbracket &:&\; 11 \text{ bits} \\ 
+\end{aligned}
+\right. 
+\end{displaymath}
+Comme $1\leq \frac{8}{7} < 2$, l'exposant est 0. Ce nombre est égal à sa mantisse. De plus, on fait facilement apparaitre la partie entière
+\begin{displaymath}
+  \frac{8}{7} = 1 + \frac{1}{7} \hspace{0.5cm} dec \rightarrow [1]
+\end{displaymath}
+On utilise ensuite l'algorithme de décomposition dans une base d'un nombre entre 0 et $b-1$ (ici $b=2$) en multipliant par $2$ jusq'à dépasser 1.
+\begin{displaymath}
+\left\lbrace \
+\begin{aligned}
+\frac{2}{7} <1\\
+x \rightarrow\frac{2}{7}\\  
+dec \rightarrow [1,0]  
+\end{aligned}
+\right. 
+\rightsquigarrow
+\left\lbrace \
+\begin{aligned}
+\frac{4}{7} <1\\
+x \rightarrow\frac{4}{7}\\  
+dec \rightarrow [1,0,0]  
+\end{aligned}
+\right. 
+\rightsquigarrow
+\left\lbrace \
+\begin{aligned}
+\frac{8}{7} >1\\
+x \rightarrow\frac{1}{7} <1\\  
+dec \rightarrow [1,0,0,1]  
+\end{aligned}
+\right. 
+\rightsquigarrow \cdots
+\end{displaymath}
+et l'exécution est ensuite périodique. On pouvait aussi remarquer que :
+\begin{displaymath}
+  \frac{8}{7} = \frac{8}{8 -1} = \frac{1}{1-2^{-3}} = 1 + \frac{1}{2^{-3}}+ \frac{1}{2^{-6}}+ \frac{1}{2^{-8}}+\cdots+ \text{ reste adéquat}
+\end{displaymath}
+La représentation binaire de la mantisse ne tient compte que de la partie fractionnaire; c'est donc :
+\begin{displaymath}
+  (\underset{17 \text{ fois } 0,0,1 = 51 \text{ bits}}{\underbrace{0,0,1,0,0,1,\cdots,0,0,1}},0)
+\end{displaymath}
+Pour $\frac{128}{15}$, l'exposant est $3$ car
+\begin{displaymath}
+\frac{128}{15} = \frac{8\times 16}{15} = 2^3 \times \frac{1}{1-2^{-4}}  
+= 1 + \frac{1}{2^{-4}}+ \frac{1}{2^{-8}}+ \frac{1}{2^{-12}}+\cdots+ \text{ reste adéquat}
+\end{displaymath}
+La représentation binaire de la mantisse est :
+\begin{displaymath}
+  (\underset{13 \text{ fois } 0,0,0,1 = 52 \text{ bits}}{\underbrace{0,0,0,1,0,0,0,1,\cdots,0,0,0,1}})
+\end{displaymath}
+L'algorithme du cours permet aussi d'obtenir cette décomposition périodique.
+\end{enumerate}
+
+\section{Séparation d'une liste}
+\input{Csep}
+\section{Calculs en binaire}
+\input{Cbrigglog}
+\end{document}

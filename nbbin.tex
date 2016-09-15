@@ -1,0 +1,205 @@
+\input{ipt.tex}
+%En tete et pied de page
+\lhead{Cours IPT}
+\chead{Systèmes - Nombres binaires et représentations}
+\begin{document}
+
+Un processeur utilise des mémoires constituées de circuits à deux états. Un tel circuit est un \emph{bit}, on les groupe par 8 pour former un octet. Un octet peut donc prendre $2^8=256$ états.\newline
+On regroupe des octets pour représenter divers objets: par exemple une adresse IP(v4) est stockée sur 4 octets. Il y a donc $256^4 = 4294967296$ adresses IP possibles.
+
+On se propose d'expliquer comment on peut organiser un nombre fixé de bits pour représenter utilement trois ensembles de nombres particuliers. On utilise la désignation des types (classes) en Python
+\begin{itemize}
+  \item \texttt{bool} l'ensemble des booléens ne contient que deux éléments.
+  \item \texttt{int} pour représenter certains entiers relatifs
+  \item \texttt{float} pour représenter certains nombres binaires
+\end{itemize}
+Parler de type \og réel\fg de données ne peut conduire qu'à des erreurs et des confusions puisqu'il ne s'agit en fait que d'un ensemble fini de nombres binaires. 
+
+\section{Sur un seul bit}
+Un seul bit ne peut prendre que deux valeurs que l'on regarde comme des valeurs logiques (booléens)(\texttt{VRAI}, \texttt{FAUX}) ou numériques ($1$, $0$).
+\begin{itemize}
+  \item On peut définir les opérations logiques \texttt{et} et \texttt{ou} ainsi que l'addition numérique.
+  \item \`A partir d'un seul bit, on peut renvoyer la valeur qu'il n'a pas. Cela s'interprète comme la négation logique ou l'opposé numérique.
+\end{itemize}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\hspace{.4cm}
+\begin{tabular}{|c|c|c|}
+\hline
+  \texttt{et}  & \texttt{VRAI} & \texttt{FAUX } \\ \hline
+  \texttt{VRAI}& \texttt{VRAI} & \texttt{FAUX } \\ \hline
+  \texttt{FAUX}& \texttt{FAUX} & \texttt{FAUX } \\ \hline
+\end{tabular} 
+\hspace{.4cm}
+\begin{tabular}{|c|c|c|}
+\hline
+  \texttt{ou}  & \texttt{VRAI} & \texttt{FAUX } \\ \hline
+  \texttt{VRAI}& \texttt{VRAI} & \texttt{VRAI } \\ \hline
+  \texttt{FAUX}& \texttt{VRAI} & \texttt{FAUX } \\ \hline
+\end{tabular} 
+\hspace{.4cm}
+\begin{tabular}{|c|c|c|}
+\hline
+  $+$ & $0$ & $1$ \\ \hline
+  $0$ & $0$ & $1$ \\ \hline
+  $1$ & $1$ & $0$ \\ \hline
+\end{tabular} 
+\hfill  
+\end{center}
+Ces trois opérations sont commutatives et associatives.
+
+\section{Opérations sur les mots de longueur fixée}
+On considère des mots de $n$ bits avec $n$ entier naturel fixé. On peut aussi bien regarder des listes de $n$ bits. Un tel mot peut prendre $2^n$ valeurs. On ne s'intéresse pas ici à ce que peuvent représenter ces mots mais aux opérations formelles que l'on peut faire avec.
+\begin{enumerate}
+  \item Le \emph{bit de poids fort} d'un mot est son bit le plus à gauche, le \emph{bit de poids faible} est celui le plus à droite.
+  \item Décalage vers la droite $\delta$ ou vers la gauche $\gamma$.
+  \begin{align*}
+    (b_0,b_1,\cdots,b_{n-1}) &\xrightarrow{\delta} (0, b_0,b_1,\cdots,b_{n-2}) \\
+    (b_0,b_1,\cdots,b_{n-1}) &\xrightarrow{\gamma} (b_1,b_2,\cdots,b_{n-1}, 0)
+  \end{align*}
+Bien noter que ces opérations font perdre chaque fois un bit d'information. Pour $p<n$, on peut décaler $p$ fois vers la droite ou vers la gauche en répétant l'opération.
+  \item \emph{Addition bit à bit}.\newline
+  On procède de droite à gauche en introduisant une \emph{retenue} de $1$ (dans le cas $1+1$) exactement comme pour l'addition en base 10. L'éventuelle retenue au delà du bit de poids fort est ignorée.\newline
+  Exemple avec un octet
+  \begin{center}
+  \begin{tabular}{cccccccc}
+    1 & 1 & 0 & 0 & 1 & 1 & 0 & 1 \\ 
+    1 & 0 & 1 & 0 & 1 & 0 & 0 & 0 \\ \hline
+    0 & 1 & 1 & 1 & 0 & 1 & 0 & 1 \\ 
+  \end{tabular}    
+  \end{center}
+La dernière retenue est ignorée.
+
+Interprétons ces opérations lorsque les mots sont des représentations binaires d'entiers. Soit $m$ représentant binaire d'un entier $\overline{m}\in \llbracket 0, 2^{n}-1 \rrbracket$:
+\begin{itemize}
+  \item Le bit de poids faible de $m$ est le reste de la division de $\overline{m}$ par $2$.
+  \item Le mot $\delta(m)$ est la représentation binaire du quotient de la division de $\overline{m}$ par $2$.
+  \item L'entier représenté par $\gamma(m)$ est congru à $2\times\overline{m}$ modulo $2^{n}$. Il y a égalité lorsque le bit de poids fort de $m$ est nul.
+\end{itemize}
+Pour deux mots $m_1$ et $m_2$ représentant des entiers $\overline{m}_1$ et $\overline{m}_2$ de $\overline{m}\in \llbracket 0, 2^{n}-1 \rrbracket$, et $m$ obtenu par l'addition bit à bit:
+\begin{displaymath}
+  \overline{m} \equiv \overline{m_1} + \overline{m_2} \mod 2^{n}
+\end{displaymath}
+Il y a égalité lorsque l'addition ne conduit pas à ignorer la dernière retenue. C'est forcément le cas lorsque les deux bits de poids fort sont nuls. 
+\end{enumerate}
+On peut aussi combiner addition bit à bit avec décalage pour former des multiplications modulo $2^n$.
+Exemple
+  \begin{center}
+  \begin{tabular}{ccccccccc}
+    $m_1$: & 1 & 0 & 1 & 0 & 1 & 0 & 0 & 0 \\
+    $m_2$: & 0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 \\ \hline 
+           & 1 & 0 & 1 & 0 & 1 & 0 & 0 & 0 \\
+           & 1 & 0 & 1 & 0 & 0 & 0 & . & .  \\
+           & 0 & 1 & 0 & 0 & 0 & . & . & . \\
+           & 0 & 0 & 0 & . & . & . & . & . \\ \hline
+    $m$:   & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0
+  \end{tabular}    
+  \end{center}
+  
+\begin{displaymath}
+\left. 
+\begin{aligned}
+\overline{m_1} &= 8 + 32 + 128 &= 168 \\
+\overline{m_2} &= 1 + 4 + 8 + 32 &= 45 \\
+\overline{m} &=  8 + 128 &= 136
+\end{aligned}
+\right\rbrace \Rightarrow
+\overline{m_1}\times \overline{m_2} = 7560 =136 + 29\times 2^8 
+\end{displaymath}
+Ces opérations sont simples à implémenter pour la structure des listes (ou des mots) de longueur fixée. Elles ont de plus une interprétation mathématique. C'est ce double aspect qui fait leur intérêt.
+
+
+
+\section{Entiers}
+Dans les versions 2.x de Python, le nombre d'octets utilisés pour représenter les objets du type \verb|int| est lié à la largeur du bus du processeur:  quatre octets sur les machines 32bits, cinq sur les machines 64bits. Dans les versions 3.x, les types \verb|int| et \verb|long| ont été confondus. Les entiers sont gérés de manière dynamique sur un nombre d'octets variable, la seule limite est la mémoire de la machine.
+
+Lorsque les entiers relatifs sont représentés par des mots binaires de longueur fixée, le signe n'est pas (comme on pourrait le croire) stocké sur le premier bit. D'une part cela aurait le défaut de conduire à deux zéros distincts mais surtout cela ne permettrait pas d'exploiter facilement les opérations bit à bit de la section précédente traduisant les opérations numériques modulo $2^n$.\newline 
+On utilise la méthode dite du \emph{du complément à 2}\index{complément à 2}.\newline
+Avec des mots binaires de longueur $n$, on va représenter les $2^n$ entiers de 
+\begin{displaymath}
+  \llbracket -2^{n-1}, 2^{n-1}-1 \rrbracket
+\end{displaymath}
+Les nombres positifs seront représentés normalement. On remarque que le bit de poids fort sera toujours nul. Par exemple
+\begin{displaymath}
+  \overline{00\cdots00} = 0, \hspace{1cm}\overline{00\cdots01} = 1, \hspace{1cm}\overline{00\cdots10} = 2, \cdots
+\end{displaymath}
+
+Un nombre négatif $x$ de cet intervalle sera représenté par la décomposition binaire du nombre congru à $x$ modulo $2^{n}$ dans l'intervalle c'est à dire $x + 2^n$.\newline
+Le bit de poids fort de la représentation d'un entier négatif sera toujours égal à 1. en effet:
+\begin{displaymath}
+  -2^{n-1} \leq x \Rightarrow x + 2^n \geq 2^n - 2^{n-1} = 2^{n-1}
+\end{displaymath}
+
+Comment obtenir la représentation de $-x$?\newline
+Soit $x = \overline{0\,b_{n-2}\,\cdots\, b_1\, b_0}$ entier tel que $0<x<2^{n-1}$.  
+\begin{itemize}
+  \item on inverse le développement: $(1,1-b_{n-2},\cdots,1-b_1,1-b_0)$
+  \item on ajoute $1$ (attention aux retenues)
+\end{itemize}
+\begin{demo}
+ Soit $y$ l'entier dont le développement est suggéré. On vérifie que
+\begin{displaymath}
+ x+y = 1+2+\cdots+2^{n-2} = 2^{n-1}-1
+\end{displaymath}
+La représentation de $-x$ est la décomposition de $z = 2^{n}-x$, on en déduit que
+\begin{displaymath}
+ 2^{n}-x = 2^{n} - 2^{n-1} + 1 +y=1+y+2^{n-1}
+\end{displaymath}
+Il suffit donc d'ajouter 1 au développement de $y$ (attention aux retenues) et de décaler ce développement en ajoutant un 1.\newline  
+\end{demo}
+Exemple. Soit $x=1000$ sur 2 octets.
+\begin{itemize}
+  \item représentation de $1000$: $0000001111101000$
+  \item inversion $1111110000010111$
+  \item on ajoute 1, représentation de $-1000$ : $1111110000011000$ 
+\end{itemize}
+C'est bien ce que l'on retrouve en développant $2^{16}-1000$ en base $2$.\newline
+commande \texttt{bin(2**16 - 1000)}
+
+Exercice.
+\begin{itemize}
+  \item Quel est l'entier dont la représentation par complément à 2 sur $n$ bits ne contient que des $1$?
+  \item Soit $m = b_{n-1}\,b_{n-2}\,\cdots\,b_1\,b_0$ un mot binaire de longueur $n$.
+\begin{displaymath}
+  \forall i\in \llbracket 0,n-1\rrbracket, \; b'_i = 1-b_i \text{ et } m' = b'_{n-1}\,b'_{n-2}\,\cdots\,b'_1\,b'_0
+\end{displaymath}
+  Quel est l'entier représenté par complément à 2 par l'addition bit à bit de $m$ et $m'$? 
+\end{itemize}
+
+Exercice en python 2.7.\newline
+Les entiers de type \texttt{int} sont stockés par complément à 2 sur 5 octets. Quel est l'intervalle des entiers du type \texttt{int}?\newline
+Lorsque l'on sort de l'intervalle des entiers \texttt{int}, python 2.7 transtype automatiquement en entier \texttt{long} et le marque en plaçant un \texttt{L} à la fin du mot. Faire afficher à python le plus grand des \texttt{int}. Comment ne pas faire apparaitre le \texttt{L} à la fin de l'affichage?   
+
+\section{Flottants}
+Un nombre binaire non nul $x$ peut s'exprimer de manière unique\footnote{norme IEEE 754} sous la forme $x = s\times m\times 2^n$ où $s\in\{-1,+1\}$ est le signe du nombre, $m\in [1,2[$ est sa \emph{mantisse}\index{mantisse}, $n\in \Z$ est son exposant.\newline
+Cette expression dite \emph{normalisée} permet de le représenter à l'aide de bits.\newline
+Avec 64 bits, on utilise 1 bit pour le signe, 11 bits pour l'exposant et 52 bits pour la mantisse.
+\begin{itemize}
+ \item Le signe $+1$ est représenté par $0$, le signe $-1$ par $1$.
+ \item L'exposant $n$ doit être compris entre $-1022$ et $1023$, on le représente par $n + 1023$ qui est compris entre $1$ et $2046$. Les deux valeurs restantes $0$ et $2047$ sont réservées pour des situations exceptionnelles ($+\infty$, $-\infty$, \verb|NaN|, ...)
+ \item La mantisse comprend un seul chiffre avant la virgule qui est toujours $1$ car $1\leq m <2$. On utilise donc les 52 bits pour représenter les chiffres après la virgule. 
+\end{itemize}
+Le terme float vient de ce que la virgule peut être déplacée en modifiant l'exposant.\newline
+L'ensemble des float avec les opérations usuelles ne conserve pas les propriétés simples des espaces mathématiques.\newline
+Par exemple, on peut remarquer que $0$ ne s'exprime pas sous la forme proposée. Dans le cas de la représentation avec 64 bits, lorsque tous les bits de la mantisse sont nuls et que l'exposant est -1022, le nombre représenté est $\pm 2^{-1022}$ on convient qu'il représente $0$. Dans l'espace des float, il ya donc deux zéros: un positif et un négatif.\newline
+L'addition n'est pas associative !!!
+\begin{verbatim}
+G = 1.
+p = 2**(-54)
+print(p,G)
+print(-G + G + p)
+print(-G + (G + p))
+>>>>(5.551115123125783e-17, 1.0)
+5.55111512313e-17
+0.0
+\end{verbatim}
+Quels sont les deux plus petits flottants $0<x_1<x_2$ sur 64 bits ?
+\begin{displaymath}
+   2^{-1022}\text{ représente }0,\; x_1 = 2^{-1022}(1 + 2^{-52}),\; x_2=2^{-1022}(1 + 2^{-51})  
+\end{displaymath}
+Quel est le plus grand flottant strictement inférieur à $1$? Quel est le plus petit strictement supérieur à $1$?
+\begin{displaymath}
+  1.1111\cdots 111 \times 2^{-1} = 1 -2^{-53},\hspace{0.5cm} 1.0000 \cdots 0001 = 1+2^{-52}
+\end{displaymath}
+
+\end{document}

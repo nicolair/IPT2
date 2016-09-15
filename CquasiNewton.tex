@@ -1,0 +1,83 @@
+\begin{enumerate}
+  \item Question de cours sur la méthode de Newton.\newline
+  La relation de récurrence définissant la suite des valeurs approchées est la même que la dérivée seconde soit positive ou négative:
+\begin{displaymath}
+  x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
+\end{displaymath}
+Ce qui change, c'est la condition initiale qu'il faut prendre à droite ou à gauche de l'intervalle de départ.
+\begin{itemize}
+  \item Cas $f''>0$. (fonction convexe) $x_0 = b$, suite décroissante figure \ref{fig: CquasiNewton_1}.
+  \item Cas $f''>0$. (fonction concave) $x_0 = a$, suite croissante figure \ref{fig: CquasiNewton_2}.
+\end{itemize}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics{./CquasiNewton_1.pdf}
+  % CquasiNewton_1.pdf: 0x0 pixel, 0dpi, 0.00x0.00 cm, bb=
+  \caption{$f''\geq 0$: fonction convexe}
+  \label{fig: CquasiNewton_1}
+\end{figure}
+\begin{figure}[h]
+  \centering
+  \includegraphics{./CquasiNewton_2.pdf}
+  \caption{$f''\leq 0$: fonction concave}
+  \label{fig: CquasiNewton_2}
+\end{figure}
+
+  \item Si on veut utiliser la méthode de Newton pour résoudre $f_a(x) = 0$, la relation de récurrence est 
+\begin{displaymath}
+  x_{n+1} = x_n - \frac{ax_n -1}{ a} = \frac{1}{a}
+\end{displaymath}
+Mais ceci n'est pas utilisable car \emph{on ne sait pas calculer l'inverse de $a$}. C'est justement l'objet du calcul. 
+
+  \item
+\begin{enumerate}
+  \item Comme on ne connait pas exactement l'inverse de $a$, on le remplace par sa valeur approchée 
+\begin{align*}
+  &\text{méthode de Newton (inutilisable)}: x_{n+1} = x_n - \underset{\simeq x_n}{\underbrace{\frac{1}{ a}}}(ax_n -1) \\
+  &\text{méthode de Quasi-Newton}: x_{n+1} = x_n-x_n(ax_n - 1) = x_n(2-ax_n)
+\end{align*}
+Si la suite converge vers un réel $l$, il doit vérifier
+\begin{displaymath}
+  l=l(2-al) \Rightarrow 0 = l(1-al) \Rightarrow l =0 \text{ ou } l=\frac{1}{a}
+\end{displaymath}
+
+  \item Le code suivant implémente la methode de quasi-Newton. 
+\lstinputlisting[firstline=8, lastline=17]{CquasiNewton.py}
+En testant numériquement, on remarque que la suite ne converge pas pour toutes les valeurs initiales. La convergence se produit pour le cas particulier des valeurs indiquées dans le code Python.
+\end{enumerate}
+
+  \item
+\begin{enumerate}
+  \item Comme la suite des matrices est censée converger vers la matrice inverse de $A$ (en supposant que $A$ soit inversible) le test d'arrêt doit mesurer la distance entre un terme et l'inverse. On peut évaluer la distance entre le produit matriciel $X_nA$ et $I$ et tester si la somme des carrés des coefficients de $X_nA -I$ est inférieure à un nombre petit fixé.
+  
+  \item Une itération nécessite une addition et deux multiplications matricielles.
+\begin{itemize}
+  \item addition matricielle : $p$ opérations (ajouter 2 sur la diagonale).
+  \item multiplication matricielle:
+\begin{displaymath}
+p^2\times \left( p\text{ (multiplications) } + (p-1)\text{ (additions)}\right)  = (2p-1)p^2  
+\end{displaymath}
+\end{itemize}
+Une itération nécessite donc 
+\begin{displaymath}
+  2(2p-1)p^2 + p = 4 p^3 -2p^2 +p \text{ opérations}
+\end{displaymath}
+
+Rappel de cours.\newline
+La complexité d'une résolution d'un système de Cramer par la méthode du pivot est en $O(p^3)$. Le calcul de la matrice inverse revient à la résolution de $p$ systèmes de Cramer: la complexité est en $O(p^4)$.
+\end{enumerate}
+
+\end{enumerate}
+
+L'énoncé ne le demandait pas mais le code suivant implémente la méthode en utilisant la bibliothèque \texttt{linalg} dans \texttt{numpy} et en particulier la classe \texttt{matrix} qui comporte des méthodes très commodes.\newline
+Pour normaliser, on considère les sommes des valeurs absolues des lignes et des colonnes. On divise par le produit des plus grandes valeurs de ces sommes. Le choix de la valeur initiale de la suite n'est pas fortuit mais dépasse le cadre de ce corrigé.
+\lstinputlisting[firstline=21, lastline=43]{CquasiNewton.py}
+La figure \ref{fig:CquasiNewton_3} est produite à partir de ce code et illustre la convergence avec le test d'arrêt choisi sur ce cas particulier.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=9cm]{./CquasiNewton_3.pdf}
+  % CquasiNewton_3.pdf: 0x0 pixel, 0dpi, 0.00x0.00 cm, bb=
+  \caption{Exemple de convergence pour la méthode de quasi-Newton}
+  \label{fig:CquasiNewton_3}
+\end{figure}

@@ -1,0 +1,86 @@
+Diverses instructions sont proposées dans la colonne de gauche. On se propose de les faire interpréter et de comprendre ce qui est renvoyé à l'aide des commentaires fournis dans la colonne de droite.
+\begin{parcolumns}[rulebetween,distance=1cm,colwidths={1= .35\linewidth}]{2}
+  \colchunk{\texttt{128, id(128), type(128)}}
+  \colchunk{\texttt{128} est l'expression littérale du nombre $128$ et \texttt{id(128)} renvoie l'identifiant unique de cet objet dans la mémoire de l'interpréteur, \texttt{type(128)} renvoie son type.}
+  \colplacechunks
+  
+  \colchunk{
+  \begin{verbatim}
+   5 ** 5
+   5 ** 200
+  \end{verbatim}
+  }
+  \colchunk{Les entiers ne sont pas limités. En Python 2.7, le "L" à la fin signifie que le résultat est un entier "long" c'est à dire trop grand pour être représenté par un mot machine. Python sait gérer ces entiers; en cas d'opération dans laquelle intervient un entier long, le résultat est toujours un entier long. En Python 3, on peut dire pour simplifier que tous les entiers sont longs et le marqueur "L" n'est plus utilisé}
+  \colplacechunks
+  
+  \colchunk{
+  \begin{verbatim}
+   14 // 3
+   14 % 3
+   14.1 / 3.0
+  \end{verbatim}
+  }
+  \colchunk{Dans une division euclidienne, le quotient est obtenu par //, le reste par \%.\newline
+  En Python 2 le / entre deux entiers calcule le quotient entier de la division euclidienne alors qu'en Python 3 il calcule une valeur approchée (float: nombres en virgule flottante) du quotient rationnel.\newline
+  Bonne pratique: réserver le / à une division entre nombres en virgule flottante. Bien noter que les opérations entre entiers en virgule flottante sont toujours approchées.}
+  \colplacechunks
+  
+  \colchunk{
+  \begin{verbatim}
+   pi
+   sin(pi)
+  \end{verbatim}
+  }
+  \colchunk{Python n'est pas spécialement orienté vers les maths. $\pi$ n'est pas un décimal, $\sin$ est inconnu.}
+  \colplacechunks
+\end{parcolumns}
+
+\begin{parcolumns}[rulebetween,distance=1cm,colwidths={1= .35\linewidth}]{2}
+  \colchunk{
+  \begin{verbatim}
+   from math import sin
+   sin(pi)
+   cos(3.1)
+   from math import *
+   cos(3.1)
+  \end{verbatim}
+  }
+  \colchunk{Si on veut utiliser des opérations mathématiques, on doit les importer de la bibliothèque mathématique. Le "*" permet de tout importer ce qui n'est pas une bonne pratique. Il vaut mieux garder l'espace de nommage aussi petit que possible. Noter que le nom du module est \texttt{math} sans \og s\fg.}
+  \colplacechunks
+  
+  \colchunk{
+  \begin{verbatim}
+   type(42)
+   type(4.2)
+   type(5 ** 20)
+  \end{verbatim}
+  }
+  \colchunk{Les entiers et les nombres en virgule flottante sont des types élémentaires de valeurs pour le langage Python}
+  \colplacechunks
+  
+  \colchunk{
+  \begin{verbatim}
+    i = 1.0j
+    c = i ** 2
+    i, c
+    type(i), type(c)
+  \end{verbatim}
+  }
+  \colchunk{Python connait les nombres complexes. La première ligne contient une expression littérale complexe.
+  }
+  \colplacechunks
+ 
+  \colchunk{
+  \begin{verbatim}
+   help(floor)
+   int(3.2)
+   int(-3.2)
+   help(int)
+   int("abc",16)
+  \end{verbatim}
+  }
+  \colchunk{On peut trouver de l'aide sur une fonction dont on connait le nom en utilisant la fonction \verb|help|. Que font les fonctions \verb|ceil| ou \verb|round| ? Que renvoie la fonction \verb|int|? Les valeurs renvoyées par \verb|int(3.5)| et \verb|round(3.5)| sont-elles les mêmes pour Python?}
+  \colplacechunks
+\end{parcolumns}
+
+Pour insérer un \emph{commentaire} c'est à dire une ligne qui est ignorée par l'interpréteur et ne sert qu'à aider le programmeur, il suffit de la faire commencer par un dièse \#. Pour insérer des commentaires sur plusieurs lignes, il faut les encadrer par deux lignes contenant seulement  """.

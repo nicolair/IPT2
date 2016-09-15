@@ -1,0 +1,120 @@
+\subsection*{I. Quelques fonctions utilitaires}
+\begin{enumerate}
+  \item Le \og \texttt{+}\fg entre deux listes les concatène c'est à dire forme une nouvelle liste formée par leurs contenus mis bout à bout. Le \og\texttt{2*}\fg émule le \og 2 fois\fg~ c'est à dire qu'il concatène la liste avec elle même. On obtient donc :\texttt{[1,2,3,4,5,6]} et \texttt{[1,2,3,1,2,3]}.
+  \item code de smul \lstinputlisting[firstline=10, lastline=14]{Cdyngrav.py}
+  \item Arithmétique de listes
+\begin{enumerate}
+  \item code de vsom \lstinputlisting[firstline=16, lastline=21]{Cdyngrav.py}
+  \item code de vdif \lstinputlisting[firstline=23, lastline=28]{Cdyngrav.py}
+\end{enumerate}
+\end{enumerate}
+
+\subsection*{II. \'Etude de schémas numériques}
+\begin{enumerate}
+  \item 
+\begin{enumerate}
+  \item La dérivée de la fonction proposée s'écrit
+\begin{displaymath}
+  y''(t)y'(t) -y'(t)g'(y(t)) = \left( y''(t) -f(y(t))\right)y'(t) = 0  
+\end{displaymath}
+Cette fonction est donc constante, on note $E$ sa valeur.
+  \item Introduisons $z=y'$, on peut alors écrire
+\begin{displaymath}
+y''(t) = f(y(t))\Leftrightarrow
+\left\lbrace 
+\begin{aligned}
+  y'(t) &= z(t) \\ z'(t) &= f(y(t))
+\end{aligned}
+\right. 
+\end{displaymath}
+
+  \item Les relations proposées ne font que traduire l'expression de l'accroissement d'une fonction comme l'intégrale de sa dérivée.
+\end{enumerate}
+
+  \item 
+\begin{enumerate}
+  \item Dans le schéma d'Euler explicite, on considère les fonctions à intégrer comme constantes (valeurs en $t_i$). On en tire
+\begin{displaymath}
+  y_{i+1} = y_i + h\,z_i \hspace{1cm} z_{i+1} = z_i + h\,f(t_i)
+\end{displaymath}
+
+  \item Quels paramètres passe-t-on à \texttt{euler}? D'abord \texttt{f} qui est une fonction Python prenant un flottant comme paramètre et renvoyant un flottant, ensuite les conditions initiales puis le pas et le nombre d'itérations. On retourne un tuple.
+  \lstinputlisting[firstline=32, lastline=42]{Cdyngrav.py}
+\end{enumerate}
+
+  \item
+\begin{enumerate}
+  \item L'équation $y'' = -\omega^2 y$ est bien de la forme $y'' = f(y)$ avec $f(u)=-\omega^2 u$ donc $g(u)=-\frac{\omega^2}{2}u^2$. La fonction constante de la question 1.a. s'écrit bien 
+\begin{displaymath}
+  \frac{1}{2} y'(t)^2 -g(y(t)) = \frac{1}{2}\left( y'(t)^2 + \omega ^2y(t)^2\right) = \frac{1}{2}\left( z(t)^2 + \omega ^2y(t)^2\right) 
+\end{displaymath}
+
+  \item \'Ecrivons les $y_{i+1}$ et $z_{i+1}$ du schéma d'Euler (comme des développements limités en $h$) puis leurs carrés pour évaluer la variation d'énergie
+\begin{align*}
+y_{i+1} = y_i + hz_i &\Rightarrow &y_{i+1}^2   = y_i^2 + 2y_iz_i h + z_i^2 h^2 & &\times \frac{\omega^2}{2}&\\
+z_{i+1} = z_i - h\omega^2 y_i &\Rightarrow &z_{i+1}^2 = z_i^2 - 2\omega^2 y_iz_i h + \omega^4 y_i^2 h^2 &  &\times \frac{1}{2}&\\
+ & &E_{i+1} = E_i + \omega^2 \, \frac{z_i^2 + \omega^2 y_i^2}{2}h^2 & & &
+\end{align*}
+On en déduit $E_{i+1}-E_i = h^2 \omega^2 E_i$.
+
+  \item Si l'énergie était conservée, la courbe $(y(t),z(t))$ serait une ellipse et le mouvement serait périodique.
+  \item Le schéma d'Euler ne modélise pas la conservation de $E$ car la courbe de la figure (1) ne se referme pas. La courbe est parcourue à partir du point de départ de coordonnées $(3,6)$ dans le sens des aiguilles d'une montre. Au début $z=y' >0$ donc $y$ est croissant mais $z'=y''=-\omega^2 y <0$ donc $z$ est décroissant. Lorsque $z$ devient négatif, $y$ est toujours positif mais décroissant et le point de la courbe va vers la gauche etc.. La courbe est en spirale car l'énergie est toujours croissante au lieu d'être constante.
+\end{enumerate}
+
+  \item
+\begin{enumerate}
+  \item Le code de \texttt{verlet} est analogue dans le principe à celui de \texttt{euler}. Il faut bien faire attention au moment où on calcule les valeurs de la fonction $f$ car la vitesse à l'étape $i+1$ fait intervenir les positions aux étapes $i$ et $i+1$.
+  \lstinputlisting[firstline=44, lastline=55]{Cdyngrav.py}
+  \item On forme les développements demandés à partir des relations données
+\begin{align*}
+  y_{i+1} &= y_i + z_ih -\frac{\omega^2}{2}y_i\,h^2 \\
+  \frac{y_{i+1}+y_i}{2} &= y_i + \frac{z_i}{2}\,h + O(h^2) \hspace{0.5cm}(\times -\omega^2 h)\\
+  z_{i+1} &= z_i -\omega^2y_i\,h -\omega^2\frac{z_i}{2}\,h^2 + O(h^2) \\
+  y_{i+1}^2 &= y_i^2 + 2y_iz_i h +(z_i^2-\omega^2 y_i^2)h^2 + O(h^3) \\
+  z_{i+1}^2 &= z_i^2 -2\omega^2 y_i z_i\,h +(\omega^4y_i^2 -\omega^2 z_i^2)h^2 + O(h^3)
+\end{align*}
+
+  \item La différence d'allure entre les deux courbes, celle du schéma de Verlet se refermant, pourrait s'expliquer par le fait que le schéma de Verlet respecte mieux la propriété de conservation de l'énergie. En effet les lignes de niveau de l'énergie dans l'espace des phases sont ici des ellipses.\newline
+  De fait la conservation de $E$ est mieux vérifiée car le calcul de la variation de l'énergie conduit à:
+\begin{align*}
+  y_{i+1}^2 &= y_i^2 + 2y_iz_i h& +(z_i^2-\omega^2 y_i^2)h^2& + O(h^3) \hspace{1cm} \times \omega^2\\
+  z_{i+1}^2 &= z_i^2 -2\omega^2 y_i z_ih& +(\omega^4y_i^2 -\omega^2 z_i^2)h^2& + O(h^3)\\
+  E_{i+1} &= E_i &  & + O(h^3)
+\end{align*}
+
+\end{enumerate}
+\end{enumerate}
+
+
+\subsection*{III. Problème à $N$ corps}
+\begin{enumerate}
+  \item Position du problème
+\begin{enumerate}
+  \item La force exercée sur le coprs $j$ est la somme des forces exercées par les autres corps
+\begin{displaymath}
+  F_j = \sum_{k\neq j} \overrightarrow{F}_{k\diagup j}
+= \sum_{k\neq j} G\,\frac{m_j m_k}{r_{jk}^3}\, \overrightarrow{P_j P_k}
+\end{displaymath}
+  \item Pour coder \texttt{force2}, on utilise une fonction auxiliaire \texttt{norme2(v)} qui renvoie la norme d'un vecteur.
+  \lstinputlisting[firstline=63, lastline=64]{Cdyngrav.py}
+  \lstinputlisting[firstline=66, lastline=72]{Cdyngrav.py}
+  \item La fonction \texttt{forceN} est essentiellement une boucle de sommation sur les corps autre que celui sur lequel la force s'exerce. \lstinputlisting[firstline=73, lastline=80]{Cdyngrav.py}
+\end{enumerate}
+
+  \item Approche numérique
+\begin{enumerate}
+  \item Les expressions \texttt{position[i]} et \texttt{vitesse[i]} désignent deux listes donnant à l'instant $t_i = t_{min}+ih$ les coordonnées de position (en mètres) et de vitesse (en mètres par secondes) des $N$ corps. Il s'agit de listes de listes: \texttt{position[i][k]} est la liste des 3 coordonnées de position du corps $k$ à l'instant $t_i$.
+  
+  \item Attention, la dérivée de la vitesse n'est pas la force mais l'accélération, pour l'obtenir, il ne faut pas oublier de diviser la force renvoyée par \texttt{forceN} par la masse du corps sur lequel elle s'exerce.
+  \lstinputlisting[firstline=82, lastline=93]{Cdyngrav.py}
+  
+  \item Pour calculer les vitesses au pas de temps suivant, on utilise les forces (plutôt l'accélération) calculées aux positions suivantes. La fonction \texttt{etat\textunderscore suiv} utilise \texttt{pos\textunderscore suiv}.
+  \lstinputlisting[firstline=95, lastline=106]{Cdyngrav.py}
+\end{enumerate}
+
+  \item Discuter de la pertinence des conditions initiales choisies dans le système d'unité considéré dépasse mes compétences en sciences physiques. On peut simplement remarquer que tout se place dans le plan $z=0$ du référentiel choisi et que la masse du corps 0 est beaucoup plus importante que celle du corps 1.\newline
+  La première image est assez surprenante par son apparence de dimension 3 et les points de rebroussement de la petite courbe (rouge) verticale. En fait il s'agit d'une translation cachée du centre de masse.\newline
+  On peut démontrer facilement par linéarité que l'accélération du centre de masse est nulle. Son mouvement est donc rectiligne et uniforme dans le référentiel choisi ses coordonnées sont \texttt{(xG,yG)}.\newline
+  Calculer les \texttt{X0},\texttt{Y0},\texttt{X1},\texttt{Y1} revient à se placer dans le référentiel attaché au centre de masse. Dans ce référentiel, les deux trajectoires sont des ellipses, celle du corps de plus grande masse est bien plus petite que celle de l'autre. Entre le soleil et une planète, je pense que le centre de masse est à l'intérieur du soleil.\newline
+  Les résultats sont donc assez raisonnables. On peut penser que dans ce cadre le schéma de Verlet est assez efficace.
+\end{enumerate}

@@ -1,0 +1,94 @@
+\begin{enumerate}
+  \item On se permet de ne pas écrire les \texttt{deplacer} mais seulement les suites de couples d'indices.\newline
+Première liste:
+\begin{multline*}
+(1,2)\rightarrow (1,3) \rightarrow (2,3)  \rightarrow (1,2)  \rightarrow (3,2)  \rightarrow (3,1)  \rightarrow (2,1) \\
+ \rightarrow (2,3)  \rightarrow (1,2)  \rightarrow (1,3)  \rightarrow (2,3)
+\end{multline*}
+Soit 11 déplacements, on sent bien que l'on peut faire plus rapidement.\newline
+Deuxième liste:
+\begin{displaymath}
+(1,3)\rightarrow (1,2) \rightarrow (3,2)  \rightarrow (1,3)  \rightarrow (2,1)  \rightarrow (3,2)  \rightarrow (1,3) 
+\end{displaymath}
+Soit 7 déplacements seulement.
+
+\item Si on peut passer du tas 1 au tas 3, on peut également passer du tas 1 au tas 2 et la séquence comprendra exactement le même nombre d'instructions. Précisément, si dans la séquence d'instructions pour passer de 1 à 2, on permute 2 et 3 dans tous les \texttt{deplacer()}, on obient une séquence d'instruction qui fait passer du tas 1 au tas 2.\newline
+On organise alors les transferts de la manière suivante
+\begin{multline*}
+\begin{aligned}
+\begin{pmatrix}
+1 \\ 2 \\ \vdots \\ n  
+\end{pmatrix}
+& &
+\begin{pmatrix}
+ \\ 
+\end{pmatrix}
+& &
+\begin{pmatrix}
+ \\
+\end{pmatrix}
+\end{aligned}
+  \longrightarrow 
+\begin{aligned}
+\begin{pmatrix}
+ n  
+\end{pmatrix}
+& &
+\begin{pmatrix}
+1 \\ 2 \\ \vdots \\ n-1 
+\end{pmatrix}
+& &
+\begin{pmatrix}
+ \\
+\end{pmatrix}
+\end{aligned}
+  \longrightarrow 
+\begin{aligned}
+\begin{pmatrix}
+ \\  
+\end{pmatrix}
+& &
+\begin{pmatrix}
+1 \\ 2 \\ \vdots \\ n-1 
+\end{pmatrix}
+& &
+\begin{pmatrix}
+ n
+\end{pmatrix}
+\end{aligned}  \\
+  \longrightarrow 
+\begin{aligned}
+\begin{pmatrix}
+ \\  
+\end{pmatrix}
+& &
+\begin{pmatrix}
+ \\
+\end{pmatrix}
+& &
+\begin{pmatrix}
+1 \\ 2 \\ \vdots \\ n
+\end{pmatrix}
+\end{aligned}  
+\end{multline*}
+Dans le schéma précédent, les transferts du début et de la fin viennent de l'hypothèse de récurrence relative à un tas de hauteur $n-1$.\newline
+Notons $h_n$ le nombre de déplacements nécessaires pour transférer un tas de hauteur $n$. Cette notation est justifiée par le fait que ce problème est celui des \emph{tours de Hanoï}. On a alors
+\begin{displaymath}
+  h_3 = 7 \text{ et } h_n=2h_{n-1}+1
+\end{displaymath}
+Pour exprimer $h_n$, on introduit un "point fixe" $c$ qui fait apparaitre une suite géométrique:
+\begin{displaymath}
+  \left. 
+  \begin{aligned}
+    h_n &=2h_{n-1}+1 \\ c &= 2c+1
+  \end{aligned}
+\right\rbrace 
+\Rightarrow
+h_n - c = 2(h_{n-1}-c) = 2 ^{n-3}(h_3-c)
+\end{displaymath}
+Avec $c=-1$ et $h_3=7$, on obtient finalement
+\begin{displaymath}
+  h_n = 2^n -1
+\end{displaymath}
+
+\end{enumerate}
