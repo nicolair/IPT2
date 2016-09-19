@@ -1,0 +1,48 @@
+\NeedsTeXFormat{LaTeX2e}
+ 
+\ProvidesPackage{maths}[2013/08/28 Extension personnelle, V0.0]
+ 
+% extensions
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+\RequirePackage{stmaryrd}
+ 
+% commandes personnelles
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\K}{\mathbf{K}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\F}{\mathbf{F}}
+\newcommand{\U}{\mathbb{U}}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\B}{\mathbb{B}}
+
+\newcommand{\card}{\mathop{\mathrm{Card}}}
+\newcommand{\Id}{\mathop{\mathrm{Id}}}
+\newcommand{\Ker}{\mathop{\mathrm{Ker}}}
+\newcommand{\Vect}{\mathop{\mathrm{Vect}}}
+\newcommand{\cotg}{\mathop{\mathrm{cotan}}}
+\newcommand{\sh}{\mathop{\mathrm{sh}}}
+\newcommand{\ch}{\mathop{\mathrm{ch}}}
+\newcommand{\argsh}{\mathop{\mathrm{argsh}}}
+\newcommand{\argch}{\mathop{\mathrm{argch}}}
+\newcommand{\tr}{\mathop{\mathrm{tr}}}
+\newcommand{\rg}{\mathop{\mathrm{rg}}}
+\newcommand{\rang}{\mathop{\mathrm{rg}}}
+\newcommand{\Mat}{\mathop{\mathrm{Mat}}}
+\renewcommand{\Re}{\mathop{\mathrm{Re}}}
+\renewcommand{\Im}{\mathop{\mathrm{Im}}}
+\renewcommand{\th}{\mathop{\mathrm{th}}}
+\renewcommand{\d}{d\,}
+
+% commandes Yannick
+\DeclareMathOperator\Gl{Gl}
+\DeclareMathOperator\Img{im}
+\newcommand{\Tr}{\mathop{\mathrm{Tr}}}
+\newcommand{\mat}[3]{\ensuremath{\mathcal M_{#1,#2}(#3)}}
+\newcommand{\matc}[2]{\ensuremath{\mathcal M_{#1}(#2)}}
+
