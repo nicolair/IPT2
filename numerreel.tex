@@ -1,0 +1,144 @@
+%<dscrpt>Introduction à l'algorithmique</dscrpt>
+% <rel_id_elt_parent>6469</rel_id_elt_parent> id de ``Algorithmique''
+% <rel_id_type_rel>14</rel_id_type_rel> id de ``contient sana ordre l'élément''
+\input{ipt.tex}
+
+%En tete et pied de page
+\lhead{Cours IPT}
+\chead{Développement d'un nombre réel dans une base}
+
+\begin{document}
+\section{Partie entière et division}
+On a déjà vu que tout nombre entier naturel se décompose de manière unique dans une base $b\geq2$ quelconque. Pratiquement, cette décomposition peut se faire en utilisant deux algorithmes: \og les petits d'abord \fg~ ou \og les grands d'abord \fg. On peut étendre ces principes des entiers aux réels.
+
+D'après une propriété de $\R$, tout nombre réel se décompose de manière unique sous la forme
+\begin{displaymath}
+  \text{un nombre réel} = \text{un nombre entier} + \text{un nombre réel dans $[0,1[$}
+\end{displaymath}
+Notation
+\begin{displaymath}
+  x = \underset{\text{partie entière de } x\in \Z }{\underbrace{\lfloor x \rfloor}} + \underset{\in [0,1[ }{\underbrace{\{ x \}}}
+\end{displaymath}
+On dit aussi que $\{x\}$ est la partie \emph{décimale} de $x$.
+
+Comme $\Q$ est une partie de $\R$, la partie entière rend compte de la division euclidienne arithmétique\newline
+Dans la division de $m\in \Z$ par $n\in \N^*$ 
+\begin{displaymath}
+  m = \underset{\in \Z}{\underbrace{n}}q + \underset{\in \llbracket 0, n\llbracket}{\underbrace{r}}
+  \Leftrightarrow \frac{m}{n} = \underset{\in \N}{\underbrace{q}} + \underset{\in [0,1[}{\underbrace{\frac{r}{n}}} 
+\end{displaymath}
+On en déduit que le quotient de la division de $m$ par $n$ est $\lfloor \frac{m}{n} \rfloor$.
+\section{Développement pratique d'un réel}
+\begin{algorithm}
+  $y\longleftarrow \lfloor x \rfloor$\;
+  \Tq{ $y > 0$}{
+      enregistrer le reste de la division de $y$ par $b$\;
+      $y\longleftarrow $ le quotient de la division de $y$ par $b$\;
+  }
+  \caption{\`A gauche: les petits d'abord.}
+  \label{nbbin_1}
+\end{algorithm}
+
+\begin{algorithm}
+  $y\longleftarrow \{ x \}$\;
+  \Tq{ $y > 0$}{
+      enregistrer $\lfloor by \rfloor$\;
+      $y\longleftarrow \{ by\}$\;
+  }
+  \caption{\`A droite: les grands d'abord.}
+  \label{nbbin_2}
+\end{algorithm}
+Soit $b$ une base fixée (entier naturel strictement plus grand que $1$, le développement d'un nombre réel strictement positif $x$  s'effectue de la manière suivante :
+\begin{itemize}
+  \item $x = \lfloor x \rfloor + \{x\}$
+  \item à gauche : \og les petits d'abord \fg appliqué = $\lfloor x \rfloor$.
+  \item à droite : \og les grands d'abord \fg appliqué = $\{ x \}$.
+\end{itemize}
+
+Dans l'algorithme \ref{nbbin_1}, on peut remarquer que, à chaque itération, le nombre entier naturel désigné par $y$ diminue strictement ce qui assure que la boucle se termine. En revanche dans l'algorithme \ref{nbbin_2}, $y$ désigne un nombre réel dans $[0,1[$ dont on ne sait pas grand-chose. Rien ne permet d'affirmer qu'il devienne nul et que l'on sorte de la boucle. 
+
+Le développement en base $b$ d'un nombre réel $x>0$ conduit donc à une suite $\left( a_n\right)_{n\leq m_x}$ d'éléments de $\llbracket 0 , b \llbracket$ où $m_x$ est un entier relatif. Les coefficients d'indices positifs correspondent au développement de la partie entière.
+
+
+Exemple: développement de $7.3$ en base $2$. on trouve $111.01001\,1001\,1001\,\cdots$.
+
+\section{Questions mathématiques}
+La partie gauche du développement précédent correspond au développement en base $b$ de la partie entière.
+
+En adoptant une notation séquentielle, le développement pratique (partie droite) détaillé plus haut s'écrit
+\begin{displaymath}
+\left. 
+\begin{aligned}
+  a_{n+1} &= \lfloor by_n\rfloor \\ y_{n+1} &= \{ny_n\}
+\end{aligned}
+\right\rbrace
+\Rightarrow by_n = a_{n+1} + y_{n+1}
+\Rightarrow y_n = \frac{a_{n+1}}{b} + \frac{a_{n+1}}{b}
+\end{displaymath}
+Cela montre qu'il existe des nombres 
+\begin{displaymath}
+a_1, a_2, \cdots, a_n \in \llbracket 0, b\llbracket, \hspace{0.5cm} y_n \in [0,1[  
+\end{displaymath}
+tels que 
+\begin{displaymath}
+  x = \lfloor x \rfloor + a_1b^{-1} + a_2b^{-2} + \cdots + + a_nb^{-n} + y_nb^{-n}  
+\end{displaymath}
+Ce formalisme permet de poser des questions:
+\begin{itemize}
+  \item l'algorithme de la partie droite se termine-t-il?
+  \item dans le cas où il ne se termine pas, la suite 
+\begin{displaymath}
+  \left( a_1b^{-1} + a_2b^{-2} + \cdots + + a_nb^{-n}\right)_{n\in \N^*}
+\end{displaymath}
+converge-t-elle ? vers $\{x\}$?
+\end{itemize}
+Pour un $x$ donné, l'algorithme se termine si et seulement si il existe un entier $n$ tel que $xb^n \in \Z$. Pour chaque base $b$, on définit un ensemble particulier formé par les nombres $x$ vérifiant cette propriété. On peut remarquer que tous ces nombres sont rationnels mais que tous les rationnels ne sont pas de cette forme. Lorsque $b=10$ cet ensemble est noté $\D$ (ensemble des nombres décimaux). Lorsque $b=2$, cet ensemble est noté $\B$ (ensemble des nombres binaires).
+\begin{align*}
+  &\text{nombres binaires}:& &x\in \B \Leftrightarrow \exists n \in\N \text{ tel que } x\,2^{n} \in \Z \\
+  &\text{nombres décimaux}:& &x\in \D \Leftrightarrow \exists n \in\N \text{ tel que } x\,10^{n} \in \Z 
+\end{align*}
+Un nombre décimal est-il binaire? Non! Un nombre binaire est-il décimal? Oui!
+Lorsque l'algorithme ne se termine pas, la suite converge vers $\{x\}$ car 
+\begin{equation}
+  \{x\} - \left( a_1b^{-1} + a_2b^{-2} + \cdots +  a_nb^{-n}\right)  = \frac{y_n}{b^n} \text{ avec } 0 < y_n < b \label{reste}
+\end{equation}
+
+Si un $y_n = 0$, on choisit de poser $a_{n+1} = a_{n+2} = \cdots = 0$ de manière à former une suite de $a_k$ dans tous les cas. Cette suite est le développement en base $b$ de $\{x\}$.
+
+Pour chaque nombre réel dans $[0,1[$
+\begin{itemize}
+  \item L'algorithme associe une unique suite $\left( a_n\right)_{n\in \N}$ d'éléments de $\llbracket 0, b\llbracket$ appelé développement en base $b$.
+  \item La suite  $\left( \left( a_1b^{-1} + a_2b^{-2} + \cdots + a_nb^{-n}\right)\right)_{n\in \N^*}$ converge vers le nombre donné.
+  \item Deux nombres distincts ont des développements distincts
+\end{itemize}
+La démonstration du dernier point repose sur des majorations à partir de la relation ~\eqref{reste}.
+
+Attention:
+\begin{displaymath}
+  \left( \sum_{k=0}^n b^{-k} \right)_{n\in \N} \rightarrow \frac{1}{1-\frac{1}{b}} = \frac{b}{b-1}
+  \Rightarrow 
+  \left( \sum_{k=0}^n (b-1)b^{-k} \right)_{n\in \N} \rightarrow  b
+\end{displaymath}
+donc $x = a_1b^{-1} + \cdots + a_pb^{-p}$ avec $a_p>0$ est aussi la limite de la suite
+\begin{displaymath}
+    \left( a_1b^{-1} + \cdots +(a_p-1)b^{-p} + (b-1)b^{-p-1}+ (b-1)b^{-p-2} + \cdots +(b-1)b^{-n}\right)_{n\in \N} 
+\end{displaymath}
+Dans le cas de la base 10, les nombres décimaux sont ceux pour lesquels il existe un développement stationnaire de valeur $0$. Un tel nombre pourrait aussi s'écrire avec un développement stationnaire de valeur $9$ par exemple 
+\begin{displaymath}
+ 1.1199999999999999999999999\cdots = 1.1200000000\cdots = 1.12
+\end{displaymath}
+mais on évite de le faire.
+\begin{prop}
+  Un nombre réel est rationnel (c'est à dire dans $\Q$) si et seulement si son développement en base $b$ est périodique à partir d'un certain rang.
+\end{prop}
+\begin{demo}
+On fournit seulement une ébauche de démonstration.
+\begin{itemize}
+  \item Si le développement est périodique de période $p$ à partir d'un certain rang, il est la somme à partir de ce rang de $p$ suites constantes. On peut calculer les limites avec des suites géométriques et on obtient un nombre rationnel.
+  \item Supposons que le nombre à développer soit rationnel: par exemple $\frac{p}{q}$ avec $p<q$.  On prouve alors que chaque $y_n=\frac{r_n}{q}$ où $r_n$ est le reste de la division de $pb^n$ par $q$. Comme la suite des $r_n$ prend ses valeurs dans un ensemble fini de $q$ éléments, elle ne peut pas être injective et il existe un $p$ et $q>$ tels que $r_p = r_q$ donc $y_p = y_q$, le développement sera $q-p$-périodique à partir de ce rang.
+\end{itemize}
+\end{demo}
+
+\printindex
+\end{document}
+ 

@@ -1,0 +1,119 @@
+%<dscrpt>Introduction à l'algorithmique</dscrpt>
+% <rel_id_elt_parent>6469</rel_id_elt_parent> id de ``Algorithmique''
+% <rel_id_type_rel>14</rel_id_type_rel> id de ``contient sana ordre l'élément''
+\input{ipt.tex}
+
+%En tete et pied de page
+\lhead{Cours IPT}
+\chead{Cours 2: Introduction à la numération le 26/09/16}
+
+\begin{document}
+\begin{prop}
+ Soit $b$ un entier naturel supérieur ou égal à $2$. Pour tout entier naturel $x$ entre $0$ et $b^n-1$, il existe un unique $n$-uplet
+\begin{displaymath}
+ (a_0,a_1,\cdots,a_{n-1})\in \{0,1,\cdots,b-1\}^n
+\end{displaymath}
+tel que 
+\begin{displaymath}
+ x = a_0 + a_1 b +\cdots +a_{n-1}b^{n-1}
+\end{displaymath}
+\end{prop}
+Cette proposition traduit l'existence et l'unicité de la décomposition d'un entier dans une base arbitraire. On utilise en particulier les bases $b=2$ (binaire), $b=10$ (décimale), $b=16$ (héxadécimal), $b=20$ \footnote{voir le système de numération maya. Cette base semble aussi avoir été utilisée par les Gaulois, le 80 quatre-vingt en serait un lointain vestige (ref wikipédia) }, $b=60$ (sexagésimale) \footnote{utilisé par les mésopotamiens voir en particulier les tablettes cuneiformes de Plimpton}
+\begin{demo}
+ Pour démontrer cette proposition, on va remarquer qu'elle est équivalente à la bijectivité d'une certaine application entre deux ensembles finis ayant le même nombre d'éléments. Pour une telle application, l'injectivité entraîne la surjectivité donc la bijectivité.\newline
+La démonstration de l'injectivité est \emph{constructive}. Si un entier est décomposé alors chaque $a_i$ se calcule algorithmiquement en fonction de $x$ et de $b$. Ceci assure l'unicité de la décomposition donc l'injectivité de la fonction.
+
+Considérons la fonction
+\begin{displaymath}
+ \Phi\left\lbrace 
+\begin{aligned}
+\{0,1,\cdots,b-1\}^n \rightarrow& \{0,1,\cdots,b^n-1\}\\
+(a_0,a_1,\cdots,a_{n-1}) \rightarrow& a_0 + a_1 b +\cdots +a_{n-1}b^{n-1} 
+\end{aligned}
+\right.
+\end{displaymath}
+En fait, il faut commencer par montrer que
+\begin{displaymath}
+ a_0 + a_1 b +\cdots +a_{n-1}b^{n-1}\in \{0,1,\cdots,b^n-1\}
+\end{displaymath}
+Ceci résulte de l'encadrement
+\begin{multline*}
+ 0\leq a_0 + a_1 b +\cdots +a_{n-1}b^{n-1} 
+\leq (b-1) + (b-1) b +\cdots +(b-1)b^{n-1}\\
+\leq (b-1)(1+b+\cdots +b^{n-1})=b^n-1
+\end{multline*}
+On démontre exactement de la même manière que, pour des $m\leq n$:
+\begin{displaymath}
+ a_0 + a_1 b +\cdots +a_{m-1}b^{m-1}\in \{0,1,\cdots,b^m-1\}
+\end{displaymath}
+Ceci servira plus loin pour justifier un des deux algorithmes proposés.\newline
+La proposition est exactement équivalente à la bijectivité de la fonction $\Phi$. Les ensembles de départ et d'arrivée ont le même nombre d'éléments à savoir $b^n$.\newline
+Si la fonction $\Phi$ est injective, les images sont deux à deux distinctes. Il y a donc autant d'images distinctes que d'éléments dans l'ensemble de départ. Mais alors tous les $b^n$ éléments de l'ensemble d'arrivée sont des images puisque cet ensemble ne contient que $b^n$ éléments.\newline
+Démontrons maintenant l'injectivité\footnote{On peut présenter cette démonstration comme une analyse-synthèse. L'analyse correspond à l'injectivité ou à l'unicité, son argumentation est algorithmique. La synthèse correspond à la surjectivité ou à l'existence, son argumentation repose sur la théorie des ensembles}. On suppose
+\begin{displaymath}
+ x=a_0 + a_1 b +\cdots +a_{n-1}b^{n-1}
+\end{displaymath}
+On peut adopter un algorithme "glouton" en cherchant d'abord les "plus gros morceaux" c'est à dire le nombre $a_{n-1}$ de $b^{n-1}$ contenus dans $x$. Comme 
+\begin{displaymath}
+ 0\leq a_0 + a_1 b +\cdots +a_{n-2}b^{n-2}\leq b^{n-1}-1
+\end{displaymath}
+ce nombre est le reste de la division de $x$ par $b^{n-1}$ et $a_{n-1}$ en est le quotient. Ceci assure l'unicité de $a_{n-1}$ et on peut poursuivre le raisonnement en divisant le reste précédent par $b^{n-2}$.\newline
+On peut aussi procéder en partant du bas. Dans la division par $b$ de
+\begin{align*}
+ x= a_0 + a_1 b +\cdots +a_{m-1}b^{m-1} = a_0 +(a_1+a_2b+\cdots+a_{n-1}b^{n-2})b
+\end{align*}
+le reste est $a_0$ et le quotient est $a_1+a_2b+\cdots+a_{n-1}b^{n-2}$. Ceci assure l'unicité du $a_0$ et le raisonnement se poursuit en divisant par $b$ le quotient précédent.
+\end{demo}
+L'expression en pseudo-code de cet algorithme est la suivant
+\begin{verbatim}
+b <-- la base
+x <-- un nombre entier >0
+# recherche du plus petit n tel que x<b^n
+n <-- 0
+p<-- 1
+tant que p <= x
+  n<-- n+1
+  p<-- p*b
+#formation du développement
+resultat <-- liste vide
+p<-- p/b
+tant que x>0
+  resultat.append(quotient de la div de x par p)
+  x<-- reste de la division de x par p
+  p<- p/b
+print(resultat)
+\end{verbatim}
+La syntaxe des structures de contrôle sera présentée en détail en TP mais cet exemple (algorithme de numération : les grands d'abord) est une bonne introduction.
+\begin{verbatim}
+b = 10
+x = 259
+n = 0
+p = 1
+#recherche du plus petit n tel que x<b^n
+while p <= x:
+    n += 1
+    p *= b
+print(n)
+#formation du développement
+resultat = []
+p = p//b
+while x>0:
+    resultat.append(x // p)
+    x = x % p
+    p = p / b
+print(resultat) 
+\end{verbatim}
+On peut aussi implémenter avec les petits d'abords
+  \begin{verbatim}
+b = 10 ; x = 16**8 ; print(x)
+resultat = []
+while x > 0 :
+    resultat.append(x % b)
+    x = x // b
+print(resultat)  
+\end{verbatim}
+Le problème est alors que les décimales sont rangées à l'envers dans la liste. 
+
+\printindex
+\end{document}
+ 
