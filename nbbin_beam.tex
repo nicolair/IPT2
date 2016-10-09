@@ -141,21 +141,69 @@ On le retrouve en développant $2^{16}-1000$ en base $2$.\newline
 commande \texttt{bin(2**16 - 1000)}  
 \end{frame}
 
+
+\begin{frame}
+  \frametitle{Autre méthode pour le codage de $-x$.}
+\begin{itemize}
+  \item représentation de $1000$: $0000001111101000$
+  \item on cherche le mot qui ajouté au précédent donne $0000000000000000$ 
+\end{itemize}
+\begin{tabular}{cccccccccccccccc}
+  0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 0 \\
+\end{tabular}
+\uncover<2->{
+\begin{tabular}{cccccccccccccccc}
+\phantom{0}& \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & 0 & 0 & 0 
+\end{tabular} 
+}
+\uncover<3->{
+\begin{tabular}{cccccccccccccccc}
+\phantom{0}& \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & 1 & 0 & 0 & 0 
+\end{tabular}
+attention à la retenue
+}
+\uncover<4->{
+\begin{tabular}{cccccccccccccccc}
+\phantom{0}& \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & 0 & 1 & 1 & 0 & 0 & 0 
+\end{tabular}
+}
+
+\uncover<5->{
+\begin{tabular}{cccccccccccccccc}
+  1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 
+\end{tabular}
+}
+\begin{tabular}{cccccccccccccccc} \hline
+  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\end{tabular}
+
+\end{frame}
+
+
 \begin{frame}
   \frametitle{Exercice}
 \begin{itemize}
-  \item Quel est l'entier dont la représentation par complément à 2 sur $n$ bits ne contient que des $1$?
+  \item Quel est l'entier $x$ dont la représentation par complément à 2 sur $n$ bits ne contient que des $1$?
+\uncover<2->{
+\newline C'est un nombre négatif car le poids fort est $1$. Le codage de $-x$ est $1$ donc $x=-1$.
+}
   \item Soit $m = b_{n-1}\,b_{n-2}\,\cdots\,b_1\,b_0$ un mot binaire de longueur $n$.
 \begin{displaymath}
   \forall i\in \llbracket 0,n-1\rrbracket, \; b'_i = 1-b_i \text{ et } m' = b'_{n-1}\,b'_{n-2}\,\cdots\,b'_1\,b'_0
 \end{displaymath}
   Quel est l'entier représenté par complément à 2 par l'addition bit à bit de $m$ et $m'$? 
+\uncover<3->{
+\newline $-1$ d'après la question précédente. Donc
+\begin{displaymath}
+  \overline{m'} = -1 - \overline{m}
+\end{displaymath}
+}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Exercice (en Python 2.7)}
-Les entiers de type \texttt{int} sont stockés par complément à 2 sur 5 octets. Quel est l'intervalle des entiers du type \texttt{int}?\newline
+Les entiers de type \texttt{int} sont stockés par complément à 2 sur 8 octets. Quel est l'intervalle des entiers du type \texttt{int}?\newline
 Lorsque l'on sort de l'intervalle des entiers \texttt{int}, python 2.7 transtype automatiquement en entier \texttt{long} et le marque en plaçant un \texttt{L} à la fin du mot. Faire afficher à python le plus grand des \texttt{int}. Comment ne pas faire apparaitre le \texttt{L} à la fin de l'affichage?
 \end{frame}
 

@@ -1,1 +1,7 @@
-Le concept de \og phrase invariante\fg sera détaillé plus tard dans le cours d'algorithmique. Il est introduit ici comme bonne pratique dans la recherche même d'une méthode pour résoudre un problème.
+Le concept de \og phrase invariante\fg sera détaillé plus tard dans le cours d'algorithmique. Il est introduit ici comme bonne pratique dans la recherche d'une méthode pour résoudre un problème.\newline
+Considérons le problème du calcul de la factorielle d'un nombre et la phrase
+\begin{quote}
+  \og $f$ désigne la factorielle du nombre désigné par $n$.\fg
+\end{quote}
+Pour résoudre le problème du calcul de $5!$, on va assigner à $f$ et $n$ des valeurs particulières telles que la phrase soit vraie puis modifier les valeurs de telle sorte que la phrase reste vraie jusqu'à ce que $n$ désigne 5.
+\lstinputlisting[firstline=3, lastline=16]{phraseinvariante.py}

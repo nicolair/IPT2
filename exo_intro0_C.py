@@ -44,9 +44,9 @@ ff = 1
 i = 1
 print(f)
 print(ff)
-# i designe l'indice de ff, fff sert a permuter
-while i < 20:
-    i += 1
+# n designe l'indice de ff, fff sert a permuter
+while n < 20:
+    n += 1
     fff = f + ff
     f = ff
     ff = fff
@@ -77,3 +77,17 @@ while z > 2:
         y -= 1
     z -= 1
 print(cpt)
+
+# suite de Fibonacci avec assignation double
+n = 0
+f = 1
+ff = 1
+#la phrase est vraie
+
+print(f)
+print(ff)
+
+while n < 18 :
+    n += 1
+    ff, f = f + ff, ff
+    print(ff) 

@@ -6,10 +6,27 @@
  \begin{document}
 \lhead{TP IPT}
 \chead{TP 1 (19/09 et 26/09 2016)}
+Les objectifs de ce TP sont
+\begin{itemize}
+  \item  savoir éditer, enregistrer (dans une arborescence de dossiers), exécuter du code python dans un fichier;
+  \item se familiariser avec les premiers éléments du langage: indendation, boucle \texttt{while}, structure de contrôle \texttt{if};
+  \item se familiariser avec les bonnes pratiques relatives aux algorithmes:
+  \begin{itemize}
+    \item \og phrases invariantes\fg~ pour la conception,
+    \item conventions de codage pour l'implémentation (rédaction).
+  \end{itemize}
+\end{itemize}
+En Python, l'élément de langage \texttt{for} n'est pas vraiment à sa place dans un contexte de boucle, sa portée est beaucoup plus grande. Penser en terme de \og boucle for\fg~ risque de vous priver de la pleine puissance de \texttt{for}; c'est pour cela que je ne l'introduit pas ici, il le sera plus tard dans le contexte des objets \og énumérables\fg.
+
+
+\section{Enregistrement et accès aux fichiers}
+\input{persistence.tex}
 
 \section{Conventions de codage}
 \input{conventionscodage.tex}
 
+\section{Phrase invariante}
+\input{phraseinvariante.tex}
 
 \section{Premiers exercices}
 \input{exo_intro0_E}

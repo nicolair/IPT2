@@ -1,7 +1,7 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Objets énumérables - Boucles d'énumération}
+\chead{Cours 3: Objets énumérables - Boucles d'énumération le 10/11/16}
 \begin{document}  \index{objets énumérables} \index{boucle for} \index{boucle d'énumération}
 En Python, la notion de boucle non conditionnelle (boucle \texttt{for}) est remplacée par une notion de \emph{boucle d'énumération} liée à des types particuliers d'objets dits \emph{énumérables}.\newline
 Un objet de type \emph{énumérable} est une sorte de conteneur, il rassemble \og dans une même boîte\fg~ divers objets. On peut accéder à ces objets à l'aide d'une boucle d'énumération \texttt{for ... in ...}.\newline
@@ -113,7 +113,7 @@ On peut convertir des objets \texttt{int} ou \texttt{float} en chaîne de caract
 En plus du constructeur littéral avec crochets et virgules, on dispose d'autres manières de construire des listes.\newline
 L'appel de fonction \verb|range(n)| avec \verb|n| désignant un entier naturel $n$ renvoie (en Python 2) la liste des entiers de $0$ à $n-1$ (en particulier \verb|range(0)| renvoie la liste vide ne contenant rien). En Python 3, \texttt{range} renvoie un objet de la classe \texttt{range} que l'on peut transtyper avec la fonction \texttt{list}.\newline
 On peut aussi utiliser la syntaxe de boucle d'itération à l'intérieur de crochets pour définir une liste. Par exemple pour former la liste des premiers carrés d'entiers: \verb|[i**2 for i in range(5)]|.\newline
-On peut aussi concaténer les listes avec + et concaténer une liste avec elle même un nombre entier de fois avec *.
+On peut également concaténer les listes avec + et concaténer une liste avec elle même un nombre entier de fois avec *.
 
 \subsection{Listes de listes}
 On peut emboîter les listes, par exemple pour former une matrice comme liste de ses lignes.\newline

@@ -1,20 +1,26 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Systèmes - Nombres binaires et représentations}
+\chead{Cours 3: Systèmes - Nombres binaires et représentations le 11/10/16}
 \begin{document}
 
 Un processeur utilise des mémoires constituées de circuits à deux états. Un tel circuit est un \emph{bit}, on les groupe par 8 pour former un octet. Un octet peut donc prendre $2^8=256$ états.\newline
 On regroupe des octets pour représenter divers objets: par exemple une adresse IP(v4) est stockée sur 4 octets. Il y a donc $256^4 = 4294967296$ adresses IP possibles.
 
-On se propose d'expliquer comment on peut organiser un nombre fixé de bits pour représenter utilement trois ensembles de nombres particuliers. On utilise la désignation des types (classes) en Python
+On se propose d'expliquer comment on peut organiser un nombre fixé de bits pour représenter utilement trois ensembles particuliers de nombres\footnote{un nombre est un élément d'un espace numérique (c'est à dire un ensemble muni de certaines opérations).} et les opérations entre eux. On utilise la désignation des types (classes) en Python
 \begin{itemize}
   \item \texttt{bool} l'ensemble des booléens ne contient que deux éléments.
   \item \texttt{int} pour représenter certains entiers relatifs
   \item \texttt{float} pour représenter certains nombres binaires
 \end{itemize}
-Parler de type \og réel\fg de données ne peut conduire qu'à des erreurs et des confusions puisqu'il ne s'agit en fait que d'un ensemble fini de nombres binaires. 
+Parler de type \og réel\fg de données ne peut conduire qu'à des erreurs et des confusions puisqu'il ne s'agit en fait que d'un ensemble fini de nombres binaires.\newline
+Un nombre $x$ est dit \emph{binaire} si et seulement si 
+\begin{displaymath}
+\exists (p,q)\in \Z^2 p\leq q, \exists (b_p,b_{p+1}, \cdots , b_p)\in \left\lbrace 0,1\right\rbrace^{q-p+1} \text{ tq }
+x = \sum_{i = p}^q b_i\,2^{i}
+\end{displaymath}
 
+ 
 \section{Sur un seul bit}
 Un seul bit ne peut prendre que deux valeurs que l'on regarde comme des valeurs logiques (booléens)(\texttt{VRAI}, \texttt{FAUX}) ou numériques ($1$, $0$).
 \begin{itemize}
@@ -51,7 +57,7 @@ Ces trois opérations sont commutatives et associatives.
 \section{Opérations sur les mots de longueur fixée}
 On considère des mots de $n$ bits avec $n$ entier naturel fixé. On peut aussi bien regarder des listes de $n$ bits. Un tel mot peut prendre $2^n$ valeurs. On ne s'intéresse pas ici à ce que peuvent représenter ces mots mais aux opérations formelles que l'on peut faire avec.
 \begin{enumerate}
-  \item Le \emph{bit de poids fort} d'un mot est son bit le plus à gauche, le \emph{bit de poids faible} est celui le plus à droite.
+  \item Le \emph{bit de poids fort} d'un mot est son bit le plus à gauche. Il est aussi désigné comme MSB (most significant bit ou  high-order bit. Le \emph{bit de poids faible} est celui le plus à droite.
   \item Décalage vers la droite $\delta$ ou vers la gauche $\gamma$.
   \begin{align*}
     (b_0,b_1,\cdots,b_{n-1}) &\xrightarrow{\delta} (0, b_0,b_1,\cdots,b_{n-2}) \\
@@ -68,7 +74,7 @@ Bien noter que ces opérations font perdre chaque fois un bit d'information. Pou
     0 & 1 & 1 & 1 & 0 & 1 & 0 & 1 \\ 
   \end{tabular}    
   \end{center}
-La dernière retenue est ignorée.
+La dernière retenue est ignorée. 
 
 Interprétons ces opérations lorsque les mots sont des représentations binaires d'entiers. Soit $m$ représentant binaire d'un entier $\overline{m}\in \llbracket 0, 2^{n}-1 \rrbracket$:
 \begin{itemize}
@@ -76,11 +82,11 @@ Interprétons ces opérations lorsque les mots sont des représentations binaire
   \item Le mot $\delta(m)$ est la représentation binaire du quotient de la division de $\overline{m}$ par $2$.
   \item L'entier représenté par $\gamma(m)$ est congru à $2\times\overline{m}$ modulo $2^{n}$. Il y a égalité lorsque le bit de poids fort de $m$ est nul.
 \end{itemize}
-Pour deux mots $m_1$ et $m_2$ représentant des entiers $\overline{m}_1$ et $\overline{m}_2$ de $\overline{m}\in \llbracket 0, 2^{n}-1 \rrbracket$, et $m$ obtenu par l'addition bit à bit:
+Pour deux mots $m_1$ et $m_2$ représentant des entiers $\overline{m}_1$ et $\overline{m}_2$ de $ \llbracket 0, 2^{n}-1 \rrbracket$, et $m$ obtenu par l'addition bit à bit, l'entier $\overline{m}$ vérifie
 \begin{displaymath}
   \overline{m} \equiv \overline{m_1} + \overline{m_2} \mod 2^{n}
 \end{displaymath}
-Il y a égalité lorsque l'addition ne conduit pas à ignorer la dernière retenue. C'est forcément le cas lorsque les deux bits de poids fort sont nuls. 
+Il y a égalité lorsque l'addition ne conduit pas à ignorer la dernière retenue. C'est forcément le cas lorsque les deux bits de poids fort sont nuls. Ignorer la retenue dans ce contexte constitue ce qui est appelé une erreur d'\emph{overflow}.
 \end{enumerate}
 On peut aussi combiner addition bit à bit avec décalage pour former des multiplications modulo $2^n$.
 Exemple
@@ -107,8 +113,6 @@ Exemple
 \overline{m_1}\times \overline{m_2} = 7560 =136 + 29\times 2^8 
 \end{displaymath}
 Ces opérations sont simples à implémenter pour la structure des listes (ou des mots) de longueur fixée. Elles ont de plus une interprétation mathématique. C'est ce double aspect qui fait leur intérêt.
-
-
 
 \section{Entiers}
 Dans les versions 2.x de Python, le nombre d'octets utilisés pour représenter les objets du type \verb|int| est lié à la largeur du bus du processeur:  quatre octets sur les machines 32bits, cinq sur les machines 64bits. Dans les versions 3.x, les types \verb|int| et \verb|long| ont été confondus. Les entiers sont gérés de manière dynamique sur un nombre d'octets variable, la seule limite est la mémoire de la machine.
@@ -147,6 +151,7 @@ La représentation de $-x$ est la décomposition de $z = 2^{n}-x$, on en déduit
 \end{displaymath}
 Il suffit donc d'ajouter 1 au développement de $y$ (attention aux retenues) et de décaler ce développement en ajoutant un 1.\newline  
 \end{demo}
+Pratiquement, on peut écrire le codage de $x$ et formé en dessous le mot tel que l'on obtienne le mot ne contenant que des $0$ et additionnant bit à bit.
 Exemple. Soit $x=1000$ sur 2 octets.
 \begin{itemize}
   \item représentation de $1000$: $0000001111101000$

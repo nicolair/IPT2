@@ -3,6 +3,14 @@
 \begin{document}
 \begin{frame}
 \frametitle{Machine théorique}
+\begin{itemize}
+  \item Qu'est-ce qu'un calcul ?
+  \pause \item C'est ce que fait une machine de Turing!
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Machine de Turing}
 Une de machine de Turing est constituée de:
 \begin{itemize}
   \item un ruban (amovible) formé d'une infinité de cases chacune contenant une lettre d'un alphabet fini.
@@ -10,17 +18,18 @@ Une de machine de Turing est constituée de:
   \begin{itemize}
     \item se déplacer (une case au plus vers la droite ou la gauche)
     \item lire et écrire sur le ruban
-    \item se trouver dans plusieurs états
+    \item changer d'états
   \end{itemize}
+  \item un tableau d'instructions.
 \end{itemize}
-La tête de lecture-écriture-déplacement peut être dans plusieurs états physiques et ce qu'elle va faire (sur le ruban et sur elle même) dépend de ce qu'elle lit et de l'état dans lequel elle se trouve. 
+La tête fait ce qu'indique le tableau d'instruction selon ce qu'elle lit et l'état dans lequel elle se trouve. 
 \end{frame}
 
 \begin{frame}
   \frametitle{Calculer ?}
 \begin{enumerate}
   \item un ruban initial avec des lettres de l'alphabet est inséré dans la machine
-  \item la machine se déplace sur le ruban en remplaçant certaines lettres par d'autres
+  \item la machine change d'états et se déplace sur le ruban en remplaçant certaines lettres par d'autres
   \item elle s'arrête
 \end{enumerate}
 Le ruban a été modifié : c'est la définition d'un \og calcul\fg. \newline
@@ -62,20 +71,20 @@ Les actions de la machine sont déterminées à partir d'un \emph{tableau d'inst
 \end{center}
 \begin{itemize}
   \item temps 0: (initial) état 1, D :\\ ... 0 0 \textcolor{red}{1} 1 1 * 1 1 0 0 ...
-  \item temps 1:  état 1, D :\\ ... 0 0 1 \textcolor{red}{1} 1 * 1 1 0 0 ...
-  \item temps 3:  état 1, D :\\ ... 0 0 1 1 1 \textcolor{red}{*} 1 1 0 0 ...
+  \pause \item temps 1:  état 1, D :\\ ... 0 0 1 \textcolor{red}{1} 1 * 1 1 0 0 ...
+  \pause \item temps 2, 3:  état 1, D :\\ ... 0 0 1 1 1 \textcolor{red}{*} 1 1 0 0 ...
 \end{itemize}
 
   \end{column}
 
   \begin{column}{6cm}
 \begin{itemize}
-  \item temps 4:  état 1, D :\\ ... 0 0 1 1 1 1 \textcolor{red}{1} 1 0 0 ...
-  \item temps 6:  état 1, G :\\ ... 0 0 1 1 1 1 1 1 \textcolor{red}{0} 0  ...
-  \item temps 7:  état 2, G :\\ ... 0 0 1 1 1 1 1 \textcolor{red}{1} 0 0  ...
-  \item temps 8:  état 3, G :\\ ... 0 0 1 1 1 1 \textcolor{red}{1} 0 0 0  ...
-  \item temps 13:  état 3, D :\\ .. 0 \textcolor{red}{0} 1 1 1 1 1 0 0 0  ...
-  \item temps 14:  état !, fin :\\ .. 0 0 \textcolor{red}{1} 1 1 1 1 0 0 0  ...
+  \pause \item temps 4:  état 1, D :\\ ... 0 0 1 1 1 1 \textcolor{red}{1} 1 0 0 ...
+  \pause \item temps 5,6:  état 1, G :\\ ... 0 0 1 1 1 1 1 1 \textcolor{red}{0} 0  ...
+  \pause \item temps 7:  état 2, G :\\ ... 0 0 1 1 1 1 1 \textcolor{red}{1} 0 0  ...
+  \pause \item temps 8:  état 3, G :\\ ... 0 0 1 1 1 1 \textcolor{red}{1} 0 0 0  ...
+  \pause \item temps 9,$\cdots$,13:  état 3, D :\\ .. 0 \textcolor{red}{0} 1 1 1 1 1 0 0 0  ...
+  \pause \item temps 14:  état !, fin :\\ .. 0 0 \textcolor{red}{1} 1 1 1 1 0 0 0  ...
 \end{itemize}
   \end{column}
 \end{columns}
@@ -108,26 +117,26 @@ s5 & 1 D s1 & 1 G s5  \\ \hline
 \begin{columns}
   \begin{column}{6cm}
     \begin{itemize}
-     \item 0: ... 0 \textcolor{red}{1} 1 0 0 0 ... s1 (0 D s2)
-     \item 1: ... 0 0 \textcolor{red}{1} 0 0 0 ... s2 (1 D s2)
-     \item 2: ... 0 0 1 \textcolor{red}{0} 0 0 ... s2 (0 D s3)
-     \item 3: ... 0 0 1 0 \textcolor{red}{0} 0 ... s3 (1 G s4)
-     \item 4: ... 0 0 1 \textcolor{red}{0} 1 0 ... s4 (0 G s5)
-     \item 5: ... 0 0 \textcolor{red}{1} 0 1 0 ... s5 (1 G s5)
-     \item 6: ... 0 \textcolor{red}{0} 1 0 1 0 ... s5 (1 D s1)
-     \item 7: ... 0 1 \textcolor{red}{1} 0 1 0 ... s1 (0 D s2)
-     \item 8: ... 0 1 0 \textcolor{red}{0} 1 0 ... s2 (0 D s3)
+     \pause \item 0: ... 0 \textcolor{red}{1} 1 0 0 0 ... s1 (0 D s2)
+     \pause \item 1: ... 0 0 \textcolor{red}{1} 0 0 0 ... s2 (1 D s2)
+     \pause \item 2: ... 0 0 1 \textcolor{red}{0} 0 0 ... s2 (0 D s3)
+     \pause \item 3: ... 0 0 1 0 \textcolor{red}{0} 0 ... s3 (1 G s4)
+     \pause \item 4: ... 0 0 1 \textcolor{red}{0} 1 0 ... s4 (0 G s5)
+     \pause \item 5: ... 0 0 \textcolor{red}{1} 0 1 0 ... s5 (1 G s5)
+     \pause \item 6: ... 0 \textcolor{red}{0} 1 0 1 0 ... s5 (1 D s1)
+     \pause \item 7: ... 0 1 \textcolor{red}{1} 0 1 0 ... s1 (0 D s2)
+     \pause \item 8: ... 0 1 0 \textcolor{red}{0} 1 0 ... s2 (0 D s3)
     \end{itemize}
   \end{column}
 
   \begin{column}{6.5cm}
   \begin{itemize}
-    \item 9: ... 0 1 0 0 \textcolor{red}{1} 0 ... s3 (1 D s3)
-    \item 10: ... 0 1 0 0 1 \textcolor{red}{0} ... s3 (1 G s4)
-    \item 11: ... 0 1 0 0 \textcolor{red}{1} 1 ... s4 (1 G s4)
-    \item 12: ... 0 1 0 \textcolor{red}{0} 1 1 ... s4 (0 G s5)
-    \item 13: ... 0 1 \textcolor{red}{0} 0 1 1 ... s5 (1 D s1)
-    \item 14: ... 0 1 1 \textcolor{red}{0} 1 1 ... s1 (!)
+    \pause \item 9: ... 0 1 0 0 \textcolor{red}{1} 0 ... s3 (1 D s3)
+    \pause \item 10: ... 0 1 0 0 1 \textcolor{red}{0} ... s3 (1 G s4)
+    \pause \item 11: ... 0 1 0 0 \textcolor{red}{1} 1 ... s4 (1 G s4)
+    \pause \item 12: ... 0 1 0 \textcolor{red}{0} 1 1 ... s4 (0 G s5)
+    \pause \item 13: ... 0 1 \textcolor{red}{0} 0 1 1 ... s5 (1 D s1)
+    \pause \item 14: ... 0 1 1 \textcolor{red}{0} 1 1 ... s1 (!)
   \end{itemize}
   \end{column}
 \end{columns}

@@ -8,9 +8,10 @@ n = n + 1
 f = n * f
 # la phrase est encore vraie
 
-while n <= 16 :
+while n <= 4 :
     n += 1
     f *= n
     # la phrase est encore vraie
     
 print(n,f)
+

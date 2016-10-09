@@ -1,13 +1,14 @@
 \input{ipt.tex}
 
 %En tete et pied de page
-%\lhead{Cours IPT}
-\chead{Introduction aux systèmes informatiques}
+\lhead{Cours IPT}
+\chead{Cours 2: Introduction aux systèmes informatiques le 26/09/2016}
 
 
 \begin{document}
 \section{Machines théoriques}
 \subsection{Machines de Turing}
+Une machine de Turing est un concept abstrait (imaginé en permettant de modéliser un calcul. Qu'est-ce qu'un calcul? C'est ce que fait une machine de Turing!\newline
 Imaginons une machine constituée d'un ruban (amovible) formé d'une infinité de cases contenant des lettres d'un alphabet fini et d'une tête qui peut se déplacer le long du ruban et lire ou écrire sur les cases.\newline
 On place dans la machine un ruban particulier sur lequel des lettres sont écrites. On la met en marche; elle se déplace sur le ruban en remplaçant certaines lettres par d'autres puis elle s'arrête. Le ruban a été modifié : la transformation du ruban est un \og calcul\fg. \newline
 Un tel dispositif est une \emph{machine de Turing}. Précisons la manière dont la machine \og calcule\fg.\newline
@@ -27,9 +28,9 @@ Les actions de la machine sont déterminées à partir d'un \emph{tableau d'inst
 2 &    & 0G3 &    \\ \hline
 3 & D! & G   &    \\ \hline
 \end{tabular}
-\end{center}
+) \end{center}
 Par exemple, lorsque la machine lit un "0" dans la case courante du ruban et qu'elle est dans l'état "1", le "G2" du tableau se traduit par: elle n'écrit rien, elle déplace la tête de lecture vers la gauche, elle se met dans l'état "2".\newline
-Lorsqu'elle lit un "1" en étant dans l'état "2", elle écrit un "0" dans la case courante, se déplace vers la gauche et se met dans l'état "3".\newline Lorsqu'elle lit un "0" en étant dans l'état "3", elle n'écrit rien se déplace vers la droite et s'arrête. Les autres cas se comprennent bien.\newline
+Lorsqu'elle lit un "1" en étant dans l'état "2", elle écrit un "0" dans la case courante, se déplace vers la gauche et se met dans l'état "3".\newline Lorsqu'elle lit un "0" en étant dans l'état "3", elle n'écrit rien se déplace vers la droite et s'arrête. Les autres cas se comprennent bien. On convient que la machine s'arrête si elle rencontre une case vide de son tableau d'instructions.\newline
 Calculons à partir d'un ruban "... 0 0 1 1 1 * 1 1 0 0 ..." en le plaçant dans la machine; la tête de lecture/écriture devant le "1" le plus à gauche.\newline
 Après l'arrêt de la machine, le ruban contient " ... 0 0 1 1 1 1 1 0 0 0 ..." avec la tête de lecture devant le "1" le plus à gauche et la machine dans l'état "!".\newline
 On peut se convaincre facilement que si on part avec $p$ fois la lettre "1" à gauche de "*" et $q$ fois à droite, on obtient $p+q$ fois "1" comme résultat du calcul. Cette machine réalise donc des additions pour des rubans codées convenablement.
@@ -69,12 +70,12 @@ Les \emph{processeurs} modernes (en particulier les CPU\footnote{Central Process
 
 L'image du ruban dans une machine de Turing universelle permet de se représenter deux concepts fondamentaux : à gauche le \emph{programme} qui modélise la machine particulière, à droite les \emph{données} sur lesquelles la machine particulière travaille. Pour la tête de lecture, cette notion de droite et de gauche n'a pas de signification, une case du ruban est un \emph{instruction} qu'elle doit exécuter.
 
-Le ruban réprésente un \emph{dispositif de stockage} des données sur lesquelles on souhaite travailler. La tête représente une \emph{unité d'échange} entre la machine et le dispositif de stockage. La machine doit aussi pouvoir avoir plusieurs états et changer d'état. Pour cela, on la dote de dispositifs physiques contrôlables pouvant prendre plusieurs états : des \emph{mémoires} qui seront appellés \emph{registres} dans le cas d'un processeur.
+Le ruban réprésente un \emph{dispositif de stockage} des données sur lesquelles on souhaite travailler. La tête représente une \emph{unité d'échange} entre la machine et le dispositif de stockage. La machine doit aussi pouvoir être dans plusieurs états différents et en changer. Pour cela, on la dote de dispositifs physiques contrôlables pouvant prendre plusieurs états : des \emph{mémoires} qui seront appellés \emph{registres} dans le cas d'un processeur.
 
 \subsection{Schématisation d'un processeur}
 Un processeur\footnote{on décrit ici plutôt un CPU qu'un GPU. Pour ce dernier, les opérations à exécuter sont plus spécifiques.} renferme deux unités fonctionnelles: \emph{l'unité de commande} et \emph{l'unité de traitement} ainsi que \emph{des registres}.
 \begin{description}
- \item[registres] Ce sont des mémoires très rapides à l'intérieur même du processeur. Ils sont reliés aux unités par un \emph{bus} de largeur 32 ou 64 bits qui permet d'écrire ou de lire des mots de cette largeur.
+ \item[registres] Ce sont des mémoires très rapides à l'intérieur même du processeur. Ils sont reliés aux unités par un \emph{bus} de largeur\footnote{quand on parle de systèmes 32 ou 64 bits, c'est de largeur du ce bus interne dont on parle.} 32 ou 64 bits qui permet d'écrire ou de lire des mots de cette largeur.
  \item[unité de commande] Elle remplit trois fonctions:
  \begin{enumerate}
   \item Aller chercher le code d'instruction en mémoire (fetch) et le charger dans un registre.
@@ -101,7 +102,7 @@ Convenons d'appeler \emph{modules} les divers composants d'un ordinateur, le CPU
  
  \item[Bus externes.] Des dispositifs physiques reliant les modules entre eux. La largeur d'un bus est le nombre de lignes le constituant. Un bus de largeur 16 permet de transmettre 16 bits simultanément.
 \end{description}
-
+ 
 \section{Introduction à la notion d'Operating System}
 L'O.S. (Operating System) est l'ensemble de programmes qui permettent l'utilisation des capacités de l'ordinateur en isolant les applications des détails du matériel. Les principaux programmes de cet ensemble sont lancés dès le démarrage de l'ordinateur. L'O.S. forme une couche logicielle entre le matériel et les applications. \'Enumérons quelques fonctions d'un tel système.
 \begin{description}
@@ -128,7 +129,7 @@ Pour écrire et exécuter du code en Python, vous pouvez utiliser un simple édi
 
 La notion de couche peut se retrouver aussi dans l'utilisation de Python. Comme il est généraliste, on utilise des couches spécifiques (bibliothèques) spécialisées dans de domaines particuliers.
 
-Les trois logiciels sont libres et disponibles pour tous les OS. Le langage Python existe en version 2.7 ou 3.3. Vous pouvez les télécharger et les installer sur vos machines personnelles. Il existe des différences significatives entre les deux versions et certaines bibliothèques ne sont pas disponibles pour 3.3. Installez les deux si vous pouvez. Si vous pouvez n'en installer qu'une préférez 2.7.  Si vous le souhaitez, vous pourrez utiliser vos machines personnelles en TP.
+Les trois logiciels sont libres et disponibles pour tous les OS. Le langage Python existe en version 2.7 ou 3.3. Vous pouvez les télécharger et les installer sur vos machines personnelles. Installez de préférence la version 3.3.  Si vous le souhaitez, vous pouvez utiliser vos machines personnelles en TP.
 
-Vous aurez besoin d'un système de stockage permettant l'échange entre l'établissement et vos machines personnelles. N'utilisez une clé USB qu'en dépannage, préférez un stockage web et constituez vous un compte googleDrive ou dropBox. Ceci DOIT \^ETRE FAIT AVANT LE PREMIER TP DE LUNDI.
+Vous aurez besoin d'un système de stockage permettant l'échange entre l'établissement et vos machines personnelles. N'utilisez une clé USB qu'en dépannage, préférez un stockage web et constituez vous un compte googleDrive ou dropBox.
 \end{document}

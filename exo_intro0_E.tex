@@ -1,7 +1,7 @@
 \begin{enumerate}
-  \item Expliquer ce que va faire et afficher le programme suivant:
+  \item En utilisant les documents de cours distribués, expliquer sans l'exécuter ce que va faire et va afficher le code suivant:
 \lstinputlisting[firstline=1, lastline=4]{exo_intro0_E.py}  
-avant de le taper dans l'éditeur et de l'exécuter.
+Vérifier qu'il se passe bien ce que vous aviez prévu en l'exécutant après l'avoir enregistré dans un fichier. Que se passe-t-il si on indente le \texttt{print(i)}?
 
   \item \'Ecrire deux programmes dont l'un exécutera 100 fois un bloc de code contenant un test et l'autre exécutera 49 fois un bloc contenant une incrémentation plus pertinente pour les problèmes suivants.
 \begin{enumerate}
@@ -9,20 +9,24 @@ avant de le taper dans l'éditeur et de l'exécuter.
   \item Afficher tous les nombres pairs entre $0$ et $100$ par ordre décroissant.
 \end{enumerate}
 
-  \item \'Ecrire deux programmes qui affichent les 20 premiers termes de la suite de Fibonacci définie par
+  \item La suite de Fibonacci est définie par
 \begin{displaymath}
   f_0 = f_1 = 1, \hspace{1cm}\forall n \in \N,\; f_{n+2} = f_{n+1} + f_n
 \end{displaymath}
-Le premier programme utilisera les assignations multiples et pas le second. Modifier les programmes pour qu'ils n'affichent que le 20ème terme (c'est à dire $f_{19}$)
+Le calcul de ses termes doit se faire en utilisant la phrase invariante:
+\begin{quote}
+  \og $n$ désignant un entier, $f$ désigne $f_n$ et $ff$ désigne $f_{n+1}$\fg
+\end{quote}
+\'Ecrire deux programmes qui affichent les 20 premiers termes. Le premier programme utilisera les assignations multiples et pas le second. Modifier les programmes pour qu'ils n'affichent que le 20ème terme (c'est à dire $f_{19}$)
 
-  \item \'Ecrire un programme qui affiche les 10 premiers termes de la suite récurrente définie par
+  \item En précisant la phrase invariante utilisée, écrire un programme qui affiche les 10 premiers termes de la suite récurrente définie par
 \begin{displaymath}
-  u_0 = 0, \hspace{0.5cm} \forall n \in \N, \;u_{n+1} = 2 + 2u_n
+  u_0 = 3, \hspace{0.5cm} \forall n \in \N, \;u_{n+1} = n + 2u_n
 \end{displaymath}
 
-  \item \`A l'aide d'un programme utilisant 3 boucles "while" imbriquées, calculer le nombre de triplets $(x,y,z)$ d'entiers de $\llbracket 1, 10 \rrbracket$ tels que
+  \item (à faire en dernier) \`A l'aide d'un programme utilisant 3 boucles "while" imbriquées, calculer le nombre de triplets $(x,y,z)$ d'entiers de $\llbracket 1, 10 \rrbracket$ tels que
   \begin{displaymath}
   1  \leq x < y < z \leq 10
   \end{displaymath}
-
+Vérifiez en comparant avec une formule pour cette somme obtenue avec les techniques de calcul de somme.
 \end{enumerate}
