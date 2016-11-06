@@ -1,0 +1,97 @@
+\input{ipt_beamer.tex}
+
+\begin{document}
+
+\begin{frame}
+  \frametitle{Partie entière - Partie décimale}
+Tout nombre réel se décompose de manière unique sous la forme
+\begin{displaymath}
+  \text{un nombre réel} = \text{un nombre entier} + \text{un nombre réel dans $[0,1[$}
+\end{displaymath}
+Notation
+\begin{displaymath}
+  x = \underset{\text{partie entière de } x\in \Z }{\underbrace{\lfloor x \rfloor}} + \underset{\text{partie décimale de } x\in [0,1[ }{\underbrace{\{ x \}}}
+\end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Partie entière et division}
+Dans la division euclidienne de $m\in \Z$ par $n\in \N^*$ 
+\begin{displaymath}
+  m = \underset{\in \Z}{\underbrace{n}}q + \underset{\in \llbracket 0, n\llbracket}{\underbrace{r}}
+  \Leftrightarrow \frac{m}{n} = \underset{\in \N}{\underbrace{q}} + \underset{\in [0,1[}{\underbrace{\frac{r}{n}}} 
+\end{displaymath}
+Le quotient de la division de $m$ par $n$ est $\lfloor \frac{m}{n} \rfloor$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Algorithme \og les petits d'abord\fg}
+\begin{algorithm}[H]
+  $y\longleftarrow $ un entier \;
+  \Tq{ $y > 0$}{
+      enregistrer le reste de la division de $y$ par $b$\;
+      $y\longleftarrow $ le quotient de la division de $y$ par $b$\;
+  }
+  \caption{les petits d'abord.}
+  \label{nbbin_1}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Algorithme \og les grands d'abord\fg}
+\begin{algorithm}[H]
+  $y\longleftarrow $ un nombre dans $[0,1[$\;
+  \Tq{ $y > 0$}{
+      enregistrer $\lfloor by \rfloor$\;
+      $y\longleftarrow \{ by\}$\;
+  }
+  \caption{ les grands d'abord.}
+  \label{nbbin_2}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Développement d'un réel}
+Base $b$ : entier naturel strictement plus grand que $1$.\newline
+Nombre  $x>0$.\newline
+Développement de $x$ dans la base $b$:
+\begin{itemize}
+  \item vers la gauche de la virgule :\newline \og les petits d'abord \fg initialisé à $\lfloor x \rfloor$.
+  \item vers la droite de la virgule :\newline \og les grands d'abord \fg initialisé à  $\{ x \}$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple : développement de $7$ en base $2$}
+Vers la gauche de la virgule.
+\begin{align*}
+  & & 7 & & . \\
+7 = 3\times 2 + 1 & & 3 & & 1. \\
+3 = 1\times 2 + 1 & & 1 & & 11. \\
+1 = 0\times 2 + 1 & & 0 & & 111.
+\end{align*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple : développement de $.3$ en base $2$}
+Vers la droite de la virgule.
+\begin{align*}
+    & & .3 & & .   \\
+.6  & & .6 & & .0  \\
+1.2 & & .2 & & .01 \\
+.4  & & .4 & & .010 \\
+.8  & & .8 & & .0100 \\
+1.6 & & .6 & & .01001
+\end{align*}
+Le développement se répète ensuite vers la droite.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exemple : développement de 7.3 en base 2}
+Le développement binaire du réel $7.3$ est
+\begin{displaymath}
+  111.01001 01001 01001 \cdots
+\end{displaymath}  
+\end{frame}
+
+\end{document}

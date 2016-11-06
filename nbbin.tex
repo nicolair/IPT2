@@ -115,7 +115,7 @@ Exemple
 Ces opérations sont simples à implémenter pour la structure des listes (ou des mots) de longueur fixée. Elles ont de plus une interprétation mathématique. C'est ce double aspect qui fait leur intérêt.
 
 \section{Entiers}
-Dans les versions 2.x de Python, le nombre d'octets utilisés pour représenter les objets du type \verb|int| est lié à la largeur du bus du processeur:  quatre octets sur les machines 32bits, cinq sur les machines 64bits. Dans les versions 3.x, les types \verb|int| et \verb|long| ont été confondus. Les entiers sont gérés de manière dynamique sur un nombre d'octets variable, la seule limite est la mémoire de la machine.
+Dans les versions 2.x de Python, le nombre d'octets utilisés pour représenter les objets du type \verb|int| est lié à la largeur du bus du processeur:  quatre octets sur les machines 32bits, huit sur les machines 64bits. Dans les versions 3.x, les types \verb|int| et \verb|long| ont été confondus. Les entiers sont gérés de manière dynamique sur un nombre d'octets variable, la seule limite est la mémoire de la machine.
 
 Lorsque les entiers relatifs sont représentés par des mots binaires de longueur fixée, le signe n'est pas (comme on pourrait le croire) stocké sur le premier bit. D'une part cela aurait le défaut de conduire à deux zéros distincts mais surtout cela ne permettrait pas d'exploiter facilement les opérations bit à bit de la section précédente traduisant les opérations numériques modulo $2^n$.\newline 
 On utilise la méthode dite du \emph{du complément à 2}\index{complément à 2}.\newline

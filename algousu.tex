@@ -1,7 +1,7 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Algorithmique - Algorithmes usuels}
+\chead{Cours 4 : Algorithmique - Algorithmes usuels le 7/11/16}
 \begin{document}
 On présente ici quelques problèmes simples et les algorithmes usuels qui les résolvent.\newline
 Quand on cherche un algorithme répondant à un problème donné, on doit commencer par examiner si ce problème peut se ramener à un de ces problèmes (ou à une combinaison). Lorsque c'est le cas, il faut adapter ces algorithmes usuels.\newline
@@ -121,7 +121,7 @@ Pour une implémentation en Python, il est utile de remarquer que $T_i$ s'obtien
 
 Il existe de nombreux algorithmes de recherche de motifs\footnote{par exemple algorithmes de Rabin-Karp, utilisant des automates finis ou de Knuth-Morris-Pratt (tirés de \emph{Introduction à l'algorithmique} Dunod)}. Une des idées pour améliorer l'algorithme \ref{algousu_4} (naïf) est d'utiliser le travail fourni en comparant $M$ à $T_i$ pour incrémenter $i$ plus efficacement afin d'éviter des comparaisons dont on peut savoir à l'avance qu'elles échoueront.\newline
 Comparons $M$ et $T_i$ en appelant une fonction $NbCarComm(M,T_i)$ qui renvoie le nombre de caractères (entre 0 et $m$) que les deux mots ont en commun (au début des mots).\newline
-Par exemple, si $T_i$ désigne \verb|tstt-tsst| et $M$ désigne \verb|tsoin|, la fonction renverra $2$ car seuls les deux premiers caractères \verb|c| et \verb|s| sont communs. Les mots sont donc égaux si et seulement si la fonction renvoie $m$.\newline
+Par exemple, si $T_i$ désigne \verb|tstt-tsst| et $M$ désigne \verb|tsoin|, la fonction renverra $2$ car seuls les deux premiers caractères \verb|t| et \verb|s| sont communs. Les mots sont donc égaux si et seulement si la fonction renvoie $m$.\newline
 Plaçons nous maintenant dans le cas particulier où les caractères de $M$ sont deux à deux distincts.\newline
 Si les $p$ premiers caractères de $M$ et $T_i$ sont égaux avec $p<m$, comme les caractères de $M$ sont deux à deux distincts, il est certain que le premier caractère des mots $T_{i+1}, T_{i+2},\cdots T_{i+p-1}$ est différent du premier caractère de $M$ puisqu'il s'agit d'un des caractères suivants de $M$.\newline
 On peut donc modifier l'algorithme précédent en formant les algorithmes \ref{algousu_5} et \ref{algousu_6}.
