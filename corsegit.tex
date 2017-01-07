@@ -1,26 +1,28 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Algorithmique - Correction de segments itératifs}
+\chead{Cours 5: Algorithmique - Correction de segments itératifs}
 \begin{document}
 \section{Variants et invariants}
-En algorithmique, on désigne par \emph{segment itératif} une boucle du type \og\verb|tant que|\fg.\newline
-L'objectif de cette section est de dégager des outils théoriques permettant de prouver que le segment itératif se termine et qu'il réalise effectivement ce qu'on veut qu'il réalise. Cette dernière condition se traduit par le fait qu'une certaine propriété doit être vraie après l'achèvement de la boucle.
+En algorithmique, on désigne par \emph{segment itératif} une boucle du type \og\verb|tant que|\fg. 
+Rappelons qu'une boucle de ce type se poursuit aussi longtemps qu'une certaine condition est évaluée à VRAI.\newline
+L'objectif de cette section est de dégager des outils théoriques permettant de prouver que le segment itératif se termine et qu'il réalise effectivement ce qu'on veut qu'il réalise. La \og réussite\fg~ de l'exécution de l'algorithme se traduit par le fait qu'une certaine propriété est vraie après l'achèvement de la boucle. Par exemple, si on veut calculer une certaine valeur, on introduit un nom et la propriété qui doit être vraie à la fin est que le nom choisi désigne la valeur voulue.\newline
 \begin{algorithm}
   \Tq{ Condition}{
       instruction 1\;
       $\vdots $\;
       instruction p\;
   }
+  \Comment{Pour sortir de la boucle la propriété $Condition$ doit être fausse.}
   \Comment{Après la boucle une propriété $\mathcal{P}$ doit être vraie.}
-  instruction suivant le segment étudié\;
+  instruction venant après le segment étudié\;
   \caption{Un segment itératif}
   \label{corsegit_1}
 \end{algorithm}
-On doit \emph{démontrer} que la condition devient fausse après l'exécution (un nombre fini de fois) de la séquence des $p$ instructions et qu'alors la propriété $\mathcal{P}$ est vraie. On dira que le segment itératif est correct.
+On doit \emph{démontrer} que la condition devient fausse après l'exécution (un nombre fini de fois) de la séquence des $p$ instructions et que la propriété $\mathcal{P}$ est alors vraie. On dira que le segment itératif est correct.
 \begin{defi}
 Un \emph{variant de boucle}, on dit aussi \emph{fonction de terminaison} est une expression formée avec des noms\footnote{certains préfèrent le terme \og variable\fg} significatifs dans l'algorithme et vérifiant les propriétés suivantes.
-\begin{itemize}                                                                                                                                                                                                                                               \item Les valeurs que prend l'expression sont des entiers naturels.
+\begin{itemize}                                                                                                                                                                                                                                               \item L'expression s'évalue à une valeur entier naturel.
 \item La valeur que prend l'expression \emph{diminue strictement} à chaque exécution de la séquence.                                                                                                                                                                                                                             \end{itemize}
 \end{defi}
 \begin{prop}
@@ -33,7 +35,7 @@ Il est utile de remarquer qu'une fonction de terminaison permet aussi de majorer
 \begin{defi}
   Un \emph{invariant de boucle} est une expression formée avec des noms significatifs dans l'algorithme et vérifiant les propriétés suivantes.
 \begin{itemize}
-  \item L'expression est à valeurs booléennes (on dit que c'est une propriété).
+  \item L'expression s'évalue à une valeur booléennes (on dit que c'est une propriété).
   \item L'expression est évaluée à \verb|true| (la propriété est vraie) avant l'exécution des séquences et elle le reste après chaque exécution.
 \end{itemize}
 \end{defi}

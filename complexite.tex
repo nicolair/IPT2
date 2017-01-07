@@ -32,10 +32,10 @@ Quel est l'argument des fonctions donnant les nombres d'opérations? Pour les co
 L'exécution de l'algorithme se fait à partir d'une donnée constituée d'un jeu de données numériques (booléennes, entières, flottantes). \emph{En général, la donnée n'est pas un nombre en elle même}.\newline
 On doit préciser un entier naturel que l'on appelle la \emph{taille} de la donnée pour l'algorithme considéré. Il existe plusieurs données de même taille et deux données de même taille ne conduisent pas à l'exécution du même nombre d'instructions. On ne cherche donc pas une expression exacte du nombre d'instructions mais plutôt une majoration $c(n)$ valable pour toutes les données de taille $n$. C'est cette fonction que l'on cherche à dominer par les suites usuelles. \newline
 On peut aussi définir donc la \emph{complexité dans le meilleur des cas}\index{complexité dans le meilleur des cas},  la \emph{complexité dans le pire des cas}\index{complexité dans le pire des cas} et la \emph{complexité moyenne}\index{complexité moyenne} pour une taille de donnée $n$ fixée.\newline
-Pour la complexité en moyenne, on doit introduire une probabilité sur l'ensemble des données de taille $n$, le nombre d'instructions est une varaiable aléatoire sur cet espace probabilisé et la complexité moyenne est l'espérance de cette variable aléatoire.
+Pour la complexité en moyenne, on doit introduire une probabilité sur l'ensemble des données de taille $n$, le nombre d'instructions est une variable aléatoire sur cet espace probabilisé et la complexité moyenne est l'espérance de cette variable aléatoire.
 
 \subsection{Estimations en temps}
-On mesure la rapidité d'un processeur au nombre d'instructions qu'il peut exécuter par seconde. \index{flops}L'unité est le \emph{flops} (floatting operations per second).\newline
+On mesure la rapidité d'un processeur au nombre d'instructions qu'il peut exécuter par seconde. \index{flops}L'unité est le \emph{flops} (floating operations per second).\newline
 En 2013 un ordinateur personnel peut disposer d'une puissance de 200 gigaFLOPS = $200\times 10^{9}$ FLOPS. Le tableau suivant présente une estimation , en fonction de la complexité, des temps de calcul sur un tel ordinateur pour des algorithmes avec une donnée de taille $10^{6}$.
 \begin{center}
 \renewcommand{\arraystretch}{1.5}
@@ -48,7 +48,7 @@ log. & lin. & quasi-lin. & quad. & pol. (3) & pol. (4)\\ \hline
 
 \section{Exemples}
 \subsection{Enchaînement d'algorithmes}
-Un algorithme s'exécute avec des données de taille $n$, il est constitué de deux algorithmes successifs: un pré-traitement qui est de complexité constante et le traitement proprement dit qui est de complexité linéaire. L'algorithme complet est aussi de complexité linéaire.
+Un algorithme s'exécute avec des données de taille $n$; il est constitué de deux algorithmes successifs: un pré-traitement qui est de complexité constante et le traitement proprement dit qui est de complexité linéaire. L'algorithme complet est aussi de complexité linéaire.
 
 \subsection{Complexité logarithmique d'une recherche dichotomique}
 \begin{algorithm}

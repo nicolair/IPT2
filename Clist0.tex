@@ -3,17 +3,18 @@
  
 \begin{verbatim}
 nmax = 4
-CoeffBin = range(nmax + 1)
+CoeffBin = (nmax + 1)*[0]
+#initialisé comme une liste de 0
 for n in range(nmax + 1):
-  CoeffBin[n] = range(n+1)
-  CoeffBin[n][0] = CoeffBin[n][n] = 1
+  CoeffBin[n] = (n+1)*[1]
+  #initialisé comme une liste de 1
   for p  in range(n-1):
     CoeffBin[n][p+1] = CoeffBin[n-1][p+1] + CoeffBin[n-1][p]  
 print(CoeffBin)
 >>> 
 [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1], [1, 4, 6, 4, 1]]\end{verbatim}
 
-  \item Le coefficient du binôme $\binom{6}{4}=15$ calculé avec le quotient de produits.
+  \item Le coefficient du binôme $\binom{6}{4}=15$ calculé avec le quotient de produits. Un double slash est utilisé pour que le calcul renvoie un entier et non un flottant.
 
   \item Inversion de listes.
 \begin{verbatim}lili = [0,1,0,0,0,1]

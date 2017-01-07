@@ -1,0 +1,104 @@
+\subsection*{Partie I.}
+\begin{enumerate}
+  \item On classe les couples décroissants $(i,j)$ de $a$ selon le premier terme $i$. Le nombre de couples décroissant est donc le nombre de couples décroissants commençant par $0$ plus le nombre couples décroissants commençant par $1$ plus ... Cela s`'écrit
+\begin{displaymath}
+  d(a) = \sum_{i=0}^{n-1}k(a,i)
+\end{displaymath}
+On pourrait sommer jusqu'à $n-2$ seulement car il n'y a pas de couples commençant par $n-1$, on considère $k(a,n-1)=0$. 
+
+  \item On suppose que $(i_0, i_0 + 1)$ est un couple décroissant contigu de $a$. Cela se traduit par:
+  \begin{displaymath}
+    a_{i_0 + 1} < a_{i_0}
+  \end{displaymath}
+Notons $p=k(a,i_0+1)$ le nombre de couples décroissants commençant par $i_0+1$ et 
+\begin{displaymath}
+  (i_0+1,j_1),\;(i_0+1,j_2),\;\cdots (i_0+1,j_p)
+\end{displaymath}
+ces couples. On veut montrer tous les couples 
+\begin{displaymath}
+  (i_0,i_0+1)\; (i_0,j_1),\;(i_0,j_2),\;\cdots (i_0,j_p)
+\end{displaymath}
+sont décroissants.
+En effet, on sait déjà que $(i_0,i_0+1)$ est un couple décroissant. De plus, pour tout $j>i_0+1$,
+\begin{displaymath}
+  (i_0,j)\text{ couple décroissant }
+  \Leftrightarrow a_{i_0+1} > a_j
+  \Rightarrow a_{i_0 } > a_j \text{ car } a_{i_0} > a_{i_0+1}
+\end{displaymath}
+On en déduit
+\begin{displaymath}
+  k(a,i_0) \geq k(a,i_0+1) + 1
+\end{displaymath}
+
+  \item Ici $a_{i_0}>a_{i_0+1}$ car $(i_0, i_0 + 1)$ est un couple décroissant contigu de $a$. Par définition de $b$, pour tout $j>i_0+1$,
+\begin{displaymath}
+  b_j < b_{i_0} \Leftrightarrow a_j < a_{i_0 + 1}
+\end{displaymath}
+De plus, $(i_0, i_0 + 1)$ n'est plus un couple décroissant contigu de $b$ à cause de l'échange effectué. Ceci prouve
+\begin{displaymath}
+  k(i_0,b) = k(i_0+1 ,a)
+\end{displaymath}
+De même,
+\begin{displaymath}
+\forall j>i_0+1,\;   b_j < b_{i_0 +1} \Leftrightarrow a_j < a_{i_0}
+\end{displaymath}
+On obtient ainsi tous les couples décroissants commençant à $i_0$ sauf $i_0,i_0+1$ donc $k(i_0+1,b) = k(i_0 ,a) - 1$.\newline
+Si $i < i_0$, comme $i_0$ et $i_0+1$ sont tous les deux strictement à droite de $i$ la permutation pour passer de $a$ à $b$ change l'ordre mais pas les valeurs, le nombre de couples décroissants sera le même. Lorsque $i_0+1<i$, le changement de $a$ à $b$ n'a rien changé à droite de $i$ donc le nombre de couples décroissants au dela de $i$ sera conservé.\newline
+Deux valeurs sont \og presque\fg~ échangées (attention au $-1$) les autres valeurs sont conservées. On en déduit
+\begin{displaymath}
+  d(b) = d(a) - 1
+\end{displaymath}
+
+
+\end{enumerate}
+
+\subsection*{Partie II.}
+\begin{algorithm}
+  \Donnees{\;
+     $A$ une liste de $l$ objets indexée entre 0 et $l-1$\;
+     $i$ un entier entre $0$ et $l-2$
+     }
+  \Comment{initialisation}
+  $j\leftarrow i$\;
+  $k\leftarrow$ 0 nb de couples décroissants entre $i$ et $j$\;
+  \Tq{ j < l }{
+      \Si{A[j]<A[i]}{
+        incrémenter $k$\;
+      }
+      incrémenter $j$\;
+  }
+  \caption{Pseudo code pour II.1.}
+  \label{Ccpledec_1}
+\end{algorithm}
+\begin{enumerate}
+  \item Le pseudo code est présenté comme Algorithme \ref{Ccpledec_1}.
+  \item Dans l'implémentation suivante, on a remplacé le \texttt{k} du pseudo code par \texttt{nb} pour éviter un conflit avec le nom de la fonction.
+\lstinputlisting[firstline=1, lastline=9]{Ccpledec.py}
+  \item On implémente une fonction \texttt{remplirK}:
+\lstinputlisting[firstline=11, lastline=16]{Ccpledec.py}
+
+\end{enumerate}
+
+\subsection*{Partie III.}
+\begin{enumerate}
+  \item Pour trouver le premier couple contigu décroissant après $i$, on imcrémente une variable $j$ initialisée à $i$ tant que les valeurs augmentent.
+\lstinputlisting[firstline=18, lastline=23]{Ccpledec.py}
+  \item Le pseudo code est présenté comme Algorithme \ref{Ccpledec_2}.\newline
+\begin{algorithm}
+  \Donnees{\;
+     $A$ une liste de $l$ objets indexée entre 0 et $l-1$\;
+     }
+  \Tq{ PCDC(A) < l-1 }{
+      échanger les valeurs du premier couple décroissant contigu\;
+  }
+  \caption{Pseudo code pour III.3.}
+  \label{Ccpledec_2}
+\end{algorithm}
+On doit prouver que l'on sort de la boucle (terminaison) et que les valeurs de la liste \texttt{A} sont alors rangées par ordre croissant (correction).\newline
+La correction est facile à prouver. La proposition \og la suite est croissante jusqu'à la valeur renvoyée par \texttt{PCDC(A)}\fg est invariante. Si on est sorti de la boucle, c'est que \texttt{PCDC(A)} a renvoyé la longueur de la liste c'est à dire que la suite associée complète est croissante. \newline
+La preuve de la terminaison est plus difficile. Elle repose sur l'existence d'un variant qui est le nombre de couples décroissants de $A$. Il s'agit bien d'un nombre entier. D'après la partie I, ce nombre décroît strictement de 1 chaque fois que s'exécute l'échange à l'intérieur de la boucle. 
+
+  \item On implémente l'algorithme présenté dans la question précédente dans la fonction \texttt{tribulle}.
+\lstinputlisting[firstline=25, lastline=30]{Ccpledec.py}
+\end{enumerate}
+

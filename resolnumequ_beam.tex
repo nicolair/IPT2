@@ -24,37 +24,37 @@ Trouver des intervalles $J$ dans $I$. Chaque $J$ contient au moins une solution 
 \end{itemize}
 Conséquences
 \begin{itemize}
-  \item Thèorème des valeurs intermédiaires: il existe une solution dans $J$.
+  \item Théorème des valeurs intermédiaires: il existe une solution dans $J$.
   \item Si $f$ strictement monotone: unique solution dans $J$. 
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Méthode dichotomique: correction}
-Comme les valeurs renvoyées sont des binaires normalisés, majorant de l'erreur de la forme $\frac{1}{2^p}$.
-\begin{itemize}
-  \item Fonction de terminaison.
-\begin{displaymath}
-p-k + \lceil \frac{\ln(b-a)}{\ln 2}\rceil  
-\end{displaymath}
-  \item Invariant.
-\begin{displaymath}
-  f(a)f(b)\leq 0
-\end{displaymath}
-\end{itemize}
+  \frametitle{Méthode dichotomique: preuve de l'algorithme}
+Les valeurs renvoyées sont des binaires normalisés: majorant de l'erreur en $\frac{1}{2^p}$.
 
-Cet invariant assure qu'il existe toujours un zéro de la fonction dans l'intervalle, chaque nombre dans le segment est une valeur approchée à $e$ près d'un zéro.
+$k$ compteur de boucle
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|}\hline
+Fonction de terminaison                     & Invariant      & Sortie de boucle \\ \hline
+$p-k + \lceil \frac{\ln(b-a)}{\ln 2}\rceil$ & $f(a)f(b)\leq 0$ & $ b - a \leq e$ \\ \hline
+\end{tabular}
+\end{center}
+$\Rightarrow$ il existe toujours un zéro de la fonction dans l'intervalle $[a,b]$
 
-Pratiquement, on renvoie une extrémité ou on peut chercher à faire un peu mieux.
+$\Rightarrow$ après la sortie de boucle tout nombre dans le segment est une valeur approchée à $e$ près d'une solution.
+
+$\Rightarrow$ on renvoie une extrémité ou on peut chercher à faire un peu mieux.
 \end{frame}
 
 \begin{frame}
   \frametitle{Méthode dichotomique: pseudo-code}
 \begin{algorithm}[H]
   \Donnees{\;
-    $a$ et $b$ deux float définissant l'intervalle\;
-    $f$ fonction renvoyant un float pour toute donnée float entre $a$ et $b$\;
-    $e$ float : l'erreur doit être inférieure à $e$\;
+    $a$ et $b$ deux flottants définissant l'intervalle\;
+    $f$ fonction renvoyant un flottant pour tout flottant entre $a$ et $b$\;
+    $e$ flottant : l'erreur doit être inférieure à $e$\;
   }
   
   $va\leftarrow f(a)$   $vb\leftarrow f(b)$\;
@@ -75,8 +75,16 @@ Pratiquement, on renvoie une extrémité ou on peut chercher à faire un peu mie
 \end{frame}
 
 \begin{frame}
-  \frametitle{Méthode dichotomique: implémentation Python}
-\lstinputlisting[firstline=11, lastline=24]{resolnumequ.py}
+  \frametitle{Méthode dichotomique: implémentation Python (fonction) }
+\lstinputlisting[firstline=11, lastline=21]{resolnumequ.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Méthode dichotomique: implémentation Python (appel) }
+\lstinputlisting[firstline=22, lastline=26]{resolnumequ.py}
+L'opérateur \texttt{lambda} permet de passer des fonctions \emph{anonymes} lors de l'appel.
+\lstinputlisting[firstline=27, lastline=28]{resolnumequ.py}
+
 \end{frame}
 
 \begin{frame}
@@ -132,7 +140,7 @@ Remplacer un problème de recherche de zéro par un problème de recherche de \e
 \begin{displaymath}
   \Phi(x) = x -\frac{f(x)}{f'(x)}, \hspace{1cm} f(x) = 0 \Leftrightarrow \Phi(x) = x
 \end{displaymath}
-$c$ un zéro de $f$ implique $c$ point fixe de $\Phi$ \emph{super-attractif} c'est à dire que $\Phi'(c)=0$.
+$c$ un zéro de $f$ implique $c$ point fixe de $\Phi$ \og super-attractif\fg c'est à dire que $\Phi'(c)=0$.
 
 Ceci explique la convergence très rapide (quadratique).
 

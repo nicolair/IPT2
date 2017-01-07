@@ -1,0 +1,47 @@
+\subsection*{Partie I.}
+Soit $n\in \N^*$ et $a = (a_0,a_1,\cdots,a_{n-1})$ une famille de nombres réels. On introduit le vocabulaire suivant
+\begin{itemize}
+  \item $(i,j)$ est un \emph{couple décroissant} de $a$ si et seulement si $0\leq i < j < n$ et $a_j < a_i$.
+  \item $(i,j)$ est dit \emph{contigu} si et seulement si $j=i+1$.
+  \item $k(a,i)$ avec $i\in\llbracket 0, n\llbracket$ est le nombre de couples décroissants $(i,j)$.
+  \item $d(a)$ est le nombre de couples décroissants de $a$.
+\end{itemize}
+\begin{enumerate}
+  \item Montrer que 
+\begin{displaymath}
+  d(a) = \sum_{i=0}^{n-1}k(a,i)
+\end{displaymath}
+  \item Soit $(i_0,i_0 + 1)$ un couple décroissant contigu d'une famille $a$. Montrer que
+\begin{displaymath}
+  k(a,i_0) \geq k(a,i_0 + 1) + 1
+\end{displaymath}
+  \item Soit $(i_0,i_0 + 1)$ un couple décroissant contigu d'une famille $a$, soit $b$ la famille obtenue à partir de $a$ en permutant les valeurs associées à $i_0$ et $i_0 +1$.
+\begin{displaymath}
+\text{Exemple }:\;  i_0 = 2,\;
+\left\lbrace 
+\begin{aligned}
+  a &= (4, 5, 7, 3, 5, 6) \\
+  b &= (4, 5, 3, 7, 5, 6)
+\end{aligned}
+\right. 
+\end{displaymath}
+Montrer que
+\begin{displaymath}
+k(b,i_0) = k(a,i_0+1), \hspace{1cm}  k(b, i_0 + 1) = k(a,i_0) - 1  
+\end{displaymath}
+et que $k(b,i) = k(a,i)$ pour les autres valeurs de $i$. Que peut-on en déduire pour $d(b)$?
+\end{enumerate}
+
+\subsection*{Partie II. Nombre de couples décroissants}
+\begin{enumerate}
+  \item Former un pseudo code très simple permettant de calculer le nombre $k(a,i)$ de la première partie.
+  \item En Python, on modélise $a$ et $i$ par \texttt{A} désignant une liste de nombres flottants et \texttt{i} désignant un indice valide de cette liste. Implémenter en Python une fonction nommée \texttt{k} acceptant deux paramètres et dont l'appel \texttt{k(A,i)} renvoie $k(a,i)$ sans rien afficher.
+  \item En utilisant la fonction \texttt{k}, former un code très simple permettant de remplir une liste \texttt{K} contenant les $k(a,i)$.
+\end{enumerate}
+
+\subsection*{Partie III. Tri bulle}
+\begin{enumerate}
+  \item Implémenter une fonction \texttt{PCDC} (Premier Couple Décroissant Contigu) dont l'appel  \texttt{PCDC(A)} renvoie le plus petit indice $i$ tel que $(i,i+1)$ soit un couple décroissant contigu. S'il n'existe pas de couple décroissant, la fonction devra renvoyer le dernier indice valide c'est à dire $l-1$ si $l$ désigne la longueur de la liste.
+  \item  Pour une liste de nombres, on considère l'algorithme qui échange les valeurs du premier couple décroissant contigu tant qu'il en existe un. Montrer formellement que cet algorithme range les valeurs de la liste par ordre croissant.
+  \item Implémenter cet algorithme dans une fonction dont l'appel \texttt{tribulle(A)} ne renvoie rien et modifie la liste \texttt{A}.
+\end{enumerate}

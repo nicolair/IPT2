@@ -19,7 +19,8 @@ def dicho(f,a,b,epsilon):
             a , va = m , vm
     return a
     
-def r(x): return x**2 -2.
+def r(x):
+    return x**2 -2.
     
 print(math.sqrt(2) , dicho(r,1,2,10**(-8)))
 
@@ -73,12 +74,12 @@ r2 = math.sqrt(2)
 
 courbe1 = [math.log(abs(dicho1(r,1,2,i)-r2)) for i in range(1,30)]
 courbe2 = [math.log(abs(dicho2(r,1,2,i)-r2)) for i in range(1,30)]
-courbe3 = [math.log(abs(dicho3(r,1,2,i)-r2)) for i in range(1,30)]
-
+courbe3 = [math.log(abs(dicho3(r,1,2,i)-r2)) for i in range(1,20)]
+plt.figure(1)
 plt.plot(courbe1,'blue') # milieu du segment
 plt.plot(courbe2, 'red') # meilleur bord
 plt.plot(courbe3, 'green') # moyenne pondérée
-
+plt.show(1)
 #################### NEWTON
 
 def newt(f,g,b,eps):
@@ -91,8 +92,12 @@ def newt(f,g,b,eps):
     return bb
 
 eps = 0.0001
-def r(x): return x**2 -2.
-def dr(x) : return 2*x
+def r(x):
+    return x**2 -2.
+    
+def dr(x) :
+    return 2*x
+    
 r2 = math.sqrt(2)
 print(abs(newt(r,dr,2,eps) - r2))
 
@@ -123,12 +128,12 @@ pasx = (xmax-xmin)/nx
 pasy = (ymax-ymin)/ny
 Lx = [xmin + i*pasx for i in range(0,nx)]
 Ly = [ymin + i*pasy for i in range(0,ny)]
-
+plt.figure(2)
 for x in Lx:
     for y in Ly:
         zi = complex(x,y)
         z = newt(f,df,zi,eps)
         if col(z) != 0:
             plt.plot([zi.real],[zi.imag],col(z))
-
+plt.show(2)
 

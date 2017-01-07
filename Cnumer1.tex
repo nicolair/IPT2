@@ -1,0 +1,103 @@
+\begin{enumerate}
+  \item Il est commode de présenter dans le même tableau et dans le même ordre la liste des puissances de $2$ et les bits à prendre en compte
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}\hline
+7   & 6  & 5  & 4  & 3 & 2 & 1 & 0\\\hline
+128 & 64 & 32 & 16 & 8 & 4 & 2 & 1\\\hline
+1   & 0  & 1  & 1  & 0 & 0 & 0 & 1\\\hline
+\end{tabular}
+\end{center}
+On en déduit que l'entier représenté par $1011\,0001$ est
+\begin{displaymath}
+  128 + 32 + 16 + 1 = 177
+\end{displaymath}
+Pour s'assurer du résultat, on peut vérifier en demandant le développement en base 2 du nombre obtenu:
+\begin{center}
+ \texttt{bin(177)} renvoie \texttt{'0b10110001'}. 
+\end{center}
+On peut aussi convertir (transtyper) la chaine de caractère en entier:
+\begin{center}
+ \texttt{int('10110001',2)} renvoie $177$. 
+\end{center}
+  \item Avec 4 bits, on peut coder $2^4=16$ objets. Dans la méthode du complément à $2$, on choisit de représenter les entiers de $\llbracket -8, 7\rrbracket$.\newline
+Comme $7 = 4 + 2 + 1$ le code de $7$ est $0111$. On peut remarquer que $7$ est le plus grand entier que l'on peut coder sur 4 bits par complément à $2$.\newline
+Le code de $-7$ est celui qui, ajouté au code de $7$ dans une addition bit à bit conduit à $0000$.
+On procède de droite à gauche en tenant compte de la retenue
+\begin{displaymath}
+\begin{aligned}
+  0 & 1 & 1 & 1 \\
+  . & . & . & . \\ \hline
+  . & . & . & .
+\end{aligned}
+\rightsquigarrow
+\begin{aligned}
+  0 & 1 & 1 & 1 \\
+  . & . & . & 1 \\ \hline
+  . & . & . & 0
+\end{aligned}
+\rightsquigarrow
+\begin{aligned}
+  0 & 1 & 1 & 1 \\
+  . & . & 0 & 1 \\ \hline
+  . & . & 0 & 0
+\end{aligned}
+\rightsquigarrow
+\begin{aligned}
+  0 & 1 & 1 & 1 \\
+  . & 0 & 0 & 1 \\ \hline
+  . & 0 & 0 & 0
+\end{aligned}
+\rightsquigarrow
+\begin{aligned}
+  0 & 1 & 1 & 1 \\
+  1 & 0 & 0 & 1 \\ \hline
+  0 & 0 & 0 & 0
+\end{aligned}
+\end{displaymath}
+On en déduit que le code de $-7$ est $1001$.\newline
+L'addition bit à bit du code de $7$ avec lui même conduit à 
+\begin{displaymath}
+  \begin{aligned}
+    0 & 1 & 1 & 1 \\
+    0 & 1 & 1 & 1 \\ \hline
+    1 & 1 & 1 & 0
+  \end{aligned}
+\end{displaymath}
+Ce code représente un nombre négatif car son bit de poids fort est $1$. En fait, ce nombre est $-2$ car
+\begin{displaymath}
+  \begin{aligned}
+    1 & 1 & 1 & 0 \\ 
+    0 & 0 & 1 & 0 \\ \hline
+    0 & 0 & 0 & 0
+  \end{aligned}
+\end{displaymath}
+Ce résultat s'explique par le fait que l'addition bit à bit est exacte modulo $2^4=16$. On retrouve bien que $7+7=14$ est congru à $-2$ modulo $16$.
+
+  \item Notons $x=123.33$.
+\begin{enumerate}
+  \item Comme $123 = 64 + 32 + 16 + 8 + 2 + 1$ son développement en base $2$ est $1111011$. De $64 = 2^6 < 123 < 128 = 2^7$ on déduit que l'exposant dans le codage en virgule flottante de $123$ est $6$ qui se code sur 8 bits en $00000110$ car $6=4+2$.
+  \item Les premiers chiffres de la mantisse de $x$ sont ceux du développement de $123$ soit $1.111011$. Dans le codage, on omet le premier $1$ car ce $1$ est le même pour tous les nombres non nuls. Le codage de la mantisse commence en 
+  \begin{displaymath}
+    111011................
+  \end{displaymath}
+Il reste $17 = 23 -6$ bits à calculer.
+  \item Le développement s'obtient en multipliant par $2$ jusqu'à dépasser $1$. On écrit les opérations et leurs contributions à la mantisse (dans le bon ordre) 
+\begin{multline*}
+\left( 4\times 0.33 = 1.32 \rightsquigarrow 01\right)\;
+\left( 4\times 0.32 = 1.28 \rightsquigarrow 01\right)\;\\
+\left( 4\times 0.28 = 1.12 \rightsquigarrow 01\right)\;
+\left( 16\times 0.12 = 1.92 \rightsquigarrow 0001\right)\;\\
+\left( 2\times 0.92 = 1.84 \rightsquigarrow 1\right)\;
+\left( 2\times 0.84 = 1.68 \rightsquigarrow 1\right)\;\\
+\left( 2\times 0.68 = 1.36 \rightsquigarrow 1\right)\;
+\left( 4\times 0.36 = 1.44 \rightsquigarrow 01\right)\;\\
+\left( 4\times 0.44 = 1.84 \rightsquigarrow 01\right)\;
+\end{multline*}
+On en déduit le codage de la mantisse
+\begin{align*}
+  &111011& & 01& & 01& & 01& & 0001& & 1& & 1& & 1& & 01& & 01
+\end{align*}
+
+\end{enumerate}
+\end{enumerate}
