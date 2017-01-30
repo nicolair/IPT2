@@ -1,7 +1,7 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Résolution numérique d'équations différentielles ordinaires}
+\chead{Cours 7: Résolution numérique d'équations différentielles ordinaires le 23/01/17}
 \begin{document}
 \section{\'Equations différentielles et schémas numériques.}
 \subsection{\'Equations différentielles ordinaires}
@@ -90,7 +90,7 @@ On aboutit ainsi à un système d'équations aux inconnues $y_1,y_2,\cdots$
 qui admet clairement une unique solution qui se calcule facilement.
 
 \subsubsection{Variante - Schéma d'ordre 2.}
-On se place dans les mêmes conditions que dans le paragraphe précédent sauf que l'on change l'opérateur discret en utilisant $\frac{1}{2h}(y_{k+1}-y_{k-1})$ au lieu de $\frac{1}{h}(y_{k+1}-y_{k})$ pour $k\geq 2$. On aboutit à un autre système d'équations
+On se place dans les mêmes conditions que dans le paragraphe précédent sauf que l'on change l'opérateur discret servant à évaluer la dérivée (sauf pour $y'(0)$. On utilise $\frac{1}{2h}(y_{k+1}-y_{k-1})$ au lieu de $\frac{1}{h}(y_{k+1}-y_{k})$ pour $k\geq 2$. On aboutit à un autre système d'équations
 \begin{align*}
   &y_1 = y_0 + hF(t_0,y_0) \\ &y_2 = y_0 + 2hF(t_1,y_1)\\ &y_3 = y_1 + 2hF(t_2,y_2)\\ &\vdots \\ &y_{k+1} = y_{k-1} + 2hF(t_k,y_k)
 \end{align*}
