@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 script pour compiler le fichier tex principal. Il peut contenir des insertions de fichiers tex ou de figures. Les figures sont crées par divers scripts.
-Les données de compilation sont rassemblées dans une liste:
-[nom fichier image, nom fichier source, nom langage script, [options commande] ]
-  les clés sont les fichiers pdf
-  les valeurs sont des listes. Chacune permettant de créer le fichier pdf 
 """
 
 import depot.compil as cpl
