@@ -1,4 +1,4 @@
-Ce problème envisage des simulations numérique autour de la dynamique gravitationnelle\footnote{d'après l'épreuve d'informatique 2015 du concours commun centrale-supélec}.
+Ce problème envisage des simulations numériques autour de la dynamique gravitationnelle\footnote{d'après l'épreuve d'informatique 2015 du concours commun centrale-supélec}.
 
 \begin{quotation}
 \textit{
@@ -123,12 +123,12 @@ Trois listes sont utilisées pour représenter ce système en Python.
   \item \texttt{position} conserve les positions successives de chaque corps:\newline \texttt{position[i][j]} $=\left[ x_{ij}, y_{ij}, z_{ij}\right]$.
   \item \texttt{vitesse} conserve les vitesses successives de chaque corps:\\ \texttt{vitesse[i][j]} $=\left[ v_{xij}, v_{yij}, v_{zij}\right]$. 
 \end{itemize}
-L'objet de la suite de ce problème est de construire ces suites en mettant en \oe{}uvre le schéma de Verlet.
+L'objet de la fin de ce problème est de construire ces suites en mettant en \oe{}uvre le schéma de Verlet.
 \begin{enumerate}
   \item Position du problème.
 \begin{enumerate}
   \item Exprimer la force $\overrightarrow{F}_j$ exercée sur le corps $j$ par l'ensemble des autres corps.
-  \item \'Ecrire une fonction Python \texttt{force2(m1,p1,m2,p2)} qui prend en paramètre les masses ($m1$ et $m2$ en kilogrammes) et les positions ($p1$ et $p2$ sous forme de listes de trois coordonnées cartésiennes en mètres) de deux corps 1 et 2 et qui renvoie la force exercée par le corps 2 sur le corps 1, sous la forme d'une liste à trois éléments représentant les coordonnées de la force dans la base de référence (en newtons).
+  \item \'Ecrire une fonction \texttt{force2(m1,p1,m2,p2)} qui prend en paramètre les masses ($m1$ et $m2$ en kilogrammes) et les positions ($p1$ et $p2$ sous forme de listes de trois coordonnées cartésiennes en mètres) de deux corps 1 et 2 et qui renvoie la force exercée par le corps 2 sur le corps 1, sous la forme d'une liste à trois éléments représentant les coordonnées de la force dans la base de référence (en newtons).
   \item \'Ecrire une fonction \texttt{forceN(j,m,pos)} qui prend en paramètres l'indice $j$ d'un corps, la liste \texttt{m} des masses des $N$ corps, la liste \texttt{pos} des positions des $N$ corps et qui renvoie la force $\overrightarrow{F}_j$ exercée par tous les autres corps sur $j$ sous la forme d'une liste à trois éléments représentant les coordonnées de cette force dans la base du référentiel.
 \end{enumerate}
 
