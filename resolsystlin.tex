@@ -1,7 +1,7 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Résolution numérique de systèmes d'équations linéaires}
+\chead{Cours 8: Résolution numérique de systèmes d'équations linéaires le 29/03/17}
 \begin{document}
 La méthode du pivot de Gauss consiste à transformer un système d'équations linéaires (sans changer l'ensemble des solutions) en un système triangulaire puis à résoudre\footnote{\og résoudre\fg ~ un système d'équations c'est trouver une description paramétrique de l'ensemble de ses solutions.} ce système triangulaire (phase de remontée).\newline
 Le programme d'informatique de la classe se limite aux systèmes linéaires inversibles (ou de Cramer). Dans de tels systèmes, le nombre d'équations est égal au nombre d'inconnues (notons le $p$) et le système admet une unique solution (qui est un $p$-uplet). Les cas plus généraux sont présentés dans le \href{http://back.maquisdoc.net/data/cours_nicolair/C2234.pdf}{cours de maths}.
@@ -69,8 +69,8 @@ La méthode de Gauss est une succession d'opérations élémentaires qui transfo
 Parmi les valeurs $a_{i i}, a_{i+1 i}, \cdots a_{p i}$, en existe-t-il une non nulle? Si oui, on en choisit une (on l'appelle le \emph{pivot}) et on renvoie son indice comme \emph{indice-pivot} $ip$.
 \begin{rems}
   \item Attention, tester l'égalité entre deux décimaux normalisés (ou vérifier si un décimal normalisé est non nul) est toujours une mauvaise pratique. On ne peut donc pas, pour la recherche d'un indice-pivot, se contenter de parcourir la fin de la colonne en s'arrêtant dès qu'un terme non nul est trouvé. Pour une résolution numérique, on choisira l'indice qui correspond à la plus grande valeur absolue des termes.
-  \item Dans le cas d'un calcul formel, par exemple si tous les coefficients sont rationnels, on choisira le plus \emph{simple} des coefficients. Cette simplicité est à préciser, par exemple pour des calculs sans machine les valeurs $1$ ou $-1$ seront choisis.
-  \item Dans le cas d'un système de Cramer, il existe un tel indice (voir le cours de maths). Si on implémente un algorithme qui peut s'exécuter pour un système qui n'est pas de Cramer, il convient de l'arrêter dans le cas où la recherche d'un indice-pivot échoue c'est à dire lorsque $a_{i i} = a_{i+1 i} = \cdots = \cdots a_{p i}=0$.  
+  \item Dans le cas d'un calcul formel, par exemple si tous les coefficients sont rationnels, on choisira le plus \emph{simple} des coefficients. Cette simplicité est à préciser, par exemple pour des calculs sans machine les valeurs $1$ ou $-1$ seront choisies.
+  \item Dans le cas d'un système de Cramer, il existe un tel indice (voir le cours de maths). Si on implémente un algorithme qui peut s'exécuter pour un système qui n'est pas de Cramer, il convient de l'arrêter dans le cas où la recherche d'un indice-pivot échoue c'est à dire lorsque $a_{i i} = a_{i+1 i} = \cdots = \cdots = a_{p i}=0$.  
 \end{rems}
 
 \subsection{Nettoyer les lignes}
@@ -149,8 +149,8 @@ L'inversion d'une matrice inversible à $p$ lignes revient à la résolution de 
 (avec le $1$ dans la ligne $k$) donnant la colonne $k$ de la matrice inverse. La complexité de l'inversion est donc en $O(p^4)$. Pour résoudre un système, il ne faut donc pas commencer par inverser la matrice.
 \subsection{Produits matriciels}
 Le calcul du produit d'une matrice colonne ($p$ lignes) par une matrice ligne ($p$ colonnes) nécessite $p$ multiplications et $p-1$ additions. Il est donc de complexité $O(p)$.\newline
-Pour calculer le produit d'une matrice carrée par une matrice colonne, il faut effectuer $p$ calculs du type précédent, complexité en $O(p^2)$.\newline
-Pour calculer le produit de deux matrices carrées, il faut effectuer $p^2$ fois des produits ligne $\times$ colonne, la complexité est en $O(p^3)$.
+Pour calculer le produit d'une matrice carrée par une matrice colonne, il faut effectuer $p$ calculs du type précédent. La complexité est en $O(p^2)$.\newline
+Pour calculer le produit de deux matrices carrées, il faut effectuer $p^2$ fois des produits ligne $\times$ colonne. La complexité est en $O(p^3)$.
 \subsection{Système triangulaire équivalent}
 La complexité de la recherche d'un indice-pivot est en $O(p)$.\newline
 La complexité de la permutation de deux lignes est en $O(p)$.\newline
@@ -161,7 +161,12 @@ Pour le calcul de $x_p$: une addition et une division.\newline
 Pour le calcul de $x_{p-1}$: une multiplication, une addition, une division\newline
 Pour le calcul de $x_{p-2}$: deux multiplications, deux addition, une division\newline
 Pour le calcul de $x_{p-3}$: $3$ multiplications, $3$ additions, une division\newline
-En sommant, on obtient une complexité en $O(p^2)$. Il est assez remarquable que, pour une matrice triangulaire et une colonne données, la complexité de la résolution du système soit la même que celle d'une multiplication.
+En sommant, on obtient une complexité en $O(p^2)$.\newline
+Pour une matrice triangulaire et une colonne données, la complexité de la résolution du système est 
+\begin{displaymath}
+  O(p^3) + O(p^2) = O(p^3). 
+\end{displaymath}
+Il est assez remarquable qu'elle soit la même que celle d'une multiplication matricielle.
 
 \section{Implémentation Python}
 On choisit d'utiliser des listes de listes pour représenter les matrices. Plus précisément, chaque ligne est représentée par une liste de $p$ objets et la matrice est la liste de ces listes. Attention, en Python les listes sont indexées à partir de $0$.\newline
@@ -267,7 +272,7 @@ def phi(E,P,t):
     l = - num/den
     return x + l , y+t*l
 \end{verbatim}
-Pour vérifier, on calcule les $t$ qui correspondent aux points donnés $M_1,\cdots M_4$ et on trace les points de la conique entre les valeurs extrèmes de ces $t$.
+Pour vérifier, on calcule les $t$ qui correspondent aux points donnés $M_1,\cdots, M_4$ et on trace les points de la conique entre les valeurs extrèmes de ces $t$.
 \begin{verbatim}
 import matplotlib.pyplot as plt
 plt.clf()
@@ -288,6 +293,7 @@ tt = tmin - p*pas
     tt += pas
 \end{verbatim}
 On voit que les points ne se recouvrent pas exactement à cause des erreurs d'arrondi.
+\end{document}
 
 \subsection{Implémentation en Scilab}
 En Scilab, le passage des paramètres dans une procédure se fait en copiant les valeurs. L'utilisation de procédures pour permuter ou nettoyer les lignes conduirait à des copies inutiles, on travaille donc directement dans la procédure principale.
