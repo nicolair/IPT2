@@ -1,0 +1,44 @@
+Ce texte est le corrigé de la partie III de l'épreuve IPT spécifique PSI de CCP 2016. La numérotation des questions du texte original est conservée.
+\paragraph{Q17} La relation est une conséquence du principe fondamental de la dynamique.
+
+\paragraph{Q18} Les fonctions numériques $S_x$ et $S_y$ sont obtenues en exprimant en coordonnées (projections orthogonales sur les axes du repère) la relation vectorielle (3).
+\begin{align*}
+  S_x(u,v,t) = - Gm_s\,u\,\left( u^2 + v^2\right)^{-1.5} 
+  - Gm_v\, \left( u-r_v\cos(\Omega t + \Phi)\right) \\
+  \left( \left( u-r_v\cos(\Omega t + \Phi)\right)^2 + \left( v-r_v\sin(\Omega t + \Phi)\right)^2\right)^{-1.5} 
+\end{align*}
+\begin{align*}
+  S_y(u,v,t) = - Gm_s\,v\,\left( u^2 + v^2\right)^{-1.5} 
+  - Gm_v\, \left( v-r_v\sin(\Omega t + \Phi)\right) \\
+  \left( \left( u-r_v\sin(\Omega t + \Phi)\right)^2 + \left( v-r_v\sin(\Omega t + \Phi)\right)^2\right)^{-1.5} 
+\end{align*}
+On implémente une fonction \texttt{eval\_sm(x,y,t)} qui renvoie les valeurs de $S_x$ et $S_y$ sous la forme d'un tuple, toutes les constantes sont passées globalement.
+\lstinputlisting[firstline=1, lastline=8]{Cccp16.py}
+
+\paragraph{Q19} La méthode d'Euler explicite conduit aux relations de récurrence suivantes pour les approximations de la vitesse
+\begin{displaymath}
+  u_{i+1} = u_i + S_x(x_i,y_i,t_i)\Delta t, \hspace{0.5cm} v_{i+1} = v_i + S_y(x_i,y_i,t_i)\Delta t\
+\end{displaymath}
+
+\paragraph{Q20} Pour les relations liant les coordonnées de position,
+\begin{displaymath}
+  x_{i+1} = x_i + u_i \Delta t,\hspace{0.5cm} y_{i+1} = y_i + v_i \Delta t
+\end{displaymath}
+Remarque. Je n'aime pas l'ordre dans lequel les questions sont posées. On calcule la nouvelle vitesse avant la nouvelle position alors qu'il faut utiliser l' \emph{ancienne} vitesse pour calculer la nouvelle position dans le schéma d'Euler explicite. Cela interdit de considérer des variables \og position courante\fg et \og vitesse courante\fg.
+
+\paragraph{Q21} On initialise les variables demandées comme des listes sans prédéfinir leur taille. Les valeurs calculées seront placées à la fin par des \texttt{.append()}.
+\lstinputlisting[firstline=10, lastline=18]{Cccp16.py}
+
+\paragraph{Q22} Le calcul des positions et des vitesses peut se faire avec
+\lstinputlisting[firstline=21, lastline=29]{Cccp16.py}
+
+\paragraph{Q23} Pour effectuer une simulation numérique sur 30 jours avec un pas de temps de 1 seconde et des variables \texttt{x[i]},\texttt{y[i]}, \texttt{u[i]}, \texttt{v[i]}, \texttt{t[i]} codées sur 8 octets. La quantité de mémoire nécessaire est
+\begin{displaymath}
+  30\times 24 \times 3600 \times 5 \times 8 \text{ o} 
+  = 103\,680\,000 \text{ o}
+  = 103.7 \text{ Mo}
+\end{displaymath}
+Ce n'est pas vraiment un problème pour un ordinateur récent. Le choix de coder les valeurs du temps comme un flottant sur 8 octets est discutable, on pourrait envisager de le coder comme un entier sur 4 octets = 32 bits seulement.
+
+\paragraph{Q24} La fonction vitesse sonde sert à afficher l'évolution de la norme de la vitesse en fonction du temps. Elle utilise les listes \texttt{u}, \texttt{v} et \texttt{t} déjà calculées. 
+\lstinputlisting[firstline=31, lastline=40]{Cccp16.py}
