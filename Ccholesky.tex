@@ -1,0 +1,135 @@
+\subsection*{Partie I. Algorithme 1.}
+\begin{enumerate}
+ \item La matrice $A$ est symétrique car 
+ \begin{displaymath}
+  \trans \left( \trans U \, U\right) = \trans U \trans \trans U = \trans U U = A 
+ \end{displaymath}
+
+ \item La matrice $U$ est triangulaire supérieure si et seulement si
+ \begin{displaymath}
+ \forall (i,j)\in \llbracket 1,n \rrbracket^2, \; i > j\; \Rightarrow u_{i j} = 0 
+\end{displaymath}
+
+ \item Examinons le terme $1, j$ de $\trans U \, U = A$:
+\begin{displaymath}
+\trans C_1(U)\, C_j(U) =
+\begin{pmatrix}
+ u_{1 1} & 0 & \cdots & 0
+\end{pmatrix}
+\begin{pmatrix}
+ u_{1 j} \\ u_{2 j} \\ \vdots \\ u_{n j}
+\end{pmatrix}
+ = u_{1 1} u_{1 j} = a_{1 j}
+\end{displaymath}
+
+ \item Pour tout $i\in \llbracket 2,n \rrbracket$ et tout $j\in \llbracket i,n \rrbracket$, examinons le terme $i, j$ de $A$:
+\begin{displaymath}
+\begin{pmatrix}
+ u_{1 i} & \cdots & u_{i i} & 0 & \cdots & 0
+\end{pmatrix}
+\begin{pmatrix}
+ u_{1 j} \\ \vdots \\ u_{j j} \\0 \\ \vdots \\ 0
+\end{pmatrix} 
+ = \sum_{k=1}^{i}u_{k i} u_{k j} = a_{i j}
+\end{displaymath}
+La somme est limitée à $i$ car $i\leq j$. La formule suivant s'obtient simplement en isolant $k=i$:
+\begin{displaymath}
+ \sum_{k=1}^{i-1}u_{k i} u_{k j} + u_{i i} u_{i j} = a_{i j}
+\end{displaymath}
+
+ \item On complète le pseudo-code proposé en utilisant la relation de la question 3. (d'abord avec $j=1$ puis pour les autres valeurs de $j$) puis celle de la question 4. (d'abord avec $j=i$ puis pour les autres valeurs de $j$ de $i+1$ à $n$). Le résultat est présenté comme algorithme \ref{Ccholesky_1}.
+\end{enumerate}
+\begin{algorithm}
+  $n\leftarrow $ naturel non  nul\;
+  $A\leftarrow $ matrice $n\times n$ définie positive \;
+  $U$ désigne la matrice triangulaire supérieure que l'on veut calculer \;
+  $i\leftarrow 1$\;
+  $u_{1 1} \leftarrow \sqrt{a_{1 1}}$\;
+  \Pour{$j$ de $2$ à $n$:}{
+    $u_{1 j} \leftarrow \frac{a_{1 j}}{u_{1 1}}$
+  }
+  \Pour{$i$ de $2$ à $n$}{
+      $u_{i i} \leftarrow \sqrt{a_{i i} - \sum_{k=1}^{i-1}u_{k i}^2}$\;
+    \Pour{$j$ de $i+1$ à $n$:}{
+      $u_{i j} \leftarrow \frac{a_{i j} - \sum_{k=1}^{i-1}u_{k i} u_{k j}}{u_{i i}}$
+    }
+  }
+  \caption{Partie I. Question 5}
+  \label{Ccholesky_1}
+\end{algorithm}
+
+\subsection*{Partie II. Application aux systèmes.}
+\begin{enumerate}
+ \item La résolution d'un système $SX =Y$ avec $S$ triangulaire supérieure inversible est \emph{la phase de remontée} du cours sur l'algorithme du pivot. Remarquer que tous les $s_{i i}$ sont non nuls car la matrice $S$ triangulaire supérieure est inversible. Le résultat est présenté comme algorithme \ref{Ccholesky_2}.
+ \begin{algorithm}
+ $i \leftarrow n$\;
+ \Tq{ $i \geq 1$:}{
+   $x_i = \frac{1}{s_{i i}}\left( y_i - \sum_{j = i+1}^{n} s_{i j} x_j\right)$\;
+   $i \leftarrow i-1$\;
+ }
+ \caption{Phase de remontée}
+ \label{Ccholesky_2}
+\end{algorithm}
+  
+  \item Codes Python.
+\begin{enumerate}
+\item Le code de la fonction \texttt{resol\_sup} est présenté au dessous.
+\lstinputlisting[firstline=5, lastline=17]{Ccholesky_1.py}
+
+\item Celui de la fonction \texttt{resol\_inf} est très proche du précédent et procède dans l'autre sens.
+\lstinputlisting[firstline=19, lastline=31]{Ccholesky_1.py}
+\end{enumerate}
+
+ \item Code pour la fonction \texttt{transpose}
+\lstinputlisting[firstline=33, lastline=39]{Ccholesky_1.py}
+
+ \item Pour résoudre le système $\trans U\, U\, X = T$, on résoud successivement deux systèmes triangulaires: d'abord inférieur puis supérieur.
+\begin{displaymath}
+\left. 
+\begin{aligned}
+ \trans U\, X_1 =& Y \\ U\, X = X_1
+\end{aligned}
+\right\rbrace 
+\Rightarrow 
+\trans U\, U\, X = Y
+\end{displaymath}
+On peut donc résoudre le système avec le code
+\begin{verbatim}
+U = cholesky(A)
+L = transpose(U)
+X1 = resol_inf(L,Y)
+X  = resol_sup(U,X1)
+\end{verbatim} 
+\end{enumerate}
+
+\subsection*{Partie III. Méthode des moindres carrés.}
+\begin{enumerate}
+ \item Il suffit d'écrire
+\begin{displaymath}
+ p(t_i) = a_0 + a_1t_i + a_2 t_{i}^{2}=
+\begin{pmatrix}
+ 1 & t_i & t_i^2
+\end{pmatrix}
+\begin{pmatrix}
+ a_0 \\ a_1 \\ a_2
+\end{pmatrix}
+\end{displaymath}
+
+ \item Chacune des $14$ relations $p(t_i) = z_i$ correspond à une ligne de l'équation matricielle. Les matrices $V$ et $Z$ ont donc $14$ lignes:
+\begin{displaymath}
+ V =
+\begin{pmatrix}
+1 & t_0 & t_0^2 \\ 1 & t_1 & t_1^2 \\ \vdots & \vdots & \vdots \\ 1 & t_{13} & t_{13}^2
+\end{pmatrix}
+\in \mathcal{M}_{14 , 3}(\R)
+\hspace{0.5cm}
+Z =
+\begin{pmatrix}
+z_0 \\ z_1 \\ \vdots \\ z_{13} 
+\end{pmatrix}
+\in \mathcal{M}_{14 , 1}(\R)
+\end{displaymath}
+
+\item Le code complété est présenté au dessous. Il faut faire attention, comme dans la question II.4 à l'ordre dans lequel on résoud les deux systèmes triangulaires. 
+\lstinputlisting[firstline=54, lastline=70]{Ccholesky_1.py}
+\end{enumerate}

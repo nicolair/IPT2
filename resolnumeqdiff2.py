@@ -30,3 +30,5 @@ for P in euler3(F, 0.,8.,0.15,-1.,0.05):
   plt.plot(P[0],P[1],'bo')
 for P in euler3(F, 0.,8.,0.15,-2.,0.05):
   plt.plot(P[0],P[1],'ro')
+  
+plt.show()
