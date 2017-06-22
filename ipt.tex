@@ -34,23 +34,148 @@
 \DontPrintSemicolon
 \SetAlgoLined
 
-\usepackage{listings}
-\lstset{language=Python,frame=single}
-\lstset{literate=
-  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
-  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
-  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
-  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
-  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
-  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
-  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
-  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
-  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
-  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
-  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
-  {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
-  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
-}
+\usepackage[procnames]{listings}
+%\lstset{language=Python,frame=single}
+%\lstset{literate=
+%  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+%  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+%  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+%  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+%  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+%  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+%  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+%  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+%  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+%  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+%  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+%  {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+%  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
+%}
+%Python %
+%\usepackage[procnames]{listings}
+\usepackage{color, setspace}
+
+\definecolor{gren}{rgb}{0,0.5,0}
+\definecolor{purple}{rgb}{0.5,0,0.5}
+\definecolor{darkred}{rgb}{0.5,0,0}
+\definecolor{orange}{rgb}{1,0.5,0}
+\definecolor{lightgrey}{rgb}{.97,.97,.97}
+
+%%%% Environnement Python %%%%%
+\lstnewenvironment{python}[1][]{
+\lstset{
+        literate=
+	  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+	  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+	  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+	  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+	  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+	  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+	  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+	  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+	  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+	  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+	  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+	  {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+	  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1,
+	language=python,
+	%frameround=tttt,
+	frame=single,
+	%framerule=2pt,
+	%rulecolor=\color{gray!60},
+	rulesep=.3pt,
+	%backgroundcolor=\color{gray!5},
+	basicstyle=\ttfamily\small\setstretch{1},
+	%stringstyle=\color{gren},
+	showstringspaces=false,
+	alsoletter={1234567890},
+	otherkeywords={\ , \}, \{},
+	%keywordstyle=\color{blue},
+	emph={access,and,as,break,class,continue,def,del,elif,else,%
+	except,exec,finally,for,from,global,if,import,in,is,%
+	lambda,not,or,pass,print,raise,return,try,while,assert},
+	%emphstyle=\color{orange},
+	emph={[2]self},
+	%emphstyle=[2]\color{gray},
+	emph={[4]ArithmeticError,AssertionError,AttributeError,BaseException,%
+		DeprecationWarning,EOFError,Ellipsis,EnvironmentError,Exception,%
+		False,FloatingPointError,FutureWarning,GeneratorExit,IOError,%
+		ImportError,ImportWarning,IndentationError,IndexError,KeyError,%
+		KeyboardInterrupt,LookupError,MemoryError,NameError,None,%
+		NotImplemented,NotImplementedError,OSError,OverflowError,%
+		PendingDeprecationWarning,ReferenceError,RuntimeError,RuntimeWarning,%
+		StandardError,StopIteration,SyntaxError,SyntaxWarning,SystemError,%
+		SystemExit,TabError,True,TypeError,UnboundLocalError,UnicodeDecodeError,%
+		UnicodeEncodeError,UnicodeError,UnicodeTranslateError,UnicodeWarning,%
+		UserWarning,ValueError,Warning,ZeroDivisionError,abs,all,any,apply,%
+		basestring,bool,buffer,callable,chr,classmethod,cmp,coerce,compile,%
+		complex,copyright,credits,delattr,dict,dir,divmod,enumerate,eval,%
+		execfile,exit,file,filter,float,frozenset,getattr,globals,hasattr,%
+		hash,help,hex,id,input,int,intern,isinstance,issubclass,iter,len,%
+		license,list,locals,long,map,max,min,object,oct,open,ord,pow,property,%
+		quit,range,raw_input,reduce,reload,repr,reversed,round,set,setattr,%
+		slice,sorted,staticmethod,str,sum,super,tuple,type,unichr,unicode,%
+		vars,xrange,zip},
+	%emphstyle=[4]\color{purple},
+	upquote=true,
+	%morecomment=[s][\color{gren}]{"""}{"""},
+	%commentstyle=\color{red}\slshape,
+	%literate={>>>}{\textbf{\textcolor{darkred}{>{>}>}}}3%
+	%         {...}{{\textcolor{gray}{...}}}3%
+	%		{\'e}{{\'e}}1 %
+	%		{\`e}{{\`e}}1 %
+	%		{\^e}{{\^e}}1%
+	%		{\^E}{{\^E}}1%
+	%		{\`a}{{\`a}}1 %
+	%		{\`A}{{\`A}}1%
+	%		{\c c}{{\c{c}}}1 %
+	%		{\`u}{{\`u}}1%
+	%		{\^\i }{{\^i}}1%
+	%		{\"\i }{{\" i}}1%
+	%		{\^o}{{\^o}}1%
+	%		{\^u}{{\^u}}1,
+	%inputencoding=latin1,
+	procnamekeys={def,class},
+	%procnamestyle=\color{blue},
+	breaklines=true,
+	breakindent=0pt,
+	%prebreak=\mbox{$\backslash$},
+	%postbreak=\mbox{    }
+}}{}
+%%%%%
+
+%%%%  Environnement SQL %%%%
+
+\lstnewenvironment{sql}[1][]{
+\lstset{
+	language=sql,
+	frameround=tttt,
+	frame=single,
+	framerule=1pt,
+	rulecolor=\color{gray!60},
+	showstringspaces=false,
+	backgroundcolor=\color{lightgrey},
+	basicstyle=\ttfamily\small\setstretch{1},
+	keywordstyle=\color{darkred}\bf,
+	commentstyle=\color{purple}\slshape,
+	stringstyle=\color{gren},
+	emph={[2]no, column, read},
+	emphstyle=[2],
+	otherkeywords={TEXT, REFERENCES, EXISTS, OFFSET},% IS},
+	literate={\'e}{{\'e}}1 %
+			{\`e}{{\`e}}1 %
+			{\^e}{{\^e}}1%
+			{\^E}{{\^E}}1%
+			{\`a}{{\`a}}1 %
+			{\`A}{{\`A}}1%
+			{\c c}{{\c{c}}}1 %
+			{\`u}{{\`u}}1%
+			{\^\i }{{\^i}}1%
+			{\"\i }{{\" i}}1%
+			{\^o}{{\^o}}1%
+			{\^u}{{\^u}}1,
+	inputencoding=latin1,
+}}{}
 
 %pr{\'e}sentation des compteurs de section, ...
 \makeatletter

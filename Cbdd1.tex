@@ -1,0 +1,21 @@
+\begin{enumerate}
+ \item Pour obtenir les croisements que l'on peut atteindre à partir du croisement $c$, il suffit d'examiner les voies qui débutent en $c$. 
+\begin{verbatim}
+ SELECT Voie.id_croisement_fin
+ FROM Voie
+ WHERE Voie.id_croisement_debut = 'c'
+\end{verbatim}
+
+\item Les longitudes et latitudes des croisements précédents sont obtenues depuis la table des croisements que l'on doit joindre dans la requête précédente sur l'attribut \texttt{Voie.id\_croisement\_fin}.
+
+\begin{verbatim}
+ SELECT Voie.id_croisement_fin, Croisement.longitude,
+         Croisement.latitude 
+ FROM Voie 
+ JOIN Croisement 
+ ON Voie.id_croisement_fin = Croisement.id
+ WHERE Voie.id_croisement_debut = 'c'
+\end{verbatim}
+
+\item La requête proposée joint la table Voie à elle même en identifiant le croisement de fin des voies de la première table à celui de début des voies de la seconde. Elle affiche les identifiants des croisements de fin des voies de la deuxième table. Elle permet donc de connaitre les croisements que l'on peut atteindre à partir du croisement $c$ en utilisant \emph{deux} voies.
+\end{enumerate}

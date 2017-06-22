@@ -1,0 +1,20 @@
+\begin{itemize}
+ \item[Q1] Les données de comptages figurent dans la table COMPTAGES, chaque enregistrement étant associé à un comptage particulier effectué par une station repérée par son identifiant. L'énoncé  demande des données de comptage (donc extraites de COMPTAGES) mais pour une station particulière connue par son nom et non par son identifiant. Une jointure avec la table STATIONS sur l'identiant des stations est nécessaire pour extraire les donnés de comptage associée à la station M8B
+\begin{verbatim}
+ SELECT `id_comptage`, `date`, `voie`, `q_exp`, `v_exp`
+ FROM `COMPTAGES`
+ JOIN `STATIONS`
+ ON `COMPTAGES`.`id_station` = `STATIONS`.`id_station` 
+ WHERE `STATIONS`.`nom` = 'M8B'
+\end{verbatim}
+
+Noter les guillemets obliques (facultatif selon les moteurs de base de données) pour délimiter les noms de tables et d'attribut ainsi que le nom complet avec un point indispensable pour la jointure à cause de l'ambiguité de l'attribut \texttt{id\_station} qui figure dans les deux tables. En revanche, le nom complet dans la clause n'est pas indispensable, il facilite cependant la comprehension de la requête.
+
+ \item[Q2] Le résultat de la requête précédente a été stocké dans \texttt{COMPTAGES\_M8B} contenant les 5 colonnes (attributs) : ($id\_comptage$, $date$, $voie$, $q\_exp$, $v\_exp$). On groupe les enregistrements de cette table par date et on somme (fonction d'agrégation) les débits des trois voies. 
+\begin{verbatim}
+ SELECT `date`, SUM(`q_exp`)
+ FROM `COMPTAGES_M8B` 
+ GROUP BY `date`
+\end{verbatim}
+
+\end{itemize}

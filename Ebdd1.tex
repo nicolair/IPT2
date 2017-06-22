@@ -1,0 +1,21 @@
+On modélise \footnote{Questions Q26, Q27, Q28 du Concours commun Mines Ponts 2017 (i17mice.pdf)} ici un réseau routier par un ensemble de \emph{croisements} et de \emph{voies} reliant ces croisements. Les voies partent d'un croisement et arrivent à un autre croisement. Ainsi, on modélise une route à double sens par deux voies circulant en sens opposés.\newline
+La base de données de ce réseau routier est constituée des relations suivantes:
+\begin{itemize}
+ \item Croisement (\underline{id}, longitude, latitude)
+ \item Voie (\underline{id}, id\_croisement\_debut, id\_croisement\_fin)
+\end{itemize}
+
+Dans la suite, $c$ désigne l'identifiant (id) d'un croisement donné.
+\begin{enumerate}
+ \item \'Ecrire la requête SQL qui renvoie les identifiants des croisements que l'on peut atteindre à partir du croisement identifié par $c$ en utilisant une seule voie.
+ \item \'Ecrire la requête SQL qui renvoie les longitudes et latitudes des croisements que l'on peut atteindre à partir du croisement identifié par $c$ en utilisant une seule voie.
+ \item Que renvoie la requête SQL suivante ?
+\begin{verbatim}
+ SELECT V2.id_croisement_fin
+ FROM Voie AS V1
+ JOIN Voie AS V2
+ ON V1.id_croisement_fin = V2.id_croisement_debut
+ WHERE V1.id_croisement_debut = c
+\end{verbatim}
+
+\end{enumerate}

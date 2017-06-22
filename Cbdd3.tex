@@ -1,0 +1,111 @@
+\begin{itemize}
+ \item [I.A - ] Pour compter les vols qui décollent strictement avant midi, on compte les enregistrements de la table vol filtrée par une clause.
+\begin{verbatim}
+ SELECT COUNT(*)
+ FROM `vol`
+ WHERE `jour` = '2016-05-02' AND `heure` < '12:00'
+\end{verbatim}
+
+\item[I.B - ] Attention, il y a deux aéroports à Paris.\newline
+On peut comprendre la question de deux manières. Soit on cherche la liste des vols atterrissant à Paris le 2 mai 2015, soit on cherche la liste des vols partant des aéroports d'où part au moins un vol atterrissant à Paris le 2 mai 2015. Cette deuxième interprétation me semble peu probable car on ne sait pas si on doit se limiter à un jour particulier pour le vol.\newline
+On ne s'intéresse donc qu'à la première interprétation mais on en donne plusieurs versions suivant que l'on connait ou non les codes d'Orly et de Roissy (\texttt{'ORY'} , \texttt{'CDG'}) et l'opérateur booleéen \texttt{IN}.\newline
+Avec l'opérateur \texttt{IN}:
+\begin{verbatim}
+ SELECT `id_vol`  FROM `vol` 
+ WHERE `arrivee` IN ('CDG', 'ORY') AND jour = '2016-05-02'
+\end{verbatim}
+Sans opérateur \texttt{IN}:
+\begin{verbatim}
+ SELECT `id_vol`  FROM `vol` 
+ WHERE (`arrivee` = 'CDG' OR `arrivee` = 'ORY')
+        AND jour = '2016-05-02'
+\end{verbatim}
+Si on ne connait pas les codes des aéroports parisiens, une jointure avec la table \texttt{aeroport} sur l'identifiant de l'aéroport d'arrivée et nécessaire
+\begin{verbatim}
+ SELECT `id_vol`  FROM `vol` 
+ JOIN `aeroport` ON `vol`.`arrivee` = `aeroport`.`id_aero` 
+ WHERE `aeroport`.`ville` = 'Paris' AND jour = '2016-05-02'
+\end{verbatim}
+
+\item[I.C - ] La table des aéroports est jointe deux fois à celle des vols. Une première fois avec l'alias \texttt{d} (pour départ) sur l'identifiant de l'aéroport de départ et la seconde avec l'alias \texttt{a} (arrivée) sur l'identifiant de l'aéroport d'arrivée.\newline
+La requête renvoie donc la liste des numeros des vols du 2 mai 2016 décollant et atterrissant en France.
+
+\item[I.D - ] On joint la table des vols à elle même (avec les alias v1 et v2) sur les critères conduisant au risque de conflit.
+\begin{verbatim}
+ SELECT v1.id_vol, v2.id_vol
+ FROM vols v1 JOIN vols v2 
+     ON v1.niveau = v2.niveau 
+       AND v1.depart = v2.arrivee 
+       AND v1.arrivee = v2.depart
+       AND v1.jour = v2.jour
+\end{verbatim}
+Avec cette requête, si un enregistrement $(id1,id2)$ est présent l'enregistrement $(id2,id1)$ le sera aussi ce qui n'est pas utile. Pour éviter cela, on filtre encore avec la clause
+\begin{verbatim}
+ WHERE v1.id_vol < v2.id_vol
+\end{verbatim}
+
+\item[II.A.1 - ] La liste de listes stockée dans \texttt{conflit} peut être regardée comme une matrice symétrique car chaque paire de conflit est présentée deux fois. Le nombre de conflit est donc le nombre de termes non nuls divisé par 2.
+\begin{verbatim}
+ def nb_conflits():
+ #renvoie le nombre de conflits potentiels 
+ nb = 0 
+ for li in conflit:
+     for v in li:
+         if v != 0:
+             nb += 1
+ return nb/2
+\end{verbatim}
+On pourrait tester les indices pour s'assurer que l'on reste dans la partie strictement supérieure et éviter de diviser par 2 à la fin. Cela ne change pas la complexité qui est $O(n^2)$.\newline
+Remarquer que 
+\begin{verbatim}
+ global conflit
+\end{verbatim}
+est inutile dans la fonction car on ne modifie pas la liste, on ne fait que la lire.
+
+\item[II.B.1 - ] Il suffit de lire la régulation pour en extraire les informations.
+\begin{python}
+def nb_vol_par_niveau_relatif(regulation):
+    """regulation est une liste de n entiers
+    renvoie [a, b, c] où :
+      - a est le nombre de vols à leurs RFL
+      - b est le nombre de vols au-dessus de leurs RFL
+      - c est le nombre de vols au-dessous de leurs RFL"""
+    nb_vols = [0, 0, 0]
+    for r in regulation: 
+        nb_vols[r] += 1
+    return nb_vols
+\end{python}
+ 
+
+\item[II.B.2.a - ] On commence par former la liste des vols régulés.
+\begin{python}
+def cout_regulation(regulation):
+    """Renvoie le coût de la régulation"""
+    n = len(regulation)
+    cout = 0
+    v = [] # liste des n vols
+    for i in range(n): 
+        v.append(3*i + regulation[i])
+    for i in range(n):
+        for j in range(i):
+            cout += conflit[v[i]][v[j]]
+    return cout
+\end{python}
+ 
+
+\item[II.B.2.b - ] Le coût de la premi\`ere boucle est en $O(n)$ et celle des deux autres est comme précédemment en $O(n^2)$ soit un co\^ut total en $O(n^2)$.
+ 
+
+\item[II.B.2.c - ] Il suffit d'appeler \texttt{cout\_regulation} avec une liste ne contenant que des 0 représentant la régulation où chaque avion vole à son RFL.
+
+\begin{python}
+def cout_RFL():
+    #coût de la régulation où chaque avion vole à son RFL
+    n = len(conflit) // 3
+    return cout_regulation( [ 0 for _ in range(n) ] )
+\end{python}
+
+
+\item[II.B.3 - ] Pour chaque vol, il y a $3$ niveaux relatifs, donc il y a $3^n$ r\'egulations possibles. Le calcul de tous les co\^uts possibles serait exponentiel, ce qui est d\'eraisonnable.
+
+\end{itemize}
