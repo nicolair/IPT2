@@ -1,5 +1,7 @@
 size(5cm);
 import graph;
+import settings;
+outformat = "pdf";
 
 real a = 1.;
 real b = 2.7;

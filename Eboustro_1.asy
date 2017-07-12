@@ -1,5 +1,8 @@
 size(6cm,3cm);
 import graph;
+import settings;
+outformat = "pdf";
+
 xaxis( xmin = -5, xmax = 5, EndArrow);
 yaxis( ymin = -5, ymax =0, BeginArrow);
 label("$i$",(5,0),N);

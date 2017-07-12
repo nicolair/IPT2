@@ -1,5 +1,7 @@
 size(6cm,3cm);
 import graph;
+import settings;
+outformat = "pdf";
 
 label("$1$",(0,0));
             label("$1$",(-1,-1)); label("$0$",(1,-1));
