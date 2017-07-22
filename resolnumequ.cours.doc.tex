@@ -120,7 +120,7 @@ L'algorithme en lui même est très simple, l'exécution et la terminaison repos
 Le calcul de la dérivée peut poser problème. On peut la faire calculer par une bibliothèque de calcul formel avant d'évaluer numériquement ses valeurs ou bien renvoyer directement des évaluations calculées uniquement à partir de $f$.
 
 \subsection{Implémentation en Python.}
-\lstinputlisting[firstline= 85, lastline= 102]{ resolnumequ.py}
+\lstinputlisting[firstline= 85, lastline= 102]{resolnumequ.py}
 
 \subsection{Exercice}
 La méthode de Newton fonctionne encore dans le champ complexe. Par exemple, appliquée à la fonction $z\mapsto z^3 -1$, on peut démontrer qu'elle converge sauf pour un ensemble dénombrable de valeurs initiales. Evidemment, lorsqu'elle converge, c'est vers une des racines cubiques de l'unité c'est à dire $1$, $j$, $j^2$.\newline
@@ -130,9 +130,9 @@ Dessiner les bassins d'attraction de ces racines en coloriant chaque point suiva
 Ne pas oublier de passer les commandes \newline
 \texttt{import math} et \texttt{import matplotlib.pyplot as plt}\newline
 d'importation de la bibliothèque de maths et d'outils graphiques au début du code.
-\lstinputlisting[firstline= 30, lastline= 41]{ resolnumequ.py}
-\lstinputlisting[firstline= 43, lastline= 57]{ resolnumequ.py}
-\lstinputlisting[firstline= 59, lastline= 70]{ resolnumequ.py}
+\lstinputlisting[firstline= 30, lastline= 41]{resolnumequ.py}
+\lstinputlisting[firstline= 43, lastline= 57]{resolnumequ.py}
+\lstinputlisting[firstline= 59, lastline= 70]{resolnumequ.py}
 Appels et comparaison des courbes:
 \begin{verbatim}
 r2 = math.sqrt(2)
@@ -149,8 +149,8 @@ plt.show(1)
 
 \section{Correction exercice sur méthode de Newton}
 Définition des complexes $j$ et $j^2$ et d'une fonction qui associe une couleur aux points dans un voisinage des racines cubiques de $1$.
-\lstinputlisting[firstline= 105, lastline= 116]{ resolnumequ.py}
+\lstinputlisting[firstline= 105, lastline= 116]{resolnumequ.py}
 Quadrillage et coloriage de la condition initiale suivant le résultat de la méthode de Newton
-\lstinputlisting[firstline= 118, lastline= 138]{ resolnumequ.py}
+\lstinputlisting[firstline= 118, lastline= 138]{resolnumequ.py}
 
 \end{document}

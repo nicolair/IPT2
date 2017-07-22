@@ -4,8 +4,9 @@ Created on Mon Mar 30 16:23:43 2015
 
 @author: remy
 """
+import os.path
 import matplotlib.pyplot as plt
-import numpy as np
+nom_pdf = os.path.basename(__file__).replace('.py','.pdf')
 
 def vpara(v0,T,n):
     g = float(9.81)
@@ -23,4 +24,6 @@ for v in vini:
   truc = vpara(v,6.5,100)
   plt.plot(truc[0],truc[1])
   
-
+#plt.show()
+plt.savefig(nom_pdf)
+plt.close()

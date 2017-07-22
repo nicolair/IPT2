@@ -4,9 +4,12 @@ Created  1 02 17
 script pour créer l'images pdf resolnumeqdiff_1.pdf à inclure dans le LaTex
 @author: remy
 """
-import matplotlib
+import matplotlib, os
 matplotlib.rcParams['text.usetex'] = True
+nom_pdf = os.path.basename(__file__).replace('.py','.pdf')
+
 import matplotlib.pyplot as plt
+
 from matplotlib.backends.backend_pdf import PdfPages
 import numpy as np
 
@@ -29,7 +32,7 @@ def F(l):
     
 
 #plt.show()
-with PdfPages('./resolnumeqdiff_1.pdf') as pdf:
+with PdfPages(nom_pdf) as pdf:
     plt.grid(True)
     plt.xlabel(r'$\theta$')
     plt.ylabel(r'$\theta\prime$')

@@ -12,6 +12,7 @@ for(int i=-4; i<5; ++i){
     dot((i,j));
   }
 }
+
 dot((0,0),red+7);
 dot((-1,-1),red+7);dot((1,-1),red+7);
 dot((-2,-2),red+7);dot((0,-2),red+7);dot((2,-2),red+7);

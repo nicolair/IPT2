@@ -140,13 +140,13 @@ On l'implémente ensuite en python et on teste pour l'équation
   \label{eqtau}
 \end{equation}
 avec $\tau$ réel fixé (égal à $1$) dont on cherche la solution dans l'intervalle $[0,1]$.
-\lstinputlisting[firstline=7, lastline=29]{resolnumeqdiff1.py}
+\lstinputlisting[firstline=7, lastline=29]{resolnumeqdiff1_cours.py}
 
 Exercice 3. Implémenter en Python la variante du schéma d'ordre $2$. La tester pour l'équation \eqref{eqtau} en formant les graphes de la solution et des deux familles de points obtenues pour les deux schémas avec un pas de $0.05$ dans les cas $\tau=1$ et $\tau=-3.5$.
 
 \section{\'Equation du pendule.}
 On se propose cette fois de mettre en oeuvre la méthode d'Euler pour l'équation du pendule. Dans ce cas, les solutions sont à valeurs dans un espace des phases de dimension $2$. En changeant les unités, on se ramène au cas où $\frac{g}{l}=1$. 
-\lstinputlisting[firstline=7, lastline=32]{resolnumeqdiff2.py}
+\lstinputlisting[firstline=7, lastline=32]{resolnumeqdiff2_cours.py}
 Interpréter les courbes de l'espace des phases obtenues par le code du dessus.
 \begin{figure}[h]
   \centering
@@ -158,6 +158,6 @@ Interpréter les courbes de l'espace des phases obtenues par le code du dessus.
 Ce genre de graphique s'appelle un portrait de phase. Quel est l'effet d'un changement d'unité sur un portrait de phases?
 
 \section{Solution exercice 3}
-\lstinputlisting[firstline=31, lastline=60]{resolnumeqdiff1.py}
+\lstinputlisting[firstline=31, lastline=60]{resolnumeqdiff1_cours.py}
 
 \end{document}

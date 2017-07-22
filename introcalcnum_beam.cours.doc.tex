@@ -205,21 +205,6 @@ On considère des suites de nombres réels définies par une relation de récurr
   \forall n>2:\;
   u_{n}= 111 - \frac{1130}{u_{n-1}} + \frac{3000}{u_{n-1}u_{n-2}}
 \end{displaymath}
-On se propose de les explorer numériquement avec Scilab.
-\end{frame}
-
-\begin{frame}
-  \frametitle{Implémentation numérique Scilab 1}
-On garde la matrice de toutes les valeurs de la suite
-\lstinputlisting[language=Scilab, firstline=5, lastline=12]{introcalcnum.sce}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Implémentation numérique Scilab 2}
-On ne garde que les valeurs permettant le calcul.
-\lstinputlisting[language=Scilab, firstline=14, lastline=20]{introcalcnum.sce}
-
-Pour les conditions initiales proposées, il semble que la suite converge vers $100$ et pour $(\frac{11}{2},\frac{61}{11})$ ?
 \end{frame}
 
 \begin{frame}
@@ -295,16 +280,6 @@ Les suites de nombres sont associées à des suites de points:
     \item On trace le point seulement si le nombre d'itérations nécessaire pour être proche de $100$ est supérieur à une valeur donnée.
   \end{itemize}
 \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Implémentation Scilab: bonindice}
-\lstinputlisting[language=Scilab, firstline=23, lastline=33]{introcalcnum.sce}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Implémentation Scilab: tracé}
-\lstinputlisting[language=Scilab, firstline=35, lastline=50]{introcalcnum.sce}
 \end{frame}
 
 \end{document}
