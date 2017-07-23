@@ -5,7 +5,10 @@ Created on Sat Apr 11 07:29:33 2015
 @author: remy
 """
 import numpy, os.path
+import matplotlib
+matplotlib.use('pdf')
 import matplotlib.pyplot as plt
+
 nom_pdf = os.path.basename(__file__).replace('.py','.pdf')
 
 
