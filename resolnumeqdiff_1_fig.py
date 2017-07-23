@@ -5,6 +5,7 @@ script pour créer l'images pdf resolnumeqdiff_1.pdf à inclure dans le LaTex
 @author: remy
 """
 import matplotlib, os
+matplotlib.use('pdf')
 matplotlib.rcParams['text.usetex'] = True
 nom_pdf = os.path.basename(__file__).replace('.py','.pdf')
 

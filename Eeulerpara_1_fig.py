@@ -5,6 +5,8 @@ Created on Mon Mar 30 16:23:43 2015
 @author: remy
 """
 import os.path
+import matplotlib
+matplotlib.use('pdf')
 import matplotlib.pyplot as plt
 nom_pdf = os.path.basename(__file__).replace('.py','.pdf')
 
