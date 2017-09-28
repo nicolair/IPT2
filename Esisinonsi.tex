@@ -1,0 +1,41 @@
+Le cours n'a présenté que la version la plus simple de structure conditionnelle. Présentons ici une version plus compliquée.
+\begin{verbatim}
+if condition1 :
+    # groupe 1
+    instruction
+    instruction
+    ...
+    #fin groupe 1
+elif condition2 :
+    #groupe 2
+    instruction
+    instruction
+    ...
+    #fin groupe 2
+elif condition3 :
+    #groupe 3
+    instruction
+    instruction
+    ...
+    #fin groupe 3
+else :
+    #groupe 4
+    instruction
+    instruction
+    ...
+    #fin groupe 4
+#fin if
+instruction suivante
+\end{verbatim}
+\begin{itemize}
+ \item Si \texttt{condition1} est évaluée à \texttt{True}, le groupe 1 est exécuté puis \texttt{instruction suivante}.
+ \item Si \texttt{condition1} est évaluée à \texttt{False} et si des conditions suivant les \texttt{elif} sont évaluées à \texttt{True}, le groupe de la première d'entre elles et lui seul est exécuté avant de passer à \texttt{instruction suivante}.
+ \item Si toutes les conditions sont évaluées à \texttt{False} et seulement dans ce cas, le groupe 4 est exécuté avant de passer à \texttt{instruction suivante}.
+\end{itemize}
+Les années bissextiles sont les années multiples de 4 sauf les années divisibles par 100 (les années séculaires) qui ne sont pas divisibles par 400. Ainsi 2000 étant divisible par 4, 100 et 400 est bissextile. En revanche 1900 est divisible par 4 mais elle n'est pas car elle est divisible par 100 sans l'être par 400.
+On se donne un nombre entier naturel représentant le numéro d'une année et on veut afficher \texttt{bissextile} ou \texttt{non bissextile}.
+\begin{enumerate}
+ \item Coder en utilisant une structure conditionnelle.
+ \item \'Ecrire l'ensemble des années bissextiles en utilisant les ensembles $4\N$ (multiples de $4$), $100\N$ (multiples de $100$) et $400\N$ (multiples de $400$) et l'opérateur de soustraction ensembliste (noté $\setminus$) puis à l'aide de $\cup$, $\cap$ et d'un complémentaire. Coder en utilisant une condition formée avec des opérateurs booléens.
+\end{enumerate}
+

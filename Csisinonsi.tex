@@ -1,0 +1,46 @@
+\begin{enumerate}
+ \item Seuls certains multiples de 4 sont correspondent à des années bissextiles. Le rappel de cours indique que, lorsque la structure conditionnelle contient plusieurs conditions, une condition n'est considérée que ce si les conditions précédentes sont évaluées à \texttt{False}. Cette remarque aide à la construction du pseudo-code suivant.
+\begin{algorithm}
+  \Si{ $n$ n'est pas un multiple de $4$}{
+        $n$ non bissextile\;
+      }
+  \;
+  \Comment{La condition suivante n'est évaluée que si $n$ est un multiple de $4$.}
+  \SinonSi {$n$ est un multiple de $400$}{
+      $n$ bissextile \;
+      }
+  \;
+  \Comment{La condition suivante n'est évaluée que si $n$ est un multiple de $4$ qui n'est pas un multiple de $400$.}\;
+  \SinonSi {$n$ est un multiple de $100$}{
+      $n$ non bissextile\;
+  }
+  \Else{
+      \Comment{$n$ est un multiple de $4$ qui n'est pas un multiple de $100$ (ni de $400$)}
+      $n$ est bissextile\;
+  }
+\caption{Pseudo-code pour le calcul des années bissextiles}
+\end{algorithm}
+
+Implémentation en Python:
+\lstinputlisting[firstline=8, lastline=22]{Csisinonsi.py}
+Bien que les chaînes de caractères ne soient pas le sujet, noter comment on joue avec le apostrophes simples ou doubles pour contourner le problème de l'apostrophe de \og n'est\fg~ dans la chaîne de caractères.\newline
+Il existe bien d'autres manières de coder ce calcul.
+
+ \item Avec des notations ensemblistes, l'ensemble des années bissextiles s'écrit
+\begin{displaymath}
+ \mathcal{B} = 4\N \setminus\left( 100\N \setminus 400\N \right) 
+\end{displaymath}
+En utilisant les règles du calcul booléen:
+\begin{multline*}
+ \mathcal{B} = 4\N \cap \left( \overline{100\N \setminus 400\N}\right)
+ = 4\N \cap \left( \overline{100\N \cap \overline{400\N}}\right)
+ = 4\N \cap \left( \overline{100\N} \cup 400\N\right)\\
+ = \left( 4\N \cap \overline{100\N}\right)  \cup \left( 4\N \cap 400\N \right) 
+ = \left( 4\N \cap \overline{100\N}\right)  \cup  400\N
+\end{multline*}
+On peut donc coder directement la condition booléenne qui régit l'affichage avec
+\begin{verbatim}
+ biss = ( (n % 4 == 0) and (n % 100 != 0) ) or (n % 400 == 0)
+\end{verbatim}
+
+\end{enumerate}

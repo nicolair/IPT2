@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# bloc execute 101 fois
+# bloc execute 100 fois
 i = 0
 while i < 100:
     if i % 2 == 1:
@@ -41,6 +41,7 @@ while i < 20:
 # suite de Fibonacci sans assignation double
 f = 1
 ff = 1
+n = 1
 i = 1
 print(f)
 print(ff)

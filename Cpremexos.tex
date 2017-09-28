@@ -21,14 +21,6 @@ On peut raccourcir la boucle en remplaçant la condition par \texttt{n \% p != 0
 Pour calculer le nombre de diviseurs, on incrémente un compteur. On peut l'incrémenter de 2 en faisant attention aux carrés
 \lstinputlisting[firstline=23, lastline=32]{Cpremexos.py}
 
-\item L'implémentation Python du pseudo-code est
-\lstinputlisting[firstline=35, lastline=44]{Cpremexos.py}
-Ce code calcule essentiellement la décomposition binaire de l'entier donné sauf qu'il écrit des \texttt{P} et des \texttt{I} au lieu de \texttt{0} et de \texttt{1}. De plus, il les écrit de gauche à droite et non de gauche à droite comme on doit le faire en numération. Pour la décomposition binaire, on peut utiliser
-\lstinputlisting[firstline=46, lastline=57]{Cpremexos.py}
-Plus généralement, on peut éviter les tests, par exemple en base 3
-\lstinputlisting[firstline=60, lastline=68]{Cpremexos.py}
-La fonction Python \texttt{int} permet de vérifier le calcul. C'est une fonction dite de \emph{transtypage} (cast en anglais) de \texttt{str} vers \texttt{int} c'est à dire qu'elle renvoie un entier lié à la chaîne de caractères fournie en paramètre. 
-
 \item Considérons la phrase
 \begin{center}
   \og \texttt{2554} =\texttt{i} fois \texttt{p} plus \texttt{n} \fg
@@ -62,6 +54,15 @@ Ce code sera amélioré en remplaçant dans le test de la boucle \texttt{while} 
   \item On convient d'appeler \emph{temps de vol} le $i(x)$ pour une valeur initiale $x$. Le code suivant affiche le plus long temps de vol et sa condition initiale pour des conditions initiales entre 1 et \texttt{X} et un temps de vol limité à \texttt{Niter}. 
 \lstinputlisting[firstline=167, lastline=185]{Cpremexos.py}
 \end{enumerate}
+
+
+\item L'implémentation Python du pseudo-code est
+\lstinputlisting[firstline=35, lastline=44]{Cpremexos.py}
+Ce code calcule essentiellement la décomposition binaire de l'entier donné sauf qu'il écrit des \texttt{P} et des \texttt{I} au lieu de \texttt{0} et de \texttt{1}. De plus, il les écrit de gauche à droite et non de gauche à droite comme on doit le faire en numération. Pour la décomposition binaire, on peut utiliser
+\lstinputlisting[firstline=46, lastline=57]{Cpremexos.py}
+Plus généralement, on peut éviter les tests, par exemple en base 3
+\lstinputlisting[firstline=60, lastline=68]{Cpremexos.py}
+La fonction Python \texttt{int} permet de vérifier le calcul. C'est une fonction dite de \emph{transtypage} (cast en anglais) de \texttt{str} vers \texttt{int} c'est à dire qu'elle renvoie un entier lié à la chaîne de caractères fournie en paramètre. 
 
 \end{enumerate}
 

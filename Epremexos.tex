@@ -1,20 +1,6 @@
 \begin{enumerate}
  \item \'Ecrire du code calculant et affichant la factorielle d'un entier strictement positif.
  \item Soit $n$ un entier  supérieur ou égal à 2 désigné par une variable \verb|n|. \'Ecrire un code affichant \verb|premier| ou \verb|composé| suivant que $n$ est premier ou non. \'Ecrire un code calculant et affichant le nombre de diviseurs naturels de $n$.
- \item Implémenter le pseudo-code suivant
- \begin{verbatim}
-n <-- un entier
-code <-- une chaine de caractère vide
-tant que n > 0
-  si n est pair
-    n <-- m tel que n = 2m
-    concaténer "P" à droite de code
-  si n est impair
-    n <-- m tel que n = 2m + 1
-    concaténer "I" à droite de code
-afficher code
- \end{verbatim}
-Modifier ce code pour qu'il calcule la chaine de caractère égale à la décomposition binaire de l'entier fourni. Elle commence par \texttt{'0b'}. Modifier encore pour fournir la décomposition en base 3. Elle commence par \texttt{'0t'}.
 
  \item Former une phrase qui s'évalue à VRAI après l'initialisation et après l'exécution de chaque bloc de la boucle du code suivant. \`A quoi sert ce code ? Comment l'améliorer ?
  \begin{verbatim}
@@ -38,7 +24,7 @@ print(n,i)
                 |   |   |   |   |             q = 3   
                 -----------------
   \end{verbatim}    
-  formé de \texttt{p} lignes. Chacune (sauf les deux bords) contient \texttt{c} cellules constituées de \texttt{q} espaces.
+  formé de \texttt{l} lignes. Chacune (sauf les deux bords) contient \texttt{c} cellules constituées de \texttt{q} espaces.
   
   \item On souhaite afficher un cercle approximatif uniquement avec \texttt{print}.\newline
   Un entier naturel désigné par \texttt{r} est fourni. On utilisera aussi deux noms \texttt{x} et \texttt{y} qui désignent les coordonnées entières des points du plan d'impression muni d'un repère (défini en figure \ref{fig:Epremexos_1}) ainsi que \texttt{e} qui désigne un flottant caractérisant le degré d'imprécision que l'on se laisse.\newline
@@ -73,5 +59,20 @@ et à expérimenter sur les valeurs de \texttt{e} et sur les caractères à impr
   \max\left\lbrace i(x), x\in\llbracket 0, n \rrbracket\right\rbrace 
 \end{displaymath}
 \end{enumerate}
+
+ \item Implémenter le pseudo-code suivant
+ \begin{verbatim}
+n <-- un entier
+code <-- une chaine de caractère vide
+tant que n > 0
+  si n est pair
+    n <-- m tel que n = 2m
+    concaténer "P" à droite de code
+  si n est impair
+    n <-- m tel que n = 2m + 1
+    concaténer "I" à droite de code
+afficher code
+ \end{verbatim}
+Modifier ce code pour qu'il calcule la chaine de caractère égale à la décomposition binaire de l'entier fourni. Elle commence par \texttt{'0b'}. Modifier encore pour fournir la décomposition en base 3. Elle commence par \texttt{'0t'}.
 
 \end{enumerate}
