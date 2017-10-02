@@ -2,16 +2,16 @@
 
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 2: Introduction aux systèmes informatiques le 26/09/2016}
+\chead{Cours 2: Introduction aux systèmes informatiques le 04/10/2017}
 
 
 \begin{document}
 \section{Machines théoriques}
 \subsection{Machines de Turing}
-Une machine de Turing est un concept abstrait (imaginé en permettant de modéliser un calcul. Qu'est-ce qu'un calcul? C'est ce que fait une machine de Turing!\newline
-Imaginons une machine constituée d'un ruban (amovible) formé d'une infinité de cases contenant des lettres d'un alphabet fini et d'une tête qui peut se déplacer le long du ruban et lire ou écrire sur les cases.\newline
+Une machine de Turing est un concept abstrait (imaginé ) et permettant de modéliser un calcul. Qu'est-ce qu'un calcul? C'est ce que fait une machine de Turing!\newline
+Imaginons un dispositif constitué d'un ruban (amovible) formé d'une infinité de cases contenant des lettres d'un alphabet fini et d'une tête qui peut se déplacer le long du ruban et lire ou écrire sur les cases.\newline
 On place dans la machine un ruban particulier sur lequel des lettres sont écrites. On la met en marche; elle se déplace sur le ruban en remplaçant certaines lettres par d'autres puis elle s'arrête. Le ruban a été modifié : la transformation du ruban est un \og calcul\fg. \newline
-Un tel dispositif est une \emph{machine de Turing}. Précisons la manière dont la machine \og calcule\fg.\newline
+Un tel dispositif est appelé une \emph{machine de Turing}. Précisons la manière dont elle \og calcule\fg.\newline
 La tête de lecture-écriture-déplacement peut être dans plusieurs états physiques et ce qu'elle va faire (sur le ruban et sur elle même) dépend de ce qu'elle lit et de l'état dans lequel elle se trouve. 
 
 Prenons l'exemple d'une machine particulière.
@@ -30,7 +30,7 @@ Les actions de la machine sont déterminées à partir d'un \emph{tableau d'inst
 \end{tabular}
 ) \end{center}
 Par exemple, lorsque la machine lit un "0" dans la case courante du ruban et qu'elle est dans l'état "1", le "G2" du tableau se traduit par: elle n'écrit rien, elle déplace la tête de lecture vers la gauche, elle se met dans l'état "2".\newline
-Lorsqu'elle lit un "1" en étant dans l'état "2", elle écrit un "0" dans la case courante, se déplace vers la gauche et se met dans l'état "3".\newline Lorsqu'elle lit un "0" en étant dans l'état "3", elle n'écrit rien se déplace vers la droite et s'arrête. Les autres cas se comprennent bien. On convient que la machine s'arrête si elle rencontre une case vide de son tableau d'instructions.\newline
+Lorsqu'elle lit un "1" en étant dans l'état "2", elle écrit un "0" dans la case courante, se déplace vers la gauche et se met dans l'état "3".\newline Lorsqu'elle lit un "0" en étant dans l'état "3", elle n'écrit rien, se déplace vers la droite et s'arrête. Les autres cas se comprennent bien. On convient que la machine s'arrête si elle rencontre une case vide de son tableau d'instructions. Cela pourrait se coder en plaçant des "!" dans les cases vides.\newline
 Calculons à partir d'un ruban "... 0 0 1 1 1 * 1 1 0 0 ..." en le plaçant dans la machine; la tête de lecture/écriture devant le "1" le plus à gauche.\newline
 Après l'arrêt de la machine, le ruban contient " ... 0 0 1 1 1 1 1 0 0 0 ..." avec la tête de lecture devant le "1" le plus à gauche et la machine dans l'état "!".\newline
 On peut se convaincre facilement que si on part avec $p$ fois la lettre "1" à gauche de "*" et $q$ fois à droite, on obtient $p+q$ fois "1" comme résultat du calcul. Cette machine réalise donc des additions pour des rubans codées convenablement.
@@ -129,7 +129,5 @@ Pour écrire et exécuter du code en Python, vous pouvez utiliser un simple édi
 
 La notion de couche peut se retrouver aussi dans l'utilisation de Python. Comme il est généraliste, on utilise des couches spécifiques (bibliothèques) spécialisées dans de domaines particuliers.
 
-Les trois logiciels sont libres et disponibles pour tous les OS. Le langage Python existe en version 2.7 ou 3.3. Vous pouvez les télécharger et les installer sur vos machines personnelles. Installez de préférence la version 3.3.  Si vous le souhaitez, vous pouvez utiliser vos machines personnelles en TP.
-
-Vous aurez besoin d'un système de stockage permettant l'échange entre l'établissement et vos machines personnelles. N'utilisez une clé USB qu'en dépannage, préférez un stockage web et constituez vous un compte googleDrive ou dropBox.
+Les trois logiciels sont libres et disponibles pour tous les OS. Le langage Python existe en version 2.7 ou 3.x. Vous pouvez les télécharger et les installer sur vos machines personnelles. Installez de préférence la version la plus récente. 
 \end{document}
