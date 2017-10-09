@@ -1,18 +1,18 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 3: Objets énumérables - Boucles d'énumération le 11/10/16}
+\chead{Cours 3: Objets énumérables - Boucles d'énumération le 18/10/17}
 \begin{document}  \index{objets énumérables} \index{boucle for} \index{boucle d'énumération}
 En Python, la notion de boucle non conditionnelle (boucle \texttt{for}) est remplacée par une notion de \emph{boucle d'énumération} liée à des types particuliers d'objets dits \emph{énumérables}.\newline
 Un objet de type \emph{énumérable} est une sorte de conteneur, il rassemble \og dans une même boîte\fg~ divers objets. On peut accéder à ces objets à l'aide d'une boucle d'énumération \texttt{for ... in ...}.\newline
-On présente plusieurs types d'objets énumérables: on utilisera essentiellement les chaînes de caractères et les listes.
+On présente plusieurs types d'objets énumérables: on utilisera essentiellement les chaînes de caractères, les listes et les \og range\fg.
 
 \section{Types d'objets énumérables}
 Un objet énumérable est \emph{mutable} \index{objet mutable} lorsque l'on peut modifier un objet contenu: penser à une bouteille plus ou moins pleine.\newline
 Un objet est \emph{indexable} \index{indexable} lorsque l'on peut accéder directement à un objet contenu particulier sans les énumérer tous.\newline
 Dans la construction littérale d'un objet énumérable, le délimiteur \index{délimiteur} est le couple de caractères entourant les objets contenus et le séparateur\index{séparateur} est le caractère entre les définitions littérales des objets contenus.
 \begin{description}
- \item [Chaînes de caractères] Strings (non mutable - indexable) Construction : délimiteur guillemets \verb|" "| ou apostrophes \verb|' '|- pas de séparateur.
+ \item [Chaînes de caractères] Strings (non mutable - indexable) Construction : délimiteur guillemets \verb|" "| ou apostrophes \verb|' '| ou triples apostrophes \verb|'''   '''|- pas de séparateur.
  \item [tuples] (non mutable - indexable) Construction : pas de délimiteur - séparateur virgule \verb|,|. Dans certain cas, il est nécessaire d'utiliser des parenthèses autour du tuple.
  \item [Listes] (mutable - indexable) Construction: délimiteur crochet \verb|[ ]| - séparateur virgule \verb|,|.
  \item [Ranges] (non mutable - indexable) A partir de python 3, \texttt{range} renvoie un objet de ce type (et non une liste) constituée d'entiers consécutifs.
@@ -79,7 +79,7 @@ On peut aussi utiliser \verb|\| (anti-slash) comme \emph{caractère d'échappeme
   stringy = "les apostrophes \"' '\" sont des délimiteurs de chaîne"\end{verbatim}
 
 \subsection{Indexation et sous-chaînes}
-En Python il n'existe pas de type représentant un seul caractère: un caractère tout seul est une chaîne de longueur 0. Une sous-chaîne d'une chaîne donnée est une chaîne formée avec des caractères consécutifs. Les caractères et les sous chaînes d'une chaîne désignée par un nom sont obtenus à l'aide de crochets et d'index.
+En Python il n'existe pas de type représentant un seul caractère: un caractère tout seul est une chaîne de longueur 1. Une sous-chaîne d'une chaîne donnée est une chaîne formée avec des caractères consécutifs. Les caractères et les sous chaînes d'une chaîne désignée par un nom sont obtenus à l'aide de crochets et d'index.
 \begin{verbatim}
   stringy = "L'apostrophe ' est un délimiteur de chaîne. "
   l = len(stringy)
