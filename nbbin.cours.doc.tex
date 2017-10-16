@@ -1,7 +1,7 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 3: Systèmes - Nombres binaires et représentations le 11/10/16}
+\chead{Cours 3: Systèmes - Nombres binaires et représentations. 18/10/17}
 \begin{document}
 
 Un processeur utilise des mémoires constituées de circuits à deux états. Un tel circuit est un \emph{bit}, on les groupe par 8 pour former un octet. Un octet peut donc prendre $2^8=256$ états.\newline
@@ -134,7 +134,7 @@ Le bit de poids fort de la représentation d'un entier négatif sera toujours é
   -2^{n-1} \leq x \Rightarrow x + 2^n \geq 2^n - 2^{n-1} = 2^{n-1}
 \end{displaymath}
 
-Comment obtenir la représentation de $-x$?\newline
+Comment obtenir la représentation de $-x$? Présentons une première méthode.\newline
 Soit $x = \overline{0\,b_{n-2}\,\cdots\, b_1\, b_0}$ entier tel que $0<x<2^{n-1}$.  
 \begin{itemize}
   \item on inverse le développement: $(1,1-b_{n-2},\cdots,1-b_1,1-b_0)$
@@ -151,7 +151,7 @@ La représentation de $-x$ est la décomposition de $z = 2^{n}-x$, on en déduit
 \end{displaymath}
 Il suffit donc d'ajouter 1 au développement de $y$ (attention aux retenues) et de décaler ce développement en ajoutant un 1.\newline  
 \end{demo}
-Pratiquement, on peut écrire le codage de $x$ et formé en dessous le mot tel que l'on obtienne le mot ne contenant que des $0$ et additionnant bit à bit.
+Une deuxième méthode consiste à écrire le codage de $x$ et former en dessous le mot tel que, additionnant bit à bit, on obtienne le mot ne contenant que des $0$.
 Exemple. Soit $x=1000$ sur 2 octets.
 \begin{itemize}
   \item représentation de $1000$: $0000001111101000$
@@ -172,7 +172,7 @@ Exercice.
 \end{itemize}
 
 Exercice en python 2.7.\newline
-Les entiers de type \texttt{int} sont stockés par complément à 2 sur 5 octets. Quel est l'intervalle des entiers du type \texttt{int}?\newline
+Les entiers de type \texttt{int} sont stockés par complément à 2 sur 8 octets. Quel est l'intervalle des entiers du type \texttt{int}?\newline
 Lorsque l'on sort de l'intervalle des entiers \texttt{int}, python 2.7 transtype automatiquement en entier \texttt{long} et le marque en plaçant un \texttt{L} à la fin du mot. Faire afficher à python le plus grand des \texttt{int}. Comment ne pas faire apparaitre le \texttt{L} à la fin de l'affichage?   
 
 \section{Flottants}
