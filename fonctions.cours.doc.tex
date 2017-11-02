@@ -1,7 +1,7 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 4: Programmation - Fonctions le 7/11/16}
+\chead{Cours 4: Fonctions le 15/11/17}
 \begin{document}
 \section{Un objet exécutable}
 Une fonction est un objet qui contient du code. Un tel objet \og fonctionnel\fg~ peut être nommé comme n'importe quel objet. Ce qui caractérise une fonction c'est qu'elle peut être \emph{appelée}. L'appel d'une fonction provoque l'exécution du code qu'elle contient. Les points à bien comprendre sont: la syntaxe de définition, la syntaxe d'appel, les conditions de l'exécution du code appelé.
@@ -67,7 +67,7 @@ Tout dépend ensuite du caractère mutable ou nom de cet objet.\newline
 Si l'objet passé est mutable, il peut être modifié à l'intérieur de la fonction et le nom extérieur pointera vers le même objet modifié. Si l'objet passé n'est pas mutable, alors il ne pourra pas être changé et le nom extérieur pointera vers le même objet évidemment inchangé puisque c'est dans sa nature. En revanche, le nom local pourra être réassigné dans le code de la fonction. 
 
 \section{Exemple}
-Le code Python suivant présente l'implémentation de l'algorithme de recherche d'un motif dans une chaîne de caractère amélioré par rapport à l'algorithme naïf dans le cas où le motif est dans répétition. (voir le cours sur les algorithmes usuels)
+Le code Python suivant présente l'implémentation de l'algorithme de recherche d'un motif dans une chaîne de caractère amélioré par rapport à l'algorithme naïf dans le cas où le motif est sans répétition. (voir le cours sur les algorithmes usuels)
 \begin{verbatim}
 def NbCarComm(M,T):
     m = len(M)

@@ -1,7 +1,9 @@
-L'objet de ce TP est d'implémenter des outils permettant l'analyse de fréquences dans un texte.
+L'objet de ce TP est d'implémenter des outils permettant l'analyse de fréquences dans un texte.\newline
+Il sert aussi d'introduction au prochain cours distribué en même temps (mais qui sera traité en classe le 15/11/18) sur les algorithmes usuels et les fonctions Python. Vous aurez besoin de la partie I du texte sur les fonctions et des algorithmes 1 et 2 de la partie I du texte sur les algorithmes usuels. 
+
 \subsection*{I - Outils}
 \begin{enumerate}
-  \item Les fonctions demandées mettent en \oe{}euvre les algorithmes présentés en pseudo-code dans le cours. Elles ne doivent pas s'appeler.
+  \item Les fonctions demandées dans cette question mettent en \oe{}uvre les algorithmes présentés en pseudo-code dans le cours. Elles ne doivent pas s'appeler.
 \begin{enumerate}
   \item Implémenter en Python une fonction nommée \verb|indice| prenant une liste et un objet comme paramètres et renvoyant l'indice correspondant de la liste lorsque l'objet y figure et une valeur convenue lorsqu'il n'y figure pas.
   \item Implémenter une fonction \texttt{valeurMax} prenant une liste de nombres comme paramètre et renvoyant le plus grand.
@@ -27,11 +29,15 @@ Elle correspond aux valeurs
 \end{center}
 qui sont rangées par ordre décroissant.\newline
 Toute liste obtenue en permutant \texttt{ligv} serait aussi acceptable. On pourrait aussi remplacer le 6 de la fin (indice du deuxième 22 de \texttt{L}) par 1 (indice du premier 22)\newline  
-L'algorithme \ref{Efreqtexte_1} présente une méthode de calcul utilisant les noms suivants:
+Pour former une LIPGV (Liste des Indices de Plus Grande Valeur) de \texttt{L}, on utilise l'algorithme \ref{Efreqtexte_1} dans lequel \texttt{j} prend les valeurs entières de 10 à \texttt{l} et pour lequel la phrase
+\begin{quote}
+ \texttt{ligv} indexée entre 0 et \texttt{j} est une LIPGV de \texttt{L} indexée entre 0 et \texttt{j}
+\end{quote}
+est toujours vraie (invariant). Il utilise les noms de variables suivantes:
 \begin{itemize}
   \item \texttt{L} : la liste donnée, longueur \texttt{l} plus grande que 10
   \item \texttt{ligv} : une liste des 10 entiers entre 0 et \texttt{l - 1} (à la fin elle désignera la liste cherchée)  
-  \item \texttt{imin} : un entier entre 0 et 9 tel que pour tout \texttt{i} entre 0 et 9 :
+  \item \texttt{imin} : un indice de valeur minimale de \texttt{ligv}. C'est un entier entre 0 et 9 tel que pour tout \texttt{i} entre 0 et 9 :
   \begin{displaymath}
   \texttt{L[ ligv[ imin ] ]} \leq  \texttt{L[ ligv[ i ] ]}
   \end{displaymath}

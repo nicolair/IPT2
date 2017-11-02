@@ -9,7 +9,11 @@ L'objet de ce TP est d'implémenter des outils permettant l'analyse de fréquenc
   la liste des 10 indices des plus grandes valeurs est\newline
   \verb|[17, 8, 12, 9, 7, 10, 16, 15, 18, 6]|. Elle correspond aux valeurs\newline
   \verb|[85, 78, 63, 54, 45, 42, 35, 29, 23, 22]|.
-On propose un algorithme \ref{Efreqtexte_1} utilisant les variables suivantes:
+Pour former une LDIPGV (Liste De Plus Grande Valeur) de \texttt{L}, on utilise l'algorithme \ref{Efreqtexte_1} dans lequel \texttt{j} prend les valeurs entières de 10 à \texttt{l} et pour lequel la phrase
+\begin{quote}
+ \texttt{ligv} indexée entre 0 et \texttt{j} est une LDIPGV de \texttt{L} indexée entre 0 et \texttt{j}
+\end{quote}
+est toujours vraie (invariant). Il utilise les variables suivantes:
 \begin{itemize}
   \item $L$ une liste de $n>10$ valeurs comparables.
   \item $Imax\leftarrow$ une liste (pour les 10 indices de plus grande valeur).
