@@ -53,8 +53,8 @@
 %}
 %Python %
 %\usepackage[procnames]{listings}
-\usepackage{color, setspace}
 
+\usepackage{color, setspace}
 \definecolor{gren}{rgb}{0,0.5,0}
 \definecolor{purple}{rgb}{0.5,0,0.5}
 \definecolor{darkred}{rgb}{0.5,0,0}
@@ -177,6 +177,13 @@
 	inputencoding=latin1,
 }}{}
 
+% indication de licence CC
+\usepackage{ hyperref, hyperxmp}
+\usepackage[type={CC}, modifier={by-sa}, version={4.0}]{doclicense}
+
+
+
+%%%%%%%%%%%%%%% commandes
 %pr{\'e}sentation des compteurs de section, ...
 \makeatletter
 \renewcommand{\thesection}{\Roman{section}.}
@@ -216,10 +223,14 @@
 \lhead{Informatique}
 %\chead{Introduction aux systèmes informatiques}
 \rhead{MPSI B Hoche}
-\lfoot{\tiny{Cette création est mise à disposition selon le Contrat\\ Paternité-Partage des Conditions Initiales à l'Identique 2.0 France\\ disponible en ligne http://creativecommons.org/licenses/by-sa/2.0/fr/  
-} 
-\rfoot{\tiny{Rémy Nicolai \jobname \; \today } }
-}
+
+%\lfoot{\tiny{Cette création est mise à disposition selon le Contrat\\ Paternité-Partage des Conditions Initiales à l'Identique 2.0 France\\ disponible en ligne http://creativecommons.org/licenses/by-sa/2.0/fr/  
+%}
+
+\rfoot{\tiny{\doclicenseText} \doclicenseImage[imagewidth=1.5cm]}
+
+\lfoot{\tiny{\jobname \; \today }}
+
 \makeindex
 
 \nonstopmode
