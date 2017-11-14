@@ -148,7 +148,7 @@ En Python $T_i$ peut s'obtenir avec la syntaxe \texttt{T[i:i+m]}
   $O$ désigne la liste qui recevra les indices d'occurence du mot\;
   $i\leftarrow 0$ un indice pour le texte \;
   \Tq{i $\leq$ t - m}{
-    \If{ M = $T_i$}{
+    \Si{ M = $T_i$}{
       placer $i$ à la fin de la liste $O$\;
     }
     incrémenter $i$
@@ -218,7 +218,7 @@ On peut incrémenter $i$ de $\max(1,p)$ (au lieu de 1)
   $NbCarComm \leftarrow$ une fonction comme décrite plus haut\;
   \Tq{i $\leq$ t - m}{
     $p \leftarrow NbCarComm(M , T_i)$\; 
-    \If{ p = m}{
+    \Si{ p = m}{
       \Comment{dans ce cas $M=T_i$}
       placer $i$ à la fin de la liste $O$\;
     }

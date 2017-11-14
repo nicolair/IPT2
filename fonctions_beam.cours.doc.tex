@@ -99,8 +99,8 @@ Un objet peut-il être modifié par une fonction?
 
 oui si il est modifiable (mutable).\newline
 \begin{itemize}
-  \item Si l'objet passé est mutable, il peut être modifié à l'intérieur de la fonction et le nom extérieur pointera vers le même objet modifié.
-  \item Si l'objet passé n'est pas mutable, alors il ne pourra pas être changé et le nom extérieur pointera vers le même objet. En revanche, le nom local pourra être réassigné (à un autre objet) dans le code de la fonction. 
+  \item Si le nom passé en paramètre désigne un objet mutable, il peut être modifié à l'intérieur de la fonction et le nom extérieur pointera vers le même objet modifié.
+  \item Si le nom passé en paramètre désigne un objet qui n'est pas mutable, alors il ne pourra pas être modifié.Le nom extérieur pointera vers l'objet initial. En revanche, le nom local pourra être réassigné (à un autre objet) dans le code de la fonction. 
 
 \end{itemize}
 \end{frame}
