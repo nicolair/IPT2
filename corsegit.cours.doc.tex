@@ -1,7 +1,7 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 5: Algorithmique - Correction de segments itératifs}
+\chead{Cours 5: Correction de segments itératifs - le 29/11/2017}
 \begin{document}
 \section{Variants et invariants}
 En algorithmique, on désigne par \emph{segment itératif} une boucle du type \og\verb|tant que|\fg. 
@@ -91,7 +91,7 @@ On a donc \emph{démontré} que lorsqu'on affiche $c$ à la fin c'est bien $a^2$
   \Comment{Initialisation}
   $a$, $n$, $r$ désignent des entiers\;
   $a\longleftarrow$ un entier naturel non nul\;
-  $n\longleftarrow$ un entier naturel non nul\;
+  $n\longleftarrow$ un entier naturel non nul $n_{\text{ini}}$\;
   $r\longleftarrow 1$\;
   \Tq{ n > 0}{
       $r\longleftarrow r * a$\;
@@ -102,7 +102,37 @@ On a donc \emph{démontré} que lorsqu'on affiche $c$ à la fin c'est bien $a^2$
   \caption{Calcul d'une puissance.}
   \label{corsegit_3}
 \end{algorithm}
-On prouve l'algorithme \ref{corsegit_3} avec le variant $V = n$ et l'invariant $\Phi = r * a^n$.
+La correction et  terminaison de l'algorithme \ref{corsegit_3} se prouve avec le variant $V = n$ et l'invariant $\Phi = \left( r * a^n == a^{n_{\text{ini}}}\right) $.\newline
+On veut maintenant former un nouvel algorithme de calcul de puissance dans lequel cette fois les deux noms $a$ et $n$ vont désigner des nombres différents lors de l'évolution.\newline
+On s'assure de la correction avec les mêmes variant et invariant.
+\[
+ V = n, \hspace{0.5cm} \Phi = \left( r * a^n == {a_{\text{ini}}}^{n_{\text{ini}}}\right)
+\]
+On discute selon la parité de $n$.
+\[
+ \text{Si } n = 2p + 1,\; a^n = a \,(a^2)^p ; \hspace{1cm} \text{Si } n = 2p,\; a^n = (a^2)^p.
+\]
+
+\begin{algorithm}
+  \Comment{Initialisation}
+  $a$, $n$, $r$ désignent des entiers\;
+  $a\longleftarrow$ un entier naturel non nul $a_{\text{ini}}$\;
+  $n\longleftarrow$ un entier naturel non nul $n_{\text{ini}}$\;
+  $r\longleftarrow 1$\;
+  \Tq{ n > 0}{
+      \eSi{$n$ pair}{
+          $a\longleftarrow a * a$\;
+          $n\longleftarrow n // 2$\;
+      }{
+          $r\longleftarrow r * a$\;
+          $n\longleftarrow n -1$\;
+      }
+  }
+  \Comment{fin du segment itératif}
+  afficher $r$\;
+  \caption{Calcul rapide d'une puissance.}
+  \label{corsegit_7}
+\end{algorithm}
 
 
 \subsection{Recherche des indices de plus grandes valeurs}
@@ -115,7 +145,7 @@ Dans l'algorithme \ref{corsegit_4}, \texttt{ligv} est une liste de 10 indices d'
   \Comment{traitement des autres valeurs}
   j $\leftarrow 10$\;
   \Tq{j < l}{
-      \If{ L[ligv[imin]] < L[j] }{
+      \Si{ L[ligv[imin]] < L[j] }{
           ligv[imin] $\leftarrow$ j\;
           actualiser imin\;
       }
@@ -149,7 +179,7 @@ On prouve l'algorithme \ref{corsegit_4} avec la fonction de terminaison $V = l-j
   $u\longleftarrow a$\;
   $v\longleftarrow b$\;
   \Tq{ u != v}{
-      \eIf{u > v}{
+      \eSi{u > v}{
         $u\longleftarrow u - v$\;
       }{
         $v\longleftarrow v - u$\;

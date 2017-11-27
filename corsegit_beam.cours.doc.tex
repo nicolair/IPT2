@@ -62,7 +62,7 @@ Une \emph{fonction de terminaison}, on dit aussi \emph{variant de boucle} est un
   \item sa valeur est le même après chaque itération
 \end{itemize}
 \end{defi}
-En principe sa valeur intiale est \texttt{True}
+En principe sa valeur intiale est \texttt{True}.
 \end{frame}
 
 \begin{frame}
@@ -133,6 +133,42 @@ Comme il existe une fonction de terminaison, la boucle se termine avec $b$ dési
   \item invariant $\Phi = r * a^n$
 \end{itemize}
 \end{frame}
+
+\begin{frame}
+ \frametitle{Calcul rapide d'une puissnce}
+On veut maintenant former un nouvel algorithme de calcul de puissance dans lequel cette fois les deux noms $a$ et $n$ vont désigner des nombres différents lors de l'évolution.\newline
+On s'assure de la correction avec les mêmes variant et invariant.
+\[
+ V = n, \hspace{0.5cm} \Phi = \left( r * a^n == {a_{\text{ini}}}^{n_{\text{ini}}}\right)
+\]
+On discute selon la parité de $n$.
+\[
+ \text{Si } n = 2p + 1,\; a^n = a \,(a^2)^p ; \hspace{1cm} \text{Si } n = 2p,\; a^n = (a^2)^p.
+\] 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Algorithme d'exponentiation rapide}
+\begin{algorithm}[H]
+  \Comment{Initialisation}
+  $a$, $n$, $r$ désignent des entiers\;
+  $a\longleftarrow$ un entier naturel non nul $a_{\text{ini}}$\;
+  $n\longleftarrow$ un entier naturel non nul $n_{\text{ini}}$\;
+  $r\longleftarrow 1$\;
+  \Tq{ n > 0}{
+      \eSi{$n$ pair}{
+          $a\longleftarrow a * a$\;
+          $n\longleftarrow n // 2$\;
+      }{
+          $r\longleftarrow r * a$\;
+          $n\longleftarrow n -1$\;
+      }
+  }
+  \Comment{fin du segment itératif}
+  afficher $r$\;
+\end{algorithm}
+\end{frame}
+
 
 \begin{frame}
   \frametitle{Exemple 3.}
