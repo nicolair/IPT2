@@ -1,0 +1,21 @@
+Soient $a_0$ et $b_0$ deux entiers naturels non nuls. Un algorithme est présenté par le pseudo-code incomplet suivant.
+\begin{algorithm}
+ \Comment{Initialisation}
+ {\tt a} $\leftarrow a_0$\;
+ {\tt b} $\leftarrow b_0$\;
+ {\tt m} $\leftarrow 0$\;
+ \Tq{ ??? }{
+   \eSi{\texttt{b} ??}{
+     \texttt{m} $\leftarrow$ ?? \;
+     \texttt{b} $\leftarrow$ \texttt{b -1} \;
+   }{
+     \texttt{a} $\leftarrow$  ?? \;
+     \texttt{b} $\leftarrow$  \texttt{b // 2} \;
+   }
+ }
+\end{algorithm}
+\begin{enumerate}
+ \item Compléter ce pseudo-code pour qu'il permette de calculer le produit de deux entiers.
+ \item Prouver qu'il se termine et effectue ce calcul de produit en précisant une fonction de terminaison (variant) et un invariant.
+ \item \'Ecrire une fonction Python \texttt{multruss(a,b)} qui renvoie le produit des entiers représentés par \texttt{a} et \texttt{b}. 
+\end{enumerate}

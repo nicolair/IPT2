@@ -1,0 +1,197 @@
+Pour $n \in \N$, on note $D_n = \llbracket 0, 2^n -1 \rrbracket$, on appelle \og point\fg tout couple d'entiers $(x,y)\in D_n\times D_n$. On cherche \`a calculer efficacement\footnote{d'après X 2017 MP (hors spé. info) PC PSI} l'intersection de deux parties de $D_n\times D_n$.
+
+{\bf Rappels de Python.}\newline
+Si {\tt a} est une liste alors {\tt a[i]} d\'esigne le {\tt i}-i\`eme \'el\'ement de cette liste o\`u l'entier {\tt i} est sup\'erieur ou \'egal \`a $0$
+et strictement plus petit que la longueur {\tt len(a)} de la liste.\newline
+La commande {\tt a[i]=e} affecte la valeur de l'expression {\tt e} au {\tt i}-i\`eme \'el\'ement de {\tt a}.\newline
+L'expression {\tt []} construit une liste vide.\newline
+L'expression {\tt n*[k]} construit une liste de longueur {\tt n} contenant {\tt n} occurrences de {\tt k}.\newline
+La commande {\tt a=list(b)} construit une copie de la liste {\tt b} et l'affecte \`a la variable {\tt a}.\newline
+La commande {\tt a.append(x)} modifie la liste {\tt a} en lui rajoutant un nouvel \'el\'ement final contenant la valeur de {\tt x}.\newline
+{\bf Important} : seules les op\'erations sur les listes apparaissant dans ce paragraphe sont autoris\'ees dans les r\'eponses. Si une fonction Python standard est n\'ecessaire, elle devra \^etre r\'e\'ecrite.
+
+\subsection{Une solution na\"\i ve.}
+Un point de coordonn\'ees $(x,y)\in D_n\times D_n$ est repr\'esent\'e en Python par une liste de deux entiers naturels {\tt [x,y]}.\newline
+Un ensemble de points est repr\'esent\'e par une liste de points sans r\'ep\'etition, donc comme une liste de listes d'entiers naturels de longueur $2$.
+\begin{enumerate}
+\item \'Ecrire une fonction {\tt membre(p,q)} qui renvoie {\tt True} si le point {\tt p} est dans l'ensemble repr\'esent\'e par la liste {\tt q} et qui renvoie {\tt False} dans le cas contraire.
+\item \'Ecrire une fonction {\tt intersection(p,q)} qui renvoie une liste repr\'esentant l'intersection des ensembles repr\'esent\'es par {\tt p} et {\tt q}. On impl\'ementera l'algorithme qui consiste \`a it\'erer sur tous les points de {\tt p} et \`a ins\'erer dans le r\'esultat ceux qui sont aussi dans {\tt q}
+\item Si la comparaison entre deux entiers naturels est prise comme op\'eration \'el\'ementaire, quelle est la complexit\'e de l'algorithme de la question pr\'ec\'edente exprim\'ee en fonction de la longueur de {\tt p} et {\tt q}~?
+\end{enumerate}
+
+\subsection{Codage de Lebesgue.}
+Le codage de Lebesgue d'un point de coordonn\'ees $(x,y)\in D_n\times D_n$ s'obtient à partir de l'entrelacement des bits des repr\'esentations binaires de $x$ et $y$ en commençant par les bits de $x$.
+On suppose que les bits de poids fort sont situ\'es \`a gauche dans les repr\'esentations binaires des entiers naturels.
+
+Par exemple, dans le cas où $n=3$, si $x = 6$ (c'est à dire $\overline{\mathbf{110}}^2$ en binaire) et $y = 3$ (donc $\overline{011}^2$ en binaire) alors l'entrelacement associé au point de coordonn\'ees $(x,y)$ est $\mathbf{1}0\, \mathbf{1}1\, \mathbf{0}1$. \newline
+Chaque paire de bits est la représentation binaire d'un chiffre parmi 0, 1, 2, 3 :
+\[
+ 0 = \overline{00}^2, \; 1 = \overline{01}^2, \; 2 = \overline{10}^2, \;  3 = \overline{11}^2.
+\]
+Le codage de Lebesgue d'un point consiste à remplacer les paires de l'entrelacement par le chiffre correspondant. On le note avec une barre au dessus et un $l$.\newline
+Ainsi, pour $n=3$, le codage de Lebesgue du point $(6,3)$ est $\overline{231}^\ell$.
+
+En Python, un codage de Lebesgue d'un point de $D_n\times D_n$ est stock\'ee dans une liste de longueur $n$ écrite dans le même ordre. Ainsi, si $n=3$, le codage de Lebesgue du point $(6,3)$ est repr\'esent\'e par la liste {\tt [2,3,1]}.
+
+\begin{enumerate}[resume]
+\item Soit $n=3$, quelle liste Python repr\'esente le codage du point $(1,6)$~?
+\item On suppose que l'on dispose d'une fonctions {\tt bits(x,k)}, qui prend en arguments deux entiers naturels {\tt x} et {\tt k}, et qui renvoie la valeur du bit de coefficient $2^k$ dans la repr\'esentation binaire de {\tt x}.\newline
+\'Ecrire une fonction {\tt code(n,p)} qui prend en arguments un entier strictement positif {\tt n} et un point {\tt p} repr\'esent\'e par une liste de longueur 2 dont les deux coordonn\'ees sont prises dans $D_n$.
+Cette fonction renvoie le codage de Lebesgue de {\tt p} repr\'esent\'e sous la forme d'une liste Python.
+\end{enumerate}
+
+\subsection{Codage dichotomique d'un quadrant.}
+Considérons $D_n \times D_n$ comme un carré de côté $2^n$. On peut le couper par son milieu en quatre carrés de côté $2^{n-1}$ et recommencer cette opération (au plus $n$ fois). On appelle \emph{quadrant} un carré qui est une partie  de $D_n \times D_n$ obtenue ainsi. Le plus grand des quadrants est $D_n \times D_n$ lui même (obtenu par $0$ découpage) les plus petits sont les singletons (obtenus par $n$ découpages).\newline
+Quelle que soit la taille du carré que l'on découpe, on numérote conventionnellement les quadrants formés.
+\begin{figure}[ht]
+ \centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|}\hline 1&3\\ \hline 0&2\\\hline\end{tabular} 
+ \caption{Numérotation des quadrants}
+ \label{fig: numquad}
+\end{figure}
+
+On code un quadrant par la liste des numéros conventionnels des quadrants qui le contiennent dans la séquence de découpages.\newline
+Par exemple, la figure \ref{fig: quadrant} représente le carré $D_3\times D_3$ et les points d'un quadrant. L'origine est en bas \`a gauche, les abscisses croissent de gauche \`a droite et les ordonn\'ees du bas vers le haut. Ce quadrant particulier est codé par $(2,1)$.\newline
+Un quadrant de $D_n \times D_n$ qui se réduit à un singleton est donc codé par une liste de longueur $n$ à valeurs dans $\left\lbrace 0,1,2,3\right\rbrace$. Un quadrant contenant $2^{n-k}$ points est codé par une liste de longueur $k$. On convient de la compléter par $n-k$ chiffres $4$ pour former une liste de longueur $n$.\newline
+Ainsi, pour $n=3$, le quadrant $D_3\times D_3$ (tout entier) est codé en Python par {\tt [4,4,4]} et celui de la figure \ref{fig: quadrant} par {\tt [2,1,4]}.
+\begin{figure}[ht]
+ \centering
+ \setlength{\unitlength}{5mm}
+\begin{picture}(8,8)
+\multiput(0,0)(1,0){9}{\line(0,1){8}}
+\multiput(0,0)(0,1){9}{\line(1,0){8}}
+\put(5.5,2.5){\circle*{0.5}}
+\put(5.5,3.5){\circle*{0.5}}
+\put(4.5,2.5){\circle*{0.5}}
+\put(4.5,3.5){\circle*{0.5}}
+\end{picture}
+ \caption{Exemple de quadrant}
+ \label{fig: quadrant}
+\end{figure}
+\begin{enumerate}[resume]
+ \item Quel est le quadrant codé par {\tt [1,1,2]}?
+ \item Soit $P\in D_n\times D_n$. Dans la partie 2, on a codé $P$ comme une certaine liste et dans cette partie, on a codé $\left\lbrace P \right\rbrace$ par une certaine liste. En fait ces listes sont identiques. Présenter le principe de démonstration de cette propriété. 
+\end{enumerate}
+Dans la suite on désignera par codage de Lebesgue le codage d'un quadrant en étendant la notation (avec barre et $l$) utilisée pour le codage d'un point. Lorsque'un quadrant se réduit à un singleton, on identifera ce quadrant avec son unique point. Bien noter que ce qui caractérise un quadrant par rapport à un point est la présence d'au moins un 4 à droite du codage. 
+
+\subsection{Ordre lexicographique sur les quadrants.}
+On utilise l'ordre lexicographique (autrement dit, l'ordre du dictionnaire) pour comparer les quadrants à l'aide de leurs codages.\newline
+Soient $c=\overline{c_{n-1}\dots c_0}^\ell$ et $d=\overline{d_{n-1}\dots d_0}^\ell$ deux codages de quadrants de $D_n\times D_n$.
+On note $c \prec d$ pour \og$c$ est strictement plus petit que $d$\fg si et seulement si
+\[
+\exists i,\ 0\leq i< n\ \text{ tel que }
+\left\lbrace 
+\begin{aligned}
+ &\forall j,\ j>i\Rightarrow c_j=d_j \\ &c_i < d_i
+\end{aligned}
+\right. 
+\]
+Si $c, d$ représentent les quadrants $C,D$, on notera $C \prec D$ si et seulement si $c \prec d$. 
+\begin{enumerate}[resume]
+\item Trier les codages suivants par ordre croissant pour l'ordre lexicographique~:
+\[\{\overline{311}^\ell,\overline{000}^\ell,\overline{012}^\ell,\overline{101}^\ell,\overline{233}^\ell\}\]
+\item \'Ecrire une fonction {\tt compare\_pcodes(n,c1,c2)}, qui prend en arguments les codages de deux quadrants de $D_n\times D_n$ et renvoie $0$ s'il sont \'egaux, $1$ si {\tt c1} est strictement plus petit par l'ordre lexicographique que {\tt c2} et $-1$ sinon.
+\end{enumerate}
+Toute partie $\mathcal{P}$ de $D_n\times D_n$ se décompose de manière unique comme une union de quadrants disjoints. On appelle \og AQL de la partie $\mathcal{P}$\fg la liste ordonnée (lexicographiquement) des codages des quadrants qui la compose.
+
+\begin{enumerate}[resume]
+ \item Les figures \ref{fig:S0} et \ref{fig:S1} définissent des parties $S_0$ et $S_1$. Décomposer ces parties en quadrants et former leur AQL.
+\end{enumerate}
+
+\begin{figure}[ht]
+ \centering
+ \begin{subfigure}[t]{3.5cm}
+  \centering
+ \setlength{\unitlength}{5mm}
+\begin{picture}(4,4)
+\multiput(0,0)(1,0){5}{\line(0,1){4}}
+\multiput(0,0)(0,1){5}{\line(1,0){4}}
+\put(0.5,0.5){\circle*{0.5}}
+\put(1.5,0.5){\circle*{0.5}}
+\put(0.5,1.5){\circle*{0.5}}
+\put(1.5,1.5){\circle*{0.5}}
+\put(2.5,2.5){\circle*{0.5}}
+\put(3.5,0.5){\circle*{0.5}}
+\end{picture}
+ \caption{$S_0 \subset D_2 \times D_2$.}
+ \label{fig:S0}
+ \end{subfigure}
+ ~
+ \begin{subfigure}[t]{5.5cm}
+\centering
+ \setlength{\unitlength}{5mm}
+\begin{picture}(8,8)
+\multiput(0,0)(1,0){9}{\line(0,1){8}}
+\multiput(0,0)(0,1){9}{\line(1,0){8}}
+\put(0.5,6.5){\circle*{0.5}}
+\put(1.5,6.5){\circle*{0.5}}
+\put(0.5,7.5){\circle*{0.5}}
+\put(1.5,7.5){\circle*{0.5}}
+\put(2.5,5.5){\circle*{0.5}}
+\put(3.5,5.5){\circle*{0.5}}
+\put(2.5,4.5){\circle*{0.5}}
+\put(3.5,4.5){\circle*{0.5}}
+\put(4.5,0.5){\circle*{0.5}}
+\put(5.5,0.5){\circle*{0.5}}
+\put(6.5,0.5){\circle*{0.5}}
+\put(7.5,0.5){\circle*{0.5}}
+\put(4.5,1.5){\circle*{0.5}}
+\put(5.5,1.5){\circle*{0.5}}
+\put(6.5,1.5){\circle*{0.5}}
+\put(7.5,1.5){\circle*{0.5}}
+\put(4.5,2.5){\circle*{0.5}}
+\put(5.5,2.5){\circle*{0.5}}
+\put(6.5,2.5){\circle*{0.5}}
+\put(7.5,2.5){\circle*{0.5}}
+\put(4.5,3.5){\circle*{0.5}}
+\put(5.5,3.5){\circle*{0.5}}
+\put(6.5,3.5){\circle*{0.5}}
+\put(7.5,3.5){\circle*{0.5}}
+\put(6.5,6.5){\circle*{0.5}}
+\put(7.5,6.5){\circle*{0.5}}
+\put(6.5,7.5){\circle*{0.5}}
+\put(7.5,7.5){\circle*{0.5}}
+\put(0.5,0.5){\circle*{0.5}}
+\put(1.5,1.5){\circle*{0.5}}
+\put(2.5,2.5){\circle*{0.5}}
+\put(3.5,3.5){\circle*{0.5}}
+\end{picture}
+ \caption{$S_1 \subset D_3 \times D_3$.}
+ \label{fig:S1}  
+ \end{subfigure}
+ \caption{Parties $S_0$ et $S_1$.}
+\end{figure}
+
+
+\subsection{Calcul efficace de l'intersection.}
+On souhaite utiliser les AQL pour calculer l'intersection de deux parties de $D_n\times D_n$. Le premier problème est de former l'AQL d'une partie. La question 11 est une instance de ce problème. L'approche visuelle utilisée par un humain est difficile à généraliser. On procède de la manière suivante.\newline
+\`A partir d'une liste de points connus par leurs coordonnées, on forme la liste des codage de Lebesgue de ces points puis on ordonne lexicographiquement cette liste.\newline
+L'algorithme de compaction doit rassembler les points d'un même quadrant par le codage de ce quadrant (question 12).
+
+\begin{enumerate}[resume]
+\item \'Ecrire une fonction {\tt ksuffixe(n,k,q)} qui prend en arguments un entier {\tt n} strictement positif, une liste {\tt q} repr\'esentant le codage d'un quadrant de $D_n\times D_n$ et un entier naturel {\tt k} inf\'erieur strictement \`a {\tt n}. Si les {\tt k} derniers chiffres de la liste {\tt q} ont pour valeur $4$, cette fonction renvoie une nouvelle liste semblable \`a la liste {\tt q} mais dont les {\tt k+1} derniers chiffres valent 4. Sinon, cette fonction renvoie {\tt q} inchang\'ee. Ainsi,\newline 
+{\tt ksuffixe(4,2,[0,1,4,4])}  renvoie {\tt [0,4,4,4]}\newline
+{\tt ksuffixe(4,2,[0,1,2,4])} renvoie {\tt [0,1,2,4]}.
+
+\item L'algorithme de compaction consiste \`a parcourir $n$ fois la liste ordonnée des codages des points considérés comme des quadrants à un seul élément. L'it\'eration $k$ vise \`a remplacer quatre codages successifs de quadrants formant un quadrant complet de c\^ot\'e $2^{k+1}$ par la repr\'esentation de ce quadrant.\newline
+\'Ecrire une fonction {\tt compacte(n,s)} qui prend en arguments un entier strictement positif {\tt n} et une liste tri\'ee {\tt s} représentant les codages de Lebesgue des points d'une partie $\mathcal{P}$ de $D_n\times D_n$. Cette fonction doit renvoyer l'AQL de la partie $\mathcal{P}$.
+
+\item On souhaite comparer les codages de deux quadrants en terme d'inclusion et d'exclusion des ensembles de points qu'ils repr\'esentent.
+
+\'Ecrire une fonction {\tt compare\_ccodes(n,p,q)} qui prend en arguments un entier strictement positif {\tt n} et deux listes {\tt p}, {\tt q} contenant les codages des quadrants $P$, $Q$ de $D_n\times D_n$. Cinq valeurs de retour sont possibles~:
+\begin{itemize}
+\item[-] l'entier $0$ si les quadrants sont \'egaux~;
+\item[-] l'entier $1$ si les quadrants $P$ et $Q$ sont disjoints et $P \prec Q$~;
+\item[-] l'entier $-1$ si les quadrants $P$ et $Q$ sont disjoints et $Q \prec P$~;
+\item[-] l'entier $2$ si $P\subset Q$~;
+\item[-] l'entier $-2$ si $Q\subset P$
+\end{itemize}
+Par exemple, {\tt compare\_ccodes(3,[1,4,4],[2,4,4])} renvoie 1 et\\
+{\tt compare\_ccodes(3,[1,2,4],[1,4,4])} renvoie 2.
+\item Pour calculer efficacement l'intersection de deux ensembles de points repr\'esent\'es par leur AQL respectif, on {\it fusionne} les deux listes tri\'ees qui leur correspondent.
+
+En utilisant {\tt compare\_ccodes}, \'ecrire une fonction {\tt intersection(n,p,q)} qui prend en argument un entier strictement positif {\tt n} ainsi que deux AQL {\tt p}, {\tt q} repr\'esentant respectivement deux parties $P$, $Q$ de $D_n\times D_n$. Cette fonction doit renvoyer un AQL repr\'esentant $P\cap Q$.\newline
+Le nombre d'appels \`a {\tt compare\_ccodes} effectu\'es par {\tt intersection(n,p,q)} doit \^etre $O({\tt len(p)+len(q)})$.
+\end{enumerate}
+

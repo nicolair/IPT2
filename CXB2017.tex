@@ -1,0 +1,74 @@
+\subsection{Une solution naïve.}
+\begin{enumerate}
+ \item Définition de la fonction \texttt{membre(p,q)}.
+\lstinputlisting[firstline=9, lastline=13]{CXB2017.py}
+
+ \item Définition de la fonction \texttt{intersection(p,q)}.
+\lstinputlisting[firstline=18, lastline=23]{CXB2017.py}
+
+ \item Tester l'égalité entre deux points utilise deux comparaisons entre des entiers. L'appel de \texttt{membre(p,q)} effectue au pire (si \texttt{p} n'est pas dans la liste \texttt{q}) $2l_q$ opérations en notant $l_q$ la longueur \texttt{len(q)}. Comme il faut appeler cette fonction pour chaque point de la liste \texttt{p}, on effectue au pire $2l_p l_q$ opérations élémentaires. La complexité est en $O(l_p l_q)$.
+\end{enumerate}
+
+\subsection{Codage de Lebesgue.}
+\begin{enumerate}[resume]
+ \item \'Ecrivons les codages binaires de $1$ et $6$ puis l'entrelacement 
+\[
+\left. 
+\begin{aligned}
+1 &= \overline{001}^2 \\ 6 &= \overline{110}^2 
+\end{aligned}
+\right\rbrace \Rightarrow
+\text{ entrelacement : } 01\,01\,10
+\Rightarrow \text{L-codage : } \texttt{[1,1,2]}
+\]
+
+ \item Pour pouvoir tester la fonction \texttt{code(n,p)}, on implémente aussi la fonction \texttt{bits(x,k)}.
+\lstinputlisting[firstline=28, lastline=34]{CXB2017.py}
+\lstinputlisting[firstline=38, lastline=47]{CXB2017.py}
+\end{enumerate}
+
+
+\subsection{Codage dichotomique d'un quadrant.}
+\begin{enumerate}[resume]
+ \item Comme le quadrant est codé par la liste \texttt{[1,1,2]} de longueur 3, il s'agit d'une partie de $D_3 \times D_3$. Comme la liste ne contient pas de 4, il s'agit d'un singleton constitué d'un seul point. Ce point est obtenu en choisissant deux fois le quadrant numéro 1 (en haut à gauche) ce qui contient au quadrant de côté 2tout en haut à gauche. Dans ce quadrant, on choisit le quadrant numéro 2 c'est à dire en bas à droite. Le point est donc dans la deuxième colonne et l'avant dernière ligne ses coordonnées sont $(1,3)$.
+ 
+ \item Pour l'exemple des questions 4 et 6, les deux manières de coder conduisent au même résultat. Cette propriété se démontre par récurrence sur $n$.\newline
+ Pour $n = 2$, cela vient de ce que les numéros des quadrants 0, 1, 2, 3 sont respectivement les singletons $\left\lbrace (0,0)\right\rbrace, \left\lbrace (0,1)\right\rbrace, \left\lbrace (1,0)\right\rbrace, \left\lbrace (1,0)\right\rbrace$. Les numéros coïncident avec les développements binaires : $0 = \overline{00}^2$, $1 = \overline{01}^2$, $2 = \overline{10}^2$, $3 = \overline{11}^2$.\newline
+ Donnons le principe de la justification du passage de $n-1$ à $n$. Considérons un point $(x,y) \in D_n\times D_n$. Soit $Q$ le quadrant de côté $2^{n-1}$ contenant le point. Le numéro de ce quadrant détermine à la fois le premier terme de la liste de la deuxième méthode et les bits de poids forts des développements binaires des coordonnées $x$ et $y$.
+\end{enumerate}
+
+
+\subsection{Ordre lexicographique sur les quadrants.}
+\begin{enumerate}[resume]
+ \item La liste se trie en $\overline{000}^2 \prec  \overline{012}^2 \prec  \overline{101}^2 \prec  \overline{233}^2 \prec  \overline{311}^2$. 
+
+ \item Implémentation de la fonction \texttt{compare\_pcodes(n,c1,c2}
+\lstinputlisting[firstline=51, lastline=60]{CXB2017.py}
+
+  \item La partie $S_0$ de $D_2 \times D_2$ se décompose en 3 quadrants ordonnés en :
+\begin{center}
+AQL de $S_0$:  \texttt{[0,4]} $\prec$ \texttt{[1,1]} $\prec$ \texttt{[3,0]}.
+\end{center}
+La partie $S_1$ de $D_3 \times D_3$ se décompose en 8 quadrants ordonnés en :
+\begin{center}
+AQL de $S_1$:  \texttt{[0,0,0]} $\prec$ \texttt{[0,0,3]} $\prec$ \texttt{[0,3,0]} $\prec$ \texttt{[0,3,3]} $\prec$ \texttt{[1,1,4]} $\prec$ \texttt{[1,2,4]} $\prec$ \texttt{[2,4,4]}$\prec$ \texttt{[3,3,4]}.
+\end{center}   
+
+\end{enumerate}
+
+
+\subsection{Calcul efficace de l'intersection.}
+\begin{enumerate}[resume]
+ \item Implémentation de \texttt{ksuffixe(n,k,q)}
+\lstinputlisting[firstline=64, lastline=72]{CXB2017.py}
+
+ \item Le point fondamental de l'algorithme est que quatre codages consécutifs d'une liste triée de quadrants forment un quadrant complet de côté $2^{k+1}$ si et seulement si ils se terminent par $k$ chiffres 4 et ont les mêmes $n-k-1$ premiers chiffres autrement dit si et seulement si ils ont le même $k$-suffixe.
+ 
+ \lstinputlisting[firstline=76, lastline=98]{CXB2017.py}
+ 
+ \item Implémentation de \texttt{compare\_ccodes(n, p, q)}
+\lstinputlisting[firstline=102, lastline=116]{CXB2017.py}
+
+ \item On cherche les points d'intersection du plus petit au plus grand pour l'ordre lexicographique. Le plus petit point d'intersection est dans l'intersection des plus petits quadrants de chaque liste. Il convient donc d'examiner les intersections des plus petits quadrants de chaque liste qui n'ont pas déjà été examinées.
+\lstinputlisting[firstline=118, lastline=140]{CXB2017.py} 
+\end{enumerate}

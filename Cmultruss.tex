@@ -1,0 +1,34 @@
+\begin{enumerate}
+ \item Algorithme complété pour la multiplication russe.
+\begin{algorithm}
+ \Comment{Initialisation}
+ {\tt a} $\leftarrow a_0$\;
+ {\tt b} $\leftarrow b_0$\;
+ {\tt m} $\leftarrow 0$\;
+ \Tq{ \texttt{ b > 0} }{
+   \eSi{\texttt{b} impair }{
+     \texttt{m} $\leftarrow$ \texttt{ m + a} \;
+     \texttt{b} $\leftarrow$ \texttt{b -1} \;
+   }{
+     \Comment{\texttt{b} pair}
+     \texttt{a} $\leftarrow$  \texttt{a * 2} \;
+     \texttt{b} $\leftarrow$  \texttt{ b // 2} \;
+   }
+ }
+\end{algorithm}
+
+ \item L'expression \texttt{b} est une fonction de terminaison de la boucle. Elle reste à valeurs entières dans la boucle et diminue strictement à chaque opération car elle est divisée par 2 dans le cas pair et diminuée de 1 dans le cas impair.\newline
+ L'expression \texttt{m + a*b} garde toujours la même valeur lors de l'exécution de la boucle. Cette valeur est $a_0b_0$ après l'initialisation. Ce qui justifie son invariance lors des itérations est l'écriture mathématique suivante
+\[
+ m + ab =
+\left\lbrace 
+\begin{aligned}
+ (m + a) + a*(b-1)   &\text{ si $b$ impair} \\
+ m + (2a)\frac{b}{2} &\text{ si $b$ pair}
+\end{aligned}
+\right. 
+\]
+\`A la sortie de la boucle la valeur de \texttt{b} est $0$ car c'est un entier naturel qui n'est pas strictement positif. La valeur de \texttt{m + ab} est alors celle de \texttt{m} qui représente donc $a_0b_0$. 
+ \item Implémentation en Python de la multiplication russe.
+\lstinputlisting[firstline=9, lastline=18]{Cmultruss.py}
+\end{enumerate}
