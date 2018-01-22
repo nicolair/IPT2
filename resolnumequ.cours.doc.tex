@@ -1,7 +1,7 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 6: Résolution numérique d'équations aux inconnues réelles le 07/0117}
+\chead{Cours 6: Résolution numérique d'équations aux inconnues réelles le 24/01/18}
 \begin{document}
 \begin{algorithm}
   \Donnees{\;
@@ -36,8 +36,8 @@ Toute équation à une inconnue dont on cherche les solutions réelles peut se m
   f(x) = 0
 \end{displaymath}
 où $f$ est une fonction définie dans une partie $I$ de $\R$. La recherche des valeurs numériques approchées des solutions de cette équation comporte deux étapes.\newline
-La première est celle de la \emph{séparation} des solutions. Elle consiste à trouver des intervalles $J$ de $I$ telles chaque $J$ contienne une unique solution et que la restriction de $f$ à $J$ ait de \og bonnes\fg  propriétés. \newline 
-La deuxième étape est celle de l'évaluation numérique de chaque solution. Elle consiste à utiliser un algorithme, avec des données spécifiques à chaque intervalle $J$, et renvoyant une valeur numérique approchant la solution dans $J$ avec une erreur plus petite qu'une valeur prescrite. Les bonnes propriétés citées plus haut assurent la validité mathématique de l'algorithme choisi.\newline
+La première est celle de la \emph{séparation} des solutions. Elle consiste à trouver des intervalles $J$ de $I$ tels que chaque $J$ contienne une unique solution et que la restriction de $f$ à $J$ ait de \og bonnes\fg  propriétés. \newline 
+La deuxième étape est celle de l'évaluation numérique de chaque solution. Elle consiste à utiliser un algorithme, avec des données spécifiques à chaque intervalle $J$, et renvoyant une valeur numérique approchant la solution dans $J$ avec une erreur plus petite qu'une valeur prescrite. Les \og bonnes propriétés\fg citées plus haut assurent la validité mathématique de l'algorithme choisi.\newline
 On ne propose pas ici de méthode de séparation des racines mais deux méthodes classiques d'évaluation numérique.
 
 \section{Méthode dichotomique.}

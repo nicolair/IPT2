@@ -2,10 +2,22 @@
   \item Pour chacune des trois boucles $d-g$ est une fonction de terminaison. Elle reste à valeurs entières à cause des conditions $g\leq d$. Elle diminue strictement dans les deux boucles internes par incrémentation de $g$ ou décrémentation de $d$. En ce qui concerne la boucle externe, si $d-g$ n'a pas diminué lors des boucles internes $g$ et $d$ n'ont pas changé de valeur donc $g$ reste inférieur à $d$ et $d-g$ est diminué de 2 lors du contrôle \texttt{if}.
   \item Les propriétés 
 \begin{displaymath}
-  k < g \Rightarrow L[k] \leq v \text{ et } d < k \Rightarrow L[k] > v
+  \left( k < g \Rightarrow L[k] \leq v\right)  \text{ et } \left( d < k \Rightarrow L[k] > v\right) 
 \end{displaymath}
-sont des invariants de la boucle externe. Elles sont donc encore valables à la fin. Comme 
+sont des invariants de la boucle externe. Elles sont donc encore valables à la fin. Comme $d = g - 1$ à la sortie de la boucle externe, on en déduit que $L$ vérifie
+\[
+ \forall k \in \llbracket 0, l-1 \rrbracket, \;
+ L[k]
+ \left\lbrace 
+ \begin{aligned}
+  \leq v &\text{ si } k < g \\
+  > v &\text{ si } g \leq k
+ \end{aligned}
+\right. .
+\]
+
   \item Implémentation en Python de l'algorithme de séparation.
 \lstinputlisting[firstline=8, lastline=20]{Csep.py}
+Comme une liste est un objet modifiable, elle est modifiée à lors de l'appel à l'intérieur de la procédure. 
 \end{enumerate}
 

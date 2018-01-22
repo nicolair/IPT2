@@ -30,7 +30,7 @@
 
 \subsection{Codage dichotomique d'un quadrant.}
 \begin{enumerate}[resume]
- \item Comme le quadrant est codé par la liste \texttt{[1,1,2]} de longueur 3, il s'agit d'une partie de $D_3 \times D_3$. Comme la liste ne contient pas de 4, il s'agit d'un singleton constitué d'un seul point. Ce point est obtenu en choisissant deux fois le quadrant numéro 1 (en haut à gauche) ce qui contient au quadrant de côté 2tout en haut à gauche. Dans ce quadrant, on choisit le quadrant numéro 2 c'est à dire en bas à droite. Le point est donc dans la deuxième colonne et l'avant dernière ligne ses coordonnées sont $(1,3)$.
+ \item Comme le quadrant est codé par la liste \texttt{[1,1,2]} de longueur 3, il s'agit d'une partie de $D_3 \times D_3$. Comme la liste ne contient pas de 4, il s'agit d'un singleton constitué d'un seul point. Ce point est obtenu en choisissant deux fois le quadrant numéro 1 (en haut à gauche) ce qui contient au quadrant de côté 2tout en haut à gauche. Dans ce quadrant, on choisit le quadrant numéro 2 c'est à dire en bas à droite. Le point est donc dans la deuxième colonne et l'avant dernière ligne. Ses coordonnées sont $(1,6)$.
  
  \item Pour l'exemple des questions 4 et 6, les deux manières de coder conduisent au même résultat. Cette propriété se démontre par récurrence sur $n$.\newline
  Pour $n = 2$, cela vient de ce que les numéros des quadrants 0, 1, 2, 3 sont respectivement les singletons $\left\lbrace (0,0)\right\rbrace, \left\lbrace (0,1)\right\rbrace, \left\lbrace (1,0)\right\rbrace, \left\lbrace (1,0)\right\rbrace$. Les numéros coïncident avec les développements binaires : $0 = \overline{00}^2$, $1 = \overline{01}^2$, $2 = \overline{10}^2$, $3 = \overline{11}^2$.\newline
@@ -47,7 +47,7 @@
 
   \item La partie $S_0$ de $D_2 \times D_2$ se décompose en 3 quadrants ordonnés en :
 \begin{center}
-AQL de $S_0$:  \texttt{[0,4]} $\prec$ \texttt{[1,1]} $\prec$ \texttt{[3,0]}.
+AQL de $S_0$:  \texttt{[0,4]} $\prec$ \texttt{[2,2]} $\prec$ \texttt{[3,0]}.
 \end{center}
 La partie $S_1$ de $D_3 \times D_3$ se décompose en 8 quadrants ordonnés en :
 \begin{center}
