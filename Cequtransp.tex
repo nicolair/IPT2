@@ -1,0 +1,107 @@
+\begin{enumerate}
+ \item 
+ \textbf{Schéma décentré à droite.} 
+ L'équation devient
+\[
+ \frac{1}{\delta_t}\left( u_{k+1,l} - u_{k,l}\right) +  \frac{1}{\delta_x}\left( u_{k,l+1} - u_{k,l}\right) = 0
+\]
+Les relations permettant de calculer les $u_{k,l}$ sont
+\[
+ \forall k\in\llbracket 0, n_t-1\rrbracket, \, \forall l \in \llbracket 0, n_x \rrbracket, \;
+ u_{k+1,l} = u_{k,l} - \frac{\delta_t}{\delta_x}\left( u_{k,l+1} - u_{k,l}\right) 
+\]
+en convenant que, $u_{k,n_x + 1} = u_{k,1}$ pour tout $k\in\llbracket 0, n_t-1\rrbracket$ car pour tout $t$, la fonction $u_t$ est périodique de période $1$.
+ 
+ \textbf{Schéma centré.}
+ L'équation devient
+\[
+ \frac{1}{\delta_t}\left( u_{k+1,l} - u_{k,l}\right) +  \frac{1}{2\delta_x}\left( u_{k,l+1} - u_{k,l-1}\right) = 0
+\]
+Les relations permettant de calculer les $u_{k,l}$ sont
+\[
+ \forall k\in\llbracket 0, n_t-1\rrbracket, \, \forall l \in \llbracket 0, n_x \rrbracket, \;
+ u_{k+1,l} = u_{k,l} - \frac{\delta_t}{2\delta_x}\left( u_{k,l+1} - u_{k,l-1}\right) 
+\]
+en convenant que, $u_{k,n_x + 1} = u_{k,1}$ et $u_{k, -1} = u_{k,n_x - 1}$ pour tout $k\in\llbracket 0, n_t-1\rrbracket$ par périodicité de $u_t$.
+ 
+ \textbf{Schéma décentré à gauche.}
+ L'équation devient
+\[
+ \frac{1}{\delta_t}\left( u_{k+1,l} - u_{k,l}\right) +  \frac{1}{\delta_x}\left( u_{k,l} - u_{k,l-1}\right) = 0
+\]
+Les relations permettant de calculer les $u_{k,l}$ sont
+\[
+ \forall k\in\llbracket 0, n_t-1\rrbracket, \, \forall l \in \llbracket 0, n_x \rrbracket, \;
+ u_{k+1,l} = u_{k,l} - \frac{\delta_t}{\delta_x}\left( u_{k,l} - u_{k,l-1}\right) 
+\]
+avec $u_{k, -1} = u_{k,n_x - 1}$ pour tout $k\in\llbracket 0, n_t-1\rrbracket$ par périodicité de $u_t$.
+
+ \item
+ Dans chacune des fonctions proposées on calcule une fois pour toute au début 
+\[
+\frac{\delta_t}{\delta_x}=\frac{t\,n_x}{n_t} \text{ noté } \tau. 
+\]
+
+ \begin{enumerate}
+  \item Schéma décentré à droite.
+     \lstinputlisting[firstline=15, lastline=38]{Cequtransp.py}
+  \item Schéma centré.
+     \lstinputlisting[firstline=41, lastline=59]{Cequtransp.py}
+  \item Schéma décentré à gauche.
+     \lstinputlisting[firstline=62, lastline=78]{Cequtransp.py}
+ \end{enumerate}
+
+ \item
+ \begin{enumerate}
+  \item La fonction $u$ définie dans $\R^2$ par:
+\[
+ \forall (t,x)\in \R^2, \; u((t,x)) = \sin(2\pi(x - t))
+\]
+est bien solution de l'équation $(1)$ car
+\[
+ \frac{\partial u}{\partial t} = -2\pi \cos(2\pi(x-t)), \hspace{0.5cm} \frac{\partial u}{\partial x} = 2\pi \cos(2\pi(x-t))
+\]
+Elle vérifie la condition aux limites car $u_x(t_0) = u((0,x)) = \sin(2\pi x)$.
+
+  \item Les figures présentent les graphes des évaluations numériques des fonctions $u_t$ pour la solution décrite dans la question précédente. Il s'agit de sinusoïdes.\newline
+  Dans le schéma décentré à droite (figure 1 gauche), les courbes pour $u_0$ et $u_{0.1}$ ressemblent bien à des sinusïdes mais la courbe se dégrade pour $u_{0.2}$. Diminuer le pas de temps (figure 1 droite) n'améliore pas la situation mais accentue au contraire la divergence. 
+  Le cas du schéma centré (figure 2) semble analogue. \`A gauche la courbe se dégrade pour $t=1.0$. Diminuer le pas de temps permet de retrouver une courbe correcte pour $t=1$ mais de nouveau la courbe n'est pas correcte pour $t=1.35$. Il faudrait de nouveau augmenter le nombre de points pour diminuer à nouveau le pas de remps. Il est difficile de conclure quant à la convergence du schéma.\newline
+  Dans le cas du schéma décentré à gauche, les courbes semblent correctes même pour des valeurs de $t$ plus grandes. Ce schéma semble être le plus convergent des trois.
+ \end{enumerate}
+
+ \item 
+ \textbf{Schéma décentré à droite.} 
+Les relations permettant de calculer les $u_{k+1,l}$ sont
+\[
+ u_{k+1,l} = u_{k,l} - \frac{\delta_t}{\delta_x}\left( u_{k,l+1} - u_{k,l}\right) 
+ = \left( 1+\frac{\delta_t}{\delta_x}\right)u_{k,l} -  \frac{\delta_t}{\delta_x} u_{k,l+1}.
+\]
+On en déduit (en majorant en valeur absolue)
+\[
+ \left( \forall l, \; |u_{k+1,l}|\leq \left( 1+\frac{\delta_t}{\delta_x}\right)M_k +  \frac{\delta_t}{\delta_x} M_k\right) 
+ \Rightarrow M_{k+1} \leq \left( 1 + 2\frac{\delta_t}{\delta_x}\right)M_k.
+\]
+ \textbf{Schéma centré.}
+Les relations permettant de calculer les $u_{k+1,l}$ sont
+\[
+ u_{k+1,l} = u_{k,l} - \frac{\delta_t}{2\delta_x}\left( u_{k,l+1} - u_{k,l-1}\right) 
+ = \frac{\delta_t}{2\delta_x}u_{k,l-1} + u_{k,l} - \frac{\delta_t}{2\delta_x}u_{k,l+1}.
+\]
+On en déduit
+\[
+ \left( \forall l, \; |u_{k+1,l}|\leq \frac{\delta_t}{2\delta_x} M_k + M_k + \frac{\delta_t}{2\delta_x}M_k\right) 
+ \Rightarrow M_{k+1} \leq \left(1 + \frac{\delta_t}{\delta_x}\right)M_k.
+\]
+ \textbf{Schéma décentré à gauche.}
+Les relations permettant de calculer les $u_{k+1,l}$ sont
+\[
+ u_{k+1,l} = u_{k,l} - \frac{\delta_t}{\delta_x}\left( u_{k,l} - u_{k,l-1}\right) 
+ = \underset{\geq 0}{\underbrace{\left( 1 - \frac{\delta_t}{\delta_x}\right)}}u_{k,l} + \frac{\delta_t}{\delta_x}u_{k,l-1}. 
+\]
+On en déduit 
+\[
+ \left( \forall l, \; |u_{k+1,l}|\leq \left( 1-\frac{\delta_t}{\delta_x}\right)M_k +  \frac{\delta_t}{\delta_x} M_k\right) 
+ \Rightarrow M_{k+1} \leq M_k.
+\]
+
+\end{enumerate}
