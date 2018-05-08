@@ -38,8 +38,8 @@ def resol(A,Y):
   X[p-1] = Y[p-1][0]/A[p-1][p-1]
   i = p-2
   while i >= 0:
-    X[i]=(Y[i][0]-\\
-       sum(A[i][k]*X[k] \\
+    X[i] = (Y[i][0]-\
+       sum(A[i][k]*X[k] \
             for k in range(i+1,p)))/A[i][i]
     i -= 1
   return X

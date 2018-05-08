@@ -1,19 +1,20 @@
-Ce texte présente une équation aux dérivées partielles dont la résolution peut être vue comme une généralisation du calcul numérique d'une primitive. Il montre les problèmes de convergence attachés au choix d'un schéma particulier de discrétisation des dérivées. L'équation considérée est
+Ce texte présente une équation aux dérivées partielles et montre les problèmes de convergence attachés au choix d'un schéma particulier de discrétisation des dérivées. L'équation considérée est
 \begin{equation}
  \frac{\partial u}{\partial t} + \frac{\partial u}{\partial x} = 0 \label{EqTransport}
 \end{equation}
 où $u$ est une fonction définie dans une partie $A$ de $\R^2$. La première composante d'un couple $(t,x)\in A$ représente un instant et la deuxième un point.\newline
 Pour un point fixé représenté par $x$, notons 
 \begin{itemize}
- \item $u_x$ la fonction définie dans une partie $I_x$ (intervalle de temps) de $\R$ qui à un instant $t$ associe $u((t,x))$,  
- \item $u_t$ la fonction définie dans une partie $J_t$ (intervalle d'espace) de $\R$ qui à un point $x$ associe $u((t,x))$,  
- \item $f$ la fonction définie dans $I_x$ qui à un instant $t$ associe $\frac{\partial u}{\partial x}((t,x))$.
+ \item $u_x$ la fonction définie dans une partie $I$ (intervalle de temps) de $\R$ qui à un instant $t$ associe $u((t,x))$,  
+ \item $u_t$ la fonction définie dans une partie $J$ (intervalle d'espace) de $\R$ qui à un point $x$ associe $u((t,x))$,  
+ \item $f$ la fonction définie dans $I$ qui à un instant $t$ associe $\frac{\partial u}{\partial x}((t,x))$.
 \end{itemize}
-On ajoute une \og condition aux limites\fg~ imposant, pour un instant fixé $t_0$ que $u_{t_0}$ est une fonction $v_0$ donnée à l'avance. L'équation s'écrit alors
+On ajoute une \og condition aux limites\fg~ imposant, pour un instant fixé $t_0=0$ que $u_{t_0}$ est une fonction $v_0$ donnée à l'avance. L'équation s'écrit alors
 \[
- u_x'(t) = -f(t) \hspace{1cm} u_x(t_0) = v(x).
+ u_x'(t) = -f(t) \hspace{1cm} u_x(t_0) = v(x) \Leftrightarrow u_{t_0}=v.
 \]
-Pour chaque $x$, il s'agit donc bien d'un calcul de primitive d'une fonction de $t$. On admet que l'équation \ref{EqTransport} avec une condition aux limites $v$ admet une unique solution.\newline
+Pour chaque $x$, il s'agit donc bien d'un calcul de primitive d'une fonction de $t$.\newline
+On admet qu'il existe une unique solution de l'équation (\ref{EqTransport}) avec la condition aux limites $v$.\newline
 Pour résoudre numériquement cette équation, on discrétise le temps et l'espace
 \begin{itemize}
  \item $t_0, t_1, t_2, \cdots $: pas constant $t_{k+1} - t_k = \delta_t$ pour $k\in \llbracket 0, n_t \rrbracket$,
@@ -55,7 +56,8 @@ Dans toute la suite, on suppose que pour tous les instants $t$, la fonction $u_t
 \end{figure}
 
 \begin{enumerate}
- \item Pour chacun des trois schémas, former les relations permettant de calculer les $u_{k,l}$ avec $k\in \llbracket 0, n_t \rrbracket$ et $l\in \llbracket 0, n_x \rrbracket$.
+ \item Pour chacun des trois schémas, former les relations permettant de résoudre numériquement l'équation (1) c'est à dire de calculer les $u_{k,l}$ avec $k\in \llbracket 0, n_t \rrbracket$ et $l\in \llbracket 0, n_x \rrbracket$. 
+ 
  \item Pour un temps $t>0$, on veut évaluer numériquement la fonction $u_t$ d'une variable d'espace (on sait qu'elle est périodique de période $1$). On discrétise l'intervalle d'espace $[0,1]$ avec un pas $\delta_x = \frac{1}{n_x}$ pour $n_x$ entier et l'intervalle de temps $[0,t]$ avec un pas $\delta_t = \frac{t}{n_t}$ pour $n_t$ entier.\newline
  La condition initiale $v$ est donnée par une liste de $n_x$ valeurs $[v_0,v_1,\cdots ]$.
  \begin{enumerate}

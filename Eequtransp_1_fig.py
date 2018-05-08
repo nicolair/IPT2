@@ -24,17 +24,23 @@ def transportDrte(tmax,nt,nx,v):
     u.append([v(x) for x in lx])
 
     k = 0
+    
     while k < nt:
+        if k >1 :
+            print("coucou",lili)
         #lili désigne la liste des u(k,l) pour le k courant
         lili = [ u[k][l] + tau*(u[k][l] - u[k][l+1]) for l in range(nx)]
         #attention à l=nx
-        lili.append(u[k][nx] + tau*(u[k][nx] - u[k][1]))
+        #lili.append(u[k][nx] + tau*(u[k][nx] - u[k][1]))
+        lili.append(lili[0])
         u.append(lili)
+        lili[1]=0
         k += 1
+        
     return u
 
 #                   éléments communs à toutes les figures
-nx = 100
+nx = 5
 #lx liste des x indexée de 0 à nx
 lx = [l/nx for l in range(nx + 1)]
 #lv liste des valeurs pour la condition aux limites
@@ -43,16 +49,16 @@ lv = [v(x) for x in lx]
 ecart = 0.3
 
 #                figure pour le schéma décentré à droite
-nt = 100
-plt.figure(1)
-plt.subplots_adjust(wspace=ecart)
+nt = 4
+#plt.figure(1)
+#plt.subplots_adjust(wspace=ecart)
 #condition aux limites
-plt.subplot(1,2,1)
-plt.plot(lx,lv,'.',label='t = 0')
+#plt.subplot(1,2,1)
+#plt.plot(lx,lv,'.',label='t = 0')
 
-u = transportDrte(0.1,nt,nx,v)
-plt.plot(lx,u[nt],'--',label='t = 0.1')
 u = transportDrte(0.2,nt,nx,v)
+plt.plot(lx,u[nt],'--',label='t = 0.1')
+"""u = transportDrte(0.2,nt,nx,v)
 plt.plot(lx,u[nt],label='t = 0.2')
 plt.legend()
 plt.title('nt = 100')
@@ -65,3 +71,6 @@ plt.plot(lx,u[nt],'g',label='t = 0.2')
 plt.legend()
 plt.title('nt = 200')
 plt.savefig('Eequtransp_1.pdf',format='pdf')
+"""
+for truc in u:
+    print(truc)

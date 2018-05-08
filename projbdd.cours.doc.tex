@@ -1,23 +1,35 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 9: Exemple base de données - Comptages routiers linéaires le 10/05/17}
+\chead{Cours 9: Exemple base de données - Comptages routiers linéaires le 09/05/18}
 \begin{document}
 
 \section{Comptages routiers linéaires}
-Le fichier (format csv) est téléchargé depuis le site\\ \href{http://opendata.hauts-de-seine.net/jeu-de-donnees/comptages-routiers-lineaires}{http://opendata.hauts-de-seine.net/jeu-de-donnees/comptages-routiers-lineaires}\\
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=10.5cm]{./projbdd_1.fig.png}
-  % projbdd_1.png: 593x708 pixel, 96dpi, 15.69x18.73 cm, bb=0 0 445 531
-  \caption{description des champs}
-  \label{fig:projbdd_1}
-\end{figure}
-La description des champs est donnée dans la figure \ref{fig:projbdd_1}. On commence par importer le fichier dans une base (attention le séparateur des champs est ";").
-On s'intéresse aux villes figurant dans cette liste et au trafic qui en sort ou qui y entre. Elles peuvent y figurer de trois manières : comme extrémité de départ ou d'arrivée ou comme lieu de comptage. Cette table permet de former un réseau dont les noeuds sont les villes extrémités et les routes les arêtes.\\
-On fera comme si tout le trafic circulant sur une route venait de la ville extrémité de départ. C'est évidemment faux mais commode pour l'exposé.
+Un fichier (au format csv) contenant des données sur des comptages routiers effectués dans le 92 a été téléchargé\footnote{http://opendata.hauts-de-seine.net/jeu-de-donnees/comptages-routiers-lineaires} puis inséré comme une table dans la base de donnée locale cours\_routes92.
+Chaque enregistrement correspond à un dispositif physique de comptage placé pendant un certain temps sur une route d'une commune du 92. La description des principaux attributs des enregistrements est donnée dans la table suivante.
+\begin{center}
+\begin{tabular}{ll|lll}
+SECTION    & id disp de cptge &  & HPS\_SENS\_2 & traf h pointe soir\\
+ROUTE      & id de la route          &  & H\_HPS\_S2   & h pointe soir\\
+MJA\_SENS\_1 & traf moy jour/an        &  & CALCUL\_TMJ & traf cum 2 sens \\
+MJA\_SENS\_2 & traf moy jour/an  &  & SENS1\_DE   & comm départ\\
+MJO\_SENS\_1 & traf moy j ouv/an        &  & SENS1\_VERS & comm arrivée \\
+MJO\_SENS\_2 & traf moy j ouv/an  &  & SENS2\_DE   & comm départ \\
+MJO\_SENS\_3 & traf 2 sens             &  & SENS2\_VERS & comm arrivée \\
+HPM\_SENS\_1 & traf h pointe matin &  & COMMUNE    & dispo de cptge \\
+H\_HPM\_S1   & heure pointe matin      &  & TMJA\_AA    &  \\
+HPS\_SENS\_1 & traf h pointe soir  &  & TYPE\_COMPT &  \\
+H\_HPS\_S1   & heure pointe            &  & PERIODICT  &  \\
+HPM\_SENS\_2 & traf h pointe matin &  & ANNEE\_COMP &  \\
+H\_HPM\_S2   & heure pointe matin      &  & MOIS\_COMPT & 
+\end{tabular}
+\end{center}
+
+On s'intéresse aux communes figurant dans cette liste et au trafic qui en sort ou qui y entre. Elles peuvent y figurer de trois manières : comme extrémité de départ ou d'arrivée ou comme lieu où est placé le dispositif de comptage.\newline
+Cette table permet de former un réseau dont les noeuds sont les villes extrémités et les routes les arêtes.\\
+On fera comme si tout le trafic circulant sur une route venait de la ville extrémité de départ et allait jusqu'à l'extrémité d'arrivée. C'est évidemment faux mais commode pour l'exposé.
 \begin{enumerate}
-  \item Former une table \verb|`communes`| contenant toutes les communes quelque soit le champ dans lequel elles figurent. Que représente dans cette table la ligne dont le champ "nom" est vide ? et dans la table des comptages? Quelle décision prendre relativement à cette ligne spéciale dans la table des communes?
+  \item Former une table \verb|`communes`| contenant toutes les communes quelque soit le champ dans lequel elles figurent. Que représente dans cette table l'enregistrement dont l'attribut "nom" est vide ? et dans la table des comptages? Quelle décision prendre relativement à cette ligne spéciale dans la table des communes?
   \item Ajouter les champs numériques suivant dans la table des communes avec \verb|NULL| comme valeur par défaut. 
 \begin{itemize}
   \item \verb|`MJO_E`| trafic moyen d'un jour ouvrable entrant cumulé pour toutes les routes.
@@ -40,12 +52,16 @@ On fera comme si tout le trafic circulant sur une route venait de la ville extr�
 
 
 \section{Requêtes}
-Une remarque sur les commentaires en SQL. cela dépend du moteur. En MySQL (ou Mariadb):
+La syntaxe des commentaires en SQL peut dépendre du moteur. Nous utiliserons
 \begin{itemize}
   \item \verb|#| jusqu'à la fin de la ligne
-  \item Depuis \verb|/*| jusqu'à \verb|*/|. Ce type de commentaire peut s'étendre sur plusieurs lignes.
-  \item Depuis \verb|-- | (double tiret espace) jusqu'à la fin de la ligne.
+  \item depuis \verb|/*| jusqu'à \verb|*/| pour des commentaires sur plusieurs lignes.
+  \item depuis \verb|-- | (double tiret espace) jusqu'à la fin de la ligne.
 \end{itemize}
+\begin{verbatim}
+ SELECT `SECTION`, COUNT(*) AS c  
+    FROM `comptages` GROUP  BY `SECTION` ORDER BY c DESC
+\end{verbatim}
 
 \begin{enumerate}
   \item Requête d'union des villes et d'insertion dans la table (déjà crée).

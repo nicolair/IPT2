@@ -1,53 +1,52 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 9: Introduction aux bases de données le 10/05/17}
+\chead{Cours 9: Introduction aux bases de données. le 09/05/18}
 \begin{document}
 \section{Présentation}
 Une \emph{base de données relationnelle} est un système de gestion de données. L'objet de ce cours est d'introduire aux concepts élémentaires de tels systèmes.\newline
 Les deux fonctions principales de tout système de gestion de données sont :
 \begin{center}
- \hspace{3cm}  Lire \hfill \'Ecrire \hspace*{3cm}
+ Lire (extraire des informations) \hfill \'Ecrire (insérer ou modifier des informations)
 \end{center}
-Les \emph{tables} sont les objets fondamentaux sur lesquels les données sont écrites. Elles rassemblent des données qui partagent une même structure. Les \emph{requêtes} sont des morceaux de code permettant d'agir sur les tables et en particulier d'extraire (lire) des données dans les tables. Ces requêtes sont écrites dans un langage particulier le \emph{SQL} (Structured Query Langage).\newline
-Il existe d'autres systèmes que les bases de données relationnelles: les tableaux (toutes les données sont rassemblées dans un seul tableau),
-les structures hierarchisées (systèmes de fichiers, ldap (Lightweight Directory Access Protocol)), les structures les plus récentes sont délibérément non relationnelles (noSQL, graphDataBase) et destinées à manipuler de plus grandes quantités de données.
+Les \emph{tables} sont les objets fondamentaux sur lesquels les données sont écrites. Elles rassemblent des données qui partagent une même structure. Les \emph{requêtes} sont des programmes agissant sur les tables. Elles sont écrites dans un langage particulier le \emph{SQL} (Structured Query Langage).\newline
+Il existe d'autres systèmes de gestion de données: des tableaux (tratés par des logiciels nommés \emph{tableurs}),
+des structures hierarchisées (systèmes de fichiers, ldap (Lightweight Directory Access Protocol)), des structures non relationnelles (noSQL, graphDataBase) pour manipuler de plus grandes quantités d'informations.
   
 \section{Tables}
 \subsection{Dictionnaire}
-Fondamentalement, une base de données relationnelle est une collections de tableaux qu'il est possible de relier entre eux.
+Comme on dispose d'une certaine habitude des tableaux, on peut les utiliser pour présenter les bases de données. Fondamentalement, une base de données relationnelle est une collections de tableaux qu'il est possible de relier entre eux. Précisons un dictionnaire entre les deux vocabulaires. 
 \begin{center}
 \begin{tabular}{l|l}
-Vocabulaire collections de tableaux & Vocabulaire base de données relationnelle \\ \hline
+Collections de tableaux & Base de données relationnelle \\ \hline
  tableau & relation ou table \\
- identifiant de colonne & attribut \\
  ligne & enregistrement \\
+ identifiant de colonne & attribut \\
  type d'une valeur d'une colonne & domaine de l'attribut
 \end{tabular}
 \end{center}
-Des exemples de types pour une colonne (domaine d'un attribut) : integer (plusieurs types petits ou grands), booléen, date, chaîne de caractêres (longueur fixée), texte (chaîne de caractères de longueur non fixée).
+Des exemples de domaines d'attribut (types pour une colonne) : integer (plusieurs sortes petits ou grands), booléen, date, chaîne de caractêres (longueur fixée), texte (chaîne de caractères de longueur non fixée).
 Il n'est pas forcément obligatoire de déclarer un type pour un attribut mais cela permet en général d'accéler les requêtes.\newline
 \index{schéma de relation} Le \emph{schéma de relation} est la suite des déclarations des domaines pour chaque attribut (des types pour chaque colonne).\newline
 \index{clé primaire}Une \emph{clé primaire} est un attribut particulier qui prend des valeurs différentes pour chaque enregistrement. Une valeur de clé primaire correspond à donc \emph{un seul enregistrement} dans une table et permet de le repérer.
 
-Une table ressemble à un ensemble dont les éléments sont les enregistrements sauf que les enregistrements ont la même structure (ce qui n'a pas de sens pour un ensemble) et que, en principe, il est possible d'avoir plusieurs fois le même enregistrement ce qui n'a pas de sens pour un ensemble. Avoir plusieurs fois le même enregistrement est considéré comme une mauvaise pratique: on s'attachera à toujours introduire une clé primaire dans une table.
+On peut aussi utiliser (dans une certaine mesure) le vocabulaire ensembliste pour parler des bases de données. Une table ressemble à un ensemble dont les éléments sont les enregistrements. Ils partagent la même structure (ce qui n'a pas de sens pour les éléments d'un ensemble). Notons aussi que, en principe, il est possible d'avoir plusieurs fois le même enregistrement dans une table ce qui n'a pas de sens pour un ensemble. Toutefois, c'est une mauvaise pratique. Pour l'éviter, on s'attachera à introduire une clé primaire dans chaque table.
 
 \subsection{Exemple}
 La base proposée est formée de deux tables téléchargées depuis le site \href{http://www.data.gouv.fr}{data.gouv.fr}.
-Ces tables étaient au format csv (Coma Separated Value). Elles ont été traduites dans le bon encodage (utf8) puis tronquées et insérées dans une base de données nommée \og cours\_2017\fg~ où elles sont désignées par \og AOC\fg~ et \og musees\fg. \newline
-On utilise une base de données au travers d'une architecture client-serveur. Ici : un serveur de base de données (MariaDb), un serveur web (apache), une interface d'accès au serveur de bases de données (phpMyAdmin). Cette architecture fera l'objet d'un autre cours.\newline
-La figure \ref{fig:aoc} reproduit une fenêtre de phpMyAdmin présentant la structure de la table \og AOC\fg.
+Ces tables étaient au format csv (Coma Separated Value). Elles ont été traduites dans le bon encodage (utf8) puis tronquées et insérées dans une base de données nommée \og cours\_2018\fg~ où elles sont désignées par \og AOC\fg~ et \og musees\fg. \newline
+On utilise une base de données au travers d'une architecture client-serveur. Ici : un serveur de base de données (MariaDb), un serveur web (apache), une interface d'accès au serveur de bases de données (phpMyAdmin).\newline
+La figure \ref{fig:aoc} reproduit une fenêtre présentant la structure de la table \og AOC\fg.
 \begin{figure}[h]
   \centering
   \includegraphics[width=10cm]{./introbdd_aoc.png}
-  \caption{structure d'une table}
+  \caption{structure d'une table - schéma de relation}
   \label{fig:aoc}
 \end{figure}
 
 
 \section{Requêtes}
-La figure \ref{fig:requete} est un exemple de \emph{requête}. Il existe de nombreux dialectes suivant les vendeurs de bases, la syntaxe proposée ici est minimale et devrait fonctionner dans beaucoup de cas. 
-On s'intéresse ici seulement aux moyens d'extraire (sélectionner) de l'information depuis les tables.
+La figure \ref{fig:requete} présente une \emph{requête} pour extraire (sélectionner) de l'information. Il existe plusieurs dialectes de SQL suivant les vendeurs de bases, ici la syntaxe est minimale et devrait toujours fonctionner.
 \subsection{Sélection sans jointure}
 \begin{figure}[h]
   \centering
@@ -55,23 +54,23 @@ On s'intéresse ici seulement aux moyens d'extraire (sélectionner) de l'informa
   \caption{fenêtre de requêtes}
   \label{fig:requete}
 \end{figure}
-Bien noter que l'on peut aller à la ligne et indenter comme on veut.
+Examinons (de gauche à droite) le texte de la requête \footnote{Bien noter que l'on peut aller à la ligne et indenter comme on veut}.
 \begin{itemize}
   \item Mot réservé \verb|SELECT|. Les majuscules ne sont pas obligatoires mais conseillées.
-  \item Liste d'attributs séparés par les virgules. Le caractère \verb|*| signifie tous les attributs de la table. Ces attributs n'ont pas à être dans le même ordre que dans le schéma de la table. Si seuls certains attributs sont demandés, on dit que l'on fait une \emph{projection} de la table. On peut aussi combiner ces attributs avec des opérations (concaténation \verb|CONCAT()| pour les types chaînes, opération numériques pour les types numériques) ou les composer par des fonctions. La syntaxe de ces opérations dépend du modèle de base. On peut définir un alias pour le nom de l'attribut avec \verb|AS| suivi du nom de l'alias.
-  \item Mot réservé suivant est \verb|FROM| suivi lui même par le nom de la base entre des guillemets obliques \verb|` `|.
+  \item Liste d'attributs séparés par les virgules. Ils n'ont pas à être dans le même ordre que dans le schéma. Si seulement certains attributs sont demandés sont demandés, on dit que l'on fait une \emph{projection} de la table. Le caractère \verb|*| signifie tous les attributs de la table. On peut combiner les attributs avec des opérations (concaténation \verb|CONCAT()| pour les types chaînes, opération numériques pour les types numériques) ou les composer par des fonctions. La syntaxe de ces opérations dépend du modèle de base. On peut définir un alias pour le nom de l'attribut avec \verb|AS| suivi du nom de l'alias.
+  \item Mot réservé \verb|FROM|. Il est suivi par le nom de la base d'où on extrait les enregistrements (entre des guillemets obliques \verb|` `|).
   \item Clause \verb|WHERE | non obligatoire suivie d'une combinaison booléenne de conditions reliées par les opérateurs \verb|AND| , \verb|OR|.
   \item On peut grouper les enregistrements par le mot clé \verb|GROUP BY| suivi d'un nom de colonne. Cela est utile si on a ajouté une fonction du type \verb|COUNT()| dans la liste de ce qui est affiché
   \begin{verbatim}
    SELECT `Aire géographique`, COUNT(`Aire géographique`) AS nb 
     FROM `AOC` GROUP BY `Aire géographique` ORDER BY nb DESC
   \end{verbatim}
-  \item On peut enfin ranger par ordre croissant ou décroissant suivant un attribut avec \verb|ORDER BY | nom d'attribut \verb|ASC| ou \verb|DESC|.
+  \item On peut ranger par ordre croissant ou décroissant suivant un attribut avec \verb|ORDER BY | nom d'attribut \verb|ASC| ou \verb|DESC|.
 \end{itemize}
 Exercice. Présenter la colonne du nombre d'AOC par aire géographique par ordre alphabétique de l'aire ou par ordre décroissant du nombre de produits.
 
 \subsection{Jointures}
-Une jointure permet de lier plusieurs tables et d'extraire de l'information de la structure ainsi formée. Ce sont les jointures qui donnent leur puissance aux bases de données en permettant de croiser les informations réparties dans plusieurs tables.\newline
+Les \emph{jointures} lient plusieurs tables. Elles donnent leur puissance aux bases de données en permettant de croiser les informations.\newline
 La jointure basique de deux tables forme une nouvelle table virtuelle qui est un produit cartésien des deux. Chaque enregistrement de la jointure est de la forme $(e_i,e'_j)$ où $e_i$ est un enregistrement de la première table et $e'_j$ de la seconde. Comme les tables comportent quelques milliers d'enregistrements cela donne une structure trop grande pour être utile.\newline
 En fait, on joint les tables \emph{sur des attributs particuliers} dont des valeurs égales sont présentes dans les deux tables.
 \begin{verbatim}
@@ -82,7 +81,7 @@ Le reste de la syntaxe de \verb|SELECT| présentée au dessus reste valable.
 
 \subsection{Fonctions d'agrégation}
 Les fonctions d'agrégation calculent leurs valeurs à partir de \emph{l'ensemble} des données renvoyées par une requête.\newline
-Les exemples suivants présentent la syntaxe Mysql pour les principales fonctions 
+Les exemples suivants présentent la syntaxe des principales fonctions 
 \begin{itemize}
   \item le nombre d'enregistrements : \texttt{COUNT(*)}.
   \item le nombre de valeurs distinctes d'un attribut : \texttt{COUNT( DISTINCT nomAttrib)}

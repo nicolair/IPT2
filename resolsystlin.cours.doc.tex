@@ -1,7 +1,7 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 8: Résolution numérique de systèmes d'équations linéaires le 29/03/17}
+\chead{Cours 8: Résolution numérique de systèmes d'équations linéaires le 04/04/18}
 \begin{document}
 La méthode du pivot de Gauss consiste à transformer un système d'équations linéaires (sans changer l'ensemble des solutions) en un système triangulaire puis à résoudre\footnote{\og résoudre\fg ~ un système d'équations c'est trouver une description paramétrique de l'ensemble de ses solutions.} ce système triangulaire (phase de remontée).\newline
 Le programme d'informatique de la classe se limite aux systèmes linéaires inversibles (ou de Cramer). Dans de tels systèmes, le nombre d'équations est égal au nombre d'inconnues (notons le $p$) et le système admet une unique solution (qui est un $p$-uplet). Les cas plus généraux sont présentés dans le \href{http://back.maquisdoc.net/data/cours_nicolair/C2234.pdf}{cours de maths}.
@@ -292,7 +292,8 @@ tt = tmin - p*pas
     plt.plot(P[0],P[1],'ro')
     tt += pas
 \end{verbatim}
-On voit que les points ne se recouvrent pas exactement à cause des erreurs d'arrondi.
+On voit que les points ne se recouvrent pas exactement à cause des erreurs d'arrondi.\newline
+Pour avoir un meilleur dessin, on peut \og viser\fg~ un point depuis un point fixé c'est à dire déterminer un intervalle de $t$ permettant de tracer une courbe de par et d'autres du point visé. Il faut viser tous les points.
 \end{document}
 
 \subsection{Implémentation en Scilab}
