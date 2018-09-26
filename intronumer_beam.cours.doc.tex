@@ -1,0 +1,126 @@
+\input{ipt_beamer.tex}
+
+\begin{document}
+
+\begin{frame}
+ \frametitle{Codage binaire}
+Soit $b$ un entier naturel supérieur ou égal à $2$.\newline
+Pour tout $x \in \llbracket 0 , b^n-1 \rrbracket$, il existe un unique $n$-uplet
+\begin{displaymath}
+ (a_0,a_1,\cdots,a_{n-1})\in \llbracket 0 , b-1\rrbracket^n
+\end{displaymath}
+tel que 
+\begin{displaymath}
+ x = a_0 + a_1 b +\cdots +a_{n-1}b^{n-1}
+\end{displaymath}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Bijection}
+Considérons la fonction
+\begin{displaymath}
+ \Phi\left\lbrace 
+\begin{aligned}
+\llbracket 0 , b-1\rrbracket^n &\rightarrow \llbracket 0 , b^n-1\rrbracket\\
+(a_0,a_1,\cdots,a_{n-1}) &\rightarrow a_0 + a_1 b +\cdots +a_{n-1}b^{n-1} 
+\end{aligned}
+\right. .
+\end{displaymath}
+On doit montrer qu'elle est bijective.
+\end{frame}
+
+\begin{frame}
+ \frametitle{Lemme fondamental}
+\begin{displaymath}
+ a_0 + a_1 b +\cdots +a_{n-1}b^{n-1}\in \llbracket 0,b^n-1\rrbracket
+\end{displaymath}
+Ceci résulte de l'encadrement
+\begin{multline*}
+ 0\leq a_0 + a_1 b +\cdots +a_{n-1}b^{n-1} 
+\leq (b-1) + (b-1) b +\cdots +(b-1)b^{n-1}\\
+\leq (b-1)(1+b+\cdots +b^{n-1})=b^n-1
+\end{multline*}
+\'Evidemment c'est vrai aussi pour tout $m\leq n$:
+\begin{displaymath}
+ a_0 + a_1 b +\cdots +a_{m-1}b^{m-1}\in \llbracket 0 , b^m-1\rrbracket.
+\end{displaymath} 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Numération par les quotients}
+\begin{displaymath}
+ x = a_{n-1}b^{n-1} + \underset{\in \llbracket 0 ,b^{n-1}-1\rrbracket}{\underbrace{a_{n-2}b^{n-2}  + \cdots + a_1 b + a_0}}
+\end{displaymath}
+Donc dans la division de $x$ par $b^{n-1}$
+\begin{itemize}
+ \item $a_{n-1}$ est le quotient,
+ \item le nombre au dessus de l'accolade est le reste
+\end{itemize}
+Ceci assure l'unicité de $a_{n-1}$ et on peut poursuivre le raisonnement en divisant le reste précédent par $b^{n-2}$.\newline
+Inconvénient: pour un $x$ arbitraire, il faut d'abord calculer le $n$.
+\end{frame}
+
+\begin{frame}
+ \frametitle{Pseudo-code}
+\begin{algorithm}[H]
+ $b \leftarrow $ la base , $x \leftarrow $ un nombre entier $>0$ \;
+ \Comment{recherche de la plus petite puissance $p$ de $b$  telle que $x < p$. Alors $b^{n-1} = p/b \leq x$.}
+ $p \leftarrow 1$\;
+ \Tq{$p \leq x$}{
+     $p\leftarrow p*b$}
+ $p \leftarrow p / b$\;
+ \Comment{Formation du développement}
+ $resultat \leftarrow$ mot vide \;
+ \Tq{$x > 0$}{
+     $q \leftarrow $ quotient de la division de $x$ par $p$ \;
+     Concaténer $q$ à droite de $resultat$ \;
+     $x \leftarrow $ reste de la division de $x$ par $p$ \;
+     $p \leftarrow p / b$ }\;
+     \caption{Numération par les quotients}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Numération par les restes}
+\begin{multline*}
+ x= a_0 + a_1 b +\cdots +a_{m-1}b^{m-1} \\
+ = a_0 +(a_1+a_2b+\cdots+a_{n-1}b^{n-2})b
+\end{multline*}
+Donc dans la division de $x$ par $b$:
+\begin{itemize}
+ \item le reste est $a_0$,
+ \item le quotient est 
+\begin{displaymath}
+a_1+a_2b+\cdots+a_{n-1}b^{n-2}. 
+\end{displaymath}
+\end{itemize}
+Ceci assure l'unicité du $a_0$ et le raisonnement se poursuit en divisant par $b$ le quotient précédent.
+\end{frame}
+
+\begin{frame}
+ \frametitle{Pseudo-code}
+\begin{algorithm}[H]
+ $b \leftarrow $ la base \;
+ $x \leftarrow $ un nombre entier $>0$ \;
+ \Comment{Formation du développement}
+ $resultat \leftarrow$ liste vide \;
+ \Tq{$x > 0$}{
+     $r \leftarrow $ reste de la division de $x$ par $b$ \;
+     Concaténer $r$ à gauche de $resultat$ \;
+     $x \leftarrow $ quotient de la division de $x$ par $b$ \;}
+ \caption{Numération par les restes}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Par les quotients: code Python}
+\lstinputlisting[firstline=12, lastline=23]{intronumer.py}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Par les restes: code Python}
+\lstinputlisting[firstline=30, lastline=34]{intronumer.py}
+\end{frame}
+
+
+\end{document}

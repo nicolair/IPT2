@@ -5,7 +5,7 @@
 
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 2: Introduction à la numération le 04/10/17}
+\chead{Cours 2: Introduction à la numération le 26/09/18}
 
 \begin{document}
 L'objet de ce cours est d'expliquer pourquoi et comment on peut coder des entiers naturels par des mots formés avec les lettres d'un alphabet de $b$ signes où $b$ est un entier naturel supérieur ou égal à $2$. Un tel codage est appelé système de numération en base $b$.\newline
@@ -15,7 +15,7 @@ La proposition suivante traduit l'existence et l'unicité de la décomposition d
 \begin{prop}
  Soit $b$ un entier naturel supérieur ou égal à $2$. Pour tout entier naturel $x$ entre $0$ et $b^n-1$, il existe un unique $n$-uplet
 \begin{displaymath}
- (a_0,a_1,\cdots,a_{n-1})\in \{0,1,\cdots,b-1\}^n
+ (a_0,a_1,\cdots,a_{n-1})\in \llbracket 0,b-1\rrbracket^n
 \end{displaymath}
 tel que 
 \begin{displaymath}
@@ -23,15 +23,15 @@ tel que
 \end{displaymath}
 \end{prop}
 
- Pour démontrer cette proposition, on va remarquer qu'elle est équivalente à la bijectivité d'une certaine application entre deux ensembles finis ayant le même nombre d'éléments. Pour une telle application, l'injectivité entraîne la surjectivité donc la bijectivité.\newline
+Pour démontrer cette proposition, on va remarquer qu'elle est équivalente à la bijectivité d'une certaine application entre deux ensembles finis ayant le même nombre d'éléments. Pour une telle application, l'injectivité entraîne la surjectivité donc la bijectivité.\newline
 La démonstration de l'injectivité est \emph{constructive}. Si un entier est décomposé alors chaque $a_i$ se calcule algorithmiquement en fonction de $x$ et de $b$. Ceci assure l'unicité de la décomposition donc l'injectivité de la fonction.
 
 Considérons la fonction
 \begin{displaymath}
  \Phi\left\lbrace 
 \begin{aligned}
-\{0,1,\cdots,b-1\}^n &\rightarrow& \{0,1,\cdots,b^n-1\}\\
-(a_0,a_1,\cdots,a_{n-1}) &\rightarrow& a_0 + a_1 b +\cdots +a_{n-1}b^{n-1} 
+\llbracket 0 , b-1 \rrbracket^n &\rightarrow \llbracket 0 , b^n-1\rrbracket \\
+(a_0,a_1,\cdots,a_{n-1}) &\rightarrow a_0 + a_1 b +\cdots +a_{n-1}b^{n-1} 
 \end{aligned}
 \right.
 \end{displaymath}
@@ -47,7 +47,7 @@ Ceci résulte de l'encadrement
 \end{multline*}
 On démontre exactement de la même manière que, pour des $m\leq n$:
 \begin{displaymath}
- a_0 + a_1 b +\cdots +a_{m-1}b^{m-1}\in \{0,1,\cdots,b^m-1\}
+ a_0 + a_1 b +\cdots +a_{m-1}b^{m-1}\in \llbracket 0 , b^m-1\rrbracket.
 \end{displaymath}
 Ceci servira plus loin pour justifier un des deux algorithmes proposés.\newline
 La proposition est exactement équivalente à la bijectivité de la fonction $\Phi$. Les ensembles de départ et d'arrivée ont le même nombre d'éléments à savoir $b^n$.\newline
@@ -104,7 +104,7 @@ Ceci assure aussi l'unicité du $a_0$ et le raisonnement se poursuit en divisant
      $r \leftarrow $ reste de la division de $x$ par $b$ \;
      Concaténer $r$ à gauche de $resultat$ \;
      $x \leftarrow $ quotient de la division de $x$ par $b$ \;}
- \caption{Numération par les quotients}
+ \caption{Numération par les restes}
  \label{Numrem} 
 \end{algorithm}
 

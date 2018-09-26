@@ -1,26 +1,164 @@
 \input{ipt.tex}
-
 \usepackage{parcolumns}
 \setlength{\parindent}{0pt}
+\makeindex
 
- \begin{document}
+\begin{document}
 \lhead{cours IPT}
-\chead{cours 1: Introduction à l'utilisation de Python le 12/09 2016}
-Python est un langage de programmation\footnote{c'est un langage interprété et non compilé} qui peut être utilisé de deux manières: 
-\emph{interactivement} c'est à dire en écrivant une instruction (ou plusieurs) dans un interpréteur puis en l'exécutant immédiatement ou bien en écrivant (avec un éditeur) un fichier texte enregistré (\emph{extension} .py) ce qui permet de le conserver et de l'exécuter de manière différée.\newline
-Sous diverses réserves (en particulier des problèmes de \emph{chemins de dossier} peuvent se produire), cela peut se faire dans n'importe quelle console\footnote{une console est une application dont l'interface avec l'utilisateur est uniquement du texte (ligne de commande).}. Toutefois le programme officiel de la classe nous demande d'utiliser Python par l'intermédiaire d'un \emph{environnement de programation}; les machines des salles de TP du lycée sont équipées de Spyder.\newline
-L'objectif de ce cours est de se familiariser avec la notion d'environnement de travail et avec les premiers principes de Python.
+\chead{cours 1: Introduction à l'utilisation de Python le 12 09 2018}
 
-\section{Environnement}
+
+\section{Langage de programmation}
+Un \emph{langage de programmation} a deux aspects: syntaxe et exécution.\index{syntaxe}\newline
+La \emph{syntaxe} est l'ensemble de règles que doit vérifier un texte pour pouvoir être qualifié de \og code\fg valide pour le langage. Dans le contexte de la programmation, un code est simplement un texte vérifiant ces règles et \og coder\fg signifie simplement écrire du code.\newline
+Un code peut être traduit par un programme (spécifique au langage) en une succession d'ordres donnés à une machine. Cette succession d'actions doit exécuter la tâche pour laquelle le code a été écrit. Cela peut se faire en une fois (\emph{langage interprété}) ou en deux fois (\emph{langage compilé}). \index{langage interprété} \index{langage compilé}\newline
+Pour un langage interprété, le \og traducteur\fg est appelé \emph{interpréteur} \index{interpréteur}. L'appel de l'interpréteur avec un code donné en paramètre exécute directement la tâche. Python, qui est le langage utilisé en mpsi, est un langage interprété.\newline
+Pour un langage compilé, le \og traducteur\fg est appelé \emph{compilateur}. \index{compilateur} L'appel du compilateur avec un code donné en paramètre produit un autre programme. Dans un second temps, l'appel de ce programme réalise la tâche visée.\newline
+
+\section{Environnement de programmation}
+Un \emph{environnement de programmation} \index{environnement de programmation} est une collection de dispositifs permettant de coder et d'exécuter du code.
+\subsection{Interpréteur utilisé interactivement}
+Le plus simple des environnements est l'interpréteur lui même utilisé interactivement. Il suffit de l'appeler (le nom peut varier selon les systèmes : \texttt{python} ou \texttt{python3} par exemple) sans paramètre dans une \emph{console}. Une console est une application dont l'interface avec l'utilisateur est uniquement du texte (ligne de commandes)\index{console}. On trouve aussi le mot \emph{terminal} pour désigner une console.\newline
+L'interpréteur attend une ligne de code (correcte) et l'exécute directement après \texttt{entrée}. Cet environnement est commode pour une initiation ou de petites vérifications. 
+On peut dire que l'interpréteur Python est lui même une console qui attend des commandes correctes.
+Il a deux limitations immédiates: la difficulté d'exécuter un code contenant plusieurs lignes, le fait que le code exécuté n'est pas enregistré en tant que fichier et donc difficile à réutiliser.
+
+\subsection{Couple éditeur-console}
+Un environnement de programmation très simple est constitué par un couple éditeur-console.\newline
+L'éditeur\footnote{à ne pas confondre avec un traitement de texte} de texte \index{éditeur de texte} \index{traitement de texte} permet de coder et d'enregistrer le code dans un fichier (l'extension du nom de fichier est .py \index{extension de nom de fichier}).\newline
+Pour exécuter le code, dans une console, on appelle l'interpréteur en lui donnant le nom du fichier de code en paramètre.\newline
+Sous diverses réserves (en particulier sous Windows des problèmes de \emph{chemins de dossier} peuvent se produire), cela peut se faire dans n'importe quelle console. Sous windows un éditeur simple est notepad. En général, un éditeur propose une \emph{coloration syntaxique} \index{coloration syntaxique} spécifique à Python. Il est conseillé de l'activer.
+
+\subsection{Autres environnements: spyder}
+Il existe de nombreux environnements de programmation pour Python offrant bien d'autres ressources (inspection des variables, debogage, ...) Un environnement de programmation sophistiqué est très utile au programmeur expérienté mais plutôt nuisible au débutant car l'apprentissage de l'environnement vient s'ajouter à celui du langage proprement dit.\newline
+Toutefois le programme officiel de la classe nous demande d'utiliser Python par l'intermédiaire de l'environnement de programmation spyder. Les machines des salles de TP du lycée sont équipées de Spyder. Il est conseillé de l'installer sur vos machines personnelles de manière à ne pas être désorienté si vous devez l'utiliser en concours. 
+
 \input{environnement.tex}
 %\clearpage
 
 \section{Exemples d'instructions}
 \input{Eexples}
 
+
+\section{Concepts et premiers éléments de syntaxe}
+L'objet de ce document est d'introduire ces premiers éléments de syntaxe ainsi que du vocabulaire et des concepts permettant de les comprendre. Ce cours est très limité et il est indispensable de savoir chercher dans la \href{http://docs.python.org/3.3/reference/}{documentation officielle} des informations plus précises. Sans une certaine maitrise du vocabulaire et des concepts, naviguer dans la documentation est très difficile.
+L'objet de ce document est d'introduire ces premiers éléments de syntaxe ainsi que du vocabulaire et des concepts permettant de les comprendre. Ce cours est très limité et il est indispensable de savoir chercher dans la \href{http://docs.python.org/3.3/reference/}{documentation officielle} des informations plus précises. Sans une certaine maitrise du vocabulaire et des concepts, naviguer dans la documentation est très difficile.
+\subsection{Expressions}
+Une expression est une phrase que l'interpréteur peut évaluer à un objet. La liste suivante présente les principaux types d'éléments constituants une expression.
+\begin{description}
+ \item[nom] ou variable: des mots formés avec les lettres de a à z en minuscule ou majuscule (Python est sensible à la casse c'est à dire que \verb|Cassy| et \verb|cassy| sont deux noms différents), le caractère underscore \verb|_| et les chiffres de \verb|0| à \verb|9| (sauf pour le premier caractère). Si un mot est réservé par Python pour un usage prédéfini, il ne peut pas être un nom.
+ \item[littéral] : un littéral désigne un objet fixé et pré-défini. La syntaxe dépend du type d'objet représenté, retenir seulement les cas suivants.\newline
+Les délimiteurs "espace" pour les entiers (int) avec éventuellement \verb|-|: par exemple \verb| 12 | désigne le nombre $12$. Il faut seulement le séparer d'un autre mot par des espaces.\newline
+Les délimiteurs \verb|" "| ou \verb|' '| pour les chaînes de caractères: \verb|"coucou"| est une chaîne de caractères.\newline
+Le \verb|.| pour les objets du type float: \verb|1.1| est un objet du type float, \verb|1.0| est un objet du type float alors que \verb|1| est un objet du type int et que \verb|"1"| est un objet du type str (chaîne de caractère).\newline
+Le \verb|j| pour un type "complex" : \verb|1.0j| représente l'imaginaire pur $i$. Noter que la partie imaginaire est de type float. Pour former des complexes avec une partie réelle non nulle, utiliser \verb|+| et un littéral du type float.
+
+\item[opérateurs] Un opérateur est un mot (contenant en général seulement un ou deux caractères) placé entre deux expressions (les opérandes). La phrase ainsi formée est elle même une expression. Il existe une hiérarchie entre les opérateurs qui élimine les ambiguités lorsque plus de deux opérateurs interviennent. Les parenthèses \verb|()| sont utilisées lorsque cette hierarchie n'est pas très claire. Pour qu'une telle phrase soit correcte, les opérandes doivent représenter des objets dont le type est en accord avec l'opérateur. Le résultat de l'évaluation est un objet dont le type dépend de l'opérateur.  
+\end{description}
+Présentons les opérateurs à retenir en les classant suivant le type de l'objet produit par l'évaluation de l'expression.
+\begin{description}
+ \item[opérateurs arithmétiques] Le résultat est d'un type représentant un nombre (en convenant que num designe l'un ou l'autre des types \verb|int| ou \verb|float|). Pour les opérateurs présentés dans le tableau suivant, il est conseillé de se limiter à des expressions dans les lesquelles les opérandes sont de type indiqué, le résultat de l'opération est alors de même type.
+ {%
+\begin{center}
+\begin{tabular}{cccccc}
+addition & multiplication & puissance & reste & quotient & division \\
+\verb|+| & \verb|*| & \verb|**| & \verb|%| & \verb|//|& \verb|/|    \\
+num      & num      & num       & int      & int      & float    \\
+ \end{tabular}
+ \end{center}
+}%
+
+\item[opérateurs booléens] Les opérandes sont de type booléens, l'expression formée s'évalue en booléen. 
+\begin{center}
+\begin{tabular}{ccc}
+\verb|and| & \verb|or| & \verb|not| \\
+ \end{tabular}
+\end{center}
+On peut remarquer que \verb|not| n'est pas tout à fait à sa place car il s'agit d'un opérateur \emph{unaire} qui se place à gauche d'une expression booléenne.
+
+\item[opérateurs sur les chaînes de caractères] Le seul à retenir pour le moment est l'opérateur de \emph{concaténation} qui se note \verb|+|.\newline
+Il colle bout à bout deux chaînes :
+\begin{verbatim}
+ "tagada"+"tsoin tsoin"
+\end{verbatim}
+s'évalue à \verb|"tagadatsoin tsoin"|.
+
+\item[opérateurs de comparaison] Une condition est une expression qui s'évalue en une valeur booléenne. Les opérateurs de comparaison forment des conditions. Les caractères utilisés pour les opérateurs présentés dans le tableau suivant sont assez clairs quant à leur signification. 
+{%
+\begin{center}
+\begin{tabular}{cccccc}
+\verb|==|  & \verb|!=| & \verb|>|  & \verb|<|  & \verb|>=|  &  \verb|<=|
+ \end{tabular}
+ \end{center}
+}
+sauf peut être \verb|!=| qui signifie "est différent de". Le détail de ce que fait l'opérateur == mérite d'être approfondi suivant les types des objets comparés.
+
+\item[opérateurs d'affectation] Ils sont de nature très différentes des précédents. Ce qui est à gauche d'un tel opérateur doit être un nom, ce qui est à droite est une expression. L'exécution référence par le nom à gauche un objet évalué à partir de l'expression de droite.\newline
+Le principal opérateur de ce type est \verb|=| que l'on peut appeler assignation simple. Le nom à gauche référence l'objet évalué à droite.\newline
+Il existe aussi des \emph{assignations augmentées} par des opérateurs
+\begin{center}
+\begin{tabular}{cccccc}
+\verb|+=|  & \verb|*=| & \verb|/=|  & \verb|%=|
+ \end{tabular}
+ \end{center}
+Par exemple \verb|a += 1| revient exactement au même que \verb|a = a + 1|. Les autres opérateurs sont sur le même principe.
+\end{description}
+Le mélange de divers types d'objets dans des expressions soulève de délicates questions qui méritent un examen détaillé de la documentation officielle du langage.\newline
+Une particularité de Python est qu'il permet des assignations multiples.\newline
+Après \verb|a , b = c , d|, les noms \verb|a| et \verb|c| désignent le même objet (celui que désignait \verb|c| avant l'exécution) et de même pour \verb|b| et \verb|d|. Cela permet en particulier de permuter les noms de deux objets.\newline
+Supposons que \verb|a| désigne l'objet1 et \verb|b| désigne l'objet2, et exécutons \verb|a , b = b , a|. Les noms sont alors permutés : \verb|a| désigne l'objet2 et \verb|b| désigne l'objet1 sans que les objets soient modifiés.
+
+\subsection{Instructions}
+Du point de vue de la syntaxe, une instruction\footnote{Le terme utilisé pour "instruction" dans la littérature informatique en anglais est \emph{statement} (ce qui affaiblit fortement l'aspect impératif).} est une \emph{ligne de code}.\newline
+L'\emph{indentation}, c'est à dire les caractères "espaces" présents au début d'une ligne joue un rôle très important dans la syntaxe Python.\newline
+Il existe des moyens de faire continuer le texte d'une instruction sur plusieurs lignes en utilisant des caractères spéciaux voir la documentation sur "logical line", "physical line", "line joining".\newline
+Un bloc d'instructions est une séquence d'intructions qui se suivent.
+\subsubsection{Commentaires}
+Un commentaire est un texte qui n'est pas interprété par Python. Lorsque l'interpréteur rencontre le caractère \verb|#|, il ignore le texte qui le suit jusqu'à la fin de la ligne. Pour insérer une ligne de commentaire, il suffit donc de la faire commencer par \verb|#|.\newline
+Si on veut insérer un commentaire sur plusieurs lignes sans les faire débuter par dièse, on peut utiliser 
+\begin{verbatim}
+ """
+ligne 1 de commentaire
+ligne 2
+...
+"""
+\end{verbatim}
+sauf dans certaines circonstances, le texte entre les délimiteurs \verb|"""| sera ignoré par l'interpréteur. Ceci n'est toutefois pas un véritable commentaire (voir la documentation). 
+
+\subsubsection{Instruction simple}
+Dans un premier temps, les instructions simples seront des assignations, d'autres sortes d'instructions seront rencontrées ensuite.
+\subsubsection{Instructions conditionnelles}
+Une instruction conditionnelle ou un bloc conditionnel d'instructions ne s'exécute que si une certaine condition est évaluée à vrai. La syntaxe est de la forme suivante
+\begin{verbatim}
+if condition :
+  instruction1
+  instruction2
+  ...
+  instructionN
+instructiontoujoursinterpretee
+\end{verbatim}
+Noter le \verb|:| dans la première ligne et l'indentation qui \emph{caractérise} les instructions du bloc. Utilisez deux ou quatre espaces de préférence à une tabulation pour l'indentation.\newline
+Il existe des variantes avec des \verb|else :| ou des \verb| elif condition1 :| qui ne sont pas présentées ici et dont la syntaxe est assez naturelle, voir éventuellement la documentation.
+
+\subsubsection{Boucles conditionnelles}
+Une boucle conditionnelle est un bloc d'instructions qui sera exécuté tout entier tant qu'une certaine condition est évaluée à vrai. La syntaxe est la suivante
+\begin{verbatim}
+instructiondavant
+while condition :
+  instruction1
+  instruction2
+  ...
+  instructionN
+instructiondapres
+\end{verbatim}
+Bien noter que le bloc peut n'être jamais exécuté car l'évaluation de la condition se fait avant la première exécution. Il est aussi possible que se produise une \emph{boucle infinie} lorsque les exécutions du blocs ne changent pas l'évaluation de la condition.\newline
+La syntaxe des boucles inconditionnelles( boucles "for") sera présentée plus loin car, en Python, ces boucles sont intimement reliées à certains types particuliers d'objets.
+
 \section{Objets, Noms, Assignations}
 \input{Einterv.tex}
 
 \section{Premiers exercices}
 \input{exo_intro0_E}
+
+\printindex
 \end{document}

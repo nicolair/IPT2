@@ -1,0 +1,103 @@
+\'Eléments de corrigé de Mines Informatique commune 2018. Mesures de Houle
+\subsection*{Partie I. Stockage interne des données}
+\begin{itemize}
+ \item[Q1] Chaque caractère est codé sur 8 bits c'est à dire un octet.Comme une mesure est codée avec 8 caractères, elle utilise 8 octets. Le nombre d'octets correspondant à 20 mn (une séquence) d'enregistrement à la fréquence de 2Hz est donc
+ \[
+  20 \times 60 \times 2 \times 8 \text{\,o} \simeq 19.2 \text{ ko}.
+ \]
+ \item[Q2] Une campagne dure quinze jours à raison de 20mn d'enregisrement par 30mn. \'Evaluons le nombre d'octets nécessaire au stockage des données.
+ \[
+  15 \times 24 \times 2 \times 1.9\, 10^{4} \text{ o} \simeq  1.38 \, 10^{7} \text{ o} = 13.8 \text{ Mo}
+ \]
+Comme 1 Go = $10^{9} \text{ o} = 1000 \text{ Mo}$, une carte mémoire de 1 Go est suffisante.
+ \item[Q3] Si on enlève un chiffre significatif, une mesure utilise 7 octets au lieu de 8. Le nombre de mesures est le même, la taille des données est multipliée par $\frac{7}{8}$ donc diminuée de 12,5\%.
+\end{itemize}
+
+\subsection*{Partie II. Analyse \og vague par vague\fg}
+\begin{itemize}
+ \item[Q5] Les hauteurs et les périodes de vagues relevées sur la figure 2 sont
+ \[
+  H_1 \simeq 9 \text{ m}, \hspace{0.5cm} H_2 \simeq 9 \text{ m}, \hspace{0.5cm} H_3 \simeq 6 \text{ m}, \hspace{0.5cm}T_1 \simeq 12 \text{ s}, \hspace{0.5cm} T_2 \simeq 13 \text{ s}.
+ \]
+ \item[Q6]Implémentation d'un calcul de moyenne.
+\lstinputlisting[firstline=3, lastline=9]{Choule.py}
+\item[Q7] Notons $T$ la durée de la séquence (20 mn), $N$ le nombre de mesures (c'est aussi la longueur de \texttt{liste\_niveaux}) et $v_i$ les mesures (pour $i \in \llbracket 0, N-1\rrbracket$). L'intervalle complet est découpé en $N-1$ petits intervalles de temps de longueur $\delta t$ entre deux mesures ($\delta t = 1/2$ seconde car la fréquence est de 2 Hz).
+Rappellons l'approximation d'une intégrale par la méthode des trapèzes:
+\[
+ \int_{\left[ a,b\right] }f \simeq (b-a)\frac{f(a) + f(b)}{2}.
+\]
+Cette approximation est utilisée sur chaque petit intervalle de temps d'où
+\[
+ \int_{0}^{T} \eta \simeq \sum_{k=0}^{N-2}\frac{\delta t}{2}(v_k + v_{k+1})
+ = \delta t\left( \frac{v_0 + v_{N-1}}{2} + \sum_{k=1}^{N-2} v_k\right) 
+\]
+Pour estimer la moyenne avec cette intégrale, il faut diviser par $T = 20 \times 60$ en secondes:
+\[
+ \text{moyenne précise} = \frac{1}{T} \int_{0}^{T} \eta.
+\]
+Implémentation du calcul de la moyenne par la méthode des trapèzes.
+\lstinputlisting[firstline=12, lastline=22]{Choule.py}
+
+ \item[Q8] On parcourt la liste à partir du début tant qu'un indice vérifiant les propriétés demandées n'est pas trouvé. On rappelle que l'énoncé suppose qu'aucune mesure n'est égale à la moyenne. Une implémentation possible est 
+\lstinputlisting[firstline=25, lastline=35]{Choule.py}
+Il serait utile de calculer la moyenne une fois pour toute et de la passer par paramètre sinon on ne peut espérer mieux qu'une complexité en $O(n)$.
+
+ \item[Q9] La question est analogue à la précédente, en parcourant la liste à partir de la fin. On fait passer la moyenne en paramètre pour avoir une complexité en $O(1)$ dans le meilleur des cas.
+\lstinputlisting[firstline=38, lastline=47]{Choule.py}
+Le meilleur des cas est celui où l'indice du dernier passage est l'avant dernier de la liste.
+
+ \item[Q10] Les deux lignes qui manquent dans la fonction \texttt{successeurs} sont
+\begin{verbatim}
+ if liste_niveaux[i] > m and liste_niveaux[i+1] < m :
+     successeurs.append[i+1]
+\end{verbatim}
+
+ \item[Q11] On utilise la syntaxe des \og tranches\fg~ (slices) de liste avec un : pour former la liste des vagues.
+\lstinputlisting[firstline=50, lastline=58]{Choule.py}
+
+  \item[Q12] Pour cette fonction \texttt{proprietes(liste\_niveaux)}, il faut faire attention aux hauteurs de la première et de la dernière vague qui correspondent à des mesures qui ne sont pas dans la liste des vagues.
+\lstinputlisting[firstline=61, lastline=83]{Choule.py}
+   
+\end{itemize}
+
+\subsection*{Partie III. Contrôle des données}
+\begin{itemize}
+ \item[Q13] Il suffit de repérer la plus grande hauteur dans la liste des propriétés.
+\lstinputlisting[firstline=86, lastline=92]{Choule.py}
+
+ \item[Q17] Pour améliorer la complexité, on calcule la moyenne une seule fois au début de la procédure.
+ 
+ \item[Q18] \`A priori, les deux fonctions devraient avoir la même complexité linéaire (en $O(n)$).
+\end{itemize}
+
+\subsection*{Partie IV. Base de données relationnelles}
+Seulement question Q19.\newline
+Requête SQL pour \og Quels sont le numéro d'identification et le nom de site des bouées localisées en Méditérannée ?\fg
+\begin{verbatim}
+ SELECT `idBouee` FROM `Bouee` 
+   WHERE `localisation` = 'Mediterrannee'
+\end{verbatim}
+
+Requête SQL pour \og Quel est le numéro d'identification des bouées qui n'ont pas subi de tempêtes ?\fg
+On peut utiliser une jointure gauche.
+\begin{verbatim}
+ SELECT `idBouee` 
+   FROM `Bouee` 
+    LEFT JOIN `Tempete` ON `Bouee`.`idBouee` = `Tempete`.`idBouee`
+   WHERE `idTempete` IS NULL
+\end{verbatim}
+On peut utiliser aussi une sous-requête\footnote{Dans le programme d'IPT, je ne vois ni le concept de sous-requête ni celui de jointure gauche.}.
+\begin{verbatim}
+ SELECT `idBouee` FROM `Bouee` 
+   WHERE `idBouee` NOT IN (SELECT `idBouee` FROM `Tempete`)
+\end{verbatim}
+
+Requête SQL pour \og Pour chaque site, quelle est la hauteur maximale enregistrée lors d'une tempête ?\fg\newline
+Cette fois il faut joindre deux tables et regrouper les enregistrements.
+\begin{verbatim}
+ SELECT `nomSite`, max(`Hmax`)
+   FROM `Bouee` 
+    JOIN `Tempete` ON `Bouee`.`idBouee` = `Tempete`.`idBouee` 
+   GROUP BY `nomSite`
+\end{verbatim}
+

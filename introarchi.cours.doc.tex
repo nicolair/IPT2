@@ -2,7 +2,7 @@
 
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 2: Introduction aux systèmes informatiques le 04/10/2017}
+\chead{Cours 2: Introduction aux systèmes informatiques le 26/09/2018}
 
 
 \begin{document}
@@ -28,7 +28,7 @@ Les actions de la machine sont déterminées à partir d'un \emph{tableau d'inst
 2 &    & 0G3 &    \\ \hline
 3 & D! & G   &    \\ \hline
 \end{tabular}
-) \end{center}
+\end{center}
 Par exemple, lorsque la machine lit un "0" dans la case courante du ruban et qu'elle est dans l'état "1", le "G2" du tableau se traduit par: elle n'écrit rien, elle déplace la tête de lecture vers la gauche, elle se met dans l'état "2".\newline
 Lorsqu'elle lit un "1" en étant dans l'état "2", elle écrit un "0" dans la case courante, se déplace vers la gauche et se met dans l'état "3".\newline Lorsqu'elle lit un "0" en étant dans l'état "3", elle n'écrit rien, se déplace vers la droite et s'arrête. Les autres cas se comprennent bien. On convient que la machine s'arrête si elle rencontre une case vide de son tableau d'instructions. Cela pourrait se coder en plaçant des "!" dans les cases vides.\newline
 Calculons à partir d'un ruban "... 0 0 1 1 1 * 1 1 0 0 ..." en le plaçant dans la machine; la tête de lecture/écriture devant le "1" le plus à gauche.\newline
