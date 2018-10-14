@@ -122,7 +122,7 @@ Avec des mots binaires de longueur $n$, on représente les $2^n$ entiers de
 
 \begin{frame}
   \frametitle{Représentation de $-x$.}
-Soit $x$ entier tel que $0<x<2^{n-1}$ et $(0,b_{n-2},\cdots,b_1,b_0)$ se représentation binaire sur $n$ bits.\newline
+Soit $x$ entier tel que $0<x<2^{n-1}$ et $(0,b_{n-2},\cdots,b_1,b_0)$ sa représentation binaire sur $n$ bits.\newline
 Comment obtenir la représentation de $-x$? 
 \begin{itemize}
   \item on inverse le développement: $(1,1-b_{n-2},\cdots,1-b_1,1-b_0)$
@@ -204,7 +204,8 @@ attention à la retenue
 \begin{frame}
   \frametitle{Exercice (en Python 2.7)}
 Les entiers de type \texttt{int} sont stockés par complément à 2 sur 8 octets. Quel est l'intervalle des entiers du type \texttt{int}?\newline
-Lorsque l'on sort de l'intervalle des entiers \texttt{int}, python 2.7 transtype automatiquement en entier \texttt{long} et le marque en plaçant un \texttt{L} à la fin du mot. Faire afficher à python le plus grand des \texttt{int}. Comment ne pas faire apparaitre le \texttt{L} à la fin de l'affichage?
+Lorsque l'on sort de l'intervalle des entiers \texttt{int}, python 2.7 transtype automatiquement en entier \texttt{long}. On le sait avec \texttt{type(nom)}.\newline
+Faire afficher à python le plus grand des \texttt{int}.
 \end{frame}
 
 \begin{frame}

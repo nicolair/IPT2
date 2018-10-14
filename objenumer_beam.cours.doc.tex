@@ -4,12 +4,12 @@
 
 \begin{frame}
   \frametitle{Boucles d'énumération}
-En Python, la notion boucle \texttt{for}
+En Python, une boucle \texttt{for}
 \begin{itemize}
   \item  n'est pas une boucle non conditionnelle. Elle n'a rien à voir avec la boucle \texttt{while},
-  \item  est remplacée par une notion de \emph{boucle d'énumération} liée à des types particuliers d'objets dits \emph{énumérables}.
+  \item  c'est une \emph{boucle d'énumération} liée à des types particuliers d'objets dits \emph{énumérables}.
 \end{itemize}
-Un objet de type \emph{énumérable} est une sorte de conteneur qui rassemble \og dans une même boîte\fg~ divers objets que l'on peut énumérer  à l'aide d'une boucle
+Un objet \emph{énumérable} est une sorte de conteneur qui rassemble \og dans une même boîte\fg~ divers objets que l'on peut énumérer  à l'aide d'une boucle
 \begin{center}
 \texttt{for ... in ...}.  
 \end{center}
@@ -86,7 +86,7 @@ Dans l'écriture \emph{littérale} d'un objet énumérable,
 
 \begin{frame}
   \frametitle{Assignation = Référence}
-Avec les objets dont le type est mutable, l'assignation est une \emph{référence} et non une copie.
+L'assignation est une \emph{référence} et non une copie :\newline attention aux objets  mutables! 
 \lstinputlisting[firstline=23, lastline=33]{objenumer.py}
 \end{frame}
 
@@ -131,7 +131,7 @@ Certains caractères jouent un rôle particulier: \og ils ne se représentent pa
 \begin{frame}
   \frametitle{Chaînes, sous-chaînes, indexation, slicing}
 \begin{itemize}
-  \item caractère = chaîne de longueur 0.
+  \item caractère = chaîne de longueur 1.
   \item sous-chaîne : formée avec des caractères consécutifs.
   \item sous chaînes obtenues avec crochets, index et \texttt{:} (slicing)
 \end{itemize}
@@ -142,7 +142,7 @@ Certains caractères jouent un rôle particulier: \og ils ne se représentent pa
   \frametitle{Chaînes: opérateur \texttt{in}}
   L'opérateur à valeur booléenne \texttt{in} permet de savoir si une chaîne est dans une chaîne.
   \lstinputlisting[firstline=65, lastline=67]{objenumer.py}
-  Ce type d'algorithme  est un attendu du programme. (algorithmes usuels)
+  Des algorithmes pour ce type de travail font partie du programme. (algorithmes usuels)
   
   Si le deuxième argument de l'opérateur n'est pas du type itérable, on obtient une erreur.
 \end{frame}
