@@ -80,13 +80,13 @@ print(f + 1)
   \frametitle{Propriétés des paramètres}
 \begin{itemize}
   \item Les concepts de passage de paramètres par \emph{valeur} ou par \emph{référence} ne sont pas pertinents en Python.
-  \item Les paramètres indiqués lors de la définition sont toujours des variables locales.
+  \item Les paramètres indiqués lors de la définition sont toujours des noms locaux.
   \item Lors de l'appel, ils référencent les objets qu'on leur passe.
 \end{itemize}
 Exemple :
 \begin{itemize}
   \item la définition de la fonction contient le nom \texttt{nomloc} en position \texttt{i} dans les paramètres
-  \item lors de l'appel, le nom \texttt{nomglob} est position \texttt{i}
+  \item lors de l'appel, le nom \texttt{nomglob} est en position \texttt{i}
 \end{itemize}
 Alors: une assignation est réalisée au moment de l'appel.
 
@@ -95,12 +95,12 @@ Le nom local \texttt{nomloc} et le nom global \texttt{nomglob} désignent le mê
 
 \begin{frame}
   \frametitle{Modification des paramètres}
-Un objet peut-il être modifié par une fonction?
+Un objet passé en paramètre peut-il être modifié par une fonction?
 
 oui si il est modifiable (mutable).\newline
 \begin{itemize}
   \item Si le nom passé en paramètre désigne un objet mutable, il peut être modifié à l'intérieur de la fonction et le nom extérieur pointera vers le même objet modifié.
-  \item Si le nom passé en paramètre désigne un objet qui n'est pas mutable, alors il ne pourra pas être modifié.Le nom extérieur pointera vers l'objet initial. En revanche, le nom local pourra être réassigné (à un autre objet) dans le code de la fonction. 
+  \item Si le nom passé en paramètre désigne un objet qui n'est pas mutable, alors il ne pourra pas être modifié. Le nom extérieur pointera vers l'objet initial, le nom local pourra être réassigné (à un autre objet) dans le code de la fonction. 
 
 \end{itemize}
 \end{frame}

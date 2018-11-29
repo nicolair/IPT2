@@ -2,7 +2,7 @@
 
 %En tete et pied de page
 %\lhead{Cours IPT}
-\chead{Cours 5 : Introduction à la complexité algorithmique - le 29/11/2017}
+\chead{Cours 5 : Introduction à la complexité algorithmique - le 21/11/2018}
 \begin{document}
 \section{\'Evaluations de complexité}
 \subsection{Types de complexité}
@@ -25,14 +25,14 @@ Il s'agit d'évaluer les ressources utilisées par un algorithme c'est à dire l
 Les instructions élémentaires sont de divers types: lecture-écriture en mémoire, calcul avec des entiers, calcul avec des flottants.
 Dans la pratique, on se limite à considérer un type particulier d'instructions et à évaluer le nombre des instructions de ce type réellement exécutées.\newline
 Dans le cas des calculs (entiers ou flottants), on parle de \emph{complexité en temps}\index{complexité en temps}. En multipliant le nombre d'opérations par le nombre maximum d'opérations par seconde pour une machine donnée, on dispose d'une évaluation du temps de l'exécution. On ne considère pas forcément toutes les instructions et ce choix n'est pas universel. Souvent, on ne compte pas les instructions du type incrémenter un compteur entier ou le tester contre un entier.\newline
-Dans le cas des instructions de lecture-écriture, comme celles ci sont très rapides, on considère plutôt la taille de la mémoire nécessaire à ces instructions plutôt que le nombre de ces instructions. On parle alors de \emph{complexité en espace}\index{complexité en espace}. Pour une implémentation particulière, si la complexité en espace dépasse la mémoire vive allouée au processus deux situations peuvent se produire. Si l'OS n'est pas efficace le processus de l'algorithme va compromettre le fonctionnement de la machine elle même. Si l'OS est efficace, les instructions de lecture-écriture vont utiliser un mode de secours et être très lentes.
+Dans le cas des instructions de lecture-écriture, comme celles ci sont très rapides, on considère la taille de la mémoire nécessaire à ces instructions plutôt que le nombre de ces instructions. On parle alors de \emph{complexité en espace}\index{complexité en espace}. Pour une implémentation particulière, si la complexité en espace dépasse la mémoire vive allouée au processus deux situations peuvent se produire. Si l'OS n'est pas efficace le processus de l'algorithme va compromettre le fonctionnement de la machine elle même. Si l'OS est efficace, les instructions de lecture-écriture vont utiliser un mode de secours et être très lentes.
 
 \subsubsection{Taille des données.}
 Quel est l'argument des fonctions donnant les nombres d'opérations? Pour les complexités usuelles, que représente le $n$?\newline
 L'exécution de l'algorithme se fait à partir d'une donnée constituée d'un jeu de données numériques (booléennes, entières, flottantes). \emph{En général, la donnée n'est pas un nombre en elle même}.\newline
 On doit préciser un entier naturel que l'on appelle la \emph{taille} de la donnée pour l'algorithme considéré. Il existe plusieurs données de même taille et deux données de même taille ne conduisent pas à l'exécution du même nombre d'instructions. On ne cherche donc pas une expression exacte du nombre d'instructions mais plutôt une majoration $c(n)$ valable pour toutes les données de taille $n$. C'est cette fonction que l'on cherche à dominer par les suites usuelles. \newline
-On peut aussi définir donc la \emph{complexité dans le meilleur des cas}\index{complexité dans le meilleur des cas},  la \emph{complexité dans le pire des cas}\index{complexité dans le pire des cas} et la \emph{complexité moyenne}\index{complexité moyenne} pour une taille de donnée $n$ fixée.\newline
-Pour la complexité en moyenne, on doit introduire une probabilité sur l'ensemble des données de taille $n$, le nombre d'instructions est une variable aléatoire sur cet espace probabilisé et la complexité moyenne est l'espérance de cette variable aléatoire.
+On peut aussi définir la \emph{complexité dans le meilleur des cas}\index{complexité dans le meilleur des cas},  la \emph{complexité dans le pire des cas}\index{complexité dans le pire des cas} et la \emph{complexité moyenne}\index{complexité moyenne} pour une taille de donnée $n$ fixée.\newline
+Pour la complexité en moyenne, on introduit une probabilité sur l'ensemble des données de taille $n$, le nombre d'instructions est une variable aléatoire sur cet espace probabilisé et la complexité moyenne est l'espérance de cette variable aléatoire.
 
 \subsection{Estimations en temps}
 On mesure la rapidité d'un processeur au nombre d'instructions qu'il peut exécuter par seconde. \index{flops}L'unité est le \emph{flops} (floating operations per second).\newline
@@ -48,7 +48,7 @@ log. & lin. & quasi-lin. & quad. & pol. (3) & pol. (4)\\ \hline
 
 \section{Exemples}
 \subsection{Enchaînement d'algorithmes}
-Un algorithme s'exécute avec des données de taille $n$; il est constitué de deux algorithmes successifs: un pré-traitement qui est de complexité constante et le traitement proprement dit qui est de complexité linéaire. L'algorithme complet est aussi de complexité linéaire.
+Considérons un algorithme qui s'exécute avec des données de taille $n$. S'il est constitué de deux algorithmes successifs: un pré-traitement qui est de complexité constante et le traitement proprement dit qui est de complexité linéaire, l'algorithme complet est aussi de complexité linéaire.
 
 \subsection{Complexité logarithmique d'une recherche dichotomique}
 \begin{algorithm}
@@ -192,7 +192,7 @@ dont la démonstration est difficile. En revanche, on peut montrer facilement qu
 Pourquoi la boucle \texttt{while} interne démarre-t-elle à $k=p^2$?
 
 \subsubsection{Factorisation}
-Pour calculer la décomposition en facteurs premiers d'un entier $n$, on effectue d'abord un prétraitement dérivé du crible d'Eratosthène en calculant un tableau $F$ qui ressemble au précédent. Au lieu de \texttt{False}, on va placer en $F[i]$ le plus petit diviseur premier de $i$.
+Pour calculer la décomposition en facteurs premiers d'un entier $n$, on effectue d'abord un prétraitement dérivé du crible d'Eratosthène en calculant un tableau $F$ qui ressemble au précédent. Au lieu de \texttt{False}, on va placer en $F[i]$ le plus petit diviseur premier de $i$ autre que lui même. Dans ces conditions, $i$ est premier si et seulement si $F[i]=0$.
 \lstinputlisting[firstline=39, lastline=50]{complexite.py}
 Muni de ce tableau $F$ des plus petits facteurs premiers des éléments de $\llbracket 2,n\rrbracket$ on peut former la liste de tous les facteurs premiers d'un $x\in  \llbracket 2,n\rrbracket$.
 
@@ -213,6 +213,6 @@ Muni de ce tableau $F$ des plus petits facteurs premiers des éléments de $\llb
 \end{algorithm}
 Le nombre de facteurs premiers de $x$ décroît strictement lors de la boucle, c'est une fonction de terminaison. Si $s$ est ce nombre, comme les nombres premiers sont plus grands que $2$, on a $2^s \leq x$ donc $s\leq \frac{\ln x}{\ln 2}$. La complexité de cette factorisation est donc en $O(\ln(n))$.\newline
 Implémentation python de cet algorithme:
-\lstinputlisting[firstline=52, lastline=65]{complexite.py}
+\lstinputlisting[firstline=52, lastline=68]{complexite.py}
 
 \end{document}

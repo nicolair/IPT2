@@ -1,13 +1,13 @@
 L'objet de ce TP est d'implémenter des outils permettant l'analyse de fréquences dans un texte.\newline
-Il sert aussi d'introduction au prochain cours distribué en même temps (mais qui sera traité en classe le 15/11/18) sur les algorithmes usuels et les fonctions Python. Vous aurez besoin de la partie I du texte sur les fonctions et des algorithmes 1 et 2 de la partie I du texte sur les algorithmes usuels. 
+Il utilise le cours sur les algorithmes usuels et les fonctions Python. Vous aurez besoin de la partie I du texte sur les fonctions et des algorithmes 1 et 2 de la partie I du texte sur les algorithmes usuels. 
 
 \subsection*{I - Outils}
 \begin{enumerate}
   \item Les fonctions demandées dans cette question mettent en \oe{}uvre les algorithmes présentés en pseudo-code dans le cours. Elles ne doivent pas s'appeler.
 \begin{enumerate}
   \item Implémenter en Python une fonction nommée \verb|indice| prenant une liste et un objet comme paramètres et renvoyant l'indice correspondant de la liste lorsque l'objet y figure et une valeur convenue lorsqu'il n'y figure pas.
-  \item Implémenter une fonction \texttt{valeurMax} prenant une liste de nombres comme paramètre et renvoyant le plus grand.
-  \item Implémenter une fonction \texttt{indicesValeurMax} prenant une liste de nombres comme paramètre et renvoyant la liste des indices correspondants à la plus grande valeur.   
+  \item Implémenter une fonction \texttt{valeurMax} prenant une liste de nombres en paramètre et renvoyant le plus grand.
+  \item Implémenter une fonction \texttt{indicesValeurMax} prenant une liste de nombres en paramètre et renvoyant la liste des indices de plus grande valeur.   
 \end{enumerate}
    
   \item On se donne une liste \texttt{L} de \texttt{l} valeurs numériques qui ne sont pas forcément deux à deux distinctes. On suppose que \texttt{l} est plus grand que 10 et on veut calculer une liste \texttt{ligv} (liste des indices de grande valeur) de 10 indices correspondants aux 10 plus grandes valeurs. \newline
@@ -31,7 +31,7 @@ qui sont rangées par ordre décroissant.\newline
 Toute liste obtenue en permutant \texttt{ligv} serait aussi acceptable. On pourrait aussi remplacer le 6 de la fin (indice du deuxième 22 de \texttt{L}) par 1 (indice du premier 22)\newline  
 Pour former une LIPGV (Liste des Indices de Plus Grande Valeur) de \texttt{L}, on utilise l'algorithme \ref{Efreqtexte_1} dans lequel \texttt{j} prend les valeurs entières de 10 à \texttt{l} et pour lequel la phrase
 \begin{quote}
- \texttt{ligv} indexée entre 0 et \texttt{j} est une LIPGV de \texttt{L} indexée entre 0 et \texttt{j}
+ \texttt{ligv} indexée entre 0 et 9 (à valeurs entre 0 et \texttt{j}) est une LIPGV de \texttt{L} indexée entre 0 et \texttt{j}
 \end{quote}
 est toujours vraie (invariant). Il utilise les noms de variables suivantes:
 \begin{itemize}

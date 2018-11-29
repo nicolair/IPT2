@@ -58,7 +58,8 @@ nt = 4
 
 u = transportDrte(0.2,nt,nx,v)
 plt.plot(lx,u[nt],'--',label='t = 0.1')
-"""u = transportDrte(0.2,nt,nx,v)
+
+u = transportDrte(0.2,nt,nx,v)
 plt.plot(lx,u[nt],label='t = 0.2')
 plt.legend()
 plt.title('nt = 100')
@@ -70,7 +71,4 @@ u = transportDrte(0.2,nt,nx,v)
 plt.plot(lx,u[nt],'g',label='t = 0.2')
 plt.legend()
 plt.title('nt = 200')
-plt.savefig('Eequtransp_1.pdf',format='pdf')
-"""
-for truc in u:
-    print(truc)
+plt.savefig('Eequtransp_1_fig.pdf',format='pdf')

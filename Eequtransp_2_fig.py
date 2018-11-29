@@ -63,5 +63,5 @@ u = transportCtre(1.35,nt,nx,v)
 plt.plot(lx,u[nt],label='t = 1.35')
 plt.legend()
 plt.title('nt = 200')
-plt.savefig('Eequtransp_2.pdf',format='pdf')
+plt.savefig('Eequtransp_2_fig.pdf',format='pdf')
 

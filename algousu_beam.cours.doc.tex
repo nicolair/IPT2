@@ -63,7 +63,7 @@ Pour résoudre $\mathcal{P}_1$,  vouloir résoudre $\mathcal{P}_2$ est une MAUVA
 \frametitle{Recherche de la plus grande valeur d'une liste}
 \begin{algorithm}[H]
   \Donnees{\;
-     $ L \leftarrow$ une liste (indexée de 0 à $n$) d'objets comparables}
+     $ L \leftarrow$ une liste (indexée de 0 à $n-1$) d'objets comparables}
   \Comment{initialisation}
   $vmax\leftarrow L[0]$  \;
   $i \leftarrow 1$\;
@@ -227,6 +227,27 @@ On peut incrémenter $i$ de $\max(1,p)$ (au lieu de 1)
   }
   \caption{}
 \end{algorithm}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Fusion de listes croissantes}
+\begin{algorithm}[H]
+ \Donnees{\;$L_1, L_2$ listes croissantes de longueurs $l1, l2$
+ }
+ \Comment{initialisation}
+ $i_1$ et $i_2$ à $0$, $L_3$ à une liste vide \;
+ \Tq{$i_1 < l_1$ et $i_2 < l_2$}{
+   \Si{ $L_1[i_1] \leq L_2[i_2]$}{
+     placer $L_1[i_1]$ à la fin de $L_3$\;
+     incrémenter $i_1$}
+   \Sinon{
+     placer $L_2[i_2]$ à la fin de $L_3$\;
+     incrémenter $i_2$}
+ }
+ Compléter $L_3$ par ce qui reste
+ \caption{}
+\end{algorithm}
+
 \end{frame}
 
 

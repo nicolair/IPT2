@@ -1,13 +1,15 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 4 : Algorithmes usuels le 15/11/17}
+\chead{Cours 4 : Algorithmes usuels le 07/11/18}
+\index{algorithmes usuels}
 \begin{document}
 On présente ici quelques problèmes simples et les algorithmes usuels qui les résolvent.\newline
 Quand on cherche un algorithme répondant à un problème donné, on doit commencer par examiner si ce problème peut se ramener à un de ces problèmes (ou à une combinaison). Lorsque c'est le cas, il faut adapter ces algorithmes usuels.\newline
 Il ne faut pas chercher à résoudre un problème plus difficile que celui qui vous est proposé. Comment préciser cette notion de difficulté?\newline
 Imaginons deux problèmes $\mathcal{P}_1$ et $\mathcal{P}_2$. Si une solution de $\mathcal{P}_2$ vous permet d'obtenir facilement une solution de $\mathcal{P}_1$, alors on peut dire que $\mathcal{P}_2$ est \emph{plus difficile} que $\mathcal{P}_1$. Dans ces conditions, si $\mathcal{P}_1$ vous est proposé, commencer par vouloir résoudre $\mathcal{P}_2$ est une MAUVAISE ID\'EE qu'il faut en général rejeter.  Par exemple, si vous cherchez \emph{un} objet vérifiant certaines propriétés, vous ne devez pas chercher \emph{tous} les objets vérifiant cette propriété.
 \section{Recherches dans une liste} 
+\index{recherche dans une liste}
 \subsection{Problématique}
 On se donne une liste d'objets (on la désigne par \texttt{L}) et un objet quelconque (désignons le par \verb|O|). L'objet \verb|O| est-il une valeur de \texttt{L}? Quel est le le premier indice pour lequel la valeur associée dans \texttt{L} est \verb|O|?\newline
 Si les valeurs de \texttt{L} sont des nombres que l'on peut comparer, quelle est la plus grande valeur? Pour quels indices cette plus grande valeur est-elle atteinte?  Quelle est la valeur moyenne de la liste? Quelle est la variance de la liste?\newline
@@ -167,5 +169,5 @@ On peut donc modifier l'algorithme précédent en formant les algorithmes \ref{a
   
   \item (en place) On se donne une seule liste $L$ indexée de $id$ (i début) à $if$ (i final) et contenant deux sous-listes croissantes. C'est à dire qu'il existe un indice $im$ tel que $id \leq im < if$ avec $L$ soit croissante de $id$ à $im -1$ (si $id < im$) et de $im$ à $if$. Il s'agit cette fois de former un algorithme modifiant $L$ pour que ses valeurs soient rangées par ordre croissant de $id$ à $if$.
 \end{enumerate}
-
+%\printindex
 \end{document}

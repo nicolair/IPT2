@@ -1,4 +1,4 @@
-L'objet de ce TP est de travailler avec des objets énumérables et des boucles d'énumération en manipulant un dessin ASCII qui remonte aux années 1990\footnote{programmes cowsay et cowthink}. L'intruction \texttt{range} n'est autorisée que dans la dernière question.
+L'objet de ce TP est de travailler avec des objets énumérables et des boucles d'énumération en manipulant un dessin ASCII qui remonte aux années 1990\footnote{programmes cowsay et cowthink}. L'intruction \texttt{range} n'est autorisée que dans la dernière question.\index{chaine de caractère} \index{boucle d'énumération}
 \begin{enumerate}
  \item Sur votre fichier source dans votre éditeur, reproduisez le code suivant qui nomme une certaine chaine de caractères.
 \begin{verbatim}
@@ -14,7 +14,8 @@ Vache = '''
 \end{verbatim}
 Le dos, le haut et le bas de la tête sont formés avec des underscores (trait du 8). Les autres caractères sont faciles à deviner. Attention s'il y a plusieurs touches pour le slash / sur votre clavier, utiliser toujours la même.\newline 
 On remarquera que le triple apostrophe \texttt{' ' '} ou \texttt{"""} est un délimiteur valide pour une construction littérale de chaine de caractères s'étendant sur plusieurs lignes.\footnote{Il n'est donc pas tout à fait correct de le considérer comme un commentaire mais plutôt comme une chaine anonyme qui sera donc \og oubliée\fg par l'interpréteur car elle n'a pas de nom.}\newline
-Faire afficher le dessin par le script avec la commande \texttt{print} et faites exécuter votre script pour vérification. Réglez les paramètres de l'exécution pour vous permettre d'interagir avec l'interpréteur. Comparer le résultat du \texttt{print} avec l'entrée de \texttt{Vache} dans l'interpréteur. Comme le backslash \ joue un rôle particulier pour l'interpréteur (échappement), il est doublé dans la chaine de caractères. 
+Faire afficher le dessin par le script avec la commande \texttt{print} et faites exécuter votre script pour vérification. Réglez les paramètres de l'exécution pour vous permettre d'interagir avec l'interpréteur. Comparer le résultat du \texttt{print} avec l'entrée de \texttt{Vache} dans l'interpréteur. Comme le backslash \ joue un rôle particulier pour l'interpréteur (échappement), dans certaines circonstances, il doit être doublé.\newline
+La chaîne de caractères représentant la vache doit comporter 7 lignes de 18 caractères complétées par des espaces. Vous pouvez le faire au clavier ou par quelques lignes de code.
 \item Au début de l'informatique les chaines de caractères n'étaient formées qu'à partir de 128 caractères (code ASCII). On peut en utiliser des milliers maintenant, ils sont codés (unicode) dans un alphabet binaire ou octal ou hexadécimal mais ils sont aussi numérotés. Si \texttt{c} désigne un tel caractère la commande \texttt{ord(c)} renvoie son numéro qui est un entier.  Inversement pour un entier \texttt{n}, la commande \texttt{chr(n)} renvoie le caractère de numéro \texttt{n}.
 \begin{enumerate}
  \item Quels sont les caractères de numéros 47, 60, 92, 95, 8254, 8725 ?
