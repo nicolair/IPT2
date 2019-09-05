@@ -1,0 +1,85 @@
+\subsection*{I. Chiffrement de César}
+\begin{enumerate}
+\item 
+\lstinputlisting[firstline=9, lastline=13]{Cchiffr1.py}
+
+\item On présente le résultat dans un tableau:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+txt              & i  & n  & f  & o  & r  & m  & a & t  & i  & q  & u  & e \\ \hline
+nbs              & 8  & 13 & 5  & 14 & 17 & 12 & 0 & 19 & 8  & 16 & 20 & 4 \\ \hline
+nbs décalés      & 14 & 19 & 11 & 20 & 23 & 18 & 6 & 25 & 14 & 22 & 0  & 10 \\ \hline
+txt     décalées & o  & t  & l  & u  & x  & s  & g & z  & o  & w  & a  & k \\ \hline
+\end{tabular}
+\end{center}
+Pour la lettre 'u', le décalage fait obtenir $26$, que l'on ramène à $0$.\newline
+La liste obtenue est :
+\[
+ [14,19,11,20,23,18,6,25,14,22,0,10]. 
+\]
+
+
+\item
+\begin{enumerate}
+\item \lstinputlisting[firstline=15, lastline=19]{Cchiffr1.py}
+
+\item On choisit un mot et un décalage qui font intervenir le reste, par exemple \og informatique\fg~ et $6$. Pour aller plus vite, on choisit plutôt \og xyz\fg~ et $2$.\\
+On teste ensuite le code proposé à la question précédente à l'aide d'un tableau (ici pour \og xyz \fg~ et $2$):
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+k       &     & 23   & 24     & 25       \\ \hline
+k+d     &     & 25   & 26     & 27       \\ \hline
+chiffre & [ ] & [25] & [25,0] & [25,0,1] \\ \hline
+\end{tabular}
+\end{center}
+
+\item Pour déchiffrer, il suffit de chiffrer avec la clé opposée.
+\lstinputlisting[firstline=21, lastline=22]{Cchiffr1.py}
+On teste la fonction avec la liste $[25,0,1]$ et $d=2$, et on retrouve bien [23,24,25].
+\end{enumerate}
+
+\end{enumerate}
+
+\subsection*{II. Cryptanalyse du chiffrement de César}
+\begin{enumerate}
+\item Le tableau des fréquences est indexé de 0 à 26. Les valeurs de $L$ sont des indices du tableau des fréquences. 
+\lstinputlisting[firstline=24, lastline=28]{Cchiffr1.py}
+
+\item La recherche d'un indice de valeur maximale est un algorithme usuel.
+\lstinputlisting[firstline=30, lastline=35]{Cchiffr1.py}
+
+\item On déchiffre de selon l'algorithme suivant.
+\begin{itemize}
+ \item On cherche le nombre $f$ le plus fréquent.\newline (en appelant \texttt{indice$\_$max(frequences(L))}).
+ \item En principe, ce nombre correspond au 'e', c'est-à-dire à $4$. La clé est donc $f-4$ si $f-4$ est positif, et $f-4+26$ sinon. Dans tous les cas, c'est $(f-4) \% 26$.
+ \item On déchiffre à l'aide de la fonction \texttt{dechiffrement$\_$cesar}.
+\end{itemize}
+L'implémentation en Python peut s'écrire comme la fonction qui suit.
+\lstinputlisting[firstline=37, lastline=41]{Cchiffr1.py}
+
+\item Le nombre de plus grande fréquence de la première liste est $6$. La clé est donc probablement $2$. Le message déchiffré est $[11,24,2,4,4,7,14,2,7,4]$ qui correspond à \og lyceehoche\fg. Comme ce texte a un sens, c'est vraisemblablement le texte original.\\
+Le nombre de plus grande fréquence dans la seconde liste est $15$. La clé doit donc être $15-4=11$. \newline
+Le message déchiffré est alors $[19,17,4,10,25,4,21]$, qui correspond à \og trekzev\fg. Comme ce texte n'a pas de sens, il ne doit pas être le texte original.\\
+Dans le premier cas, la lettre la plus fréquente du message chiffré est bien un 'e', alors que dans le second elle ne l'est probablement pas.\newline
+En fait, le texte en clair était \og cantine\fg chiffré avec la clé 2.\newline
+Le cryptanalyste doit donc disposer de messages codés assez longs et \og génériques\fg (par exemple pas le texte du roman \og\emph{ La disparition}\fg~ de Perec écrit sans 'e') pour que l'analyse des fréquences de lettre soit pertinente.
+\end{enumerate}
+
+\subsection*{III. Chiffrement de Vigénère}
+\begin{enumerate}
+\item On procède comme dans l'énoncé:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+texte en clair & l  & y  & c  & e  & e  & h  & o  & c  & h  & e\\ \hline
+liste en clair & 11 & 24 & 2  & 4  & 4  & 7  & 14 & 2  & 7  & 4\\ \hline 
+clé            & m  & p  & s  & i  & m  & p  & s  & i  & m  & p  \\ \hline
+liste clé      & 12 & 15 & 18 & 8  & 12 & 15 & 18 & 8  & 12 & 15  \\ \hline
+liste chiffrée & 23 & 13 & 20 & 12 & 16 & 22 & 6  & 10 & 19 & 19 \\ \hline
+texte chiffré  & x  & n  & u  & m  & q  & w  & g  & k  & t  & t  \\ \hline
+\end{tabular}
+\end{center}
+
+\item Implémentation du chiffrement de Vigénère:
+\lstinputlisting[firstline=43, lastline=48]{Cchiffr1.py}
+\end{enumerate}

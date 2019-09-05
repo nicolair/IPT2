@@ -1,0 +1,35 @@
+\begin{enumerate}
+  \item Fonction qui renvoie une conformation aléatoire.
+\lstinputlisting[firstline=1, lastline=9]{Cadn.py}
+  
+  \item Calcul de l'allongement.
+\lstinputlisting[firstline=14, lastline=18]{Cadn.py}  
+  
+  \item Modification aléatoire d'une conformation.
+\lstinputlisting[firstline=20, lastline=31]{Cadn.py}
+
+  \item Sélection d'une conformation.
+\lstinputlisting[firstline=33, lastline=46]{Cadn.py}
+
+  \item Si on connait la moyenne $x$ et la variance $V$ de la famille  $(x_1, \cdots, x_p)$, on peut calculer la variance de $(x_2,\cdots, x_{p+1})$ avec 8 opérations pour n'importe quel $p$.\newline
+  Commençons par calculer la moyenne $x'$ de la famille décalée:
+\[
+ x' = x + \frac{x_{p+1} -x_{1}}{p} \hspace{0.5cm} \text{ en notant } c = \frac{x_{p+1} -x_{1}}{p}.
+\]
+Il suffit de 2 opérations (1 addition et 1 multiplication) pour calculer $c$ plus 1 addition pour calculer $x'$.\newline
+Considérons ensuite la moyenne des carrés
+\[
+ X' = X + \frac{x_{p+1}^2 -x_{1}^2}{p} = X + c(x_{p+1} + x_{1}).
+\]
+Il suffit donc de 3 opérations supplémentaires (2 additions, 1 multiplication) pour calculer $X'$. On termine avec
+\[
+ V = X' - x'^2
+\]
+qui comporte 2 opérations supplémentaires (1 addition, 1 multiplication).\newline
+En tout, il suffit de $8 = 3 + 3 + 2$ opérations pour calculer la variance suivante.
+
+  \item Implémentation de la méthode de Monte-Carlo. On utilise une fonction d'initialisation qui renvoie la conformation après 500 itérations, la file des 500 premiers allongements et les moyennes des allongements et de leurs carrés.
+\lstinputlisting[firstline=60, lastline=80]{Cadn.py}
+On calcule ensuite chaque nouvelle conformation on insère son allongement dans la file et on calcule la variance des 500 dernièrs allongements avec 8 opérations.
+\lstinputlisting[firstline=83, lastline=103]{Cadn.py}
+\end{enumerate}

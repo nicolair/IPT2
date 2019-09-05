@@ -1,0 +1,40 @@
+Une base de données médicale\footnote{D'après le sujet de CCINP PSI 2019.} contient des informations administratives sur des patients et des informations médicales résultant des examens médicaux subis par ces patients.\newline
+La table \texttt{PATIENT} contient les attributs suivants:
+\begin{itemize}
+ \item \texttt{id} : identifiant unique d'un individu (entier), clé primaire;
+ \item \texttt{nom} : nom du patient (chaîne de caractères);
+ \item \texttt{prenom}: prénom du patient (chaîne de caractères);
+ \item \texttt{adresse} : adresse du patient (chaîne de caractères);
+ \item \texttt{email} : (chaîne de caractères);
+ \item \texttt{naissance} : année de naissance (entier).
+\end{itemize}
+La table \texttt{EXAMEN} contient les attributs suivants:
+\begin{itemize}
+ \item \texttt{id} : identifiant unique de l'examen (entier), clé primaire;
+ \item \texttt{date} : la date à laquelle l'examen a été réalisé (date);
+ \item \texttt{data1} : donnée (flottant);
+ \item \texttt{data2} : donnée (flottant);
+ \item ... ;
+ \item \texttt{idpatient} : identifiant du patient ayant subi l'examen représenté par l'attribut id de la table PATIENT (entier);
+ \item \texttt{etat} : description codée de l'état du patient (une chaine de caractères parmi N H ou S).
+\end{itemize}
+
+Les attributs \texttt{data1}, \texttt{data2}, ... sont des mesures effectuées lors de l'examen. L'attribut \texttt{etat} a été renseigné à l'issue de l'examen. La signification des codes d'état est donnée dans le tableau suivant:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|l|l|l|} \hline
+\texttt{N} & \texttt{H}     & \texttt{S} \\ \hline
+Normal     & Hernie discale & Spondylolisthésis \\ \hline
+\end{tabular}
+\end{center}
+On ne soulèvera pas de difficulté au sujet du type \og date\fg. On supposera en particulier que l'on peut comparer deux dates avec une simple inégalité
+\begin{multline*}
+ \left( \text{date de l'événement 1} \leq \text{date de l'événement 2}\right)\\
+ \Leftrightarrow \text{ l'événement 1 s'est déroulé avant l'événement 2}.
+\end{multline*}
+\begin{enumerate}
+ \item \'Ecrire une requête SQL permettant d'extraire les identifiants des patients pour lesquels une hernie discale a été diagnostiquée.
+ \item \'Ecrire une requête SQL permettant d'extraire les noms et prénoms des patients pour lesquels une spondylolisthésis a été diagnostiquée.
+ \item \'Ecrire une requête SQL permettant d'extraire les identifiants des patients pour lesquels une hernie discale et une spondylolisthésis ont été diagnostiquées.
+ \item \'Ecrire une requête SQL permettant d'extraire les identifiants des patients pour lesquels une hernie discale a été diagnostiquée lors d'un examen mais qui ont subi plus tard un autre examen dignostiquant l'état \texttt{N}.
+\end{enumerate}

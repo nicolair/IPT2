@@ -1,0 +1,38 @@
+\begin{enumerate}
+ \item On veut extraire les identifiants des patients pour lesquels une hernie discale a été diagnostiquée.
+\begin{verbatim}
+SELECT DISTINCT `idpatient` 
+  FROM `EXAMEN` 
+    WHERE `etat` = 'H'  
+\end{verbatim} 
+Le \texttt{DISTINCT} est utile car le même patient peut avoir subi plusieurs examens.
+
+\item On veut extraire les noms et prénoms des patients pour lesquels une spondylolisthésis a été diagnostiquée.\newline
+On modifie la requête précédente en joignant la table administrative pour récupérer les noms et prénoms.
+\begin{verbatim}
+SELECT DISTINCT 'PATIENT'.`nom`, 'PATIENT'.`prenom` 
+  FROM `EXAMEN` JOIN 'PATIENT' 
+    ON `EXAMEN`.`idpatient` = `PATIENT`.`id`
+  WHERE `etat` = 'S'  
+\end{verbatim} 
+
+ \item On veut extraire les identifiants des patients pour lesquels une hernie discale et une spondylolisthésis ont été diagnostiquées.\newline
+ Cette fois, il faut joindre la table des examens avec elle même. On utilise des alias \texttt{E1} et \texttt{E2}. Chaque ligne représente un couple d'examens subis par le même patient. Il faut bien remarquer que si $e_i$ et $e_j$ désignent deux examens subis par un patient, les deux couples $(e_i,e_j)$ et $(e_j,e_i)$ figurent dans la jointure.
+\begin{verbatim}
+SELECT DISTINCT E1.`idpatient` 
+  FROM `EXAMEN` E1 JOIN `EXAMEN` E2 
+    ON E1.`idpatient` = E2.`idpatient`
+  WHERE E1.`etat` = 'H' AND  E2.`etat` = 'S' 
+\end{verbatim} 
+ 
+ \item On veut extraire les identifiants des patients qui ont été (à un moment) guéris d'une hernie discale. Ils ont pu rechuter ensuite.\newline
+ On s'inspire de la requête précédente car il s'agit d'abord d'extraire les identifiants des patients ayant subis des examens conduisant aux états \texttt{H} et \texttt{N} (au lieu de \texttt{H} et \texttt{S}).  On filtre ensuite à l'aide de la date des examens. 
+\begin{verbatim}
+SELECT DISTINCT E1.`idpatient` 
+  FROM `EXAMEN` E1 JOIN `EXAMEN` E2 
+    ON E1.`idpatient` = E2.`idpatient`
+  WHERE E1.`etat` = 'H' AND  E2.`etat` = 'N' 
+               AND E1.`date` < E2.`date` 
+\end{verbatim} 
+Les patients sélectionnés ne sont pas forcément guéris car ils ont pu rechuter après un examen normal.
+\end{enumerate}

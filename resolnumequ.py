@@ -38,6 +38,7 @@ def dicho1(f,a,b,n):
         else:
             a , va = m , vm
         k += 1
+    # renvoyer le milieu du segment
     return (a+b)/2.
 
 def dicho2(f,a,b,n):
@@ -51,6 +52,7 @@ def dicho2(f,a,b,n):
         else:
             a , va = m , vm
         k += 1
+    # renoyer la meilleure extrémité
     if abs(va) < abs(vb):
         return a
     else:
@@ -67,6 +69,7 @@ def dicho3(f,a,b,n):
         else:
             a , va = m , vm
         k += 1
+    # renvoyer une moyenne pondérée
     return (abs(vb)*a + abs(va)*b)/(abs(va) + abs(vb))
 
 
@@ -78,9 +81,9 @@ courbe3 = [math.log(abs(dicho3(r,1,2,i)-r2)) for i in range(1,20)]
 plt.figure(1)
 plt.plot(courbe1,'blue') # milieu du segment
 plt.plot(courbe2, 'red') # meilleur bord
-plt.plot(courbe3, 'green') # moyenne pondérée
+plt.plot(courbe3, 'green') # moyenne pond.
 plt.show(1)
-#################### NEWTON
+################# NEWTON
 
 def newt(f,g,b,eps):
     bb = b - f(b)/g(b)
@@ -104,7 +107,8 @@ print(abs(newt(r,dr,2,eps) - r2))
     
 j = complex(math.cos(2*math.pi/3),math.sin(2*math.pi/3))
 j2 = complex(math.cos(2*math.pi/3),-math.sin(2*math.pi/3))
-    
+   
+#renvoie le codage d'une couleur suivant la position de z 
 def col(z):
     if(abs(z-1)<eps):
         return '.r'

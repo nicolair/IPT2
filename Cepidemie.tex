@@ -1,0 +1,167 @@
+\section*{Partie I. Mod\`ele \`a compartiments}
+\begin{enumerate}
+ \item On peut prendre $X = (S,I,R,D) \in \R^4$ et la fonction
+ \[
+  f:
+  \left\lbrace 
+  \begin{aligned}
+   \R^4 &\rightarrow \R^4 \\
+   (S,I,R,D) &\mapsto (-rIS, rIS - (a+b)I, aI, bI)
+  \end{aligned}
+\right. .
+ \]
+
+ \item On suppose que le paramètre \texttt{X} est passé comme un tuple et pas comme un tableau. Les premières lignes complétées sont:
+\begin{lstlisting}
+def f(X):
+	""" Fonction definissant l'equ. differentielle """
+	global r,a,b
+	S, I, R, D = X
+	return np.array([-r*S*I, r*S*I - (a+b)*I, a*I, b*I])
+\end{lstlisting}
+Si $X$ est passé comme une liste, il faut utiliser \texttt{S = X[0]}, \texttt{I = X[1]} ...
+
+ \item On peut présumer que l'erreur est plus importante pour $N = 7$ que pour $N = 250$. Le temps de calcul le plus long est certainement pour $N = 250$.
+ 
+ \item Code complété
+\begin{lstlisting}
+def f(X,Itau):
+	"""
+	Fonction def l'equ. diff.
+	Itau est la valeur 
+	   de I(t-p*dt)	
+	"""
+	global r,a,b
+	S, I, R, D = X
+	return np.array([-r*S*Itau, r*S*Itau - (a+b)*I, a*I, b*I])
+\end{lstlisting}
+\begin{lstlisting}
+# Methode d'Euler
+for i in range(N):
+	t = t + dt
+	# calcul de Itau
+	Itau = 0.05
+	if t > p * dt:
+	  Itau = XX[i - p][1]
+	X = X + dt * f(X, Itau)
+	tt.append(t)
+	XX.append(X)
+\end{lstlisting}
+
+ \item Il suffit de remplacer la ligne \texttt{Itau = XX[i-p][1]} par :
+\begin{lstlisting}
+ Itau = dt * sum(XX[i-j][1] * h(j * dt) for j in range(p) )
+\end{lstlisting}
+
+
+
+\section*{Partie II. Mod\'elisation dans des grilles}
+ \item L'instruction renvoie une liste de $n$ listes ne contenant que des $0$.
+ 
+ \item On initialise par le code suivant
+\begin{lstlisting}
+import random as rd
+
+def init(n):
+    G = [n*[0] for i in range(n)]
+    i = rd.randrange(n)
+    j = rd.randrange(n)
+    G[i][j] = 1
+    return G 
+\end{lstlisting}
+
+ \item Code pour compter les cases des différents états
+ \begin{lstlisting}
+def compte(G):
+    cpte = 4*[0]
+    for L in G:
+        for e in L:
+            cpte[e] += 1
+    return cpte
+ \end{lstlisting}
+
+ \item La fonction \texttt{voisins(i,j,n} renvoie une liste de liste de 2 entiers. Cette liste représente les voisins en tenant compte des effets de bords.\newline
+ La fonction \texttt{est\_exposee(G,i,j)} renvoie une valeur booléenne? \texttt{True} si la case est voisine d'une case infectée.
+ 
+ \item Dans la fonction \texttt{voisins}, il manque le test pour décider si la case doit être insérée parmi les voisins c'est à dire qu'elle est bien une case de la grille.\newline Soit (à l'indentation près):
+\begin{lstlisting}
+if u >= 0 and u < n and v>= 0 and v < n and [a,b] != [0,0]:
+    V.append([u,v])
+\end{lstlisting}
+Une case est exposée si une de ses voisines est contaminée c'est à dire que la valeur de $G$ associée est $1$. On examine si le produit des valeurs de G -1 pour les cases voisines est nul.
+\begin{lstlisting}
+def est_exposee(G,i,j):
+    n = len(G)
+    V = voisins(i,j,n)
+    est_exp = 1
+    for v in V:
+        est_exp *= G[v[0]][v[1]] - 1
+    return est_exp == 0
+\end{lstlisting}
+
+ \item Implémentation de la fonction \texttt{suivant(G,p1,p2)}.
+\begin{lstlisting}
+def suivant(G,p1,p2):
+    n = len(G)
+    GG = [[g for g in L] for L in G]
+    for i in range(n):
+        for j in range(n):
+            if GG[i][j] == 1:
+                if bernoulli(p1):
+                    GG[i][j] = 3
+                else:
+                    GG[i][j] = 2
+            elif GG[i][j] == 0:
+                if est_exposee(G,i,j):
+                    if bernoulli(p2):
+                        GG[i][j] = 1
+    return GG
+\end{lstlisting}
+
+ \item Implémentation de la fonction \texttt{simulation(n,p1,p2)}.
+\begin{lstlisting}
+def simulation(n,p1,p2):
+    G = init(n)
+    cpt = 0
+    #l'epidemie continue tant que quelqu'un est infecte
+    while compte(G)[1] > 0:
+        G = suivant(G,p1,p2)
+        cpt += 1
+    print(cpt)
+    N = n*n   #nb total de cases
+    return [c/N for c in compte(G)]
+\end{lstlisting}
+L'énoncé ne le demandait pas mais on fait afficher un compteur de la durée de l'épidémie.
+
+ \item \`A la fin $x_1=0$ car c'est la condition de sortie de la boucle. Comme les $x_i$ sont des proportions:
+\[
+ x_1 + x_2 + x_3 + x_4 = 1.
+\]
+Les cases atteintes par l'épidémie sont les décédées ou les guéries c'est à dire
+\[
+x_{\text{atteintes}} = x_2 + x_3.
+\]
+
+ \item Il s'agit quasiment d'une question de cours. On doit implémenter la méthode de dichotomie. On cherche i tel que $Lxa[i]<= 0.5$ et $Lxa[i+1] > 0.5$. Au cours de la boucle, $i$ et $j$ verifieront toujours
+\begin{center}
+ $i$ et $j$ entiers et $i < j$ et $Lxa[i] <= 0.5$ et $Lxa[j] > 0.5$.
+\end{center}
+La boucle s'arrête quand $j-i < 2$.
+\begin{lstlisting}
+def seuil(Lp2,Lxa):
+   i = 0
+   j = len(Lxa) - 1
+   while j - i >= 2:
+       k = (i+j)//2
+       if Lxa[k] <= 0.5:
+           i = k
+       else:
+           j = k
+   return Lp2[i]
+ \end{lstlisting}
+ 
+ \item On ne peut pas supprimer le test de la ligne 8 car on initialise avec une case infectée qui ne doit pas être vaccinée. De plus, il ne faut pas revacciner une case qui a été vaccinée.
+ 
+ \item L'appel \texttt{init\_vac(5, 0.2)} renvoie une grille $5 \times 5$ dont exactement $5$ cases sont à 2 (rétablie = vaccinée), une est à 1 (infectée) et toutes les autres à 0 (saine).
+
+\end{enumerate}

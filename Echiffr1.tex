@@ -1,0 +1,95 @@
+Ce texte porte sur les systèmes de chiffrement de César et Vigénère.
+
+Deux personnes désirent échanger un message sans qu'il soit lisible par un tiers.
+Le texte d'origine est transformé (on parle de chiffrement) à l'aide d'une clé, qui est secrète. Quiconque possède la clé de chiffrement est capable de déchiffrer le message.
+
+Dans ce sujet, on représentera des mots composés de lettres en minuscules (soit 26 caractères différents) représentés par des entiers compris entre $0$ et $25$, avec l'identification naturelle présentée dans le tableau suivant.
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+a  & b  & c  & d  & e  & f  & g  & h  & i \\ \hline
+0  & 1  & 2  & 3  & 4  & 5  & 6  & 7  & 8 \\ \hline \hline 
+j  & k  & l  & m  & n  & o  & p  & q  & r \\ \hline 
+9  & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17\\ \hline \hline 
+s  & t  & u  & v  & w  & x  & y  & z  & \\ \hline
+18 & 19 & 20 & 21 & 22 & 23 & 24 & 25 & \\ \hline
+\end{tabular}
+\end{center}
+
+En Python, on utilisera ainsi la liste $[12,15,18,8,1]$ pour représenter le mot \og mpsib\fg. Dans la suite, le texte à déchiffrer sera toujours une telle liste de nombres. 
+%
+\subsection*{Introduction}
+\'Ecrire une fonction \texttt{verifie(L)} ayant pour argument une liste \texttt{L}, et retournant un booléen indiquant si \texttt{L} contient bien uniquement des entiers compris entre $0$ et $25$.\bigskip
+
+\textbf{Dans la suite, on suppose que les listes données en entrées vérifient bien cette condition (et il n'est donc pas nécessaire de le vérifier).}
+
+\subsection*{I. Chiffrement de César}
+Le chiffrement de César est l'un des plus rudimentaires. Le principe est de décaler modulo 26 les lettres de l'alphabet d'une ou plusieurs positions, la clé de chiffrement étant la valeur du décalage.\newline
+Par exemple, en décalant les lettres de 2 positions, le caractère 'a' se transforme en 'c', le 'b' en 'd',... et le 'z' en 'b'. Le mot \og mpsib \fg~ avec un décalage de 4 donne \og quwmf\fg.
+\begin{enumerate}
+\item Que donne le mot \og informatique\fg avec un décalage de 6? On donnera la solution sous forme d'une liste de nombres.
+
+\item On rappelle que si \texttt{n} est un entier et \texttt{m} est un entier naturel non-nul, l'expression \texttt{ n \% m } désigne le reste de la division euclidienne de \texttt{n} par \texttt{m} (quelque soit le signe de $n$, ce reste est un entier contenu entre $0$ et $m-1$).
+\begin{enumerate}
+\item \'Ecrire une fonction \texttt{chiffrement$\_$cesar(L,d)} qui prend en arguments une liste \texttt{L} de nombres entiers compris entre $0$ et $25$ et un entier \texttt{d}, et renvoie (sans rien afficher) une nouvelle liste de même taille que \texttt{L} contenant les chiffres de \texttt{L} décalés de \texttt{d} positions. 
+
+\item Proposer un jeu de données pertinent permettant de tester votre fonction.
+
+\item \'Ecrire une fonction \texttt{dechiffrement$\_$cesar(L,d)} prenant les mêmes arguments mais réalisant le décalage dans l'autre sens.
+\end{enumerate}
+\end{enumerate}
+
+\subsection*{II. Cryptanalyse du chiffrement de César}
+
+%La cryptanalyse est la science de l'attaque de systèmes de cryptographie. Le principe de la cryptanalyse étudiée dans ce problème est simple. 
+Le travail du cryptanalyste consiste à casser le chiffrement, c'est-à-dire à découvrir des informations sur le message d'origine sans connaître la clé, ou même de retrouver la clé.
+Pour réaliser la cryptanalyse du chiffrement de César, on va essayer de découvrir la valeur du décalage.\newline 
+L'approche la plus souvent utilisée est de considérer la fréquence d'apparition de chaque lettre dans le texte chiffré. Par exemple, la lettre la plus fréquente dans un texte suffisamment long en fran\c cais est la lettre 'e'.
+
+\begin{enumerate}
+  \item \'Ecrire une fonction \texttt{frequences(L)} qui prend en argument une liste de nombres entiers compris entre $0$ et $25$, et retourne une liste de taille $26$ dont l'élément d'indice $i$ est le nombre d'apparitions du nombre $i$ dans \texttt{L}.
+
+  \item \'Ecrire une fonction \texttt{indice$\_$max(T)} qui prend en argument une liste $T$ de nombres entiers, et retourne l'indice du maximum de la liste. On suppose que celui-ci est unique.
+
+  \item \'Ecrire une fonction \texttt{dechiffrement$\_$auto(L)} qui prend en argument une liste de nombres entiers compris entre $0$ et $25$, et retourne la liste correspondant au texte d'origine.
+
+  \item Que donne votre fonction pour les listes 
+  \[
+   [13,0,4,6,6,9,16,4,9,6] \hspace{1cm} [4,2,15,21,10,15,6] ?
+  \]
+  Commenter.
+\end{enumerate}
+
+\subsection*{III. Chiffrement de Vigénère}
+
+Le codage de César a été modernisé par Vigénère au XVI-ème siècle. Au lieu de décaler toutes les lettres du texte de la même manière, on utilise un texte clé qui donne une suite de décalages.\newline
+Par exemple, pour chiffrer un texte à l'aide de la clé \og sup\fg, on utilisera pour la première lettre le décalage qui envoie le 'a' sur le 's', pour la seconde lettre le décalage qui envoie le 'a' sur le 'u', pour la troisième le décalage qui envoie le 'a' sur le 'p', puis pour la quatrième le décalage qui envoie le 'a' sur le 's' et ainsi de suite.\newline
+Voici un exemple de chiffrement avec la clé \og sup\fg :
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+texte à chiffrer & i & n & f & o & r & m & a & t & i & q & u & e\\
+\hline
+liste non chiffrée & 8 & 13 & 5 & 14 & 17 & 12 & 0 & 19 & 8 & 16 & 20 & 4\\
+\hline 
+clé & s & u & p & s & u & p & s & u & p & s & u & p \\
+\hline
+chiffres associés & 18 & 20 & 15 & 18 & 20 & 15 & 18 & 20 & 15 & 18 & 20 & 15 \\
+\hline
+liste chiffrée & 0 & 7 & 20 & 6 & 11 & 1 & 18 & 13 & 23 & 8 & 14 & 19\\
+\hline
+texte chiffré & a& h & u & g & l & b & s & n & x & i & o & t \\
+\hline
+\end{tabular}
+\end{center}
+\begin{enumerate}
+  \item Donner le chiffrement du texte \texttt{lyceehoche} en utilisant la clé de codage \texttt{mpsi}.
+
+  \item \'Ecrire une fonction \texttt{chiffrement$\_$vigenere(L,C)} prenant en argument un texte à chiffrer \texttt{L} (sous forme d'une liste d'entiers entre $0$ et $25$) et une clé \texttt{C} (sous la même forme), et renvoie le texte chiffré par la méthode de Vigénère.
+
+\end{enumerate}
+%
+%Nous ne donnerons pas d'algorithme de déchiffrement ici, celui-ci reposant sur un calcul de pgcd, non connu de ceux qui n'ont pas fait la spécialité mathématiques en terminale.
+
+
