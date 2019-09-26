@@ -22,17 +22,17 @@ Un \emph{environnement de programmation} \index{environnement de programmation} 
 Le plus simple des environnements est l'interpréteur lui même utilisé interactivement. Il suffit de l'appeler (le nom peut varier selon les systèmes : \texttt{python} ou \texttt{python3} par exemple) sans paramètre dans une \emph{console}. Une console est une application dont l'interface avec l'utilisateur est uniquement du texte (ligne de commandes)\index{console}. On trouve aussi le mot \emph{terminal} pour désigner une console.\newline
 L'interpréteur attend une ligne de code (correcte) et l'exécute directement après \texttt{entrée}. Cet environnement est commode pour une initiation ou de petites vérifications. 
 On peut dire que l'interpréteur Python est lui même une console qui attend des commandes correctes.
-Il a deux limitations immédiates: la difficulté d'exécuter un code contenant plusieurs lignes, le fait que le code exécuté n'est pas enregistré en tant que fichier et donc difficile à réutiliser.
+Il a deux limitations immédiates: la difficulté d'exécuter un code contenant plusieurs lignes, le fait que le code exécuté n'est pas enregistré en tant que fichier et donc difficile à réutiliser. Il existe un interpréteur amélioré \emph{Ipython} qui permet d'éditer du texte sur plusieurs lignes.
 
 \subsection{Couple éditeur-console}
 Un environnement de programmation très simple est constitué par un couple éditeur-console.\newline
 L'éditeur\footnote{à ne pas confondre avec un traitement de texte} de texte \index{éditeur de texte} \index{traitement de texte} permet de coder et d'enregistrer le code dans un fichier (l'extension du nom de fichier est .py \index{extension de nom de fichier}).\newline
 Pour exécuter le code, dans une console, on appelle l'interpréteur en lui donnant le nom du fichier de code en paramètre.\newline
-Sous diverses réserves (en particulier sous Windows des problèmes de \emph{chemins de dossier} peuvent se produire), cela peut se faire dans n'importe quelle console. Sous windows un éditeur simple est notepad. En général, un éditeur propose une \emph{coloration syntaxique} \index{coloration syntaxique} spécifique à Python. Il est conseillé de l'activer.
+Sous diverses réserves (en particulier sous Windows des problèmes de \emph{chemins de dossier} peuvent se produire), cela peut se faire dans n'importe quelle console. Sous windows un éditeur simple est notepad. En général, un éditeur propose une \emph{coloration syntaxique} \index{coloration syntaxique} spécifique à Python. La coloration syntaxique analyse eun texte en fonction d'une syntaxe donnée et le présente avec différentes couleurs qui permettent de visualiser la structure du texte. Il est conseillé de l'activer.
 
-\subsection{Autres environnements: spyder}
+\subsection{Autres environnements: Spyder}
 Il existe de nombreux environnements de programmation pour Python offrant bien d'autres ressources (inspection des variables, debogage, ...) Un environnement de programmation sophistiqué est très utile au programmeur expérienté mais plutôt nuisible au débutant car l'apprentissage de l'environnement vient s'ajouter à celui du langage proprement dit.\newline
-Toutefois le programme officiel de la classe nous demande d'utiliser Python par l'intermédiaire de l'environnement de programmation spyder. Les machines des salles de TP du lycée sont équipées de Spyder. Il est conseillé de l'installer sur vos machines personnelles de manière à ne pas être désorienté si vous devez l'utiliser en concours. 
+Toutefois le programme officiel de la classe nous demande d'utiliser Python par l'intermédiaire de l'environnement de programmation Spyder. Les machines des salles de TP du lycée sont équipées de Spyder. Il est conseillé de l'installer sur vos machines personnelles de manière à ne pas être désorienté si vous devez l'utiliser en concours. 
 
 \input{environnement.tex}
 %\clearpage
@@ -47,7 +47,7 @@ L'objet de ce document est d'introduire ces premiers éléments de syntaxe ainsi
 Une expression\index{expression} est une phrase que l'interpréteur peut évaluer à un objet. La liste suivante présente les principaux types d'éléments constituants une expression.
 \begin{description}
  \item[nom] ou variable\index{nom} : des mots formés avec les lettres de a à z en minuscule ou majuscule (Python est sensible à la casse c'est à dire que \verb|Cassy| et \verb|cassy| sont deux noms différents), le caractère underscore \verb|_| et les chiffres de \verb|0| à \verb|9| (sauf pour le premier caractère). Si un mot est réservé par Python pour un usage prédéfini, il ne peut pas être un nom.
- \item[littéral] : \index{litteral} un littéral désigne un objet fixé et pré-défini. La syntaxe dépend du type d'objet représenté, retenir seulement les cas suivants.\newline
+ \item[littéral] : \index{littéral} un littéral désigne un objet fixé et pré-défini. La syntaxe dépend du type d'objet représenté, retenir seulement les cas suivants.\newline
 Les délimiteurs "espace" pour les entiers (int) avec éventuellement \verb|-|: par exemple \verb| 12 | désigne le nombre $12$. Il faut seulement le séparer d'un autre mot par des espaces.\newline
 Les délimiteurs \verb|" "| ou \verb|' '| pour les chaînes de caractères: \verb|"coucou"| est une chaîne de caractères.\newline
 Le \verb|.| pour les objets du type float: \verb|1.1| est un objet du type float, \verb|1.0| est un objet du type float alors que \verb|1| est un objet du type int et que \verb|"1"| est un objet du type str (chaîne de caractère).\newline

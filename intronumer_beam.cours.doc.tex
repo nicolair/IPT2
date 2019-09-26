@@ -64,18 +64,19 @@ Inconvénient: pour un $x$ arbitraire, il faut d'abord calculer le $n$.
  \frametitle{Pseudo-code}
 \begin{algorithm}[H]
  $b \leftarrow $ la base , $x \leftarrow $ un nombre entier $>0$ \;
- \Comment{recherche de la plus petite puissance $p$ de $b$  telle que $x < p$. Alors $b^{n-1} = p/b \leq x$.}
+ \Comment{recherche plus gde puissance $p$ de $b$ tq $p \leq x$.}
  $p \leftarrow 1$\;
- \Tq{$p \leq x$}{
-     $p\leftarrow p*b$}
- $p \leftarrow p / b$\;
+ $q \leftarrow p * b$\;
+ \Tq{$q \leq x$}{
+     $p\leftarrow q$\;
+     $q\leftarrow p*b$}
  \Comment{Formation du développement}
  $resultat \leftarrow$ mot vide \;
- \Tq{$x > 0$}{
+ \Tq{$p >= 1$}{
      $q \leftarrow $ quotient de la division de $x$ par $p$ \;
      Concaténer $q$ à droite de $resultat$ \;
      $x \leftarrow $ reste de la division de $x$ par $p$ \;
-     $p \leftarrow p / b$ }\;
+     $p \leftarrow p // b$ }\;
      \caption{Numération par les quotients}
 \end{algorithm}
 \end{frame}
@@ -114,12 +115,12 @@ Ceci assure l'unicité du $a_0$ et le raisonnement se poursuit en divisant par $
 
 \begin{frame}
  \frametitle{Par les quotients: code Python}
-\lstinputlisting[firstline=12, lastline=23]{intronumer.py}
+\lstinputlisting[firstline=10, lastline=25]{intronumer.py}
 \end{frame}
 
 \begin{frame}
  \frametitle{Par les restes: code Python}
-\lstinputlisting[firstline=30, lastline=34]{intronumer.py}
+\lstinputlisting[firstline=30, lastline=37]{intronumer.py}
 \end{frame}
 
 

@@ -9,16 +9,16 @@ while n < p:
     n += 1
     f *= n
     # f designe encore la factorielle de n
-print p,n,f
+print(p,n,f)
 
 n = 22
 p = 2
 while n % p != 0:
     p += 1
 if p < n :
-    print "compose"
+    print("compose")
 else:
-    print "premier"
+    print("premier")
 
 n = 16
 d = 2 # 1 et n sont des diviseurs
@@ -29,7 +29,7 @@ while p*p < n:
     p += 1
 if p*p == n:
     d += 1
-print "nb diviseurs de " + str(n) + " = " + str(d) 
+print("nb diviseurs de " + str(n) + " = " + str(d)) 
 
 
 n = 22
@@ -41,7 +41,7 @@ while n > 0 :
     else:
         n = (n-1) // 2
         code = code + 'I'
-print code
+print(code)
 
 n = 22
 code = ''
@@ -53,8 +53,8 @@ while n > 0 :
         n = (n-1) // 2
         code = '1' + code
 code = '0b' + code
-print code
-print bin(22) # verification
+print(code)
+print(bin(22)) # verification
 
 
 n = 22
@@ -63,9 +63,9 @@ while n > 0 :
     r = n % 3 
     n = n // 3
     code = str(r) + code
-print int(code,3)
+print(int(code,3))
 code = '0t' + code
-print code
+print(code)
 
 n = 2554 ; p = 39
 i = 0
@@ -111,16 +111,16 @@ lign += '|'
 ###########  Affichage
 i = 0
 #ligne 0
-print bord
+print(bord)
 i += 1
 
 # lignes 1 à l-2
 while i < l-1:
-    print lign
+    print(lign)
     i += 1
 
 # ligne l-1 (bord)
-print bord
+print(bord)
 
 ######### Affichage cercle approximatif
 r = 10
@@ -137,7 +137,7 @@ while x <= 2*r:
         else:
             ligne = ligne + vide
         y += 1
-    print ligne 
+    print(ligne) 
     x += 1
 
 ############# Suite de Syracuse    
@@ -149,7 +149,7 @@ while n < 20:
         u = u // 2
     else:
         u = 3*u + 1
-    print u
+    print(u)
 
     
 
@@ -161,7 +161,7 @@ while u > 1 and n < 20:
         u = u // 2
     else:
         u = 3*u + 1
-print n
+print(n)
 
 
 m = 0 #max des i(x)
@@ -182,4 +182,4 @@ while x <= X:
     if n > m:
         m = n
         xmax = x
-print m, xmax
+print(m, xmax)
