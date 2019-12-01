@@ -1,7 +1,7 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 3: Objets énumérables - Boucles d'énumération. 10/10/18}
+\chead{Cours 3: Objets énumérables - Boucles d'énumération. 9/10/19}
 \begin{document}  \index{objets énumérables} \index{boucle for} \index{boucle d'énumération}
 En Python, la notion de boucle non conditionnelle (boucle \texttt{for}) est remplacée par une notion de \emph{boucle d'énumération} liée à des types particuliers d'objets dits \emph{énumérables}.\newline
 Un objet de type \emph{énumérable} est une sorte de conteneur, il rassemble \og dans une même boîte\fg~ divers objets. On peut accéder à ces objets à l'aide d'une boucle d'énumération \texttt{for ... in ...}.\newline
@@ -45,7 +45,7 @@ print(chacha)
 >>>>> TypeError: 'str' object does not support item assignment\end{verbatim}
 
 \section{Boucle d'énumération}
-Exécuter une boucle non conditionnelle, c'est parcourir les objets constituant un objet énumérable en les désignant tour à tour par un même nom et exécuter un bloc d'instructions. 
+En Python, on ne dispose pas d'une syntaxe spécifique pour effectuer une boucle non conditionnelle. La syntaxe avec \texttt{for} permet d'exécuter une boucle d'énumération, c'est à dire de parcourir les objets constituant un objet énumérable en les désignant tour à tour par un même nom et en exécutant un bloc d'instructions. 
 La syntaxe est
 \begin{verbatim}
 for nom in obj:
@@ -65,7 +65,8 @@ print(type(truc))                          f *= i
                                        
 for i in range(5):
   print(i)
-                                       \end{verbatim}
+\end{verbatim}
+Si on veut exécuter un nombre arbitraire de fois une séquence sans introduire un compteur et une boucle \texttt{while}, on doit introduire un objet énumérable quelconque de longueur le nombre arbitraire et parcourir cet objet. En pratique, on utilisera toujours dans ce cas un type d'objet particulier : un \texttt{range}.
 
 \section{Chaines de caractères}
 \subsection{Concaténation et échappement}
@@ -106,7 +107,9 @@ En fait \texttt{in} permet de savoir si une sous-chaine est dans la chaîne. Con
 Remarque, si le deuxième argument de l'opérateur n'est pas du type itérable, on obtient une erreur de type.
 
 \subsection{Conversion - transtypage}
-On peut convertir des objets \texttt{int} ou \texttt{float} en chaîne de caractère à l'aide de la fonction \texttt{str}. Par exemple \texttt{str(12)} et \texttt{str(1.2)} prennent respectivement un entier ou un float comme paramètre et renvoient des chaînes de caractères.
+Des chaines de caractères peuvent coder des nombres: par exemple le codage décimal des entiers avec des mots formés des lettres 0,1, ..., 9. Le langage Python contient des fonctions natives pour passer de l'un à l'autre.\newline
+On peut convertir des objets numériques (\texttt{int} ou \texttt{float}) en chaîne de caractère à l'aide de la fonction \texttt{str}. Par exemple \texttt{str(12)} et \texttt{str(1.2)} prend respectivement un entier ou un float comme paramètre et renvoie la chaîne de caractères qui le code en décimal. De manière analogue \texttt{bin}, \texttt{oct}, \texttt{hex} prennent un nombre en argument et renvoie la chaine qui le code en binaire (base 2), en octal (base 8) ouen hexadécimal (base 16).\newline
+Inversement la fonction \texttt{int} prend en paramètres une chaine de caractère et un codage (par défaut décimal) et renvoie un nombre. 
 
 \section{Listes}
 \subsection{Constructeurs}

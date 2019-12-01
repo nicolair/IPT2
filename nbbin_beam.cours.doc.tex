@@ -222,6 +222,28 @@ Un nombre binaire non nul $x$ s'exprime de manière unique sous la forme
 \end{frame}
 
 \begin{frame}
+  \frametitle{Forme normalisée}
+\begin{algorithm}[H]
+  $x \leftarrow $ un nombre entier $>0$\;
+  $m \leftarrow x ; \hspace{0.5cm} n \leftarrow 0$\;
+  \Si{$m \geq 2$}{
+    \Tq{$m \geq 2$}{
+      $m\leftarrow m/2; \hspace{0.5cm} n \leftarrow n + 1$;
+    }
+    \Comment{$m$ désigne un nb $<2$ avec $2m \geq 2 \Rightarrow m \geq 1$}
+  }
+  \Si{$m < 1$}{
+    \Tq{$m < 1$}{
+      $m\leftarrow 2m ; \hspace{0.5cm} n \leftarrow n - 1$;
+    }
+    \Comment{$m$ désigne un nb $\geq 1$ avec $m/2 < 1 \Rightarrow m < 2$}
+  }
+  \caption{Justification algorithmique}
+\end{algorithm}
+\end{frame}
+
+
+\begin{frame}
 \frametitle{Flottants sur 64 bits}
 On utilise 1 bit pour le signe, 11 bits pour l'exposant et 52 bits pour la mantisse.
 \begin{itemize}

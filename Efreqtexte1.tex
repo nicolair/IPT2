@@ -3,17 +3,17 @@ Il utilise le cours sur les algorithmes usuels et les fonctions Python. Vous aur
 
 \subsection*{I - Outils}
 \begin{enumerate}
-  \item Les fonctions demandées dans cette question mettent en \oe{}uvre les algorithmes présentés en pseudo-code dans le cours. Elles ne doivent pas s'appeler.
+  \item Les fonctions demandées dans cette question mettent en \oe{}uvre les algorithmes présentés en pseudo-code dans le cours. Elles ne doivent être implémentées de manière indépendant c'est à dire qu'aucune de ces trois fonctions ne doit être utilisée.
 \begin{enumerate}
-  \item Implémenter en Python une fonction nommée \verb|indice| prenant une liste et un objet comme paramètres et renvoyant l'indice correspondant de la liste lorsque l'objet y figure et une valeur convenue lorsqu'il n'y figure pas.
-  \item Implémenter une fonction \texttt{valeurMax} prenant une liste de nombres en paramètre et renvoyant le plus grand.
-  \item Implémenter une fonction \texttt{indicesValeurMax} prenant une liste de nombres en paramètre et renvoyant la liste des indices de plus grande valeur.   
+  \item \'Ecrire en Python une fonction nommée \verb|indice| prenant une liste et un objet comme paramètres et renvoyant l'indice correspondant de la liste lorsque l'objet y figure et une valeur convenue lorsqu'il n'y figure pas.
+  \item \'Ecrire une fonction \texttt{valeurMax} prenant une liste de nombres en paramètre et renvoyant le plus grand.
+  \item \'Ecrire une fonction \texttt{indicesValeurMax} prenant une liste de nombres en paramètre et renvoyant la liste des indices de plus grande valeur.   
 \end{enumerate}
    
-  \item On se donne une liste \texttt{L} de \texttt{l} valeurs numériques qui ne sont pas forcément deux à deux distinctes. On suppose que \texttt{l} est plus grand que 10 et on veut calculer une liste \texttt{ligv} (liste des indices de grande valeur) de 10 indices correspondants aux 10 plus grandes valeurs. \newline
-  Cela se traduit par : pour tout \texttt{j} (entre 0 et \texttt{l-1}) qui n'est pas une valeur de la liste \texttt{ligv} et tout indice \texttt{k} (entre 0 et\texttt{l-1}) qui est une valeur de la liste \texttt{ligv}, 
+  \item Soit \texttt{L} une liste de \texttt{l} (avec \texttt{l} plus grand que 10) valeurs numériques qui ne sont pas forcément deux à deux distinctes. On veut former une LIPGV (Liste des Indices de Plus Grande Valeur) de \texttt{L} c'est à dire une liste nommée \texttt{ligv} de 10 indices correspondants aux 10 plus grandes valeurs. \newline
+  Cela se traduit par : pour tout \texttt{j} (entre 0 et \texttt{l-1}) qui n'est pas une valeur de la liste \texttt{ligv} et tout indice \texttt{k} (entre 0 et \texttt{l-1}) qui est une valeur de la liste \texttt{ligv}: 
   \begin{center}
-    \texttt{L[j]} $\leq$ \texttt{L[k]} 
+    \texttt{L[j]} $\leq$ \texttt{L[k]}. 
   \end{center}
 Il peut y avoir plusieurs listes vérifiant les conditions pour une liste donnée. Par exemple, si
 \begin{center}
@@ -21,7 +21,7 @@ Il peut y avoir plusieurs listes vérifiant les conditions pour une liste donné
 \end{center}
 une liste \texttt{ligv} possible est
 \begin{center}
-  \verb|ligv = [17, 8, 12, 9, 7, 10, 16, 15, 18, 6]|
+  \verb|ligv = [17, 8, 12, 9, 7, 10, 16, 15, 18, 6]|.
 \end{center}
 Elle correspond aux valeurs
 \begin{center}
@@ -29,9 +29,9 @@ Elle correspond aux valeurs
 \end{center}
 qui sont rangées par ordre décroissant.\newline
 Toute liste obtenue en permutant \texttt{ligv} serait aussi acceptable. On pourrait aussi remplacer le 6 de la fin (indice du deuxième 22 de \texttt{L}) par 1 (indice du premier 22)\newline  
-Pour former une LIPGV (Liste des Indices de Plus Grande Valeur) de \texttt{L}, on utilise l'algorithme \ref{Efreqtexte_1} dans lequel \texttt{j} prend les valeurs entières de 10 à \texttt{l} et pour lequel la phrase
+Pour former une LIPGV  de \texttt{L}, on utilise l'algorithme \ref{Efreqtexte_1} dans lequel \texttt{j} prend les valeurs entières de 10 à \texttt{l} et pour lequel la phrase
 \begin{quote}
- \texttt{ligv} indexée entre 0 et 9 (à valeurs entre 0 et \texttt{j}) est une LIPGV de \texttt{L} indexée entre 0 et \texttt{j}
+ \og \texttt{ligv} indexée entre 0 et 9 (à valeurs entre 0 et \texttt{j}) est une LIPGV de \texttt{L} indexée entre 0 et \texttt{j}\fg
 \end{quote}
 est toujours vraie (invariant). Il utilise les noms de variables suivantes:
 \begin{itemize}

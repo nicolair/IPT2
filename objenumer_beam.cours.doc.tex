@@ -68,8 +68,8 @@ Dans l'écriture \emph{littérale} d'un objet énumérable,
     \item [tuples] pas de délimiteur - séparateur \texttt{ ,}\newline
     Parfois nécessaire d'utiliser des ( ) autour du tuple
     \item [Listes] délimiteur \texttt{[ ]} - séparateur \texttt{ , }
-    \item [Ensembles] délimiteur \texttt{{ }} - séparateur \texttt{ ,}
-    \item [Dictionnaires] délimiteur \{ \} - séparateur \texttt{ , } entre les couples.\newline
+    \item [Ensembles] délimiteur \texttt{\{ \}} - séparateur \texttt{ ,}
+    \item [Dictionnaires] délimiteur \texttt{\{ \}} - séparateur \texttt{ , } entre les couples.\newline
     Dans un couple, "\texttt{ : }" entre la clé (à gauche) et la valeur (à droite)
   \end{description}
 \end{frame}
@@ -145,6 +145,15 @@ Certains caractères jouent un rôle particulier: \og ils ne se représentent pa
   Des algorithmes pour ce type de travail font partie du programme. (algorithmes usuels)
   
   Si le deuxième argument de l'opérateur n'est pas du type itérable, on obtient une erreur.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Chaines: transtypage entier}
+\begin{itemize}
+  \item Nombres $\rightarrow$ Chaines : \texttt{str}, \texttt{bin}, \texttt{oct}, \texttt{hex} un nombre en argument, renvoie la chaine qui le code en décimal, binaire (base 2), en octal (base 8) en hexadécimal (base 16).
+
+  \item Chaines $\rightarrow$ Nombre : \texttt{int} prend en paramètres une chaine de caractère et un codage (par défaut décimal) et renvoie un nombre. 
+\end{itemize}
 \end{frame}
 
 \begin{frame}

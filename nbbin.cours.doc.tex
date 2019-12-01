@@ -1,7 +1,7 @@
 \input{ipt.tex}
 %En tete et pied de page
 \lhead{Cours IPT}
-\chead{Cours 3: Systèmes - Nombres binaires et représentations. 10/10/18}
+\chead{Cours 4: Systèmes - Nombres binaires et représentations. 06/11/19}
 \begin{document}
 
 Un processeur utilise des mémoires constituées de circuits à deux états. Un tel circuit est un \emph{bit}, on les groupe par 8 pour former un octet. Un octet peut donc prendre $2^8=256$ états.\newline
@@ -115,7 +115,7 @@ Exemple
 Ces opérations sont simples à implémenter pour la structure des listes (ou des mots) de longueur fixée. Elles ont de plus une interprétation mathématique. C'est ce double aspect qui fait leur intérêt.
 
 \section{Entiers}
-Dans les versions 2.x de Python, le nombre d'octets utilisés pour représenter les objets du type \verb|int| est lié à la largeur du bus du processeur:  quatre octets sur les machines 32bits, huit sur les machines 64bits. Dans les versions 3.x, les types \verb|int| et \verb|long| ont été confondus. Les entiers sont gérés de manière dynamique sur un nombre d'octets variable, la seule limite est la mémoire de la machine.
+Dans les versions 2.x de Python, le nombre d'octets utilisés pour représenter les objets du type \verb|int| est lié à la largeur du bus du processeur:  quatre octets sur les machines 32 bits, huit sur les machines 64 bits. Dans les versions 3.x, les types \verb|int| et \verb|long| ont été confondus. Les entiers sont gérés de manière dynamique sur un nombre d'octets variable, la seule limite est la mémoire de la machine.
 
 Lorsque les entiers relatifs sont représentés par des mots binaires de longueur fixée, le signe n'est pas (comme on pourrait le croire) stocké sur le premier bit. D'une part cela aurait le défaut de conduire à deux zéros distincts mais surtout cela ne permettrait pas d'exploiter facilement les opérations bit à bit de la section précédente traduisant les opérations numériques modulo $2^n$.\newline 
 On utilise la méthode dite du \emph{du complément à 2}\index{complément à 2}.\newline
@@ -178,6 +178,24 @@ Lorsque l'on sort de l'intervalle des entiers \texttt{int}, python 2.7 transtype
 \section{Flottants}
 Un nombre binaire non nul $x$ peut s'exprimer de manière unique\footnote{norme IEEE 754} sous la forme $x = s\times m\times 2^n$ où $s\in\{-1,+1\}$ est le signe du nombre, $m\in [1,2[$ est sa \emph{mantisse}\index{mantisse}, $n\in \Z$ est son exposant.\newline
 Cette expression dite \emph{normalisée} permet de le représenter à l'aide de bits.\newline
+\begin{algorithm}
+  $x \leftarrow $ un nombre entier $>0$\;
+  $m \leftarrow x ; \hspace{0.5cm} n \leftarrow 0$\;
+  \Si{$m \geq 2$}{
+    \Tq{$m \geq 2$}{
+      $m\leftarrow m/2; \hspace{0.5cm} n \leftarrow n + 1$;
+    }
+    \Comment{$m$ désigne un nb $<2$ avec $2m \geq 2 \Rightarrow m \geq 1$}
+  }
+  \Si{$m < 1$}{
+    \Tq{$m < 1$}{
+      $m\leftarrow 2m ; \hspace{0.5cm} n \leftarrow n - 1$;
+    }
+    \Comment{$m$ désigne un nb $\geq 1$ avec $m/2 < 1 \Rightarrow m < 2$}
+  }
+  \caption{Justification algorithmique de la forme normalisée}
+  \end{algorithm}
+Dans l'algorithme présenté pour justifier la forme normalisée, on remarque que la phrase \og$x = m 2^m$\fg est toujours vraie.
 Avec 64 bits, on utilise 1 bit pour le signe, 11 bits pour l'exposant et 52 bits pour la mantisse.
 \begin{itemize}
  \item Le signe $+1$ est représenté par $0$, le signe $-1$ par $1$.

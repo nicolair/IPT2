@@ -203,7 +203,8 @@ Pire des cas = pas d'échange satisfaisant : complexité en $O(n^3)$.
   \frametitle{\'Echanges de valeurs: formulation}
 $s_A$ et $s_B$ les deux sommes, échange possible si et seulement si 
 \begin{multline*}
-  \exists (i,j)\in \llbracket 0, n-1 \rrbracket \text{ tq } s_A + b_j -a_i = s_B + a_i - b_j\Leftrightarrow s_B - s_A = 2(b_j - a_i)\\
+  \exists (i,j)\in \llbracket 0, n-1 \rrbracket \text{ tq } s_A + b_j -a_i = s_B + a_i - b_j\\
+  \Leftrightarrow s_B - s_A = 2(b_j - a_i)\\
 \Leftrightarrow b_j = a_i + \frac{s_B - s_A}{2}
 \end{multline*}
 $s_B - s_A$ doit être pair pour que l'échange soit possible.
